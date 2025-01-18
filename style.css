@@ -1,0 +1,56 @@
+:root {
+  --white: #ffffff;
+  --white-50: rgba(250, 250, 250, 0.5);
+  --white-80: rgba(250, 250, 250, 0.8);
+  --white-10: rgba(250, 250, 250, 0.1);
+  --black: #000000;
+  --green-dark: #277028;
+  --green-lighter: #4aa042;
+  --green-gradient: linear-gradient(
+    91deg,
+    #38883e 1.53%,
+    #398a3f 11.36%,
+    #4aa148 21.19%,
+    #51ab47 31.03%,
+    #3f9439 40.86%,
+    #3e9238 50.7%,
+    #409539 60.53%,
+    #54b04a 70.37%,
+    #4aa148 80.2%,
+    #398a3f 90.04%,
+    #38883e 99.87%
+  );
+  --font-bold: 700;
+  --font-regular: 500;
+  --font-light: 400;
+  --font-thin: 300;
+}
+
+body {
+  background-color: var(--black);
+  font-family: "Roboto", sans-serif;
+  font-size: 1em;
+  font-weight: var(--font-regular);
+  line-height: 1.5em;
+  color: var(--white);
+  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.body {
+  background-color: var(--black);
+  background-image: url(./Assets-imgs/ban-gonegirl.png);
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  min-height: 100vh;
+}
+
+body.login-page {
+  background: linear-gradient(to bottom right, #3e9238, #000) bottom right / 50%
+      50% no-repeat,
+    linear-gradient(to bottom left, #3e9238, #000) bottom left / 50% 50%
+      no-repeat,
+    linear-gradient(to top left, #3e9238, #000) top left / 50% 50% no-repeat,
+    linear-gradient(to top right, #3e9238, #000) top right / 50% 50% no-repeat;
+  background-color: #000;
+}

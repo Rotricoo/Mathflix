@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Mathflix</title>
+    <link rel="icon" href="Assets-icons/mathflix-icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="reset.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles/login.css">
+    <!-- Highlight: JavaScript script para funcionalidade de login -->
+    <script>
+        function validateLogin(event) {
+            event.preventDefault(); // Prevenir comportamento padrão do formulário
+
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            const validUsername = "teteu"; // Usuário válido
+            const validPassword = "digo"; // Senha válida
+
+            if (username === validUsername && password === validPassword) {
+                window.location.href = "index.html"; // Redirecionar para a página inicial
+            } else {
+                const errorMessage = document.getElementById("error-message");
+                errorMessage.textContent = "Invalid username or password.";
+            }
+        }
+    </script>
+</head>
+<body class="login-page">
+
+    <section class="login">
+        <img class="login__icon" src="Assets-icons/mathflix-icon-white.svg" alt="Mathflix Logo">
+        
+        <!-- Alteração: Adicionado o evento onsubmit para chamar a função validateLogin -->
+        <form class="login__form" onsubmit="validateLogin(event)">
+            <div id="error-message" class="error" style="color: red; text-align: center; margin-bottom: 1em;"></div>
+
+        <form class="login__form">
+            <div class="login__field">
+                <label class="login__label" for="username">Username</label>
+                <input class="login__input" type="text" id="username" name="username" placeholder="Enter your username">
+            </div>
+            
+            <div class="login__field">
+                <label class="login__label" for="password">Password</label>
+                <input class="login__input" type="password" id="password" name="password" placeholder="Enter your password">
+            </div>
+            
+            <div class="login__subtext-group">
+                <div class="login__checkbox">
+                    <input type="checkbox" id="remember-me" name="remember-me">
+                    <label for="remember-me">Remember me</label>
+                </div>
+                <a class="login__forgot" href="#">Forget password?</a>
+            </div>
+            
+            <button class="login__button" type="submit">Login</button>
+        </form>
+    </section>
+    
+    <section class="login__footer">
+            <p class="login__subtext">New user?</p>
+            <button class="login__button login__button-secondary">Sign up here</button>
+    </section>
+    
+</body>
+</html>
