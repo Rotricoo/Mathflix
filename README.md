@@ -39,10 +39,10 @@ This project challenged me to push beyond the initial requirements of the challe
  
  ## <strong>Technologies Used</strong>
  <ul>
- <li> HTML5 for the structure of the website.</li>
+	<li>Visual Studio Code as the development environment.</li>
+	<li> HTML5 for the structure of the website.</li>
 	<li>CSS3 for styling and layout design.</li>
 	<li>JavaScript for basic interactivity and login functionality.</li>
-	<li>Visual Studio Code as the development environment.</li>
  </ul>
 
  <hr>
