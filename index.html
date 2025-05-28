@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MathFlix</title>
+    <link rel="icon" href="assets/icons/mathflix-icon.png" type="image/x-icon" />
+    <link rel="stylesheet" href="styles/reset.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+    <link rel="stylesheet" href="styles/styles-base.css" />
+    <link rel="stylesheet" href="styles/main-sections.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glider-js@1/glider.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4/dist/css/splide.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/glider-js@1/glider.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4/dist/js/splide.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide-extension-auto-scroll@0/dist/js/splide-extension-auto-scroll.min.js"></script>
+    <script src="scripts/script.js" defer></script>
+    <script src="scripts/movies.js" defer></script>
+  </head>
+  <body class="body">
+    <div id="background"></div>
+    <main id="main-content">
+      <!-- HEADER SECTION -->
+      <header class="header">
+        <div class="header__logo">
+          <img src="assets/icons/mathflix-logo.svg" alt="Mathflix Logo" />
+        </div>
+        <nav aria-label="Main navigation">
+          <ul class="header__nav">
+            <li class="header__nav-tittle header__nav-tittle--active">
+              <a href="index.html">Home</a>
+            </li>
+            <li class="header__nav-tittle"><a href="#">Series</a></li>
+            <li class="header__nav-tittle"><a href="#">Movies</a></li>
+          </ul>
+        </nav>
+        <div class="header__icons">
+          <div class="header__icon-button">
+            <button id="search-btn" aria-label="Open search" title="Search">
+              <svg class="icon-search" viewBox="0 0 24 24">
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
+            </button>
+          </div>
+          <div class="header__icon-button">
+            <button id="notification-btn" aria-label="Notifications" title="Notifications">
+              <svg class="icon-notification" viewBox="0 0 24 24">
+                <path d="M18 16v-5a6 6 0 0 0-12 0v5" />
+                <rect x="6" y="16" width="12" height="2" rx="1" />
+                <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+              </svg>
+            </button>
+          </div>
+          <div
+            class="header__icon-user"
+            id="profile-menu-toggle"
+            tabindex="0"
+            aria-label="Open profile menu"
+            aria-haspopup="true"
+            aria-expanded="false"
+            title="Profile menu"
+          >
+            <a href="#">
+              <img src="assets/icons/mathflix-icon.svg" alt="Mathflix icon" />
+            </a>
+          </div>
+        </div>
+        <!-- Profile dropdown menu -->
+        <div id="profile-menu" class="profile-menu" style="display: none">
+          <ul>
+            <li><a href="#">Profile</a></li>
+            <li><a href="login.html">Logout</a></li>
+          </ul>
+        </div>
+        <!-- Search modal -->
+        <div id="search-modal" class="search-modal" style="display: none">
+          <div class="search-modal__backdrop"></div>
+          <div class="search-modal__content">
+            <button id="search-close" aria-label="Close search">&times;</button>
+            <input type="text" id="search-input" placeholder="What are you looking for?" />
+            <button id="search-submit">Search</button>
+            <div id="search-result" class="search-result"></div>
+          </div>
+        </div>
+        <!-- Notification modal -->
+        <div id="notification-modal" class="search-modal" style="display: none">
+          <div class="search-modal__backdrop"></div>
+          <div class="search-modal__content">
+            <button id="notification-close" aria-label="Close notifications">&times;</button>
+            <div id="notification-result" class="search-result">
+              <div>No notifications for you, Math! 🍿</div>
+              <button id="random-movie-btn" class="random-movie-btn">Surprise Me!</button>
+            </div>
+          </div>
+        </div>
+        <!-- Coming soon modal -->
+        <div id="coming-soon-modal" class="search-modal" style="display: none">
+          <div class="search-modal__backdrop"></div>
+          <div class="search-modal__content">
+            <button id="coming-soon-close" aria-label="Close">&times;</button>
+            <div class="search-result">
+              Oops! This feature is coming soon.<br />
+              Maybe try again after a popcorn break 🍿😄
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- HERO SECTION -->
+      <section class="hero">
+        <div class="hero-content">
+          <div class="hero__icon-container">
+            <img class="hero__icon" src="assets/icons/mathflix-icon.svg" alt="Mathflix icon" />
+            <h3 class="hero__icon-text">Movie</h3>
+          </div>
+          <h1 class="hero__title">GONE GIRL</h1>
+          <p class="hero__text">
+            Between false leads, buried secrets, and a truth that was always an illusion, Nick and Amy play a deadly game where no
+            one is who they seem to be.
+          </p>
+          <p class="hero__text hero__text-bold">In the end, the question remains: who really disappeared?</p>
+          <div class="hero__button">
+            <button class="hero__button-group hero__see-details-btn" data-movie="arrival">See details</button>
+            <button class="hero__button-group hero__button--secondary" id="spoiler-btn">Spoiler</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- =========================
+           === CAROUSELS         ===
+           ========================= -->
+
+      <!-- TOP 10 CAROUSEL -->
+      <div class="gallery__container top10">
+        <h2 class="gallery__title">MATH TOP 10</h2>
+        <div class="splide splide-top10">
+          <div class="splide__track">
+            <ul class="splide__list">
+              <!-- Adicione os filmes do Top 10 aqui, exemplo: -->
+              <li class="splide__slide">
+                <img
+                  class="gallery__thumbnail open-movie-modal"
+                  src="assets/imgs/ban-arrival.png"
+                  alt="Arrival"
+                  data-movie="arrival"
+                />
+              </li>
+              <li class="splide__slide">
+                <img
+                  class="gallery__thumbnail open-movie-modal"
+                  src="assets/imgs/ban-abouttime.png"
+                  alt="About Time"
+                  data-movie="abouttime"
+                />
+              </li>
+              <li class="splide__slide">
+                <img
+                  class="gallery__thumbnail open-movie-modal"
+                  src="assets/imgs/ban-hojequerovoltarsozinho.png"
+                  alt="Hoje Quero Voltar Sozinho"
+                  data-movie="hojequerovoltarsozinho"
+                />
+              </li>
+              <li class="splide__slide">
+                <img
+                  class="gallery__thumbnail open-movie-modal"
+                  src="assets/imgs/ban-origins.png"
+                  alt="Origins"
+                  data-movie="origins"
+                />
+              </li>
+              <li class="splide__slide">
+                <img
+                  class="gallery__thumbnail open-movie-modal"
+                  src="assets/imgs/ban-lastchristmas.png"
+                  alt="Last Christmas"
+                  data-movie="lastchristmas"
+                />
+              </li>
+              <li class="splide__slide">
+                <img
+                  class="gallery__thumbnail open-movie-modal"
+                  src="assets/imgs/ban-ghoststory.png"
+                  alt="A Ghost Story"
+                  data-movie="ghoststory"
+                />
+              </li>
+              <li class="splide__slide">
+                <img
+                  class="gallery__thumbnail open-movie-modal"
+                  src="assets/imgs/ban-perksofbeing.png"
+                  alt="Perks of Being a Wallflower"
+                  data-movie="perksofbeing"
+                />
+              </li>
+              <li class="splide__slide">
+                <img
+                  class="gallery__thumbnail open-movie-modal"
+                  src="assets/imgs/ban-bridesmaids.png"
+                  alt="Bridesmaids"
+                  data-movie="bridesmaids"
+                />
+              </li>
+              <li class="splide__slide">
+                <img
+                  class="gallery__thumbnail open-movie-modal"
+                  src="assets/imgs/ban-beforesunrise.png"
+                  alt="Before Sunrise"
+                  data-movie="beforesunrise"
+                />
+              </li>
+              <li class="splide__slide">
+                <img class="gallery__thumbnail open-movie-modal" src="assets/imgs/ban-her.png" alt="Her" data-movie="her" />
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- VERTICAL CAROUSEL -->
+      <div class="gallery__container-vertical">
+        <h2 class="gallery__title">For Sleepless Nights</h2>
+        <div class="splide splide-vertical">
+          <div class="splide__track">
+            <ul class="splide__list">
+              <li class="splide__slide">
+                <img
+                  class="gallery__thumbnail-vertical open-movie-modal"
+                  src="assets/imgs/pos-screen.png"
+                  alt="Screen"
+                  data-movie="screen"
+                />
+              </li>
+              <li class="splide__slide">
+                <img
+                  class="gallery__thumbnail-vertical open-movie-modal"
+                  src="assets/imgs/pos-chucky.png"
+                  alt="Chucky"
+                  data-movie="chucky"
+                />
+              </li>
+              <li class="splide__slide">
+                <img
+                  class="gallery__thumbnail-vertical open-movie-modal"
+                  src="assets/imgs/pos-tifannychucky.png"
+                  alt="Tiffany & Chucky"
+                  data-movie="tifannychucky"
+                />
+              </li>
+              <li class="splide__slide">
+                <img
+                  class="gallery__thumbnail-vertical open-movie-modal"
+                  src="assets/imgs/pos-seedschucky.png"
+                  alt="Seed of Chucky"
+                  data-movie="seedschucky"
+                />
+              </li>
+              <li class="splide__slide">
+                <img
+                  class="gallery__thumbnail-vertical open-movie-modal"
+                  src="assets/imgs/pos-substance.png"
+                  alt="Substance"
+                  data-movie="substance"
+                />
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARROSSEL TO MAKE DIGO HAPPY -->
+      <div class="gallery__container series digo-happy">
+        <h2 class="gallery__title">To Make Digo Happy</h2>
+        <div class="splide splide-digohappy">
+          <div class="splide__track">
+            <ul class="splide__list">
+              <li class="splide__slide">
+                <img
+                  class="gallery__thumbnail open-movie-modal"
+                  src="assets/imgs/ban-marypoppins.png"
+                  alt="Mary Poppins Returns"
+                  data-movie="marypoppins"
+                />
+              </li>
+              <li class="splide__slide">
+                <img
+                  class="gallery__thumbnail open-movie-modal"
+                  src="assets/imgs/ban-ralphbreaks.png"
+                  alt="Ralph Breaks the Internet"
+                  data-movie="ralphbreaks"
+                />
+              </li>
+              <li class="splide__slide">
+                <img
+                  class="gallery__thumbnail open-movie-modal"
+                  src="assets/imgs/ban-greatestshowman.png"
+                  alt="The Greatest Showman"
+                  data-movie="greatestshowman"
+                />
+              </li>
+              <li class="splide__slide">
+                <img
+                  class="gallery__thumbnail open-movie-modal"
+                  src="assets/imgs/ban-avangers.png"
+                  alt="Avengers: Endgame"
+                  data-movie="avangers"
+                />
+              </li>
+              <li class="splide__slide">
+                <img
+                  class="gallery__thumbnail open-movie-modal"
+                  src="assets/imgs/ban-hocuspocus.png"
+                  alt="Hocus Pocus"
+                  data-movie="hocuspocus"
+                />
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARROSSEL DE SÉRIES -->
+      <div class="gallery__container series">
+        <h2 class="gallery__title">Séries para Maratonar</h2>
+        <div class="splide splide-series">
+          <div class="splide__track">
+            <ul class="splide__list">
+              <li class="splide__slide">
+                <img
+                  class="gallery__thumbnail open-movie-modal"
+                  src="assets/imgs/ban-simpsons.png"
+                  alt="Simpsons"
+                  data-movie="simpsons"
+                />
+              </li>
+              <li class="splide__slide">
+                <img
+                  class="gallery__thumbnail open-movie-modal"
+                  src="assets/imgs/ban-howmetyour.png"
+                  alt="How I Met Your Mother"
+                  data-movie="howmetyour"
+                />
+              </li>
+              <li class="splide__slide">
+                <img
+                  class="gallery__thumbnail open-movie-modal"
+                  src="assets/imgs/ban-agatha.png"
+                  alt="Agatha"
+                  data-movie="agatha"
+                />
+              </li>
+              <li class="splide__slide">
+                <img
+                  class="gallery__thumbnail open-movie-modal"
+                  src="assets/imgs/ban-wandavision.png"
+                  alt="WandaVision"
+                  data-movie="wandavision"
+                />
+              </li>
+              <li class="splide__slide">
+                <img
+                  class="gallery__thumbnail open-movie-modal"
+                  src="assets/imgs/ban-theoffice.png"
+                  alt="The Office"
+                  data-movie="theoffice"
+                />
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- MARATONA: HUNGER GAMES -->
+      <div class="gallery__container marathon-section">
+        <div class="marathon-info">
+          <span class="marathon-label">Marathon</span>
+          <h2 class="marathon-title">The Hunger Games</h2>
+        </div>
+        <div class="marathon-carousel">
+          <div class="splide splide-hungergames">
+            <div class="splide__track">
+              <ul class="splide__list">
+                <li class="splide__slide">
+                  <img
+                    class="gallery__thumbnail open-movie-modal"
+                    src="assets/imgs/Marathon/Hunger-games/hungergames.png"
+                    alt="The Hunger Games"
+                    data-movie="hungergames"
+                  />
+                </li>
+                <li class="splide__slide">
+                  <img
+                    class="gallery__thumbnail open-movie-modal"
+                    src="assets/imgs/Marathon/Hunger-games/catchingfire.png"
+                    alt="Catching Fire"
+                    data-movie="catchingfire"
+                  />
+                </li>
+                <li class="splide__slide">
+                  <img
+                    class="gallery__thumbnail open-movie-modal"
+                    src="assets/imgs/Marathon/Hunger-games/mockingjay1.png"
+                    alt="Mockingjay Part 1"
+                    data-movie="mockingjay1"
+                  />
+                </li>
+                <li class="splide__slide">
+                  <img
+                    class="gallery__thumbnail open-movie-modal"
+                    src="assets/imgs/Marathon/Hunger-games/mockingjay2.png"
+                    alt="Mockingjay Part 2"
+                    data-movie="mockingjay2"
+                  />
+                </li>
+                <li class="splide__slide">
+                  <img
+                    class="gallery__thumbnail open-movie-modal"
+                    src="assets/imgs/Marathon/Hunger-games/BalladOfSongbirds&Snakes.png"
+                    alt="The Ballad of Songbirds & Snakes"
+                    data-movie="BalladOfSongbirds&Snakes"
+                  />
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MARATONA: HARRY POTTER -->
+      <div class="gallery__container marathon-section">
+        <div class="marathon-info">
+          <span class="marathon-label">Marathon</span>
+          <h2 class="marathon-title">Harry Potter</h2>
+        </div>
+        <div class="marathon-carousel">
+          <div class="splide splide-harrypotter">
+            <div class="splide__track">
+              <ul class="splide__list">
+                <li class="splide__slide">
+                  <img
+                    class="gallery__thumbnail open-movie-modal"
+                    src="assets/imgs/Marathon/HarryPotter/harrypotter1.png"
+                    alt="Harry Potter and the Sorcerer's Stone"
+                    data-movie="harrypotter1"
+                  />
+                </li>
+                <li class="splide__slide">
+                  <img
+                    class="gallery__thumbnail open-movie-modal"
+                    src="assets/imgs/Marathon/HarryPotter/harrypotter2.png"
+                    alt="Harry Potter and the Chamber of Secrets"
+                    data-movie="harrypotter2"
+                  />
+                </li>
+                <li class="splide__slide">
+                  <img
+                    class="gallery__thumbnail open-movie-modal"
+                    src="assets/imgs/Marathon/HarryPotter/harrypotter3.png"
+                    alt="Harry Potter and the Prisoner of Azkaban"
+                    data-movie="harrypotter3"
+                  />
+                </li>
+                <li class="splide__slide">
+                  <img
+                    class="gallery__thumbnail open-movie-modal"
+                    src="assets/imgs/Marathon/HarryPotter/harrypotter4.png"
+                    alt="Harry Potter and the Goblet of Fire"
+                    data-movie="harrypotter4"
+                  />
+                </li>
+                <li class="splide__slide">
+                  <img
+                    class="gallery__thumbnail open-movie-modal"
+                    src="assets/imgs/Marathon/HarryPotter/harrypotter5.png"
+                    alt="Harry Potter and the Order of the Phoenix"
+                    data-movie="harrypotter5"
+                  />
+                </li>
+                <li class="splide__slide">
+                  <img
+                    class="gallery__thumbnail open-movie-modal"
+                    src="assets/imgs/Marathon/HarryPotter/harrypotter6.png"
+                    alt="Harry Potter and the Half-Blood Prince"
+                    data-movie="harrypotter6"
+                  />
+                </li>
+                <li class="splide__slide">
+                  <img
+                    class="gallery__thumbnail open-movie-modal"
+                    src="assets/imgs/Marathon/HarryPotter/harrypotter7.png"
+                    alt="Harry Potter and the Deathly Hallows – Part 1"
+                    data-movie="harrypotter7"
+                  />
+                </li>
+                <li class="splide__slide">
+                  <img
+                    class="gallery__thumbnail open-movie-modal"
+                    src="assets/imgs/Marathon/HarryPotter/harrypotter8.png"
+                    alt="Harry Potter and the Deathly Hallows – Part 2"
+                    data-movie="harrypotter8"
+                  />
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MARATONA: ALIEN -->
+      <div class="gallery__container marathon-section">
+        <div class="marathon-info">
+          <span class="marathon-label">Marathon</span>
+          <h2 class="marathon-title">Alien</h2>
+        </div>
+        <div class="marathon-carousel">
+          <div class="splide splide-alien">
+            <div class="splide__track">
+              <ul class="splide__list">
+                <li class="splide__slide">
+                  <img
+                    class="gallery__thumbnail open-movie-modal"
+                    src="assets/imgs/Marathon/Alien/alien1.png"
+                    alt="Alien (1979)"
+                    data-movie="alien1"
+                  />
+                </li>
+                <li class="splide__slide">
+                  <img
+                    class="gallery__thumbnail open-movie-modal"
+                    src="assets/imgs/Marathon/Alien/alien2.png"
+                    alt="Aliens (1986)"
+                    data-movie="alien2"
+                  />
+                </li>
+                <li class="splide__slide">
+                  <img
+                    class="gallery__thumbnail open-movie-modal"
+                    src="assets/imgs/Marathon/Alien/alien3.png"
+                    alt="Alien 3 (1992)"
+                    data-movie="alien3"
+                  />
+                </li>
+                <li class="splide__slide">
+                  <img
+                    class="gallery__thumbnail open-movie-modal"
+                    src="assets/imgs/Marathon/Alien/alien4.png"
+                    alt="Alien: Resurrection (1997)"
+                    data-movie="alien4"
+                  />
+                </li>
+                <li class="splide__slide">
+                  <img
+                    class="gallery__thumbnail open-movie-modal"
+                    src="assets/imgs/Marathon/Alien/prometheus.png"
+                    alt="Prometheus (2012)"
+                    data-movie="prometheus"
+                  />
+                </li>
+                <li class="splide__slide">
+                  <img
+                    class="gallery__thumbnail open-movie-modal"
+                    src="assets/imgs/Marathon/Alien/covenant.png"
+                    alt="Alien: Covenant (2017)"
+                    data-movie="covenant"
+                  />
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MARATONA: TOY STORY -->
+      <div class="gallery__container marathon-section">
+        <div class="marathon-info">
+          <span class="marathon-label">Marathon</span>
+          <h2 class="marathon-title">Toy Story</h2>
+        </div>
+        <div class="marathon-carousel">
+          <div class="splide splide-toystory">
+            <div class="splide__track">
+              <ul class="splide__list">
+                <li class="splide__slide">
+                  <img
+                    class="gallery__thumbnail open-movie-modal"
+                    src="assets/imgs/Marathon/ToyStory/toystory1.png"
+                    alt="Toy Story"
+                    data-movie="toystory1"
+                  />
+                </li>
+                <li class="splide__slide">
+                  <img
+                    class="gallery__thumbnail open-movie-modal"
+                    src="assets/imgs/Marathon/ToyStory/toystory2.png"
+                    alt="Toy Story 2"
+                    data-movie="toystory2"
+                  />
+                </li>
+                <li class="splide__slide">
+                  <img
+                    class="gallery__thumbnail open-movie-modal"
+                    src="assets/imgs/Marathon/ToyStory/toystory3.png"
+                    alt="Toy Story 3"
+                    data-movie="toystory3"
+                  />
+                </li>
+                <li class="splide__slide">
+                  <img
+                    class="gallery__thumbnail open-movie-modal"
+                    src="assets/imgs/Marathon/ToyStory/toystory4.png"
+                    alt="Toy Story 4"
+                    data-movie="toystory4"
+                  />
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MARATONA: X-MEN -->
+      <div class="gallery__container marathon-section">
+        <div class="marathon-info">
+          <span class="marathon-label">Marathon</span>
+          <h2 class="marathon-title">X-Men</h2>
+        </div>
+        <div class="marathon-carousel">
+          <div class="splide splide-xmen">
+            <div class="splide__track">
+              <ul class="splide__list">
+                <li class="splide__slide">
+                  <img
+                    class="gallery__thumbnail open-movie-modal"
+                    src="assets/imgs/Marathon/Xmen/xmen1.png"
+                    alt="X-Men (2000)"
+                    data-movie="xmen1"
+                  />
+                </li>
+                <li class="splide__slide">
+                  <img
+                    class="gallery__thumbnail open-movie-modal"
+                    src="assets/imgs/Marathon/Xmen/xmen2.png"
+                    alt="X2: X-Men United (2003)"
+                    data-movie="xmen2"
+                  />
+                </li>
+                <li class="splide__slide">
+                  <img
+                    class="gallery__thumbnail open-movie-modal"
+                    src="assets/imgs/Marathon/Xmen/xmen3.png"
+                    alt="X-Men: The Last Stand (2006)"
+                    data-movie="xmen3"
+                  />
+                </li>
+                <li class="splide__slide">
+                  <img
+                    class="gallery__thumbnail open-movie-modal"
+                    src="assets/imgs/Marathon/Xmen/xmen4.png"
+                    alt="X-Men Origins: Wolverine (2009)"
+                    data-movie="xmen4"
+                  />
+                </li>
+                <li class="splide__slide">
+                  <img
+                    class="gallery__thumbnail open-movie-modal"
+                    src="assets/imgs/Marathon/Xmen/xmen5.png"
+                    alt="X-Men: First Class (2011)"
+                    data-movie="xmen5"
+                  />
+                </li>
+                <li class="splide__slide">
+                  <img
+                    class="gallery__thumbnail open-movie-modal"
+                    src="assets/imgs/Marathon/Xmen/xmen6.png"
+                    alt="The Wolverine (2013)"
+                    data-movie="xmen6"
+                  />
+                </li>
+                <li class="splide__slide">
+                  <img
+                    class="gallery__thumbnail open-movie-modal"
+                    src="assets/imgs/Marathon/Xmen/xmen7.png"
+                    alt="X-Men: Days of Future Past (2014)"
+                    data-movie="xmen7"
+                  />
+                </li>
+                <li class="splide__slide">
+                  <img
+                    class="gallery__thumbnail open-movie-modal"
+                    src="assets/imgs/Marathon/Xmen/xmen8.png"
+                    alt="X-Men: Apocalypse (2016)"
+                    data-movie="xmen8"
+                  />
+                </li>
+                <li class="splide__slide">
+                  <img
+                    class="gallery__thumbnail open-movie-modal"
+                    src="assets/imgs/Marathon/Xmen/xmen9.png"
+                    alt="Logan (2017)"
+                    data-movie="xmen9"
+                  />
+                </li>
+                <li class="splide__slide">
+                  <img
+                    class="gallery__thumbnail open-movie-modal"
+                    src="assets/imgs/Marathon/Xmen/xmen10.png"
+                    alt="X-Men: Dark Phoenix (2019)"
+                    data-movie="xmen10"
+                  />
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- MOVIE MODAL -->
+    <div id="movie-modal" class="movie-modal" style="display: none">
+      <div class="movie-modal__backdrop"></div>
+      <div class="movie-modal__content">
+        <button class="movie-modal__close" aria-label="Close">&times;</button>
+        <div class="movie-modal__info">
+          <!-- LEFT: Info -->
+          <div class="movie-modal__details">
+            <h2 id="movie-modal-title"></h2>
+            <p id="movie-modal-description"></p>
+            <ul id="movie-modal-meta"></ul>
+            <div id="movie-modal-ranking" class="movie-modal__ranking"></div>
+          </div>
+          <!-- RIGHT: Poster+trailer for verticals -->
+          <div class="movie-modal__media-vertical" style="display: none">
+            <div id="vertical-media-container">
+              <img id="vertical-modal-poster" src="" alt="Poster" class="movie-modal__poster-vertical" />
+              <iframe
+                id="vertical-modal-trailer"
+                width="220"
+                height="330"
+                src=""
+                frameborder="0"
+                allowfullscreen
+                style="display: none"
+              ></iframe>
+            </div>
+            <button id="toggle-vertical-media" class="movie-modal__toggle-btn">See Trailer</button>
+          </div>
+          <!-- RIGHT: Poster+trailer for normal -->
+          <div class="movie-modal__media">
+            <img id="movie-modal-poster" src="" alt="Poster" class="movie-modal__poster" />
+            <div class="movie-modal__trailer">
+              <iframe id="movie-modal-trailer" width="320" height="180" src="" frameborder="0" allowfullscreen></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER SECTION -->
+    <footer class="footer">
+      <div class="footer__container">
+        <div class="footer__logo">
+          <img src="assets/icons/mathflix-logo.svg" alt="Mathflix Logo" />
+        </div>
+        <nav class="footer__nav">
+          <a href="#">Home</a>
+          <a href="#">Series</a>
+          <a href="#">Movies</a>
+        </nav>
+        <div class="footer__social">
+          <!-- Instagram -->
+          <a href="https://www.instagram.com/rotrico/" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+              <rect width="24" height="24" rx="6" fill="#181818" />
+              <path d="M12 7.2A4.8 4.8 0 1 0 12 16.8A4.8 4.8 0 1 0 12 7.2Z" stroke="#fff" stroke-width="1.5" />
+              <circle cx="17.5" cy="6.5" r="1.2" fill="#fff" />
+              <rect x="3" y="3" width="18" height="18" rx="5" stroke="#fff" stroke-width="1.5" />
+            </svg>
+          </a>
+          <!-- LinkedIn -->
+          <a href="https://www.linkedin.com/in/rotrico/" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+              <rect x="1" y="1" width="22" height="22" rx="6" fill="#181818" stroke="#fff" stroke-width="0.5" />
+              <path d="M7.75 9.5V16.25" stroke="#fff" stroke-width="1.5" stroke-linecap="round" />
+              <circle cx="7.75" cy="7.25" r="1.25" fill="#fff" />
+              <path d="M11.25 12.5V16.25" stroke="#fff" stroke-width="1" stroke-linecap="round" />
+              <path
+                d="M11.25 13.75C11.25 12.5074 12.2574 11.5 13.5 11.5C14.7426 11.5 15.75 12.5074 15.75 13.75V16.25"
+                stroke="#fff"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              />
+            </svg>
+          </a>
+          <!-- Behance -->
+          <a href="https://www.behance.net/rotrico" aria-label="Behance" target="_blank" rel="noopener noreferrer">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+              <rect x="1" y="1" width="22" height="22" rx="6" fill="#181818" stroke="#fff" stroke-width="1" />
+              <path
+                d="M7.5 10.5H10C11.1046 10.5 12 11.3954 12 12.5C12 13.6046 11.1046 14.5 10 14.5H7.5V10.5ZM7.5 10.5V14.5M16.5 12.5C16.5 11.3954 15.6046 10.5 14.5 10.5C13.3954 10.5 12.5 11.3954 12.5 12.5C12.5 13.6046 13.3954 14.5 14.5 14.5C15.6046 14.5 16.5 13.6046 16.5 12.5ZM13 9.5H16"
+                stroke="#fff"
+                stroke-width="1.2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </a>
+          <!-- GitHub -->
+          <a href="https://github.com/Rotricoo" aria-label="GitHub" target="_blank" rel="noopener noreferrer">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+              <rect width="24" height="24" rx="6" fill="#181818" />
+              <path
+                d="M12 2C6.48 2 2 6.58 2 12.26c0 4.5 2.87 8.32 6.84 9.67.5.09.68-.22.68-.48 0-.24-.01-.87-.01-1.7-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.1-1.5-1.1-1.5-.9-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.3.1-2.7 0 0 .84-.28 2.75 1.05A9.38 9.38 0 0112 6.84c.85.004 1.7.12 2.5.35 1.9-1.33 2.74-1.05 2.74-1.05.55 1.4.2 2.44.1 2.7.64.72 1.03 1.64 1.03 2.76 0 3.94-2.34 4.8-4.57 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.8 0 .26.18.58.69.48A10.01 10.01 0 0022 12.26C22 6.58 17.52 2 12 2z"
+                fill="#fff"
+              />
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer__copy">&copy; 2025 Mathflix. All rights reserved.</div>
+    </footer>
+
+    <!-- COMMENT POPUP -->
+    <div id="comment-popup" class="custom-popup" style="display: none">
+      <div class="custom-popup__content">
+        <span id="comment-popup-label"></span>
+        <textarea
+          id="comment-popup-input"
+          maxlength="300"
+          rows="4"
+          style="width: 100%; margin-top: 1em; border-radius: 8px; padding: 0.7em; font-size: 1.1em"
+        ></textarea>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5em">
+          <span id="comment-popup-count" style="font-size: 0.95em; color: #888">0/300</span>
+          <div>
+            <button id="comment-popup-cancel" class="login__button" style="margin-right: 0.7em; background: #bbb; color: #222">
+              Cancel
+            </button>
+            <button id="comment-popup-save" class="login__button">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

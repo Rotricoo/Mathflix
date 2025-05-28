@@ -1,0 +1,288 @@
+/* =========================
+   === PAGE BACKGROUND ===
+   ========================= */
+body.login-page {
+  font-size: 62.5%; /* 1rem = 10px for easier rem calculations */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(120deg, #4aa042, #000000, #277028, #000000);
+  background-size: 200% 200%;
+  animation: gradientMove 10s ease-in-out infinite alternate;
+}
+
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+/* =========================
+   === LOGIN CONTAINER ===
+   ========================= */
+.login {
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 3rem 4rem;
+  border-radius: 3rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  max-width: 35rem;
+  width: 100%;
+  overflow: visible;
+  opacity: 0;
+  transform: scale(1.4);
+  transform-origin: center center;
+  transition: opacity 0.7s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+/* === LOGIN CONTAINER VISIBLE ANIMATION === */
+.login.login--visible {
+  opacity: 1;
+  transform: scale(1.4);
+}
+
+/* =========================
+   === LOGO ANIMATION ===
+   ========================= */
+.login__icon {
+  position: absolute;
+  top: -3rem;
+  padding: 0.5rem;
+  width: 5rem;
+  height: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: rotating 1s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+.login__icon:hover {
+  animation: rotating2 2s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+@keyframes rotating {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes rotating2 {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+
+/* =========================
+   === LOGIN FORM ===
+   ========================= */
+.login__form {
+  width: 100%;
+}
+
+/* === FORM FIELD GROUP === */
+.login__field {
+  text-align: left;
+  position: relative;
+  margin-bottom: 1.5rem; /* Increased spacing between fields */
+}
+
+/* === INPUTS (TEXT, PASSWORD, EMAIL) === */
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+  all: unset;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.5rem;
+  border: 2px solid var(--green-dark);
+  border-radius: 5rem;
+  background-color: var(--white);
+  color: var(--green-dark);
+  outline: none;
+  min-height: 2.5rem;
+}
+
+/* === INPUT FOCUS STATE === */
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus {
+  border-color: var(--green-light);
+  box-shadow: 0 0 5px var(--green-light);
+}
+
+/* === INPUT FEEDBACK (ERROR & SUCCESS) === */
+.login__input.error {
+  border-color: #e74c3c;
+  box-shadow: 0 0 5px #e74c3c;
+}
+.login__input.success {
+  border-color: #27ae60;
+  box-shadow: 0 0 5px #27ae60;
+}
+
+/* === ERROR MESSAGE === */
+#error-message {
+  font-size: 1.2rem;
+  margin-top: 0.7rem;
+  margin-bottom: 1.5rem;
+  white-space: pre-line;
+  color: #e91a03;
+  font-weight: bold;
+}
+
+/* =========================
+   === SUBTEXT & CHECKBOX ===
+   ========================= */
+.login__subtext-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1rem;
+  margin-top: 1rem;
+  width: 100%;
+}
+.login__checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+/* =========================
+   === BUTTONS ===
+   ========================= */
+button,
+.login__button {
+  all: unset;
+  display: inline-block;
+  cursor: pointer;
+  padding: 0.5rem 2rem;
+  margin-top: 1rem;
+  font-size: 1.3rem;
+  border: 2px solid var(--white);
+  border-radius: 5rem;
+  transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+}
+button:hover,
+.login__button:hover {
+  background: var(--green-gradient-buttons);
+  color: var(--white);
+  box-shadow: 0 0 16px var(--green-lighter), 0 2px 8px #0004;
+}
+
+/* === SECONDARY BUTTON (SIGN UP, ETC) === */
+.login__button-secondary {
+  background-color: var(--white);
+  border: 2px solid var(--green-dark);
+  color: var(--green-dark);
+  padding: 1rem 2rem;
+  margin: 0;
+  font-size: 1.5rem;
+}
+.login__button-secondary:hover {
+  background-color: var(--white-80);
+}
+
+/* =========================
+   === FOOTER SECTION ===
+   ========================= */
+.login__footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-top: 7rem;
+}
+.login__subtext {
+  font-size: 1.3rem;
+  color: var(--white);
+  margin-bottom: 0.5rem;
+}
+.login__footer-text {
+  margin-bottom: 0.5rem;
+  font-size: 1.3rem;
+}
+.login__signup {
+  display: flex;
+  justify-content: center;
+}
+
+/* =========================
+   === SHOW/HIDE PASSWORD ICON ===
+   ========================= */
+.eye-icon {
+  position: absolute;
+  right: 3.5rem;
+  top: 2rem;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  z-index: 2;
+}
+.eye-icon svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+/* =========================
+   === CUSTOM POPUP ===
+   ========================= */
+.custom-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.custom-popup__content {
+  background: #222;
+  color: #fff;
+  padding: 2rem 2.5rem;
+  border-radius: 1rem;
+  text-align: center;
+  min-width: 220px;
+  box-shadow: 0 4px 24px #0008;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+#custom-popup-message {
+  font-size: 2rem;
+  line-height: 1.5;
+  white-space: pre-line;
+  word-break: break-word;
+}
+
+/* =========================
+   === RESPONSIVE DESIGN ===
+   ========================= */
+@media (max-width: 768px) {
+  body.login-page {
+    font-size: 0.7rem;
+  }
+  .login {
+    max-width: 200px;
+    width: 100vh;
+  }
+}

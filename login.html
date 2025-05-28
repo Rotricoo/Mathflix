@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MathFlix</title>
+    <link rel="icon" href="assets/icons/mathflix-icon.png" type="image/x-icon" />
+    <link rel="stylesheet" href="styles/reset.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+    <link rel="stylesheet" href="styles/styles-base.css" />
+    <link rel="stylesheet" href="styles/login.css" />
+    <link rel="stylesheet" href="/styles/main-sections.css" />
+    <script src="scripts/login.js" defer></script>
+  </head>
+  <body class="login-page">
+    <!-- =========================
+         === LOGIN CONTAINER ===
+         ========================= -->
+    <section class="login">
+      <img class="login__icon" src="/assets/icons/mathflix-icon-white.svg" alt="Mathflix Logo" />
+
+      <form class="login__form" onsubmit="validateLogin(event)">
+        <div id="error-message" class="error"></div>
+        <div class="login__field">
+          <label class="login__label" for="username">Username</label>
+          <input class="login__input" type="text" id="username" name="username" placeholder="Enter your username" />
+        </div>
+        <div class="login__field" style="position: relative">
+          <label class="login__label" for="password">Password</label>
+          <input
+            class="login__input"
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Enter your password"
+            autocomplete="off"
+            autocorrect="off"
+            spellcheck="false"
+          />
+          <!-- Show/hide password button -->
+          <button type="button" id="toggle-password" class="eye-icon" aria-label="Show password">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#277028"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <ellipse cx="12" cy="12" rx="9" ry="5" />
+              <circle cx="12" cy="12" r="2" />
+            </svg>
+          </button>
+        </div>
+        <div class="login__subtext-group">
+          <div class="login__checkbox">
+            <input type="checkbox" id="remember-me" name="remember-me" />
+            <label for="remember-me">Remember me</label>
+          </div>
+          <a class="login__forgot" href="#">Forget password?</a>
+        </div>
+        <button class="login__button" type="submit">Login</button>
+      </form>
+      <!-- Spinner for loading state -->
+      <div id="login-spinner" style="display: none; margin: 1em auto">
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Loading...">
+          <g>
+            <circle cx="20" cy="20" r="18" stroke="#4aa042" stroke-width="4" opacity="0.2" />
+            <path d="M38 20a18 18 0 1 0-18 18" stroke="#4aa042" stroke-width="4">
+              <animateTransform
+                attributeName="transform"
+                type="rotate"
+                from="0 20 20"
+                to="360 20 20"
+                dur="1s"
+                repeatCount="indefinite"
+              />
+            </path>
+            <rect x="15" y="10" width="10" height="8" rx="2" fill="#4aa042" opacity="0.7" />
+            <rect x="17" y="6" width="6" height="4" rx="1" fill="#4aa042" opacity="0.7" />
+          </g>
+        </svg>
+      </div>
+    </section>
+
+    <!-- =========================
+         === LOGIN FOOTER ===
+         ========================= -->
+    <section class="login__footer">
+      <p class="login__subtext">New user?</p>
+      <button class="login__button login__button-secondary">Sign up here</button>
+    </section>
+
+    <!-- =========================
+         === CUSTOM POPUP ===
+         ========================= -->
+    <div id="custom-popup" class="custom-popup" style="display: none">
+      <div class="custom-popup__content">
+        <span id="custom-popup-message"></span>
+        <button id="custom-popup-close" class="login__button" style="margin-top: 1em">OK</button>
+      </div>
+    </div>
+  </body>
+</html>
