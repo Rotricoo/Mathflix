@@ -1,8 +1,11 @@
 /* =========================
    === PAGE BACKGROUND ===
    ========================= */
-body.login-page {
+html {
   font-size: 62.5%; /* 1rem = 10px for easier rem calculations */
+}
+
+body.login-page {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -274,15 +277,140 @@ button:hover,
   word-break: break-word;
 }
 
+#custom-popup-close {
+  font-size: 1.4rem !important;
+  padding: 1rem 4rem !important;
+  min-width: 0 !important;
+  width: auto !important;
+  border-radius: 2rem !important;
+  margin: 0 auto !important;
+  display: inline-block !important;
+}
+
 /* =========================
    === RESPONSIVE DESIGN ===
    ========================= */
-@media (max-width: 768px) {
+@media (min-width: 300px) and (max-width: 768px) {
   body.login-page {
     font-size: 0.7rem;
   }
   .login {
-    max-width: 200px;
-    width: 100vh;
+    max-width: 60vw;
+    padding: 2rem 0.7rem;
+  }
+  .login__icon {
+    animation: rotating 10s linear infinite;
+  }
+  .login__icon:hover {
+    animation: rotating 10s linear infinite;
+  }
+  #error-message {
+    font-size: 0.8rem;
+    line-height: 1.2;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+  .login__label {
+    font-size: 0.7rem;
+    margin-left: 1rem;
+    margin-bottom: 0.3rem;
+  }
+  .login__checkbox label,
+  .login__checkbox input,
+  .login__forgot {
+    font-size: 0.9rem;
+    transform: scale(0.9);
+    margin-top: -0.5rem;
+  }
+  .login__checkbox {
+    gap: 0.1rem;
+  }
+  .custom-popup {
+    width: auto;
+  }
+  .custom-popup__content {
+    width: 70vw !important;
+    max-width: 95vw !important;
+    box-sizing: border-box;
+    padding: 1.2rem 0.7rem;
+    font-size: 1.1rem;
+  }
+  #custom-popup-message {
+    font-size: 1.3rem;
+  }
+  #custom-popup-close {
+    font-size: 1.3rem !important;
+    padding: 0.8rem 4rem !important;
+  }
+}
+
+@media (min-width: 1800px) {
+  body.login-page {
+    font-size: 1.4rem;
+  }
+  .login {
+    margin-top: 10rem;
+    max-width: 60rem;
+    padding: 5rem 7rem;
+  }
+  .login__icon {
+    width: 8rem;
+    height: 8rem;
+    top: -4rem;
+  }
+  .login__icon svg {
+    margin-top: 1rem;
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+  #error-message {
+    font-size: 1.5rem;
+    line-height: 1.4;
+  }
+  .login__checkbox label,
+  .login__checkbox input,
+  .login__forgot {
+    font-size: 1.3rem;
+    margin-top: -0.2rem;
+  }
+  .login__label {
+    font-size: 1.5rem;
+    margin-left: 1rem;
+  }
+  input.login__input {
+    min-height: 3rem;
+    font-size: 1.5rem;
+    margin-top: 1rem;
+    padding: 1rem;
+  }
+  .login__button {
+    font-size: 1.5rem;
+    padding: 1rem 4rem;
+    margin-top: 2rem;
+  }
+  .custom-popup__content {
+    font-size: 1.5rem;
+    min-width: 350px;
+    max-width: 40vw;
+    padding: 3rem 4rem;
+  }
+  #custom-popup-message {
+    font-size: 2.5rem;
+    padding: 0 2rem;
+  }
+  #custom-popup-close {
+    font-size: 1.3rem;
+    padding: 0.7rem 2.5rem;
+  }
+  .login__footer {
+    margin-top: 10rem;
+  }
+  .login__subtext {
+    font-size: 2.5rem;
+  }
+  .login__button.login__button-secondary {
+    font-size: 2rem;
+    margin: 1rem;
+    padding: 1.5rem 3rem;
   }
 }

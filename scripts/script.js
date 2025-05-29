@@ -3,13 +3,7 @@
 // ==========================
 
 // --- Lista de filmes verticais ---
-const verticalMovies = [
-  "screen",
-  "chucky",
-  "tifannychucky",
-  "seedschucky",
-  "substance",
-];
+const verticalMovies = ["screen", "chucky", "tifannychucky", "seedschucky", "substance"];
 
 // --- Abrir modal de filme ao clicar no thumb ---
 document.querySelectorAll(".open-movie-modal").forEach((img) => {
@@ -20,9 +14,7 @@ document.querySelectorAll(".open-movie-modal").forEach((img) => {
     if (!info) return;
 
     // Render genres as clickable buttons
-    const genresHtml = info.genre
-      .map((g) => `<button class="movie-genre" data-genre="${g}">${g}</button>`)
-      .join(", ");
+    const genresHtml = info.genre.map((g) => `<button class="movie-genre" data-genre="${g}">${g}</button>`).join(", ");
 
     document.getElementById("movie-modal-title").textContent = info.title;
     document.getElementById("movie-modal-meta").innerHTML = `
@@ -31,32 +23,27 @@ document.querySelectorAll(".open-movie-modal").forEach((img) => {
       <li><strong>Duration:</strong> <span>${info.duration}</span></li>
       <li><strong>Origin:</strong> <span>${info.origin}</span></li>
       <li><strong>Locations:</strong> <span>${
-        Array.isArray(info.locations)
-          ? info.locations.join(" / ")
-          : info.locations
+        Array.isArray(info.locations) ? info.locations.join(" / ") : info.locations
       }</span></li>
       <li><strong>Director:</strong> <span>${info.director}</span></li>
       <li><strong>Cast:</strong> <span>${info.cast.join(", ")}</span></li>
       <li><strong>Genre:</strong> ${genresHtml}</li>
     `;
-    document.getElementById("movie-modal-description").textContent =
-      info.description;
+    document.getElementById("movie-modal-description").textContent = info.description;
 
     // Check if movie is vertical
     const isVertical = verticalMovies.includes(key);
 
     if (isVertical) {
       document.querySelector(".movie-modal__media").style.display = "none";
-      document.querySelector(".movie-modal__media-vertical").style.display =
-        "flex";
+      document.querySelector(".movie-modal__media-vertical").style.display = "flex";
 
       document.getElementById("vertical-modal-poster").src = info.poster;
       document.getElementById("vertical-modal-poster").alt = info.title;
       document.getElementById("vertical-modal-trailer").src = info.trailer;
       document.getElementById("vertical-modal-poster").style.display = "block";
       document.getElementById("vertical-modal-trailer").style.display = "none";
-      document.getElementById("toggle-vertical-media").textContent =
-        "See Trailer";
+      document.getElementById("toggle-vertical-media").textContent = "See Trailer";
 
       // Toggle between poster and trailer
       document.getElementById("toggle-vertical-media").onclick = function () {
@@ -74,8 +61,7 @@ document.querySelectorAll(".open-movie-modal").forEach((img) => {
       };
     } else {
       document.querySelector(".movie-modal__media").style.display = "flex";
-      document.querySelector(".movie-modal__media-vertical").style.display =
-        "none";
+      document.querySelector(".movie-modal__media-vertical").style.display = "none";
       document.getElementById("movie-modal-poster").src = info.poster;
       document.getElementById("movie-modal-poster").alt = info.title;
       document.getElementById("movie-modal-trailer").src = info.trailer;
@@ -141,9 +127,7 @@ function saveMovieData(key, data) {
 function renderStars(user, value, editable) {
   let stars = "";
   for (let i = 1; i <= 5; i++) {
-    stars += `<span class="star${
-      i <= value ? " filled" : ""
-    }" data-user="${user}" data-value="${i}" ${
+    stars += `<span class="star${i <= value ? " filled" : ""}" data-user="${user}" data-value="${i}" ${
       editable ? "" : 'style="pointer-events:none"'
     }>★</span>`;
   }
@@ -192,12 +176,10 @@ function renderRanking(movieKey) {
   `;
   // Adiciona evento para abrir o popup ao clicar no preview
   if (info.comments.math) {
-    document.getElementById("comment-math").onclick = () =>
-      showCommentBox("math", true);
+    document.getElementById("comment-math").onclick = () => showCommentBox("math", true);
   }
   if (info.comments.digo) {
-    document.getElementById("comment-digo").onclick = () =>
-      showCommentBox("digo", true);
+    document.getElementById("comment-digo").onclick = () => showCommentBox("digo", true);
   }
 }
 
@@ -306,13 +288,9 @@ if (searchSubmit) {
         ${
           totalPages > 1
             ? `<div class="search-pagination">
-                <button ${
-                  page === 1 ? "disabled" : ""
-                } id="search-prev">Prev</button>
+                <button ${page === 1 ? "disabled" : ""} id="search-prev">Prev</button>
                 <span>Page ${page} of ${totalPages}</span>
-                <button ${
-                  page === totalPages ? "disabled" : ""
-                } id="search-next">Next</button>
+                <button ${page === totalPages ? "disabled" : ""} id="search-next">Next</button>
               </div>`
             : ""
         }
@@ -358,8 +336,7 @@ if (searchSubmit) {
         (movie.director && movie.director.toLowerCase().includes(query)) ||
         (movie.origin && movie.origin.toLowerCase().includes(query)) ||
         (movie.year && movie.year.toString().includes(query)) ||
-        (movie.genre &&
-          movie.genre.some((g) => g.toLowerCase().includes(query))) ||
+        (movie.genre && movie.genre.some((g) => g.toLowerCase().includes(query))) ||
         (movie.cast && movie.cast.some((a) => a.toLowerCase().includes(query)))
       ) {
         currentResults.push({ ...movie, key });
@@ -372,8 +349,7 @@ if (searchSubmit) {
       searchResult.style.display = "block";
       searchSubmit.style.display = "inline-block";
     } else {
-      searchResult.textContent =
-        "Sorry, we couldn't find that. \n Maybe try searching on our sibling Flix?";
+      searchResult.textContent = "Sorry, we couldn't find that. \n Maybe try searching on our sibling Flix?";
       searchResult.style.display = "block";
       searchSubmit.style.display = "none";
     }
@@ -416,9 +392,7 @@ function showRandomMovieCard() {
           <div>No notifications for you, Math! 🍿</div>
           <button id="random-movie-btn" class="random-movie-btn">Surprise Me!</button>
         `;
-        document
-          .getElementById("random-movie-btn")
-          .addEventListener("click", showRandomMovieCard);
+        document.getElementById("random-movie-btn").addEventListener("click", showRandomMovieCard);
       }, 350);
     }
   }, 1000);
@@ -432,9 +406,7 @@ function showRandomMovieCard() {
         <div>No notifications for you, Math! 🍿</div>
         <button id="random-movie-btn" class="random-movie-btn">Surprise Me!</button>
       `;
-      document
-        .getElementById("random-movie-btn")
-        .addEventListener("click", showRandomMovieCard);
+      document.getElementById("random-movie-btn").addEventListener("click", showRandomMovieCard);
     }, 350);
   });
 
