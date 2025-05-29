@@ -5,17 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MathFlix</title>
     <link rel="icon" href="assets/icons/mathflix-icon.png" type="image/x-icon" />
-    <link rel="stylesheet" href="styles/reset.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
-    <link rel="stylesheet" href="styles/styles-base.css" />
-    <link rel="stylesheet" href="styles/main-sections.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glider-js@1/glider.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4/dist/css/splide.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/glider-js@1/glider.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4/dist/js/splide.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide-extension-auto-scroll@0/dist/js/splide-extension-auto-scroll.min.js"></script>
+    <link rel="stylesheet" href="styles/reset.css" />
+    <link rel="stylesheet" href="styles/styles-base.css" />
+    <link rel="stylesheet" href="styles/main-sections.css" />
     <script src="scripts/main.js" defer></script>
     <script src="scripts/script.js" defer></script>
     <script src="scripts/movies.js" defer></script>
@@ -81,9 +81,16 @@
           <div class="search-modal__backdrop"></div>
           <div class="search-modal__content">
             <button id="search-close" aria-label="Close search">&times;</button>
-            <input type="text" id="search-input" placeholder="What are you looking for?" />
+            <div class="search-bar-wrapper" style="position: relative">
+              <input type="text" id="search-input" placeholder="What are you looking for?" />
+              <ul id="search-autocomplete" class="autocomplete-list"></ul>
+            </div>
             <button id="search-submit">Search</button>
             <div id="search-result" class="search-result"></div>
+            <div class="search-random-hint">
+              <span>Don't know what you're looking for?</span>
+              <button id="random-movie-btn" class="random-movie-btn">Surprise Me!</button>
+            </div>
           </div>
         </div>
         <!-- Notification modal -->
@@ -93,7 +100,6 @@
             <button id="notification-close" aria-label="Close notifications">&times;</button>
             <div id="notification-result" class="search-result">
               <div>No notifications for you, Math! 🍿</div>
-              <button id="random-movie-btn" class="random-movie-btn">Surprise Me!</button>
             </div>
           </div>
         </div>
@@ -124,7 +130,7 @@
           </p>
           <p class="hero__text hero__text-bold">In the end, the question remains: who really disappeared?</p>
           <div class="hero__button">
-            <button class="hero__button-group hero__see-details-btn" data-movie="arrival">See details</button>
+            <button class="hero__button-group hero__see-details-btn" data-movie="gonegirl">See details</button>
             <button class="hero__button-group hero__button--secondary" id="spoiler-btn">Spoiler</button>
           </div>
         </div>
@@ -215,6 +221,14 @@
               </li>
               <li class="splide__slide">
                 <img class="gallery__thumbnail open-movie-modal" src="assets/imgs/ban-her.png" alt="Her" data-movie="her" />
+              </li>
+              <li class="splide__slide">
+                <img
+                  class="gallery__thumbnail open-movie-modal"
+                  src="assets/imgs/ban-goneGirl.png"
+                  alt="Gone Girl"
+                  data-movie="gonegirl"
+                />
               </li>
             </ul>
           </div>
@@ -843,6 +857,11 @@
           </div>
         </div>
       </div>
+    </div>
+    <!-- Surprise Me Modal -->
+    <div id="surprise-modal" class="search-modal" style="display: none">
+      <div class="search-modal__backdrop"></div>
+      <div class="search-modal__content" id="surprise-modal-content"></div>
     </div>
   </body>
 </html>

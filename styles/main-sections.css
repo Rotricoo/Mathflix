@@ -1,6 +1,7 @@
 /* =========================
    === GLOBAL BACKGROUND ===
    ========================= */
+/* Atualizar o background para incluir um gradiente para leitura melhor */
 #background {
   position: absolute;
   top: 0;
@@ -8,11 +9,13 @@
   width: 100vw;
   height: 100vh;
   object-fit: cover;
-  background: linear-gradient(to bottom, transparent 80%, black 100%),
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.4) 20%, transparent 60%),
+    linear-gradient(to bottom, transparent 80%, black 100%),
     url("../assets/hero-banner/mainly-ban-gonegirl.png") top center / cover no-repeat;
   z-index: -1;
   pointer-events: none;
   opacity: 1;
+  transition: background 0.8s ease-in-out;
 }
 
 /* =========================
@@ -144,6 +147,9 @@
   cursor: pointer;
   font-size: 1.5rem;
 }
+#search-result {
+  max-height: 60vh;
+}
 #search-result,
 #notification-modal .search-result,
 #coming-soon-modal .search-result {
@@ -166,6 +172,50 @@
   color: #fff;
   font-size: 3rem;
   cursor: pointer;
+}
+
+/* =========================
+   === SEARCH AUTOCOMPLETE ===
+   ========================= */
+.search-bar-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 30rem;
+  margin: 0 auto;
+}
+.autocomplete-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: #222;
+  color: #fff;
+  border-radius: 0 0 1rem 1rem;
+  box-shadow: 0 4px 16px #0008;
+  z-index: 10;
+  max-height: 11.5em;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.autocomplete-list li {
+  padding: 0.7rem 1.2rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #333;
+}
+.autocomplete-list li:last-child {
+  border-bottom: none;
+}
+.autocomplete-list li:hover {
+  background: #333;
+}
+.autocomplete-category {
+  color: #4caf50;
+  font-size: 0.95em;
+  margin-left: 1.2em;
 }
 
 /* =========================
@@ -195,8 +245,118 @@
   transform: rotate(12deg) scale(1.08);
 }
 
-/* ==== randon button ==== */
+/* =========================
+   === SEARCH SECTION ===
+   ========================= */
+.search-thumbs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 2rem;
+  justify-content: center;
+  margin-top: 2rem;
+  width: 100%;
+}
 
+.search-thumbs-wrapper {
+  width: 100%;
+  max-width: 1200px; /* limitar a largura máxima */
+  margin: 0 auto;
+}
+
+.search-thumb-card {
+  width: 200px; /* Largura fixa para cada card */
+  max-width: 100%;
+  background: #181818;
+  border-radius: 1.2rem;
+  box-shadow: 0 4px 24px #000a;
+  padding: 1.2rem 1.2rem 1.5rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+  justify-self: center; /* Centralizar na célula do grid */
+}
+.search-thumb-card:hover {
+  transform: scale(1.04);
+  box-shadow: 0 8px 32px #000c;
+}
+.search-thumb-img {
+  width: 100%;
+  aspect-ratio: 16/9;
+  border-radius: 1rem;
+  margin-bottom: 1rem;
+  object-fit: cover;
+  cursor: pointer;
+  box-shadow: 0 2px 12px #0007;
+  transition: opacity 0.2s;
+}
+.search-thumb-title {
+  font-size: 1.25rem;
+  color: #fff;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 0.7rem;
+}
+.search-thumb-btn {
+  background: var(--green-gradient-buttons, #4caf50);
+  color: #fff;
+  border: none;
+  border-radius: 1rem;
+  padding: 0.5rem 1.2rem;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 0.2rem;
+  transition: background 0.2s;
+}
+.search-thumb-btn:hover {
+  background: #388e3c;
+}
+
+.search-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+  margin-top: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+.search-pagination button {
+  background: var(--green-gradient-buttons, #4caf50);
+  color: #fff;
+  border: none;
+  border-radius: 1.2rem;
+  padding: 0.6rem 2.2rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s, opacity 0.2s;
+  box-shadow: 0 2px 8px #0003;
+}
+.search-pagination button:disabled {
+  background: #444;
+  color: #bbb;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+.search-pagination span {
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+}
+
+/* =========================
+   === RANDOM MOVIE BUTTON ===
+   ========================= */
+.search-random-hint {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.7rem;
+  margin-top: 2.5rem;
+  color: #bbb;
+  font-size: 1.5rem;
+}
 .random-card {
   margin: 2rem auto 0 auto;
   background: #181818e6;
@@ -208,7 +368,6 @@
   flex-direction: column;
   align-items: center;
 }
-
 .random-movie-btn#reroll-random-movie {
   background: #222;
   color: #4caf50;
@@ -219,9 +378,8 @@
   background: #333;
   color: #fff;
 }
-
 .random-movie-btn {
-  margin-top: 2rem;
+  margin-top: 1rem;
   background: var(--green-gradient-buttons, #4caf50);
   color: #fff;
   border: none;
@@ -263,7 +421,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  min-height: 60vh;
+  min-height: 600px; /* Manter altura mínima */
 }
 .hero__icon-container {
   display: flex;
@@ -273,12 +431,14 @@
 }
 .hero__icon {
   height: 3rem;
+  transition: filter 0.5s ease;
 }
 .hero__icon-text {
   font-size: 1.3rem;
   text-transform: uppercase;
   color: var(--white-50);
   letter-spacing: 0.5rem;
+  transition: color 0.5s ease;
 }
 .hero__title {
   position: relative;
@@ -306,17 +466,135 @@
   font-size: 1.7rem;
   line-height: 1.5;
   font-weight: var(--font-light);
-  max-width: 450px;
-  margin: 1rem 0 1.5rem 0;
+  width: 450px; /* Largura fixa */
+  margin: 1rem 0 0 0; /* Remover margem inferior */
   z-index: 2;
+  opacity: 1;
 }
 .hero__text-bold {
   font-weight: var(--font-bold);
+  opacity: 1;
+  margin-bottom: 0; /* Garantir que não há margem inferior */
+}
+
+/* === HERO SECTION NAVIGATION === */
+.hero-navigation {
+  position: absolute;
+  bottom: -5rem; /* Mover para perto do Top 10 */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 1rem;
+  z-index: 10;
+}
+
+.hero-nav-dot {
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.hero-nav-dot.active {
+  background-color: var(--green-lighter);
+  transform: scale(1.2);
+  transition: background-color 0.5s ease;
+}
+
+.hero-nav-dot:hover {
+  background-color: var(--white);
+}
+
+.hero-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  color: var(--white);
+  border: none;
+  border-radius: 50%;
+  width: 4rem;
+  height: 4rem;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s, background 0.3s;
+  z-index: 10;
+}
+
+.hero-nav-prev {
+  left: 2rem;
+}
+
+.hero-nav-next {
+  right: 2rem;
+}
+
+.hero:hover .hero-nav-btn {
+  opacity: 0.7;
+}
+
+.hero-nav-btn:hover {
+  opacity: 1 !important;
+  background: rgba(76, 175, 80, 0.7);
+}
+
+/* Texto escuro para fundos claros */
+.hero-content.dark-text .hero__title,
+.hero-content.dark-text .hero__text,
+.hero-content.dark-text .hero__text-bold,
+.hero-content.dark-text .hero__icon-text {
+  color: rgb(34, 34, 34);
+  text-shadow: 0 1px 3px rgba(255, 255, 255, 0.4);
+}
+
+.hero-content.dark-text .hero__title {
+  background: linear-gradient(90deg, rgba(34, 34, 34, 0.7) 0%, rgba(34, 34, 34, 0.8) 50%, rgba(34, 34, 34, 0.9) 100%);
+  background-size: 200%;
+  background-position: -100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+/* === HERO SECTION ANIMATIONS === */
+.hero-content {
+  transition: opacity 0.5s ease;
+}
+.hero-content.fade-out {
+  opacity: 0;
+}
+.hero-content.fade-in {
+  opacity: 1;
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#background {
+  transition: background 0.8s ease-in-out;
 }
 
 /* === HERO BUTTONS === */
 .hero__button {
   display: flex;
+  position: relative;
+  margin-top: 3rem; /* Distância fixa do texto - 3rem conforme solicitado */
 }
 .hero__button-group {
   display: flex;
@@ -329,9 +607,11 @@
   font-size: 1.6rem;
   font-weight: var(--font-bold);
   transition: all 0.3s ease;
+  opacity: 0.8;
+  border: none;
 }
 .hero__button-group:hover {
-  opacity: 80%;
+  opacity: 100%;
 }
 .hero__button--secondary {
   background: var(--green-gradient-buttons);
@@ -818,6 +1098,9 @@ div.gallery__container-vertical h2.gallery__title {
   color: #4aa042;
 }
 
+/* =========================
+   === CUSTOM POPUP ===
+   ========================= */
 .custom-popup {
   position: fixed;
   inset: 0;
@@ -844,8 +1127,6 @@ div.gallery__container-vertical h2.gallery__title {
   flex-direction: column;
   align-items: stretch;
 }
-
-/* Comentário popup buttons */
 #comment-popup-save {
   background: var(--green-gradient-buttons, #4aa042);
   color: #fff;
@@ -946,7 +1227,9 @@ div.gallery__container-vertical h2.gallery__title {
   margin-top: 1rem;
 }
 
-/* Carrossel de séries e maratonas */
+/* =========================
+   === SERIES & MARATHON CAROUSELS ===
+   ========================= */
 .gallery__container.series,
 .gallery__container.marathon,
 div.div.gallery__container.digo-happy {
@@ -955,7 +1238,6 @@ div.div.gallery__container.digo-happy {
   padding-left: 0;
   padding-right: 0;
 }
-
 .gallery__container.marathon .gallery__title {
   margin-left: 3.5rem;
   font-size: 2.2rem;
@@ -965,7 +1247,6 @@ div.div.gallery__container.digo-happy {
   margin-bottom: 2rem;
   text-align: left;
 }
-
 div.gallery__container.series .splide,
 div.gallery__container.marathon .splide,
 div.gallery__container.digo-happy .splide {
@@ -991,21 +1272,19 @@ div.gallery__container.digo-happy .gallery__thumbnail:hover {
   opacity: 1;
 }
 
-/* Esconde as setas dos carrosseis por padrão (menos o vertical) */
+/* Hide carousel arrows by default (except vertical) */
 .gallery__container .splide__arrow {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.25s;
 }
-
-/* Mostra as setas ao passar o mouse sobre o carrossel (menos o vertical) */
+/* Show arrows on hover/focus (except vertical) */
 .gallery__container:hover .splide__arrow,
 .gallery__container:focus-within .splide__arrow {
   opacity: 1;
   pointer-events: auto;
 }
-
-/* Garante que o vertical continue com setas visíveis se quiser */
+/* Keep vertical carousel arrows always visible */
 .gallery__container-vertical .splide__arrow {
   opacity: 1 !important;
   pointer-events: auto !important;
@@ -1014,7 +1293,6 @@ div.gallery__container.digo-happy .gallery__thumbnail:hover {
 /* =========================
    === MARATHON SECTION ===
    ========================= */
-
 .marathon-section {
   display: flex;
   align-items: stretch;
@@ -1023,9 +1301,8 @@ div.gallery__container.digo-happy .gallery__thumbnail:hover {
   margin: 5rem 0 7rem 0;
   min-height: 220px;
   padding: 0;
-  overflow: hidden; /* <-- ESSENCIAL */
+  overflow: hidden;
 }
-
 div.marathon-carousel .gallery__thumbnail {
   width: 24rem;
   min-width: 24rem;
@@ -1034,7 +1311,6 @@ div.marathon-carousel .gallery__thumbnail {
   height: auto;
   border-radius: 1.2em;
 }
-
 .marathon-info {
   width: 30%;
   background: linear-gradient(to right, rgba(0, 0, 0, 1) 85%, rgba(0, 0, 0, 0) 100%);
@@ -1048,7 +1324,6 @@ div.marathon-carousel .gallery__thumbnail {
   border-bottom-right-radius: 2rem;
   z-index: 2;
 }
-
 span.marathon-label {
   font-size: 1.4rem;
   color: var(--green-lighter, #4caf50);
@@ -1065,7 +1340,6 @@ h2.marathon-title {
 h2.marathon-title:hover {
   color: var(--white-50);
 }
-
 .marathon-carousel {
   width: 70%;
   background: transparent;
@@ -1076,129 +1350,66 @@ h2.marathon-title:hover {
   padding: 2rem 0 2rem 0;
   z-index: 1;
 }
-
 .marathon-carousel .splide {
   width: 100%;
-  padding-left: 0; /* Remova o padding-left */
+  padding-left: 0;
 }
-
 .marathon-carousel .splide__list {
-  gap: 3.5rem !important; /* ou o valor que preferir */
+  gap: 3.5rem !important;
 }
 
-/* Search section  */
+/* =========================
+   === RESPONSIVE MEDIA QUERIES (add as needed) ===
+   ========================= */
+/* Add your responsive breakpoints here as you develop for different screens */
 
-.search-thumbs-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 2rem;
-  justify-content: center;
-  margin-top: 2rem;
+/* =========================
+   === END OF FILE ===
+   ========================= */
+
+/* === SPOILER MODAL === */
+#spoiler-modal .search-modal__content {
+  max-width: 500px;
+  border-top: 4px solid red;
 }
-.search-thumbs-wrapper {
-  width: 70vw;
-  max-width: 1100px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.search-thumb-card {
-  background: #181818;
-  border-radius: 1.2rem;
-  box-shadow: 0 4px 24px #000a;
-  padding: 1.2rem 1.2rem 1.5rem 1.2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 200px;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-.search-thumb-card:hover {
-  transform: scale(1.04);
-  box-shadow: 0 8px 32px #000c;
-}
-.search-thumb-img {
-  width: 100%;
-  aspect-ratio: 16/9;
-  border-radius: 1rem;
-  margin-bottom: 1rem;
-  object-fit: cover;
-  cursor: pointer;
-  box-shadow: 0 2px 12px #0007;
-  transition: opacity 0.2s;
-}
-.search-thumb-title {
-  font-size: 1.25rem;
-  color: #fff;
-  font-weight: bold;
+
+.spoiler-content {
   text-align: center;
-  margin-bottom: 0.7rem;
+  padding: 1rem;
 }
-.search-thumb-btn {
-  background: var(--green-gradient-buttons, #4caf50);
-  color: #fff;
-  border: none;
+
+.spoiler-content h2 {
+  color: red;
+  font-size: 2.2rem;
+  margin-bottom: 2rem;
+  animation: blink 1s infinite;
+}
+
+.spoiler-content p {
+  font-size: 1.8rem;
+  line-height: 1.5;
+  margin-bottom: 2.5rem;
+  padding: 1.5rem;
+  background: rgba(255, 0, 0, 0.1);
   border-radius: 1rem;
-  padding: 0.5rem 1.2rem;
-  font-size: 1rem;
-  cursor: pointer;
-  margin-top: 0.2rem;
-  transition: background 0.2s;
-}
-.search-thumb-btn:hover {
-  background: #388e3c;
 }
 
-.search-pagination {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 2.5rem;
-  margin-top: 2.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.search-pagination button {
-  background: var(--green-gradient-buttons, #4caf50);
-  color: #fff;
-  border: none;
-  border-radius: 1.2rem;
-  padding: 0.6rem 2.2rem;
+.spoiler-timer {
   font-size: 1.2rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background 0.2s, opacity 0.2s;
-  box-shadow: 0 2px 8px #0003;
-}
-.search-pagination button:disabled {
-  background: #444;
-  color: #bbb;
-  cursor: not-allowed;
-  opacity: 0.7;
-}
-.search-pagination span {
-  color: #fff;
-  font-size: 1.2rem;
-  font-weight: 500;
-  letter-spacing: 0.05em;
+  color: #888;
 }
 
-/* ===== media responsiva ===== */
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
 
-/* Search modal  */
-@media (max-width: 1200px) {
-  .search-thumbs-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-@media (max-width: 800px) {
-  .search-thumbs-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-@media (max-width: 500px) {
-  .search-thumbs-grid {
-    grid-template-columns: 1fr;
-  }
+/* Mantém o botão de spoiler consistente */
+#spoiler-btn {
+  min-height: 40px;
 }

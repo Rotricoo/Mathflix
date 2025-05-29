@@ -204,6 +204,23 @@ window.moviesData.her = {
   tags: ["AI", "future", "romance"],
   ranking: { math: 0, digo: 0 },
 };
+window.moviesData.gonegirl = {
+  title: "Gone Girl",
+  genre: ["Drama", "Mystery", "Thriller"],
+  duration: "2h 29min",
+  year: 2014,
+  age: "18+",
+  origin: "USA",
+  locations: ["Cape Girardeau - Missouri / Los Angeles - California / New York City - New York"],
+  cast: ["Ben Affleck", "Rosamund Pike", "Neil Patrick Harris", "Tyler Perry"],
+  director: "David Fincher",
+  description:
+    "When his wife goes missing, a man becomes the center of an intense media circus. As police dig deeper, shocking secrets begin to emerge.",
+  poster: "assets/imgs/ban-goneGirl.png",
+  trailer: "https://www.youtube.com/embed/2-_-1nJf8Vg",
+  tags: ["mystery", "crime", "psychological thriller"],
+  ranking: { math: 0, digo: 0 },
+};
 
 // ============================================================
 // =================== VERTICAL CAROUSEL ======================
