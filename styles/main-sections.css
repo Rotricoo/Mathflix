@@ -9,9 +9,15 @@
   width: 100vw;
   height: 100vh;
   object-fit: cover;
-  background: linear-gradient(to right, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.4) 20%, transparent 60%),
+  background: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0.7) 0%,
+      rgba(0, 0, 0, 0.4) 20%,
+      transparent 60%
+    ),
     linear-gradient(to bottom, transparent 80%, black 100%),
-    url("../assets/hero-banner/mainly-ban-gonegirl.png") top center / cover no-repeat;
+    url("../assets/hero-banner/mainly-ban-gonegirl.png") top center / cover
+      no-repeat;
   z-index: -1;
   pointer-events: none;
   opacity: 1;
@@ -448,9 +454,15 @@
   transform: scale(1);
   will-change: transform;
   transform-origin: left center;
-  transition: transform 3s cubic-bezier(0.34, 0.76, 0.33, 0.76), background-position 3s cubic-bezier(0.34, 0.76, 0.33, 0.76);
+  transition: transform 3s cubic-bezier(0.34, 0.76, 0.33, 0.76),
+    background-position 3s cubic-bezier(0.34, 0.76, 0.33, 0.76);
   z-index: 2;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0.9) 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.7) 0%,
+    rgba(255, 255, 255, 0.8) 50%,
+    rgba(255, 255, 255, 0.9) 100%
+  );
   background-size: 200%;
   background-position: -100%;
   background-clip: text;
@@ -554,7 +566,12 @@
 }
 
 .hero-content.dark-text .hero__title {
-  background: linear-gradient(90deg, rgba(34, 34, 34, 0.7) 0%, rgba(34, 34, 34, 0.8) 50%, rgba(34, 34, 34, 0.9) 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(34, 34, 34, 0.7) 0%,
+    rgba(34, 34, 34, 0.8) 50%,
+    rgba(34, 34, 34, 0.9) 100%
+  );
   background-size: 200%;
   background-position: -100%;
   background-clip: text;
@@ -865,7 +882,8 @@ div.gallery__container-vertical h2.gallery__title {
 }
 .splide-simple .splide__slide img:hover {
   transform: scale(1.2);
-  box-shadow: 0 0 50px 3px rgba(255, 255, 255, 0.3), 0 8px 16px rgba(0, 0, 0, 0.28);
+  box-shadow: 0 0 50px 3px rgba(255, 255, 255, 0.3),
+    0 8px 16px rgba(0, 0, 0, 0.28);
   filter: brightness(1.1);
   z-index: 2;
 }
@@ -1313,7 +1331,11 @@ div.marathon-carousel .gallery__thumbnail {
 }
 .marathon-info {
   width: 30%;
-  background: linear-gradient(to right, rgba(0, 0, 0, 1) 85%, rgba(0, 0, 0, 0) 100%);
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 1) 85%,
+    rgba(0, 0, 0, 0) 100%
+  );
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -1361,7 +1383,6 @@ h2.marathon-title:hover {
 /* =========================
    === RESPONSIVE MEDIA QUERIES (add as needed) ===
    ========================= */
-/* Add your responsive breakpoints here as you develop for different screens */
 
 /* =========================
    === END OF FILE ===
@@ -1412,4 +1433,47 @@ h2.marathon-title:hover {
 /* Mantém o botão de spoiler consistente */
 #spoiler-btn {
   min-height: 40px;
+}
+
+/* =========================
+   === Media min 1600px ===
+   ========================= */
+
+@media (min-width: 1600px) {
+  .header__logo img {
+    width: 180px;
+    max-width: 200px;
+  }
+  .profile-menu {
+    top: 9rem;
+    right: 6rem;
+    z-index: 9999;
+  }
+  .hero-navigation {
+    bottom: -8rem;
+  }
+  .gallery__container.top10 .gallery__thumbnail {
+    margin-right: 1.5rem;
+    width: 24rem;
+    min-width: 24rem;
+  }
+  .gallery__thumbnail-vertical,
+  .movie-modal__poster-vertical,
+  #vertical-modal-trailer {
+    width: 340px;
+    height: 510px;
+  }
+  #vertical-media-container {
+    width: 340px;
+    height: 510px;
+  }
+  div.gallery__container.series .gallery__thumbnail,
+  div.gallery__container.marathon .gallery__thumbnail {
+    width: 28rem;
+    min-width: 28rem;
+    margin-right: 1.5rem;
+  }
+  .marathon-carousel .splide__list {
+    gap: 2rem !important;
+  }
 }

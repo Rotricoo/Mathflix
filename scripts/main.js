@@ -29,9 +29,12 @@ let step = 0;
 const spoilers = {
   gonegirl:
     "Amy fakes her own disappearance to frame her husband Nick. In the end, she returns and forces Nick to stay with her.",
-  arrival: "The aliens didn't come to invade, but to gift humans their language which allows seeing the future.",
-  abouttime: "The secret to happiness isn't time travel, but appreciating each day as if you're living it for the second time.",
-  marypoppins: "Mary Poppins didn't need magic to fix the Banks family; she just taught them to find fun in everything.",
+  arrival:
+    "The aliens didn't come to invade, but to gift humans their language which allows seeing the future.",
+  abouttime:
+    "The secret to happiness isn't time travel, but appreciating each day as if you're living it for the second time.",
+  marypoppins:
+    "Mary Poppins didn't need magic to fix the Banks family; she just taught them to find fun in everything.",
   wandavision:
     "It's all an illusion created by Wanda to cope with grief after losing Vision. The townsfolk are hostages of her magic.",
   hungergames:
@@ -45,13 +48,21 @@ if (spoilerBtn) {
       spoilerBtn.classList.add("spoiler-fixed");
       spoilerFixed = true;
       spoilerBtn.removeEventListener("mouseenter", fixSpoilerBtn);
-      document.querySelector(".hero-content").removeEventListener("mouseenter", fixSpoilerBtn);
-      document.querySelector(".hero__see-details-btn").removeEventListener("mouseenter", fixSpoilerBtn);
+      document
+        .querySelector(".hero-content")
+        .removeEventListener("mouseenter", fixSpoilerBtn);
+      document
+        .querySelector(".hero__see-details-btn")
+        .removeEventListener("mouseenter", fixSpoilerBtn);
     }
   }
   spoilerBtn.addEventListener("mouseenter", fixSpoilerBtn);
-  document.querySelector(".hero-content").addEventListener("mouseenter", fixSpoilerBtn);
-  document.querySelector(".hero__see-details-btn").addEventListener("mouseenter", fixSpoilerBtn);
+  document
+    .querySelector(".hero-content")
+    .addEventListener("mouseenter", fixSpoilerBtn);
+  document
+    .querySelector(".hero__see-details-btn")
+    .addEventListener("mouseenter", fixSpoilerBtn);
 
   spoilerBtn.addEventListener("click", () => {
     if (step === 0) {
@@ -73,7 +84,9 @@ if (spoilerBtn) {
           step = 0;
 
           // Mostrar spoiler bobo
-          const currentMovieKey = document.querySelector(".hero__see-details-btn").dataset.movie;
+          const currentMovieKey = document.querySelector(
+            ".hero__see-details-btn"
+          ).dataset.movie;
           showSpoilerModal(currentMovieKey);
         }
       }, 600);
@@ -108,7 +121,9 @@ function showSpoilerModal(movieKey) {
   const spoilerClose = document.getElementById("spoiler-modal-close");
 
   // Exibir o spoiler correspondente ao filme
-  spoilerText.textContent = spoilers[movieKey] || "This movie is so secret we don't even have a spoiler for it!";
+  spoilerText.textContent =
+    spoilers[movieKey] ||
+    "This movie is so secret we don't even have a spoiler for it!";
   spoilerModal.style.display = "flex";
 
   // Timer para fechar automaticamente (10 segundos)
@@ -139,7 +154,7 @@ new Splide(".splide-top10", {
   drag: "free",
   focus: "center",
   perPage: 4,
-  gap: "1rem",
+  gap: "1.5rem",
   autoScroll: {
     speed: 0.5,
     pauseOnHover: true,
@@ -149,6 +164,8 @@ new Splide(".splide-top10", {
   breakpoints: {
     900: { perPage: 1.5, gap: "1rem" },
     1400: { perPage: 2.5, gap: "1.5rem" },
+    1600: { perPage: 6, gap: "1.2rem" }, // Use 1600, não 1800
+    1800: { perPage: 7, gap: "1.2rem" }
   },
 }).mount(window.splide.Extensions);
 
@@ -173,12 +190,14 @@ new Splide(".splide-vertical", {
   type: "loop",
   perPage: 3,
   focus: "center",
-  gap: "5rem",
+  gap: "3rem",
   pagination: false,
   arrows: true,
   breakpoints: {
     900: { perPage: 1, gap: "1rem" },
     1400: { perPage: 2, gap: "1.5rem" },
+    1600: { perPage: 3, gap: "4.5rem" }, // Use 1600, não 1800
+    1800: { perPage: 4, gap: "5rem" }
   },
 }).mount();
 
@@ -192,18 +211,19 @@ new Splide(".splide-series", {
   breakpoints: {
     900: { perPage: 1, gap: "0.5rem" },
     1400: { perPage: 2, gap: "0.8rem" },
+    1800: { perPage: perPage + 2, gap: "2rem" }, // Adicione esta linha
   },
 }).mount();
 
 // --- Maratonas ---
 [
-  { selector: ".splide-hungergames", perPage: 4 },
-  { selector: ".splide-harrypotter", perPage: 3 },
-  { selector: ".splide-alien", perPage: 3 },
-  { selector: ".splide-toystory", perPage: 3 },
-  { selector: ".splide-xmen", perPage: 3 },
-  { selector: ".splide-digohappy", perPage: 5 },
-].forEach(({ selector, perPage }) => {
+  { selector: ".splide-hungergames", perPage: 4, perPageLarge: 6 },
+  { selector: ".splide-harrypotter", perPage: 3, perPageLarge: 5 },
+  { selector: ".splide-alien", perPage: 3, perPageLarge: 5 },
+  { selector: ".splide-toystory", perPage: 3, perPageLarge: 5 },
+  { selector: ".splide-xmen", perPage: 3, perPageLarge: 5 },
+  { selector: ".splide-digohappy", perPage: 5, perPageLarge: 7 },
+].forEach(({ selector, perPage, perPageLarge }) => {
   new Splide(selector, {
     type: "loop",
     perPage,
@@ -213,6 +233,7 @@ new Splide(".splide-series", {
     breakpoints: {
       900: { perPage: 1, gap: "0.5rem" },
       1400: { perPage: 2, gap: "0.8rem" },
+      1600: { perPage: perPageLarge, gap: "1.5rem" }
     },
   }).mount();
 });
@@ -320,9 +341,21 @@ function setupModalCloseOnBackdrop(modalId, contentClass, closeBtnId) {
     });
   }
 }
-setupModalCloseOnBackdrop("search-modal", "search-modal__content", "search-close");
-setupModalCloseOnBackdrop("notification-modal", "search-modal__content", "notification-close");
-setupModalCloseOnBackdrop("coming-soon-modal", "search-modal__content", "coming-soon-close");
+setupModalCloseOnBackdrop(
+  "search-modal",
+  "search-modal__content",
+  "search-close"
+);
+setupModalCloseOnBackdrop(
+  "notification-modal",
+  "search-modal__content",
+  "notification-close"
+);
+setupModalCloseOnBackdrop(
+  "coming-soon-modal",
+  "search-modal__content",
+  "coming-soon-close"
+);
 
 // ==========================
 // 6. HERO "SEE DETAILS" BUTTON
@@ -406,7 +439,8 @@ const heroMovies = [
     title: "ARRIVAL",
     background: "assets/hero-banner/mainly-ban-arrival.png",
     text: "When mysterious spacecraft touch down across the globe, an elite team led by linguist Louise Banks is brought together to investigate.",
-    textHighlight: "As mankind teeters on the verge of global war, Banks races against time to decipher their intent.",
+    textHighlight:
+      "As mankind teeters on the verge of global war, Banks races against time to decipher their intent.",
     type: "movie",
     textColor: "light", // Para texto claro em fundo escuro
     customStyles: {
@@ -520,7 +554,8 @@ function createHeroIndicators() {
   prevBtn.innerHTML = "❮";
   prevBtn.addEventListener("click", () => {
     clearInterval(heroInterval);
-    currentHeroIndex = (currentHeroIndex - 1 + heroMovies.length) % heroMovies.length;
+    currentHeroIndex =
+      (currentHeroIndex - 1 + heroMovies.length) % heroMovies.length;
     updateHero(currentHeroIndex);
     restartHeroInterval();
   });
