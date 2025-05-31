@@ -19,6 +19,7 @@
     <script src="scripts/main.js" defer></script>
     <script src="scripts/script.js" defer></script>
     <script src="scripts/movies.js" defer></script>
+    <script src="scripts/intelligent-glow.js" defer></script>
   </head>
   <body class="body">
     <div id="background"></div>
@@ -286,7 +287,7 @@
       </div>
 
       <!-- CARROSSEL TO MAKE DIGO HAPPY -->
-      <div class="gallery__container series digo-happy">
+      <div class="gallery__container series digohappy">
         <h2 class="gallery__title">This is about Digo</h2>
         <div class="splide splide-simple">
           <div class="splide__track">
@@ -345,6 +346,14 @@
               <li class="splide__slide">
                 <img
                   class="gallery__thumbnail open-movie-modal"
+                  src="assets/imgs/ban-rupaul.png"
+                  alt="RuPaul's Drag Race"
+                  data-movie="rupaul"
+                />
+              </li>
+              <li class="splide__slide">
+                <img
+                  class="gallery__thumbnail open-movie-modal"
                   src="assets/imgs/ban-simpsons.png"
                   alt="Simpsons"
                   data-movie="simpsons"
@@ -353,9 +362,17 @@
               <li class="splide__slide">
                 <img
                   class="gallery__thumbnail open-movie-modal"
-                  src="assets/imgs/ban-howmetyour.png"
+                  src="assets/imgs/ban-howmetyourmother.png"
                   alt="How I Met Your Mother"
-                  data-movie="howmetyour"
+                  data-movie="howmetyourmother"
+                />
+              </li>
+              <li class="splide__slide">
+                <img
+                  class="gallery__thumbnail open-movie-modal"
+                  src="assets/imgs/ban-howmetyourfather.png"
+                  alt="How I Met Your Mother"
+                  data-movie="howmetyourfather"
                 />
               </li>
               <li class="splide__slide">
@@ -600,7 +617,7 @@
                 <li class="splide__slide">
                   <img
                     class="gallery__thumbnail open-movie-modal"
-                    src="assets/imgs/Marathon/ToyStory/toystory1.png"
+                    src="assets/imgs/Marathon/Toy-Story/ban-toystory1.png"
                     alt="Toy Story"
                     data-movie="toystory1"
                   />
@@ -608,7 +625,7 @@
                 <li class="splide__slide">
                   <img
                     class="gallery__thumbnail open-movie-modal"
-                    src="assets/imgs/Marathon/ToyStory/toystory2.png"
+                    src="assets/imgs/Marathon/Toy-Story/ban-toystory2.png"
                     alt="Toy Story 2"
                     data-movie="toystory2"
                   />
@@ -616,7 +633,7 @@
                 <li class="splide__slide">
                   <img
                     class="gallery__thumbnail open-movie-modal"
-                    src="assets/imgs/Marathon/ToyStory/toystory3.png"
+                    src="assets/imgs/Marathon/Toy-Story/ban-toystory3.png"
                     alt="Toy Story 3"
                     data-movie="toystory3"
                   />
@@ -624,7 +641,7 @@
                 <li class="splide__slide">
                   <img
                     class="gallery__thumbnail open-movie-modal"
-                    src="assets/imgs/Marathon/ToyStory/toystory4.png"
+                    src="assets/imgs/Marathon/Toy-Story/ban-toystory4.png"
                     alt="Toy Story 4"
                     data-movie="toystory4"
                   />
@@ -648,7 +665,7 @@
                 <li class="splide__slide">
                   <img
                     class="gallery__thumbnail open-movie-modal"
-                    src="assets/imgs/Marathon/Xmen/xmen1.png"
+                    src="assets/imgs/Marathon/X-men/ban-xmen1.png"
                     alt="X-Men (2000)"
                     data-movie="xmen1"
                   />
@@ -656,7 +673,7 @@
                 <li class="splide__slide">
                   <img
                     class="gallery__thumbnail open-movie-modal"
-                    src="assets/imgs/Marathon/Xmen/xmen2.png"
+                    src="assets/imgs/Marathon/X-men/ban-xmen2.png"
                     alt="X2: X-Men United (2003)"
                     data-movie="xmen2"
                   />
@@ -664,7 +681,7 @@
                 <li class="splide__slide">
                   <img
                     class="gallery__thumbnail open-movie-modal"
-                    src="assets/imgs/Marathon/Xmen/xmen3.png"
+                    src="assets/imgs/Marathon/X-men/ban-xmen3.png"
                     alt="X-Men: The Last Stand (2006)"
                     data-movie="xmen3"
                   />
@@ -672,7 +689,7 @@
                 <li class="splide__slide">
                   <img
                     class="gallery__thumbnail open-movie-modal"
-                    src="assets/imgs/Marathon/Xmen/xmen4.png"
+                    src="assets/imgs/Marathon/X-men/ban-xmen4.png"
                     alt="X-Men Origins: Wolverine (2009)"
                     data-movie="xmen4"
                   />
@@ -680,7 +697,7 @@
                 <li class="splide__slide">
                   <img
                     class="gallery__thumbnail open-movie-modal"
-                    src="assets/imgs/Marathon/Xmen/xmen5.png"
+                    src="assets/imgs/Marathon/X-men/ban-xmen5.png"
                     alt="X-Men: First Class (2011)"
                     data-movie="xmen5"
                   />
@@ -688,7 +705,7 @@
                 <li class="splide__slide">
                   <img
                     class="gallery__thumbnail open-movie-modal"
-                    src="assets/imgs/Marathon/Xmen/xmen6.png"
+                    src="assets/imgs/Marathon/X-men/ban-xmen6.png"
                     alt="The Wolverine (2013)"
                     data-movie="xmen6"
                   />
@@ -696,7 +713,7 @@
                 <li class="splide__slide">
                   <img
                     class="gallery__thumbnail open-movie-modal"
-                    src="assets/imgs/Marathon/Xmen/xmen7.png"
+                    src="assets/imgs/Marathon/X-men/ban-xmen7.png"
                     alt="X-Men: Days of Future Past (2014)"
                     data-movie="xmen7"
                   />
@@ -704,7 +721,7 @@
                 <li class="splide__slide">
                   <img
                     class="gallery__thumbnail open-movie-modal"
-                    src="assets/imgs/Marathon/Xmen/xmen8.png"
+                    src="assets/imgs/Marathon/X-men/ban-xmen8.png"
                     alt="X-Men: Apocalypse (2016)"
                     data-movie="xmen8"
                   />
@@ -712,7 +729,7 @@
                 <li class="splide__slide">
                   <img
                     class="gallery__thumbnail open-movie-modal"
-                    src="assets/imgs/Marathon/Xmen/xmen9.png"
+                    src="assets/imgs/Marathon/X-men/ban-xmen9.png"
                     alt="Logan (2017)"
                     data-movie="xmen9"
                   />
@@ -720,7 +737,7 @@
                 <li class="splide__slide">
                   <img
                     class="gallery__thumbnail open-movie-modal"
-                    src="assets/imgs/Marathon/Xmen/xmen10.png"
+                    src="assets/imgs/Marathon/X-men/ban-xmen10.png"
                     alt="X-Men: Dark Phoenix (2019)"
                     data-movie="xmen10"
                   />

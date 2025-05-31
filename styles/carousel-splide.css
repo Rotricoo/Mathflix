@@ -22,21 +22,22 @@
 div.gallery__container.top10,
 div.gallery__container-vertical,
 div.gallery__container.series,
-div.gallery__container.digo-happy {
+div.gallery__container.digohappy {
   position: relative;
   max-width: 100%;
-  margin: 0 auto 5rem auto;
-  padding: 0 4rem;
+  margin: 0 auto 4rem auto;
+  padding: 0;
   box-sizing: border-box;
 }
 
+/* STANDARDIZED TITLE ALIGNMENT - ALL TITLES 5REM FROM LEFT */
 h2.gallery__title {
   font-size: 1.6rem;
   letter-spacing: 0.1rem;
   font-weight: var(--font-bold);
   text-transform: uppercase;
-  margin-bottom: 1.5rem;
-  margin-left: 6rem;
+  margin-bottom: 1rem;
+  margin-left: 5rem; /* Standardized - all titles aligned */
   text-align: left;
 }
 
@@ -48,8 +49,7 @@ h2.gallery__title {
   min-width: 28rem;
   aspect-ratio: 16/9;
   border-radius: 2em;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.28);
-  transition: transform 0.35s cubic-bezier(0.4, 2, 0.6, 1), box-shadow 0.35s;
+  transition: transform 0.35s cubic-bezier(0.4, 2, 0.6, 1);
   will-change: transform;
   z-index: 1;
   overflow: visible;
@@ -58,51 +58,33 @@ h2.gallery__title {
 
 .gallery__container.top10 .gallery__thumbnail:hover {
   transform: scale(1.12);
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
   z-index: 2;
 }
 
+/* Remove the old white glow effect, will be replaced by intelligent glow */
 .gallery__container.top10 .gallery__thumbnail::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 2em;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.3s;
-  box-shadow: 0 0 32px 8px #fff8, 0 0 0 0 transparent;
+  display: none;
 }
 
-.gallery__container.top10 .gallery__thumbnail:hover::after,
-.gallery__container.top10 .gallery__thumbnail:active::after {
-  opacity: 1;
-  animation: thumb-shine 0.7s linear;
-}
-
+/* Remove the old shine animation */
 @keyframes thumb-shine {
-  0% {
-    box-shadow: 0 0 0 0 #fff0;
-  }
-  40% {
-    box-shadow: 0 0 32px 8px #fff8;
-  }
-  100% {
-    box-shadow: 0 0 0 0 #fff0;
-  }
+  /* Keep animation for potential future use but disable the pseudo-element */
 }
 
 /* =========================
    3. VERTICAL CAROUSEL (POSTERS)
    ========================= */
+
 div.gallery__container-vertical {
   width: 100vw;
-  margin: 0 auto 3rem auto;
+  margin: -2rem auto -3rem auto;
   overflow: visible;
-  padding: 2rem 0;
+  padding: 4rem 0;
 }
 
 div.gallery__container-vertical h2.gallery__title {
-  margin-bottom: 3rem;
+  margin-bottom: 0;
+  margin-left: 5rem; /* Consistent with all other titles */
 }
 
 .splide-vertical {
@@ -110,7 +92,8 @@ div.gallery__container-vertical h2.gallery__title {
   margin-right: 0;
   max-width: 100vw;
   contain: layout style paint;
-  padding: 4rem 0;
+  padding: 7rem 0;
+  overflow: visible;
 }
 
 .splide-vertical .splide__track {
@@ -121,7 +104,7 @@ div.gallery__container-vertical h2.gallery__title {
 .splide-vertical .splide__list {
   overflow: visible !important;
   align-items: center;
-  padding: 2rem 0;
+  padding: 1rem 0;
 }
 
 .splide-vertical .splide__slide {
@@ -130,10 +113,12 @@ div.gallery__container-vertical h2.gallery__title {
   align-items: center;
   position: relative;
   z-index: 1;
+  overflow: visible;
+  padding: 1rem 0;
 }
 
 .splide-vertical .splide__slide img {
-  transition: transform 0.4s ease, box-shadow 0.4s ease, opacity 0.4s ease, filter 0.4s ease;
+  transition: transform 0.4s ease, opacity 0.4s ease, filter 0.4s ease;
   opacity: 0.3;
   filter: blur(3px);
   transform: scale(0.85);
@@ -180,6 +165,13 @@ div.gallery__container-vertical h2.gallery__title {
   display: inline-block;
 }
 
+/* If the vertical carousel is followed by a specific section, adjust that too */
+.gallery__container-vertical + .gallery__container.series,
+.gallery__container-vertical + .gallery__container.marathon,
+.gallery__container-vertical + div.gallery__container.digo-happy {
+  margin-top: -1rem; /* Pull even closer */
+}
+
 /* =========================
    4. SIMPLE CAROUSELS
    ========================= */
@@ -193,8 +185,7 @@ div.gallery__container-vertical h2.gallery__title {
   width: 22rem;
   min-width: 22rem;
   border-radius: 1em;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
-  transition: transform 1s, box-shadow 0.4s, filter 0.25s;
+  transition: transform 1s, filter 0.25s;
   cursor: pointer;
   position: relative;
   margin-right: 1.2rem;
@@ -202,7 +193,6 @@ div.gallery__container-vertical h2.gallery__title {
 
 .splide-simple .splide__slide img:hover {
   transform: scale(1.2);
-  box-shadow: 0 0 50px 3px rgba(255, 255, 255, 0.3), 0 8px 16px rgba(0, 0, 0, 0.28);
   filter: brightness(1.1);
   z-index: 2;
 }
@@ -213,14 +203,15 @@ div.gallery__container-vertical h2.gallery__title {
 .gallery__container.series,
 .gallery__container.marathon,
 div.gallery__container.digo-happy {
-  margin-top: 4rem;
-  margin-bottom: 6rem;
-  padding-left: 0;
+  margin-top: 1rem;
+  margin-bottom: 5rem;
+  padding-left: 0; /* Remove left padding to align titles */
   padding-right: 0;
 }
 
+/* MARATHON TITLE - ALIGNED WITH ALL OTHER TITLES */
 .gallery__container.marathon .gallery__title {
-  margin-left: 3.5rem;
+  margin-left: 5rem; /* Changed from 3.5rem to 5rem for consistency */
   font-size: 2.2rem;
   color: var(--green-lighter, #4caf50);
   font-weight: bold;
@@ -229,10 +220,11 @@ div.gallery__container.digo-happy {
   text-align: left;
 }
 
+/* SPLIDE CONTAINERS - ADJUSTED TO COMPENSATE FOR TITLE ALIGNMENT */
 div.gallery__container.series .splide,
 div.gallery__container.marathon .splide,
 div.gallery__container.digo-happy .splide {
-  padding-left: 3.5rem;
+  padding-left: 5rem; /* Changed from 3.5rem to 5rem to align with titles */
   padding-right: 1.5rem;
 }
 
@@ -243,7 +235,7 @@ div.gallery__container.marathon .gallery__thumbnail {
   aspect-ratio: 16/9;
   border-radius: 1.5em;
   margin-right: 2rem;
-  transition: transform 0.35s cubic-bezier(0.4, 2, 0.6, 1), box-shadow 0.3s;
+  transition: transform 0.35s cubic-bezier(0.4, 2, 0.6, 1);
   opacity: 0.85;
 }
 
@@ -251,7 +243,6 @@ div.gallery__container.series .gallery__thumbnail:hover,
 div.gallery__container.marathon .gallery__thumbnail:hover,
 div.gallery__container.digo-happy .gallery__thumbnail:hover {
   transform: scale(1.12);
-  box-shadow: 0px 0px 40px rgba(255, 255, 255, 0.276);
   opacity: 1;
 }
 
@@ -263,7 +254,7 @@ div.gallery__container.digo-happy .gallery__thumbnail:hover {
   align-items: stretch;
   width: 100%;
   max-width: 100vw;
-  margin: 5rem 0 7rem 0;
+  margin: 1rem 0 1rem 0;
   min-height: 220px;
   padding: 0;
   overflow: hidden;
@@ -277,12 +268,11 @@ div.marathon-carousel .gallery__thumbnail {
   height: auto;
   border-radius: 1.2em;
   opacity: 0.85;
-  transition: transform 0.35s cubic-bezier(0.4, 2, 0.6, 1), box-shadow 0.35s;
+  transition: transform 0.35s cubic-bezier(0.4, 2, 0.6, 1);
 }
 
 div.marathon-carousel .gallery__thumbnail:hover {
   transform: scale(1.12);
-  box-shadow: 0px 0px 32px rgba(255, 255, 255, 0.276);
   opacity: 1;
 }
 
@@ -293,10 +283,8 @@ div.marathon-carousel .gallery__thumbnail:hover {
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  padding: 5rem 2.5rem 2rem 5rem;
+  padding: 2rem 2rem 0 5rem; /* Consistent 5rem left padding */
   box-sizing: border-box;
-  border-top-right-radius: 2rem;
-  border-bottom-right-radius: 2rem;
   z-index: 2;
 }
 
@@ -309,15 +297,16 @@ span.marathon-label {
 }
 
 h2.marathon-title {
-  font-size: 3.5rem;
-  line-height: 1;
-  color: var(--white);
+  font-size: 4rem;
+  line-height: 1.2;
+  color: var(--white-50);
   font-weight: bold;
   margin: 1rem 0;
+  padding-left: 0; /* No additional padding - already aligned with container */
 }
 
 h2.marathon-title:hover {
-  color: var(--white-50);
+  color: var(--white);
 }
 
 .marathon-carousel {
@@ -325,9 +314,7 @@ h2.marathon-title:hover {
   background: transparent;
   display: flex;
   align-items: center;
-  border-top-right-radius: 2rem;
-  border-bottom-right-radius: 2rem;
-  padding: 2rem 0 2rem 0;
+  padding: 1rem 0;
   z-index: 1;
 }
 
@@ -337,7 +324,7 @@ h2.marathon-title:hover {
 }
 
 .marathon-carousel .splide__list {
-  gap: 3.5rem !important;
+  gap: 3rem !important;
 }
 
 /* =========================

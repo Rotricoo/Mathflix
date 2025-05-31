@@ -14,6 +14,11 @@ body.login-page {
   background: linear-gradient(120deg, #4aa042, #000000, #277028, #000000);
   background-size: 200% 200%;
   animation: gradientMove 10s ease-in-out infinite alternate;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+  overflow-x: hidden;
 }
 
 @keyframes gradientMove {
@@ -37,20 +42,20 @@ body.login-page {
   text-align: center;
   padding: 3rem 4rem;
   border-radius: 3rem;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  max-width: 35rem;
+  max-width: 45rem;
   width: 100%;
   overflow: visible;
   opacity: 0;
-  transform: scale(1.4);
+  transform: scale(1);
   transform-origin: center center;
-  transition: opacity 0.7s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  transition: opacity 0.7s cubic-bezier(0.68, -0.55, 0.27, 1.55), transform 0.7s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  z-index: 10;
 }
 
 /* === LOGIN CONTAINER VISIBLE ANIMATION === */
 .login.login--visible {
   opacity: 1;
-  transform: scale(1.4);
+  transform: scale(1);
 }
 
 /* =========================
@@ -58,18 +63,21 @@ body.login-page {
    ========================= */
 .login__icon {
   position: absolute;
-  top: -3rem;
+  top: -4rem;
   padding: 0.5rem;
-  width: 5rem;
-  height: 5rem;
+  width: 7rem;
+  height: 7rem;
   display: flex;
   justify-content: center;
   align-items: center;
   animation: rotating 1s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  z-index: 11;
 }
+
 .login__icon:hover {
   animation: rotating2 2s cubic-bezier(0.68, -0.55, 0.27, 1.55);
 }
+
 @keyframes rotating {
   0% {
     transform: rotate(0deg);
@@ -78,6 +86,7 @@ body.login-page {
     transform: rotate(360deg);
   }
 }
+
 @keyframes rotating2 {
   0% {
     transform: rotate(0deg);
@@ -98,51 +107,69 @@ body.login-page {
 .login__field {
   text-align: left;
   position: relative;
-  margin-bottom: 1.5rem; /* Increased spacing between fields */
+  margin-bottom: 1.5rem;
+}
+
+/* === LABELS === */
+.login__label {
+  display: block;
+  font-size: 1.2rem;
+  color: var(--white, #ffffff);
+  margin-left: 1rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
 }
 
 /* === INPUTS (TEXT, PASSWORD, EMAIL) === */
+.login__input,
 input[type="text"],
 input[type="password"],
 input[type="email"] {
   all: unset;
   box-sizing: border-box;
   width: 100%;
-  padding: 0.5rem;
-  border: 2px solid var(--green-dark);
+  padding: 1rem 1.5rem;
+  border: 2px solid var(--green-dark, #277028);
   border-radius: 5rem;
-  background-color: var(--white);
-  color: var(--green-dark);
+  background-color: var(--white, #ffffff);
+  color: var(--green-dark, #277028);
   outline: none;
   min-height: 2.5rem;
+  font-size: 1.4rem;
+  transition: all 0.3s ease;
 }
 
 /* === INPUT FOCUS STATE === */
+.login__input:focus,
 input[type="text"]:focus,
 input[type="password"]:focus,
 input[type="email"]:focus {
-  border-color: var(--green-light);
-  box-shadow: 0 0 5px var(--green-light);
+  border-color: var(--green-lighter, #4aa042);
+  box-shadow: 0 0 5px var(--green-lighter, #4aa042);
+  transform: none;
 }
 
 /* === INPUT FEEDBACK (ERROR & SUCCESS) === */
 .login__input.error {
-  border-color: #e74c3c;
-  box-shadow: 0 0 5px #e74c3c;
+  border-color: #e74c3c !important;
+  box-shadow: 0 0 5px #e74c3c !important;
 }
+
 .login__input.success {
-  border-color: #27ae60;
-  box-shadow: 0 0 5px #27ae60;
+  border-color: #27ae60 !important;
+  box-shadow: 0 0 5px #27ae60 !important;
 }
 
 /* === ERROR MESSAGE === */
 #error-message {
-  font-size: 1.2rem;
+  font-size: 1.4rem;
+  line-height: 1.3;
   margin-top: 0.7rem;
   margin-bottom: 1.5rem;
   white-space: pre-line;
   color: #e91a03;
   font-weight: bold;
+  text-align: center;
 }
 
 /* =========================
@@ -152,49 +179,80 @@ input[type="email"]:focus {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 1rem;
   margin-top: 1rem;
   width: 100%;
 }
+
 .login__checkbox {
   display: flex;
   align-items: center;
-  gap: 0.3rem;
+  gap: 0.5rem;
+}
+
+.login__checkbox input[type="checkbox"] {
+  width: auto;
+  height: auto;
+  min-height: auto;
+  padding: 0;
+  margin: 0;
+  border-radius: 3px;
+}
+
+.login__checkbox label {
+  color: var(--white, #ffffff);
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+
+.login__forgot {
+  color: var(--white, #ffffff);
+  font-size: 1.3rem;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 /* =========================
    === BUTTONS ===
    ========================= */
-button,
-.login__button {
+.login__button,
+button {
   all: unset;
   display: inline-block;
   cursor: pointer;
-  padding: 0.5rem 2rem;
-  margin-top: 1rem;
+  padding: 1rem 2rem;
+  margin-top: 1.5rem;
   font-size: 1.3rem;
-  border: 2px solid var(--white);
+  border: 2px solid var(--white, #ffffff);
   border-radius: 5rem;
-  transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+  background: transparent;
+  color: var(--white, #ffffff);
+  text-align: center;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  min-width: 120px;
 }
-button:hover,
-.login__button:hover {
-  background: var(--green-gradient-buttons);
-  color: var(--white);
-  box-shadow: 0 0 16px var(--green-lighter), 0 2px 8px #0004;
+
+.login__button:hover,
+button:hover {
+  background: linear-gradient(45deg, var(--green-lighter, #4aa042), var(--green-dark, #277028));
+  color: var(--white, #ffffff);
+  box-shadow: 0 0 16px var(--green-lighter, #4aa042), 0 2px 8px rgba(0, 0, 0, 0.25);
+  transform: translateY(-2px);
 }
 
 /* === SECONDARY BUTTON (SIGN UP, ETC) === */
 .login__button-secondary {
-  background-color: var(--white);
-  border: 2px solid var(--green-dark);
-  color: var(--green-dark);
+  background-color: var(--white, #ffffff);
+  border: 2px solid var(--green-dark, #277028);
+  color: var(--green-dark, #277028);
   padding: 1rem 2rem;
   margin: 0;
   font-size: 1.5rem;
 }
+
 .login__button-secondary:hover {
-  background-color: var(--white-80);
+  background-color: rgba(255, 255, 255, 0.9);
+  transform: translateY(-2px);
 }
 
 /* =========================
@@ -205,17 +263,22 @@ button:hover,
   flex-direction: column;
   align-items: center;
   width: 100%;
-  margin-top: 7rem;
+  margin-top: 3rem;
 }
+
 .login__subtext {
-  font-size: 1.3rem;
-  color: var(--white);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--white, #ffffff);
   margin-bottom: 0.5rem;
 }
+
 .login__footer-text {
   margin-bottom: 0.5rem;
   font-size: 1.3rem;
+  color: var(--white, #ffffff);
 }
+
 .login__signup {
   display: flex;
   justify-content: center;
@@ -224,22 +287,33 @@ button:hover,
 /* =========================
    === SHOW/HIDE PASSWORD ICON ===
    ========================= */
+/* =========================
+   === SHOW/HIDE PASSWORD ICON ===
+   ========================= */
 .eye-icon {
   position: absolute;
-  right: 3.5rem;
-  top: 2rem;
+  right: 1.5rem;
+  top: 50%;
   transform: translateY(-50%);
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0;
+  padding: 0.3rem;
   display: flex;
   align-items: center;
-  z-index: 2;
+  justify-content: center;
+  z-index: 12;
+  color: var(--green-dark, #277028);
 }
+
+.eye-icon:hover {
+  background-color: rgba(39, 112, 40, 0.1);
+}
+
 .eye-icon svg {
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1.4rem;
+  height: 1.4rem;
+  fill: currentColor;
 }
 
 /* =========================
@@ -257,6 +331,7 @@ button:hover,
   justify-content: center;
   z-index: 1000;
 }
+
 .custom-popup__content {
   background: #222;
   color: #fff;
@@ -264,12 +339,13 @@ button:hover,
   border-radius: 1rem;
   text-align: center;
   min-width: 220px;
-  box-shadow: 0 4px 24px #0008;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1.5rem;
 }
+
 #custom-popup-message {
   font-size: 2rem;
   line-height: 1.5;
@@ -292,55 +368,76 @@ button:hover,
    ========================= */
 @media (min-width: 300px) and (max-width: 768px) {
   body.login-page {
-    font-size: 0.7rem;
+    font-size: 1rem;
+    padding: 1rem;
   }
+
   .login {
-    max-width: 60vw;
-    padding: 2rem 0.7rem;
+    max-width: 90vw;
+    padding: 2rem 1.5rem;
+    margin: 1rem;
   }
+
   .login__icon {
-    animation: rotating 10s linear infinite;
+    width: 4rem;
+    height: 4rem;
+    top: -2rem;
   }
-  .login__icon:hover {
-    animation: rotating 10s linear infinite;
+
+  .login__label {
+    font-size: 1rem;
+    margin-left: 0.5rem;
+    margin-bottom: 0.3rem;
   }
+
+  .login__input {
+    font-size: 1.2rem;
+    padding: 0.8rem 1rem;
+    min-height: 2rem;
+  }
+
+  .login__button {
+    font-size: 1.1rem;
+    padding: 0.8rem 1.5rem;
+  }
+
   #error-message {
-    font-size: 0.8rem;
+    font-size: 1rem;
     line-height: 1.2;
     margin-top: 1rem;
     margin-bottom: 1rem;
   }
-  .login__label {
-    font-size: 0.7rem;
-    margin-left: 1rem;
-    margin-bottom: 0.3rem;
-  }
+
   .login__checkbox label,
   .login__checkbox input,
   .login__forgot {
     font-size: 0.9rem;
-    transform: scale(0.9);
-    margin-top: -0.5rem;
   }
+
   .login__checkbox {
-    gap: 0.1rem;
+    gap: 0.3rem;
   }
-  .custom-popup {
-    width: auto;
-  }
+
   .custom-popup__content {
-    width: 70vw !important;
+    width: 85vw !important;
     max-width: 95vw !important;
     box-sizing: border-box;
-    padding: 1.2rem 0.7rem;
+    padding: 1.5rem 1rem;
     font-size: 1.1rem;
   }
+
   #custom-popup-message {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
   }
+
   #custom-popup-close {
-    font-size: 1.3rem !important;
-    padding: 0.8rem 4rem !important;
+    font-size: 1.2rem !important;
+    padding: 0.8rem 2rem !important;
+  }
+
+  .eye-icon {
+    right: 1rem;
+    padding: 0.3rem;
   }
 }
 
@@ -348,69 +445,114 @@ button:hover,
   body.login-page {
     font-size: 1.4rem;
   }
+
   .login {
-    margin-top: 10rem;
+    margin-top: 5rem;
     max-width: 60rem;
     padding: 5rem 7rem;
   }
+
   .login__icon {
     width: 8rem;
     height: 8rem;
     top: -4rem;
   }
+
   .login__icon svg {
-    margin-top: 1rem;
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 3rem;
+    height: 3rem;
   }
+
+  .login__label {
+    font-size: 1.8rem;
+    margin-left: 1rem;
+  }
+
+  .login__input {
+    min-height: 3.5rem;
+    font-size: 1.8rem;
+    padding: 1.2rem 2rem;
+  }
+
+  .login__button {
+    font-size: 1.8rem;
+    padding: 1.5rem 4rem;
+    margin-top: 2rem;
+  }
+
   #error-message {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     line-height: 1.4;
   }
+
   .login__checkbox label,
   .login__checkbox input,
   .login__forgot {
-    font-size: 1.3rem;
-    margin-top: -0.2rem;
-  }
-  .login__label {
     font-size: 1.5rem;
-    margin-left: 1rem;
   }
-  input.login__input {
-    min-height: 3rem;
-    font-size: 1.5rem;
-    margin-top: 1rem;
-    padding: 1rem;
-  }
-  .login__button {
-    font-size: 1.5rem;
-    padding: 1rem 4rem;
-    margin-top: 2rem;
-  }
+
   .custom-popup__content {
     font-size: 1.5rem;
     min-width: 350px;
     max-width: 40vw;
     padding: 3rem 4rem;
   }
+
   #custom-popup-message {
     font-size: 2.5rem;
     padding: 0 2rem;
   }
+
   #custom-popup-close {
-    font-size: 1.3rem;
-    padding: 0.7rem 2.5rem;
+    font-size: 1.6rem !important;
+    padding: 1rem 3rem !important;
   }
+
   .login__footer {
-    margin-top: 10rem;
+    margin-top: 5rem;
   }
+
   .login__subtext {
-    font-size: 2.5rem;
+    font-size: 2rem;
   }
-  .login__button.login__button-secondary {
+
+  .login__button-secondary {
     font-size: 2rem;
     margin: 1rem;
     padding: 1.5rem 3rem;
   }
+
+  .eye-icon {
+    right: 2rem;
+  }
+}
+
+/* =========================
+   === PREVENT CONFLICTS ===
+   ========================= */
+/* Ensure login page styles don't get overridden by main site styles */
+body.login-page * {
+  box-sizing: border-box;
+}
+
+body.login-page .login *:not(.eye-icon):not(.eye-icon svg) {
+  transform: none !important;
+}
+
+/* Reset any potential carousel/glow effects that might leak */
+body.login-page .login *,
+body.login-page .login *:hover {
+  filter: none !important;
+  box-shadow: inherit !important;
+}
+
+body.login-page .login input:hover,
+body.login-page .login input:focus {
+  transform: none !important;
+  filter: none !important;
+}
+
+body.login-page .login button:not(:hover) {
+  transform: none !important;
+  filter: none !important;
 }

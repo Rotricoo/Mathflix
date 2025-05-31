@@ -223,15 +223,18 @@ document.addEventListener("DOMContentLoaded", function () {
         new Splide(selector, {
           type: "loop",
           perPage,
-          gap: "1.5rem",
+          perMove: 1, // Move one slide at a time (like series carousels)
+          gap: "3rem",
           pagination: false,
           arrows: true,
+          speed: 600, // Smooth transition speed
+          easing: "ease", // Smooth easing
           breakpoints: {
             900: { perPage: 1, gap: "0.5rem" },
-            1200: { perPage: 2, gap: "0.8rem" },
-            1400: { perPage: 3, gap: "1rem" },
-            1600: { perPage: perPageLarge, gap: "1.5rem" },
-            1800: { perPage: perPageLarge + 1, gap: "2rem" },
+            1200: { perPage: 3, gap: "1.2rem" },
+            1400: { perPage: 3.5, gap: "2.5rem" },
+            1600: { perPage: perPageLarge, gap: "2rem" },
+            1800: { perPage: perPageLarge + 1, gap: "2.5rem" },
           },
         }).mount();
         console.log(`✅ Marathon carousel mounted: ${selector}`);

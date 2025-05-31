@@ -401,6 +401,23 @@ window.moviesData.hocuspocus = {
 // ============================================================
 // ================= SÉRIES PARA MARATONAR ====================
 // ============================================================
+window.moviesData.rupaul = {
+  title: "RuPaul's Drag Race",
+  genre: ["Reality", "Competition", "Comedy", "Entertainment"],
+  duration: "16+ seasons",
+  year: 2009,
+  age: "TV-14",
+  origin: "USA",
+  locations: ["World of Wonder Studios - Los Angeles, California", "Various locations for challenges"],
+  cast: ["RuPaul", "Michelle Visage", "Carson Kressley", "Ross Mathews"],
+  director: "Nick Murray",
+  description:
+    "America's most sickening drag queens compete in challenges testing charisma, uniqueness, nerve, and talent to become America's Next Drag Superstar and win the crown.",
+  poster: "assets/imgs/ban-rupaul.png",
+  trailer: "https://www.youtube.com/embed/I1eSW2tzyoM?si=1mNHsCeYJ1uu7cWs",
+  tags: ["drag", "competition", "LGBTQ+", "reality TV", "fashion"],
+  ranking: { math: 0, digo: 0 },
+};
 window.moviesData.simpsons = {
   title: "The Simpsons",
   genre: ["Animation", "Comedy", "Family"],
@@ -418,7 +435,7 @@ window.moviesData.simpsons = {
   tags: ["animation", "comedy", "family"],
   ranking: { math: 0, digo: 0 },
 };
-window.moviesData.howmetyour = {
+window.moviesData.howmetyourmother = {
   title: "How I Met Your Mother",
   genre: ["Comedy", "Romance"],
   duration: "9 seasons",
@@ -430,26 +447,43 @@ window.moviesData.howmetyour = {
   director: "Pamela Fryman",
   description:
     "A father recounts to his children the humorous and emotional journey that led him to meet their mother, spanning years of memories.",
-  poster: "assets/imgs/ban-howmetyour.png",
-  trailer: "https://www.youtube.com/embed/C8-4jMTOUJI?si=5nHfR-qACY5pPucH",
+  poster: "assets/imgs/ban-howmetyourmother.png",
+  trailer: "https://www.youtube.com/embed/cjJLEYMzpjc?si=6het-bvSR_o4stFq",
+  tags: ["sitcom", "romance", "friendship"],
+  ranking: { math: 0, digo: 0 },
+};
+window.moviesData.howmetyourfather = {
+  title: "How I Met Your Father",
+  genre: ["Comedy", "Romance"],
+  duration: "2 seasons",
+  year: 2022,
+  age: "TV-14",
+  origin: "USA",
+  locations: ["New York City, USA (setting)", "Los Angeles & Burbank, California (filming)"],
+  cast: ["Hilary Duff", "Christopher Lowell", "Francia Raisa", "Suraj Sharma", "Tom Ainsley", "Tien Tran", "Kim Cattrall"],
+  director: "Pamela Fryman",
+  description:
+    "In the year 2050, Sophie recounts to her son the story of how she met his father, taking us back to 2022 where she and her close-knit group of friends navigate love and life in New York City.",
+  poster: "assets/imgs/ban-howmetyourfather.png",
+  trailer: "https://www.youtube.com/embed/kHQVS-EySu4?si=NFpFGc9jRqrdKG53",
   tags: ["sitcom", "romance", "friendship"],
   ranking: { math: 0, digo: 0 },
 };
 window.moviesData.agatha = {
-  title: "Agatha Christie's Poirot",
-  genre: ["Crime", "Drama", "Mystery"],
-  duration: "13 seasons",
-  year: 1989,
-  age: "TV-PG",
-  origin: "UK",
-  locations: "England, UK",
-  cast: ["David Suchet", "Hugh Fraser", "Philip Jackson"],
-  director: "Edward Bennett",
+  title: "Agatha All Along",
+  genre: ["Action", "Adventure", "Comedy", "Drama", "Fantasy"],
+  duration: "9 episodes",
+  year: 2024,
+  age: "TV-14",
+  origin: "USA",
+  locations: ["Trilith Studios - Atlanta, Georgia", "Warner Bros. Ranch - Burbank, California"],
+  cast: ["Kathryn Hahn", "Joe Locke", "Sasheer Zamata", "Ali Ahn", "Patti LuPone", "Aubrey Plaza", "Debra Jo Rupp"],
+  director: "Jac Schaeffer",
   description:
-    "Famous detective Hercule Poirot unravels complex murder mysteries across England, using sharp intellect and keen observation.",
+    "After being freed from a spell, Agatha Harkness embarks on a journey along the Witches' Road to regain her powers, forming a new alliance with a mysterious teenager.",
   poster: "assets/imgs/ban-agatha.png",
-  trailer: "https://www.youtube.com/embed/your_trailer_id_agatha",
-  tags: ["detective", "mystery", "crime"],
+  trailer: "https://www.youtube.com/embed/R9pXbNz6Vbw?si=YOV7Pz5h2Yd9sFWH",
+  tags: ["witchcraft", "magic", "MCU", "spin-off"],
   ranking: { math: 0, digo: 0 },
 };
 window.moviesData.wandavision = {
@@ -465,7 +499,7 @@ window.moviesData.wandavision = {
   description:
     "In a sitcom-like town, Wanda and Vision live an ideal suburban life that unravels as they begin to suspect something isn't quite right.",
   poster: "assets/imgs/ban-wandavision.png",
-  trailer: "https://www.youtube.com/embed/your_trailer_id_wandavision",
+  trailer: "https://www.youtube.com/embed/sj9J2ecsSpo?si=0M26SE5_Y0LPxCIb",
   tags: ["marvel", "superhero", "sitcom"],
   ranking: { math: 0, digo: 0 },
 };
@@ -482,7 +516,7 @@ window.moviesData.theoffice = {
   description:
     "A documentary-style sitcom about the lives, quirks, and chaos of office workers at Dunder Mifflin's Scranton branch.",
   poster: "assets/imgs/ban-theoffice.png",
-  trailer: "https://www.youtube.com/embed/your_trailer_id_theoffice",
+  trailer: "https://www.youtube.com/embed/-C2z-nshFts?si=CFokD1TwBjsny5rE",
   tags: ["sitcom", "office", "comedy"],
   ranking: { math: 0, digo: 0 },
 };
@@ -521,7 +555,7 @@ window.moviesData.catchingfire = {
   director: "Francis Lawrence",
   description: "Katniss and Peeta become targets of the Capitol after their victory sparks rebellion in the districts.",
   poster: "assets/imgs/Marathon/Hunger-games/ban-catchingfire.png",
-  trailer: "https://www.youtube.com/embed/MkvUNfySGQU",
+  trailer: "https://www.youtube.com/embed/EAzGXqJSDJ8?si=csp0iKHYT5tPxFF8",
   tags: ["dystopia", "rebellion", "action"],
   ranking: { math: 0, digo: 0 },
 };
@@ -537,8 +571,8 @@ window.moviesData.mockingjay1 = {
   cast: ["Jennifer Lawrence", "Josh Hutcherson", "Liam Hemsworth"],
   director: "Francis Lawrence",
   description: "Katniss becomes the symbol of rebellion as the districts unite against the Capitol.",
-  poster: "assets/imgs/Marathon/Hunger-games/ban-mockingjay1.png",
-  trailer: "https://www.youtube.com/embed/C_Tsj_wTJkQ",
+  poster: "assets/imgs/Marathon/Hunger-games/ban-mockingjay.png",
+  trailer: "https://www.youtube.com/embed/3PkkHsuMrho?si=nONXDOVsnqadGGNV",
   tags: ["dystopia", "rebellion", "war"],
   ranking: { math: 0, digo: 0 },
 };
@@ -555,7 +589,7 @@ window.moviesData.mockingjay2 = {
   director: "Francis Lawrence",
   description: "Katniss and her allies bring the revolution to the Capitol, facing deadly traps and moral dilemmas.",
   poster: "assets/imgs/Marathon/Hunger-games/ban-mockingjay2.png",
-  trailer: "https://www.youtube.com/embed/n-7K_OjsDCQ",
+  trailer: "https://www.youtube.com/embed/eO0T9A3kdqc?si=oR0_ZSBLdeaxMHv9",
   tags: ["dystopia", "revolution", "finale"],
   ranking: { math: 0, digo: 0 },
 };
@@ -844,7 +878,7 @@ window.moviesData.toystory1 = {
   director: "John Lasseter",
   description:
     "A cowboy toy feels threatened when a flashy spaceman replaces him as the favorite toy, sparking a rivalry and an unlikely friendship.",
-  poster: "assets/imgs/Marathon/ToyStory/toystory1.png",
+  poster: "assets/imgs/Marathon/Toy-Story/ban-toystory1.png",
   trailer: "https://www.youtube.com/embed/v-PjgYDrg70",
   tags: ["animation", "toys", "friendship"],
   ranking: { math: 0, digo: 0 },
@@ -861,7 +895,7 @@ window.moviesData.toystory2 = {
   cast: ["Tom Hanks", "Tim Allen", "Joan Cusack"],
   director: "John Lasseter",
   description: "Woody is stolen by a toy collector, prompting Buzz and the gang to launch a daring rescue mission.",
-  poster: "assets/imgs/Marathon/ToyStory/toystory2.png",
+  poster: "assets/imgs/Marathon/Toy-Story/ban-toystory2.png",
   trailer: "https://www.youtube.com/embed/xNWSGRD5CzU",
   tags: ["animation", "toys", "rescue"],
   ranking: { math: 0, digo: 0 },
@@ -879,7 +913,7 @@ window.moviesData.toystory3 = {
   director: "Lee Unkrich",
   description:
     "The toys face an uncertain future as Andy prepares to leave for college, leading to an emotional adventure at a daycare.",
-  poster: "assets/imgs/Marathon/ToyStory/toystory3.png",
+  poster: "assets/imgs/Marathon/Toy-Story/ban-toystory3.png",
   trailer: "https://www.youtube.com/embed/JcpWXaA2qeg",
   tags: ["animation", "toys", "adventure"],
   ranking: { math: 0, digo: 0 },
@@ -896,7 +930,7 @@ window.moviesData.toystory4 = {
   cast: ["Tom Hanks", "Tim Allen", "Annie Potts"],
   director: "Josh Cooley",
   description: "Woody, Buzz, and friends embark on a road trip with new toy Forky, discovering what it means to belong.",
-  poster: "assets/imgs/Marathon/ToyStory/toystory4.png",
+  poster: "assets/imgs/Marathon/Toy-Story/ban-toystory4.png",
   trailer: "https://www.youtube.com/embed/wmiIUN-7qhE",
   tags: ["animation", "toys", "road trip"],
   ranking: { math: 0, digo: 0 },
@@ -917,8 +951,8 @@ window.moviesData.xmen1 = {
   director: "Bryan Singer",
   description:
     "Mutants with extraordinary powers clash over humanity's fate, as the X-Men fight for peace while others seek mutant dominance.",
-  poster: "assets/imgs/Marathon/Xmen/xmen1.png",
-  trailer: "https://www.youtube.com/embed/pT0tBsGzZhY",
+  poster: "assets/imgs/Marathon/x-men/ban-xmen1.png",
+  trailer: "https://www.youtube.com/embed/VNxwlx6etXI?si=_5etQBR2lq61ECoO",
   tags: ["mutants", "superhero", "marvel"],
   ranking: { math: 0, digo: 0 },
 };
@@ -934,8 +968,8 @@ window.moviesData.xmen2 = {
   cast: ["Hugh Jackman", "Patrick Stewart", "Ian McKellen"],
   director: "Bryan Singer",
   description: "The X-Men join forces with their enemy Magneto to stop a threat against all mutants and humans.",
-  poster: "assets/imgs/Marathon/Xmen/xmen2.png",
-  trailer: "https://www.youtube.com/embed/NNY8YjGwjB4",
+  poster: "assets/imgs/Marathon/X-men/ban-xmen2.png",
+  trailer: "https://www.youtube.com/embed/KNIdceH7XOw?si=NBIoYIyxW0r4PovR",
   tags: ["mutants", "superhero", "marvel"],
   ranking: { math: 0, digo: 0 },
 };
@@ -951,8 +985,8 @@ window.moviesData.xmen3 = {
   cast: ["Hugh Jackman", "Patrick Stewart", "Ian McKellen"],
   director: "Brett Ratner",
   description: "A cure for mutation divides the X-Men, while a resurrected Jean Grey unleashes her dark side as the Phoenix.",
-  poster: "assets/imgs/Marathon/Xmen/xmen3.png",
-  trailer: "https://www.youtube.com/embed/5XqC0QvNHk8",
+  poster: "assets/imgs/Marathon/X-men/ban-xmen3.png",
+  trailer: "https://www.youtube.com/embed/ZQ0v5dXbw7M?si=rfOvesF7TqfHhVSZ",
   tags: ["mutants", "superhero", "marvel"],
   ranking: { math: 0, digo: 0 },
 };
@@ -968,8 +1002,8 @@ window.moviesData.xmen4 = {
   cast: ["Hugh Jackman", "Liev Schreiber", "Danny Huston"],
   director: "Gavin Hood",
   description: "The backstory of Wolverine is revealed, from his childhood to his time in the Weapon X program.",
-  poster: "assets/imgs/Marathon/Xmen/xmen4.png",
-  trailer: "https://www.youtube.com/embed/9U6eJZBsxgM",
+  poster: "assets/imgs/Marathon/X-men/ban-xmen4.png",
+  trailer: "https://www.youtube.com/embed/8IxT7WFL6Ec?si=FrwW8A-QBhqLfFUW",
   tags: ["mutants", "wolverine", "origin"],
   ranking: { math: 0, digo: 0 },
 };
@@ -985,8 +1019,8 @@ window.moviesData.xmen5 = {
   cast: ["James McAvoy", "Michael Fassbender", "Jennifer Lawrence"],
   director: "Matthew Vaughn",
   description: "The origins of the X-Men are explored as Charles Xavier and Erik Lehnsherr form the first team of mutants.",
-  poster: "assets/imgs/Marathon/Xmen/xmen5.png",
-  trailer: "https://www.youtube.com/embed/o8ccSiH4olo",
+  poster: "assets/imgs/Marathon/X-men/ban-xmen5.png",
+  trailer: "https://www.youtube.com/embed/kyQKi5-k0UU?si=CEOxlngPyP81Rv13",
   tags: ["mutants", "origin", "marvel"],
   ranking: { math: 0, digo: 0 },
 };
@@ -1002,7 +1036,7 @@ window.moviesData.xmen6 = {
   cast: ["Hugh Jackman", "Tao Okamoto", "Rila Fukushima"],
   director: "James Mangold",
   description: "Wolverine travels to Japan, where he faces his past and new deadly enemies.",
-  poster: "assets/imgs/Marathon/Xmen/xmen6.png",
+  poster: "assets/imgs/Marathon/X-men/ban-xmen6.png",
   trailer: "https://www.youtube.com/embed/toLpchTUYk8",
   tags: ["mutants", "wolverine", "japan"],
   ranking: { math: 0, digo: 0 },
@@ -1019,7 +1053,7 @@ window.moviesData.xmen7 = {
   cast: ["Hugh Jackman", "James McAvoy", "Michael Fassbender"],
   director: "Bryan Singer",
   description: "Wolverine is sent to the past to change history and prevent the extinction of mutants and humans.",
-  poster: "assets/imgs/Marathon/Xmen/xmen7.png",
+  poster: "assets/imgs/Marathon/X-men/ban-xmen7.png",
   trailer: "https://www.youtube.com/embed/pK2zYHWDZKo",
   tags: ["mutants", "time travel", "marvel"],
   ranking: { math: 0, digo: 0 },
@@ -1036,7 +1070,7 @@ window.moviesData.xmen8 = {
   cast: ["James McAvoy", "Michael Fassbender", "Jennifer Lawrence"],
   director: "Bryan Singer",
   description: "The ancient mutant Apocalypse awakens and threatens the world, forcing the X-Men to unite against him.",
-  poster: "assets/imgs/Marathon/Xmen/xmen8.png",
+  poster: "assets/imgs/Marathon/X-men/ban-xmen8.png",
   trailer: "https://www.youtube.com/embed/Jer8XjMrUB4",
   tags: ["mutants", "apocalypse", "marvel"],
   ranking: { math: 0, digo: 0 },
@@ -1053,7 +1087,7 @@ window.moviesData.xmen9 = {
   cast: ["Hugh Jackman", "Patrick Stewart", "Dafne Keen"],
   director: "James Mangold",
   description: "In a bleak future, an aging Wolverine and ailing Professor X fight to protect a young mutant from dark forces.",
-  poster: "assets/imgs/Marathon/Xmen/xmen9.png",
+  poster: "assets/imgs/Marathon/X-men/ban-xmen9.png",
   trailer: "https://www.youtube.com/embed/Div0iP65aZo",
   tags: ["mutants", "wolverine", "future"],
   ranking: { math: 0, digo: 0 },
@@ -1071,7 +1105,7 @@ window.moviesData.xmen10 = {
   director: "Simon Kinberg",
   description:
     "Jean Grey develops incredible powers that corrupt and turn her into the Dark Phoenix, forcing the X-Men to choose between saving her or humanity.",
-  poster: "assets/imgs/Marathon/Xmen/xmen10.png",
+  poster: "assets/imgs/Marathon/X-men/ban-xmen10.png",
   trailer: "https://www.youtube.com/embed/QWbMckU3AOQ",
   tags: ["mutants", "phoenix", "marvel"],
   ranking: { math: 0, digo: 0 },

@@ -14,8 +14,19 @@
 // 1. GLOBAL VARIABLES & CONFIGURATIONS
 // ==========================
 
-// Admin configuration - set to true to allow ranking editing and comments
-const isAdminUser = true; // Change to false to disable editing features
+// Check if current user is admin (can edit ratings and comments)
+function checkAdminUser() {
+  try {
+    const currentUser = localStorage.getItem("mathflix_current_user");
+    return currentUser === "mathdigo"; // Only mathdigo can edit
+  } catch (error) {
+    console.warn("❌ Error checking admin user:", error);
+    return false;
+  }
+}
+
+// Dynamic admin status based on logged user
+let isAdminUser = checkAdminUser();
 
 // Current movie key being displayed in modal
 let currentMovieKey = null;
@@ -83,6 +94,9 @@ function openMovieModal(key) {
 
   console.log(`🎬 Opening modal for: ${movieInfo.title}`);
   const movieModal = document.getElementById("movie-modal");
+
+  // Update admin status when opening modal
+  isAdminUser = checkAdminUser();
 
   // Generate genre buttons HTML
   const genresHtml = movieInfo.genre
@@ -217,14 +231,14 @@ function renderStars(user, value, editable) {
   // Create 5 stars, filled based on rating value
   for (let i = 1; i <= 5; i++) {
     starsHtml += `<span class="star${i <= value ? " filled" : ""}" data-user="${user}" data-value="${i}" ${
-      editable ? "" : 'style="pointer-events:none"'
+      editable ? "" : 'style="pointer-events:none; cursor:default;"'
     }>★</span>`;
   }
 
-  // Add comment button for admin users
-  if (editable) {
-    starsHtml += `<button class="comment-btn" data-user="${user}" title="Add comment" style="margin-left:8px;padding:2px 7px;font-size:1.1rem;border-radius:5px;border:none;background:#4aa042;color:#fff;cursor:pointer;">💬</button>`;
-  }
+  // Add comment button for ALL users (admin can edit, viewers can view)
+  starsHtml += `<button class="comment-btn" data-user="${user}" title="${
+    editable ? "Add/Edit comment" : "View comment"
+  }" style="margin-left:8px;padding:2px 7px;font-size:1.1rem;border-radius:5px;border:none;background:#4aa042;color:#fff;cursor:pointer;">💬</button>`;
 
   return starsHtml;
 }
@@ -241,6 +255,9 @@ function renderRanking(movieKey) {
   const movieInfo = window.moviesData[movieKey];
   if (!movieInfo || !movieInfo.ranking) return;
 
+  // Update admin status
+  isAdminUser = checkAdminUser();
+
   // Load any saved rankings/comments from localStorage
   const savedData = getSavedMovieData(movieKey);
   if (savedData) {
@@ -253,7 +270,7 @@ function renderRanking(movieKey) {
   // Initialize comments object if it doesn't exist
   if (!movieInfo.comments) movieInfo.comments = { math: "", digo: "" };
 
-  // Render ranking HTML with stars and comment previews
+  // Render ranking HTML with stars and comment previews (NO WARNING MESSAGE)
   container.innerHTML = `
     <div class="stars-row">
       <span class="stars-label">Math</span>
@@ -273,17 +290,22 @@ function renderRanking(movieKey) {
 
   // Add click events for existing comment previews to show full text
   if (movieInfo.comments.math) {
-    document.getElementById("comment-math").onclick = () => showCommentBox("math", true);
+    document.getElementById("comment-math").onclick = () => showCommentBox("math", !isAdminUser);
   }
   if (movieInfo.comments.digo) {
-    document.getElementById("comment-digo").onclick = () => showCommentBox("digo", true);
+    document.getElementById("comment-digo").onclick = () => showCommentBox("digo", !isAdminUser);
   }
 }
 
-// Handle star rating clicks and comment button clicks (admin only)
+// Handle star rating clicks and comment button clicks
 document.addEventListener("click", function (e) {
-  // Star rating click handling
-  if (isAdminUser && e.target.classList.contains("star")) {
+  // Star rating click handling (admin only)
+  if (e.target.classList.contains("star")) {
+    if (!isAdminUser) {
+      console.log("❌ Only admin can edit ratings");
+      return;
+    }
+
     const user = e.target.dataset.user;
     const value = parseInt(e.target.dataset.value, 10);
 
@@ -299,14 +321,14 @@ document.addEventListener("click", function (e) {
 
       // Re-render to show updated rating
       renderRanking(currentMovieKey);
-      console.log(`⭐ Updated ${user}'s rating to ${value} stars`);
+      console.log(`⭐ Admin updated ${user}'s rating to ${value} stars`);
     }
   }
 
-  // Comment button click handling
-  if (isAdminUser && e.target.classList.contains("comment-btn")) {
+  // Comment button click handling (all users)
+  if (e.target.classList.contains("comment-btn")) {
     const user = e.target.dataset.user;
-    showCommentBox(user);
+    showCommentBox(user, !isAdminUser);
   }
 });
 
@@ -334,34 +356,39 @@ function showCommentBox(user, readOnly = false) {
   input.focus();
 
   // Handle read-only mode for non-admin users
-  if (readOnly && !isAdminUser) {
+  if (readOnly) {
     input.setAttribute("readonly", "readonly");
     saveBtn.style.display = "none";
     count.style.display = "none";
+    label.textContent += " (Read-only)";
   } else {
     input.removeAttribute("readonly");
     saveBtn.style.display = "";
     count.style.display = "";
   }
 
-  // Update character count as user types
+  // Update character count as user types (only if editable)
   input.oninput = () => {
-    count.textContent = `${input.value.length}/300`;
+    if (!readOnly) {
+      count.textContent = `${input.value.length}/300`;
+    }
   };
 
-  // Save comment functionality
+  // Save comment functionality (only for admin)
   saveBtn.onclick = () => {
-    movieInfo.comments[user] = input.value.slice(0, 300); // Limit to 300 characters
+    if (!readOnly) {
+      movieInfo.comments[user] = input.value.slice(0, 300); // Limit to 300 characters
 
-    // Save to localStorage
-    saveMovieData(currentMovieKey, {
-      ranking: movieInfo.ranking,
-      comments: movieInfo.comments,
-    });
+      // Save to localStorage
+      saveMovieData(currentMovieKey, {
+        ranking: movieInfo.ranking,
+        comments: movieInfo.comments,
+      });
 
-    popup.style.display = "none";
-    renderRanking(currentMovieKey);
-    console.log(`💬 Updated comment for ${user}`);
+      popup.style.display = "none";
+      renderRanking(currentMovieKey);
+      console.log(`💬 Admin updated comment for ${user}`);
+    }
   };
 
   // Cancel functionality
@@ -758,17 +785,22 @@ function showCommentBox(user, readOnly = false) {
 // 7. INITIALIZATION & STARTUP
 // ==========================
 
-// Ensure movie data is loaded before any functionality is used
+// Simple user setup when page loads
 document.addEventListener("DOMContentLoaded", function () {
+  // Set default user if none exists
+  const currentUser = localStorage.getItem("mathflix_current_user");
+  if (!currentUser) {
+    localStorage.setItem("mathflix_current_user", "math");
+    console.log("🔧 Set default user: math");
+  }
+
   // Check if movie data is available
   if (!window.moviesData || Object.keys(window.moviesData).length === 0) {
     console.warn("⚠️ Movie data not found, attempting to load...");
-
-    // Try to load movie data if the function exists
     if (typeof loadMoviesData === "function") {
       loadMoviesData();
     }
   } else {
-    console.log(`✅ Movie data loaded successfully: ${Object.keys(window.moviesData).length} movies available`);
+    console.log(`✅ Movie data loaded: ${Object.keys(window.moviesData).length} movies`);
   }
 });
