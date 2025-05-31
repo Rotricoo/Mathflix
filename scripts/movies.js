@@ -491,7 +491,7 @@ window.moviesData.theoffice = {
 // ========= MARATONAS DE FILMES - HUNGER GAMES ============
 // =========================================================
 
-window.moviesData.hungergames1 = {
+window.moviesData.hungergames = {
   title: "The Hunger Games",
   genre: ["Action", "Adventure", "Sci-Fi"],
   duration: "2h 22min",
@@ -503,13 +503,13 @@ window.moviesData.hungergames1 = {
   director: "Gary Ross",
   description:
     "Katniss Everdeen volunteers to replace her sister in a deadly competition where teens must fight to the death for survival and televised fame.",
-  poster: "assets/imgs/Marathon/Hunger-games/hungergames.png",
+  poster: "assets/imgs/Marathon/Hunger-games/ban-hungergames.png",
   trailer: "https://www.youtube.com/embed/mfmrPu43DF8",
   tags: ["dystopia", "survival", "action"],
   ranking: { math: 0, digo: 0 },
 };
 
-window.moviesData.hungergames2 = {
+window.moviesData.catchingfire = {
   title: "The Hunger Games: Catching Fire",
   genre: ["Action", "Adventure", "Sci-Fi"],
   duration: "2h 26min",
@@ -520,13 +520,13 @@ window.moviesData.hungergames2 = {
   cast: ["Jennifer Lawrence", "Josh Hutcherson", "Liam Hemsworth"],
   director: "Francis Lawrence",
   description: "Katniss and Peeta become targets of the Capitol after their victory sparks rebellion in the districts.",
-  poster: "assets/imgs/Marathon/Hunger-games/catchingfire.png",
+  poster: "assets/imgs/Marathon/Hunger-games/ban-catchingfire.png",
   trailer: "https://www.youtube.com/embed/MkvUNfySGQU",
   tags: ["dystopia", "rebellion", "action"],
   ranking: { math: 0, digo: 0 },
 };
 
-window.moviesData.hungergames3 = {
+window.moviesData.mockingjay1 = {
   title: "The Hunger Games: Mockingjay – Part 1",
   genre: ["Action", "Adventure", "Sci-Fi"],
   duration: "2h 3min",
@@ -537,13 +537,13 @@ window.moviesData.hungergames3 = {
   cast: ["Jennifer Lawrence", "Josh Hutcherson", "Liam Hemsworth"],
   director: "Francis Lawrence",
   description: "Katniss becomes the symbol of rebellion as the districts unite against the Capitol.",
-  poster: "assets/imgs/Marathon/Hunger-games/mockingjay1.png",
+  poster: "assets/imgs/Marathon/Hunger-games/ban-mockingjay1.png",
   trailer: "https://www.youtube.com/embed/C_Tsj_wTJkQ",
   tags: ["dystopia", "rebellion", "war"],
   ranking: { math: 0, digo: 0 },
 };
 
-window.moviesData.hungergames4 = {
+window.moviesData.mockingjay2 = {
   title: "The Hunger Games: Mockingjay – Part 2",
   genre: ["Action", "Adventure", "Sci-Fi"],
   duration: "2h 17min",
@@ -554,13 +554,13 @@ window.moviesData.hungergames4 = {
   cast: ["Jennifer Lawrence", "Josh Hutcherson", "Liam Hemsworth"],
   director: "Francis Lawrence",
   description: "Katniss and her allies bring the revolution to the Capitol, facing deadly traps and moral dilemmas.",
-  poster: "assets/imgs/Marathon/Hunger-games/mockingjay2.png",
+  poster: "assets/imgs/Marathon/Hunger-games/ban-mockingjay2.png",
   trailer: "https://www.youtube.com/embed/n-7K_OjsDCQ",
   tags: ["dystopia", "revolution", "finale"],
   ranking: { math: 0, digo: 0 },
 };
 
-window.moviesData.hungergames5 = {
+window.moviesData.BalladOfSongbirdsSnakes = {
   title: "The Hunger Games: The Ballad of Songbirds & Snakes",
   genre: ["Action", "Adventure", "Drama"],
   duration: "2h 37min",
@@ -572,7 +572,7 @@ window.moviesData.hungergames5 = {
   director: "Francis Lawrence",
   description:
     "Years before he would become the tyrannical president of Panem, 18-year-old Coriolanus Snow sees a chance for a change of fortunes when he mentors Lucy Gray Baird in the 10th Hunger Games.",
-  poster: "assets/imgs/Marathon/Hunger-games/BalladOfSongbirds&Snakes.png",
+  poster: "assets/imgs/Marathon/Hunger-games/ban-songsbirdsnake.png",
   trailer: "https://www.youtube.com/embed/NxW_X4kzeus",
   tags: ["prequel", "dystopia", "games"],
   ranking: { math: 0, digo: 0 },
@@ -593,7 +593,7 @@ window.moviesData.harrypotter1 = {
   director: "Chris Columbus",
   description:
     "An orphaned boy attends a magical school, where he discovers his past and destiny while battling the dark wizard who killed his parents.",
-  poster: "assets/imgs/Marathon/HarryPotter/harrypotter1.png",
+  poster: "assets/imgs/Marathon/HarryPotter/ban-harrypotter1.png",
   trailer: "https://www.youtube.com/embed/VyHV0BRtdxo",
   tags: ["magic", "wizard", "adventure"],
   ranking: { math: 0, digo: 0 },
@@ -611,7 +611,7 @@ window.moviesData.harrypotter2 = {
   director: "Chris Columbus",
   description:
     "Harry returns for his second year at Hogwarts, where a mysterious force is petrifying students and a dark secret is uncovered.",
-  poster: "assets/imgs/Marathon/HarryPotter/harrypotter2.png",
+  poster: "assets/imgs/Marathon/HarryPotter/ban-harrypotter2.png",
   trailer: "https://www.youtube.com/embed/1bq0qff4iF8",
   tags: ["magic", "mystery", "adventure"],
   ranking: { math: 0, digo: 0 },
@@ -628,7 +628,7 @@ window.moviesData.harrypotter3 = {
   cast: ["Daniel Radcliffe", "Emma Watson", "Rupert Grint"],
   director: "Alfonso Cuarón",
   description: "Harry learns of the escape of Sirius Black, a dangerous prisoner, and uncovers secrets about his own past.",
-  poster: "assets/imgs/Marathon/HarryPotter/harrypotter3.png",
+  poster: "assets/imgs/Marathon/HarryPotter/ban-harrypotter3.png",
   trailer: "https://www.youtube.com/embed/lAxgztbYDbs",
   tags: ["magic", "time travel", "adventure"],
   ranking: { math: 0, digo: 0 },
@@ -646,7 +646,7 @@ window.moviesData.harrypotter4 = {
   director: "Mike Newell",
   description:
     "Harry is mysteriously entered into the dangerous Triwizard Tournament, facing deadly tasks and the return of Voldemort.",
-  poster: "assets/imgs/Marathon/HarryPotter/harrypotter4.png",
+  poster: "assets/imgs/Marathon/HarryPotter/ban-harrypotter4.png",
   trailer: "https://www.youtube.com/embed/3EGojp4Hh6I",
   tags: ["magic", "tournament", "adventure"],
   ranking: { math: 0, digo: 0 },
@@ -664,7 +664,7 @@ window.moviesData.harrypotter5 = {
   director: "David Yates",
   description:
     "Harry and his friends form Dumbledore's Army to fight the oppressive regime at Hogwarts and prepare for the coming war.",
-  poster: "assets/imgs/Marathon/HarryPotter/harrypotter5.png",
+  poster: "assets/imgs/Marathon/HarryPotter/ban-harrypotter5.png",
   trailer: "https://www.youtube.com/embed/y6ZW7KXaXYk",
   tags: ["magic", "rebellion", "adventure"],
   ranking: { math: 0, digo: 0 },
@@ -681,7 +681,7 @@ window.moviesData.harrypotter6 = {
   cast: ["Daniel Radcliffe", "Emma Watson", "Rupert Grint"],
   director: "David Yates",
   description: "Harry discovers a mysterious book and learns more about Voldemort's past as the wizarding world grows darker.",
-  poster: "assets/imgs/Marathon/HarryPotter/harrypotter6.png",
+  poster: "assets/imgs/Marathon/HarryPotter/ban-harrypotter6.png",
   trailer: "https://www.youtube.com/embed/sg81Lts5kYY",
   tags: ["magic", "mystery", "adventure"],
   ranking: { math: 0, digo: 0 },
@@ -698,7 +698,7 @@ window.moviesData.harrypotter7 = {
   cast: ["Daniel Radcliffe", "Emma Watson", "Rupert Grint"],
   director: "David Yates",
   description: "Harry, Ron, and Hermione leave Hogwarts to find and destroy Voldemort's Horcruxes, facing danger at every turn.",
-  poster: "assets/imgs/Marathon/HarryPotter/harrypotter7.png",
+  poster: "assets/imgs/Marathon/HarryPotter/ban-harrypotter7.png",
   trailer: "https://www.youtube.com/embed/MxqsmsA8y5k",
   tags: ["magic", "quest", "adventure"],
   ranking: { math: 0, digo: 0 },
@@ -715,7 +715,7 @@ window.moviesData.harrypotter8 = {
   cast: ["Daniel Radcliffe", "Emma Watson", "Rupert Grint"],
   director: "David Yates",
   description: "The final battle for Hogwarts and the wizarding world begins as Harry faces Voldemort in a climactic showdown.",
-  poster: "assets/imgs/Marathon/HarryPotter/harrypotter8.png",
+  poster: "assets/imgs/Marathon/HarryPotter/ban-harrypotter8.png",
   trailer: "https://www.youtube.com/embed/mObK5XD8udk",
   tags: ["magic", "finale", "adventure"],
   ranking: { math: 0, digo: 0 },

@@ -1,0 +1,415 @@
+/* =========================
+   === CAROUSELS & SPLIDE COMPONENTS - NAVIGATION INDEX ===
+   ========================= */
+/* 
+   QUICK NAVIGATION - Use Ctrl+F to jump to sections:
+   
+   1. GALLERIES & CAROUSELS BASE
+   2. TOP 10 CAROUSEL
+   3. VERTICAL CAROUSEL (POSTERS)
+   4. SIMPLE CAROUSELS
+   5. SERIES & MARATHON CAROUSELS
+   6. MARATHON SECTION
+   7. SPLIDE ARROWS & CONTROLS
+   8. RESPONSIVE BREAKPOINTS
+   
+   TIP: Search for "===" to jump between main sections
+   ========================= */
+
+/* =========================
+   1. GALLERIES & CAROUSELS BASE
+   ========================= */
+div.gallery__container.top10,
+div.gallery__container-vertical,
+div.gallery__container.series,
+div.gallery__container.digo-happy {
+  position: relative;
+  max-width: 100%;
+  margin: 0 auto 5rem auto;
+  padding: 0 4rem;
+  box-sizing: border-box;
+}
+
+h2.gallery__title {
+  font-size: 1.6rem;
+  letter-spacing: 0.1rem;
+  font-weight: var(--font-bold);
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  margin-left: 6rem;
+  text-align: left;
+}
+
+/* =========================
+   2. TOP 10 CAROUSEL
+   ========================= */
+.gallery__container.top10 .gallery__thumbnail {
+  width: 28rem;
+  min-width: 28rem;
+  aspect-ratio: 16/9;
+  border-radius: 2em;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.28);
+  transition: transform 0.35s cubic-bezier(0.4, 2, 0.6, 1), box-shadow 0.35s;
+  will-change: transform;
+  z-index: 1;
+  overflow: visible;
+  margin-right: 3rem;
+}
+
+.gallery__container.top10 .gallery__thumbnail:hover {
+  transform: scale(1.12);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+  z-index: 2;
+}
+
+.gallery__container.top10 .gallery__thumbnail::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 2em;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+  box-shadow: 0 0 32px 8px #fff8, 0 0 0 0 transparent;
+}
+
+.gallery__container.top10 .gallery__thumbnail:hover::after,
+.gallery__container.top10 .gallery__thumbnail:active::after {
+  opacity: 1;
+  animation: thumb-shine 0.7s linear;
+}
+
+@keyframes thumb-shine {
+  0% {
+    box-shadow: 0 0 0 0 #fff0;
+  }
+  40% {
+    box-shadow: 0 0 32px 8px #fff8;
+  }
+  100% {
+    box-shadow: 0 0 0 0 #fff0;
+  }
+}
+
+/* =========================
+   3. VERTICAL CAROUSEL (POSTERS)
+   ========================= */
+div.gallery__container-vertical {
+  width: 100vw;
+  margin: 0 auto 3rem auto;
+  overflow: visible;
+  padding: 2rem 0;
+}
+
+div.gallery__container-vertical h2.gallery__title {
+  margin-bottom: 3rem;
+}
+
+.splide-vertical {
+  margin-left: 0;
+  margin-right: 0;
+  max-width: 100vw;
+  contain: layout style paint;
+  padding: 4rem 0;
+}
+
+.splide-vertical .splide__track {
+  overflow: visible !important;
+  padding: 3rem 0;
+}
+
+.splide-vertical .splide__list {
+  overflow: visible !important;
+  align-items: center;
+  padding: 2rem 0;
+}
+
+.splide-vertical .splide__slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.splide-vertical .splide__slide img {
+  transition: transform 0.4s ease, box-shadow 0.4s ease, opacity 0.4s ease, filter 0.4s ease;
+  opacity: 0.3;
+  filter: blur(3px);
+  transform: scale(0.85);
+  will-change: transform, opacity, filter;
+  cursor: pointer;
+}
+
+/* Active slide (centered poster) with prominence */
+.splide-vertical .splide__slide.is-active img {
+  transform: scale(1.3);
+  opacity: 1;
+  filter: none;
+  z-index: 3;
+}
+
+/* Adjacent slides with medium visibility */
+.splide-vertical .splide__slide.is-active + .splide__slide img,
+.splide-vertical .splide__slide:has(+ .splide__slide.is-active) img {
+  transform: scale(0.85);
+  opacity: 0.6;
+  filter: blur(2px);
+}
+
+/* HOVER: Only NON-ACTIVE thumbs have subtle hover */
+.splide-vertical .splide__slide:not(.is-active):hover img {
+  opacity: 0.5;
+  filter: blur(2px);
+}
+
+/* HOVER: Only ACTIVE thumb has scale hover effect */
+.splide-vertical .splide__slide.is-active:hover img {
+  transform: scale(1.4);
+  opacity: 1;
+  filter: none;
+}
+
+.gallery__thumbnail-vertical {
+  width: 200px;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border: 1px solid var(--white);
+  border-radius: 1em;
+  margin: 0;
+  display: inline-block;
+}
+
+/* =========================
+   4. SIMPLE CAROUSELS
+   ========================= */
+.gallery__container.two,
+.gallery__container.three {
+  margin-top: 4rem;
+}
+
+.splide-simple .splide__slide img {
+  aspect-ratio: 16 / 9;
+  width: 22rem;
+  min-width: 22rem;
+  border-radius: 1em;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+  transition: transform 1s, box-shadow 0.4s, filter 0.25s;
+  cursor: pointer;
+  position: relative;
+  margin-right: 1.2rem;
+}
+
+.splide-simple .splide__slide img:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 50px 3px rgba(255, 255, 255, 0.3), 0 8px 16px rgba(0, 0, 0, 0.28);
+  filter: brightness(1.1);
+  z-index: 2;
+}
+
+/* =========================
+   5. SERIES & MARATHON CAROUSELS
+   ========================= */
+.gallery__container.series,
+.gallery__container.marathon,
+div.gallery__container.digo-happy {
+  margin-top: 4rem;
+  margin-bottom: 6rem;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.gallery__container.marathon .gallery__title {
+  margin-left: 3.5rem;
+  font-size: 2.2rem;
+  color: var(--green-lighter, #4caf50);
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+div.gallery__container.series .splide,
+div.gallery__container.marathon .splide,
+div.gallery__container.digo-happy .splide {
+  padding-left: 3.5rem;
+  padding-right: 1.5rem;
+}
+
+div.gallery__container.series .gallery__thumbnail,
+div.gallery__container.marathon .gallery__thumbnail {
+  width: 22rem;
+  min-width: 22rem;
+  aspect-ratio: 16/9;
+  border-radius: 1.5em;
+  margin-right: 2rem;
+  transition: transform 0.35s cubic-bezier(0.4, 2, 0.6, 1), box-shadow 0.3s;
+  opacity: 0.85;
+}
+
+div.gallery__container.series .gallery__thumbnail:hover,
+div.gallery__container.marathon .gallery__thumbnail:hover,
+div.gallery__container.digo-happy .gallery__thumbnail:hover {
+  transform: scale(1.12);
+  box-shadow: 0px 0px 40px rgba(255, 255, 255, 0.276);
+  opacity: 1;
+}
+
+/* =========================
+   6. MARATHON SECTION
+   ========================= */
+.marathon-section {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  max-width: 100vw;
+  margin: 5rem 0 7rem 0;
+  min-height: 220px;
+  padding: 0;
+  overflow: hidden;
+}
+
+div.marathon-carousel .gallery__thumbnail {
+  width: 24rem;
+  min-width: 24rem;
+  max-width: 28rem;
+  aspect-ratio: 16/9;
+  height: auto;
+  border-radius: 1.2em;
+  opacity: 0.85;
+  transition: transform 0.35s cubic-bezier(0.4, 2, 0.6, 1), box-shadow 0.35s;
+}
+
+div.marathon-carousel .gallery__thumbnail:hover {
+  transform: scale(1.12);
+  box-shadow: 0px 0px 32px rgba(255, 255, 255, 0.276);
+  opacity: 1;
+}
+
+.marathon-info {
+  width: 25%;
+  background: linear-gradient(to right, rgba(0, 0, 0, 1) 85%, rgba(0, 0, 0, 0) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 5rem 2.5rem 2rem 5rem;
+  box-sizing: border-box;
+  border-top-right-radius: 2rem;
+  border-bottom-right-radius: 2rem;
+  z-index: 2;
+}
+
+span.marathon-label {
+  font-size: 1.4rem;
+  color: var(--green-lighter, #4caf50);
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+h2.marathon-title {
+  font-size: 3.5rem;
+  line-height: 1;
+  color: var(--white);
+  font-weight: bold;
+  margin: 1rem 0;
+}
+
+h2.marathon-title:hover {
+  color: var(--white-50);
+}
+
+.marathon-carousel {
+  width: 70%;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  border-top-right-radius: 2rem;
+  border-bottom-right-radius: 2rem;
+  padding: 2rem 0 2rem 0;
+  z-index: 1;
+}
+
+.marathon-carousel .splide {
+  width: 100%;
+  padding-left: 0;
+}
+
+.marathon-carousel .splide__list {
+  gap: 3.5rem !important;
+}
+
+/* =========================
+   7. SPLIDE ARROWS & CONTROLS
+   ========================= */
+.splide__arrow {
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 50%;
+  color: #fff;
+  font-size: 2.5rem;
+  transition: background 0.2s;
+}
+
+.splide__arrow:hover {
+  background: var(--green-lighter);
+}
+
+.splide__track,
+.splide__list {
+  overflow: visible !important;
+}
+
+/* Hide carousel arrows by default (except vertical) */
+.gallery__container .splide__arrow {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s;
+}
+
+/* Show arrows on hover/focus (except vertical) */
+.gallery__container:hover .splide__arrow,
+.gallery__container:focus-within .splide__arrow {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Keep vertical carousel arrows always visible */
+.gallery__container-vertical .splide__arrow {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+/* =========================
+   8. RESPONSIVE BREAKPOINTS
+   ========================= */
+@media (min-width: 1600px) {
+  .gallery__container.top10 .gallery__thumbnail {
+    margin-right: 1.5rem;
+    width: 24rem;
+    min-width: 24rem;
+  }
+
+  .gallery__thumbnail-vertical,
+  .movie-modal__poster-vertical,
+  #vertical-modal-trailer {
+    width: 340px;
+    height: 510px;
+  }
+
+  #vertical-media-container {
+    width: 340px;
+    height: 510px;
+  }
+
+  div.gallery__container.series .gallery__thumbnail,
+  div.gallery__container.marathon .gallery__thumbnail {
+    width: 28rem;
+    min-width: 28rem;
+    margin-right: 1.5rem;
+  }
+
+  .marathon-carousel .splide__list {
+    gap: 2rem !important;
+  }
+}

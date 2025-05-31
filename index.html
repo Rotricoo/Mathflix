@@ -14,8 +14,8 @@
     <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4/dist/js/splide.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide-extension-auto-scroll@0/dist/js/splide-extension-auto-scroll.min.js"></script>
     <link rel="stylesheet" href="styles/reset.css" />
-    <link rel="stylesheet" href="styles/styles-base.css" />
     <link rel="stylesheet" href="styles/main-sections.css" />
+    <link rel="stylesheet" href="styles/carousel-splide.css" />
     <script src="scripts/main.js" defer></script>
     <script src="scripts/script.js" defer></script>
     <script src="scripts/movies.js" defer></script>
@@ -39,7 +39,7 @@
         </nav>
         <div class="header__icons">
           <div class="header__icon-button">
-            <button id="search-btn" aria-label="Open search" title="Search">
+            <button id="search-btn" type="button" aria-label="Open search" title="Search">
               <svg class="icon-search" viewBox="0 0 24 24">
                 <circle cx="11" cy="11" r="8" />
                 <line x1="21" y1="21" x2="16.65" y2="16.65" />
@@ -47,7 +47,7 @@
             </button>
           </div>
           <div class="header__icon-button">
-            <button id="notification-btn" aria-label="Notifications" title="Notifications">
+            <button id="notification-btn" type="button" aria-label="Notifications" title="Notifications">
               <svg class="icon-notification" viewBox="0 0 24 24">
                 <path d="M18 16v-5a6 6 0 0 0-12 0v5" />
                 <rect x="6" y="16" width="12" height="2" rx="1" />
@@ -85,11 +85,10 @@
               <input type="text" id="search-input" placeholder="What are you looking for?" />
               <ul id="search-autocomplete" class="autocomplete-list"></ul>
             </div>
-            <button id="search-submit">Search</button>
+            <button id="search-submit" type="button">Search</button>
             <div id="search-result" class="search-result"></div>
-            <div class="search-random-hint">
-              <span>Don't know what you're looking for?</span>
-              <button id="random-movie-btn" class="random-movie-btn">Surprise Me!</button>
+            <div class="search-random-hint" id="search-random-hint" style="display: none">
+              <button id="random-movie-btn" class="random-movie-btn">Don't know what to watch? Click here!</button>
             </div>
           </div>
         </div>
@@ -288,8 +287,8 @@
 
       <!-- CARROSSEL TO MAKE DIGO HAPPY -->
       <div class="gallery__container series digo-happy">
-        <h2 class="gallery__title">To Make Digo Happy</h2>
-        <div class="splide splide-digohappy">
+        <h2 class="gallery__title">This is about Digo</h2>
+        <div class="splide splide-simple">
           <div class="splide__track">
             <ul class="splide__list">
               <li class="splide__slide">
@@ -339,8 +338,8 @@
 
       <!-- CARROSSEL DE SÉRIES -->
       <div class="gallery__container series">
-        <h2 class="gallery__title">Séries para Maratonar</h2>
-        <div class="splide splide-series">
+        <h2 class="gallery__title">Series</h2>
+        <div class="splide splide-simple">
           <div class="splide__track">
             <ul class="splide__list">
               <li class="splide__slide">
@@ -401,7 +400,7 @@
                 <li class="splide__slide">
                   <img
                     class="gallery__thumbnail open-movie-modal"
-                    src="assets/imgs/Marathon/Hunger-games/hungergames.png"
+                    src="assets/imgs/Marathon/Hunger-games/ban-hungergames.png"
                     alt="The Hunger Games"
                     data-movie="hungergames"
                   />
@@ -409,7 +408,7 @@
                 <li class="splide__slide">
                   <img
                     class="gallery__thumbnail open-movie-modal"
-                    src="assets/imgs/Marathon/Hunger-games/catchingfire.png"
+                    src="assets/imgs/Marathon/Hunger-games/ban-catchingfire.png"
                     alt="Catching Fire"
                     data-movie="catchingfire"
                   />
@@ -417,7 +416,7 @@
                 <li class="splide__slide">
                   <img
                     class="gallery__thumbnail open-movie-modal"
-                    src="assets/imgs/Marathon/Hunger-games/mockingjay1.png"
+                    src="assets/imgs/Marathon/Hunger-games/ban-mockingjay.png"
                     alt="Mockingjay Part 1"
                     data-movie="mockingjay1"
                   />
@@ -425,7 +424,7 @@
                 <li class="splide__slide">
                   <img
                     class="gallery__thumbnail open-movie-modal"
-                    src="assets/imgs/Marathon/Hunger-games/mockingjay2.png"
+                    src="assets/imgs/Marathon/Hunger-games/ban-mockingjay2.png"
                     alt="Mockingjay Part 2"
                     data-movie="mockingjay2"
                   />
@@ -433,9 +432,9 @@
                 <li class="splide__slide">
                   <img
                     class="gallery__thumbnail open-movie-modal"
-                    src="assets/imgs/Marathon/Hunger-games/BalladOfSongbirds&Snakes.png"
+                    src="assets/imgs/Marathon/Hunger-games/ban-songsbirdsnake.png"
                     alt="The Ballad of Songbirds & Snakes"
-                    data-movie="BalladOfSongbirds&Snakes"
+                    data-movie="BalladOfSongbirdsSnakes"
                   />
                 </li>
               </ul>
@@ -457,7 +456,7 @@
                 <li class="splide__slide">
                   <img
                     class="gallery__thumbnail open-movie-modal"
-                    src="assets/imgs/Marathon/HarryPotter/harrypotter1.png"
+                    src="assets/imgs/Marathon/HarryPotter/ban-harrypotter1.png"
                     alt="Harry Potter and the Sorcerer's Stone"
                     data-movie="harrypotter1"
                   />
@@ -465,7 +464,7 @@
                 <li class="splide__slide">
                   <img
                     class="gallery__thumbnail open-movie-modal"
-                    src="assets/imgs/Marathon/HarryPotter/harrypotter2.png"
+                    src="assets/imgs/Marathon/HarryPotter/ban-harrypotter2.png"
                     alt="Harry Potter and the Chamber of Secrets"
                     data-movie="harrypotter2"
                   />
@@ -473,7 +472,7 @@
                 <li class="splide__slide">
                   <img
                     class="gallery__thumbnail open-movie-modal"
-                    src="assets/imgs/Marathon/HarryPotter/harrypotter3.png"
+                    src="assets/imgs/Marathon/HarryPotter/ban-harrypotter3.png"
                     alt="Harry Potter and the Prisoner of Azkaban"
                     data-movie="harrypotter3"
                   />
@@ -481,7 +480,7 @@
                 <li class="splide__slide">
                   <img
                     class="gallery__thumbnail open-movie-modal"
-                    src="assets/imgs/Marathon/HarryPotter/harrypotter4.png"
+                    src="assets/imgs/Marathon/HarryPotter/ban-harrypotter4.png"
                     alt="Harry Potter and the Goblet of Fire"
                     data-movie="harrypotter4"
                   />
@@ -489,7 +488,7 @@
                 <li class="splide__slide">
                   <img
                     class="gallery__thumbnail open-movie-modal"
-                    src="assets/imgs/Marathon/HarryPotter/harrypotter5.png"
+                    src="assets/imgs/Marathon/HarryPotter/ban-harrypotter5.png"
                     alt="Harry Potter and the Order of the Phoenix"
                     data-movie="harrypotter5"
                   />
@@ -497,7 +496,7 @@
                 <li class="splide__slide">
                   <img
                     class="gallery__thumbnail open-movie-modal"
-                    src="assets/imgs/Marathon/HarryPotter/harrypotter6.png"
+                    src="assets/imgs/Marathon/HarryPotter/ban-harrypotter6.png"
                     alt="Harry Potter and the Half-Blood Prince"
                     data-movie="harrypotter6"
                   />
@@ -505,7 +504,7 @@
                 <li class="splide__slide">
                   <img
                     class="gallery__thumbnail open-movie-modal"
-                    src="assets/imgs/Marathon/HarryPotter/harrypotter7.png"
+                    src="assets/imgs/Marathon/HarryPotter/ban-harrypotter7.png"
                     alt="Harry Potter and the Deathly Hallows – Part 1"
                     data-movie="harrypotter7"
                   />
@@ -513,7 +512,7 @@
                 <li class="splide__slide">
                   <img
                     class="gallery__thumbnail open-movie-modal"
-                    src="assets/imgs/Marathon/HarryPotter/harrypotter8.png"
+                    src="assets/imgs/Marathon/HarryPotter/ban-harrypotter8.png"
                     alt="Harry Potter and the Deathly Hallows – Part 2"
                     data-movie="harrypotter8"
                   />
@@ -772,6 +771,14 @@
         </div>
       </div>
     </div>
+
+    <!-- Random Movie Section (antes do footer) -->
+    <section class="random-movie-section">
+      <div class="random-movie-container">
+        <span class="random-movie-title">Don't know what to watch?</span>
+        <button id="random-movie-btn-bottom" class="random-movie-btn">Click here!</button>
+      </div>
+    </section>
 
     <!-- FOOTER SECTION -->
     <footer class="footer">

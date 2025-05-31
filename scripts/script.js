@@ -1,21 +1,71 @@
 // ==========================
-// === SECTION INDEX (script.js)
+// === MATHFLIX SCRIPT.JS - SECTION INDEX ===
 // ==========================
-// 1. MOVIE MODAL LOGIC
-// 2. MOVIE RANKING LOGIC
-// 3. SEARCH & RANDOM MOVIE (FILMES)
-// 4. SEARCH AUTOCOMPLETE LOGIC
+// 1. GLOBAL VARIABLES & CONFIGURATIONS
+// 2. LOCALSTORAGE MANAGEMENT FUNCTIONS
+// 3. MOVIE MODAL SYSTEM (Open/Close/Events)
+// 4. MOVIE RANKING & COMMENT SYSTEM
+// 5. SEARCH & RANDOM MOVIE FUNCTIONALITY
+// 6. SEARCH AUTOCOMPLETE & SUGGESTIONS
+// 7. INITIALIZATION & STARTUP
 // ==========================
 
 // ==========================
-// 1. MOVIE MODAL LOGIC
+// 1. GLOBAL VARIABLES & CONFIGURATIONS
 // ==========================
 
-// --- List of vertical movies ---
+// Admin configuration - set to true to allow ranking editing and comments
+const isAdminUser = true; // Change to false to disable editing features
+
+// Current movie key being displayed in modal
+let currentMovieKey = null;
+
+// List of movies that use vertical poster layout in modal
 const verticalMovies = ["screen", "chucky", "tifannychucky", "seedschucky", "substance"];
 
-// --- Open movie modal when clicking a thumb or button (delegated for dynamic elements) ---
+// Search pagination variables
+let currentPage = 1;
+let currentResults = [];
+
+// ==========================
+// 2. LOCALSTORAGE MANAGEMENT FUNCTIONS
+// ==========================
+
+// Save movie data (rankings and comments) to localStorage
+function saveMovieData(movieKey, data) {
+  try {
+    const existingData = JSON.parse(localStorage.getItem("mathflix_movies")) || {};
+    existingData[movieKey] = data;
+    localStorage.setItem("mathflix_movies", JSON.stringify(existingData));
+    console.log(`💾 Saved data for movie: ${movieKey}`);
+  } catch (error) {
+    console.warn("❌ Error saving movie data:", error);
+  }
+}
+
+// Load saved movie data (rankings and comments) from localStorage
+function getSavedMovieData(movieKey) {
+  try {
+    const savedData = JSON.parse(localStorage.getItem("mathflix_movies")) || {};
+    return savedData[movieKey] || null;
+  } catch (error) {
+    console.warn("❌ Error loading saved data:", error);
+    return null;
+  }
+}
+
+// ==========================
+// 3. MOVIE MODAL SYSTEM (Open/Close/Events)
+// ==========================
+
+// Handle clicks on movie thumbnails and buttons (delegated event listener)
 document.addEventListener("click", function (e) {
+  // EXCLUDE vertical carousel clicks - these are handled by main.js
+  if (e.target.closest(".splide-vertical")) {
+    return; // Let main.js handle vertical carousel interactions
+  }
+
+  // Check if clicked element is a movie modal trigger
   const target = e.target.closest(".open-movie-modal");
   if (target && target.dataset.movie) {
     e.preventDefault();
@@ -23,196 +73,252 @@ document.addEventListener("click", function (e) {
   }
 });
 
+// Open movie modal with all movie information
 function openMovieModal(key) {
-  const info = window.moviesData[key];
-  if (!info) return;
+  const movieInfo = window.moviesData[key];
+  if (!movieInfo) {
+    console.error("❌ Movie not found:", key);
+    return;
+  }
 
-  // Render genres as clickable buttons
-  const genresHtml = info.genre.map((g) => `<button class="movie-genre" data-genre="${g}">${g}</button>`).join(", ");
+  console.log(`🎬 Opening modal for: ${movieInfo.title}`);
+  const movieModal = document.getElementById("movie-modal");
 
-  document.getElementById("movie-modal-title").textContent = info.title;
+  // Generate genre buttons HTML
+  const genresHtml = movieInfo.genre
+    .map((genre) => `<button class="movie-genre" data-genre="${genre}">${genre}</button>`)
+    .join(", ");
+
+  // Populate modal with movie metadata
+  document.getElementById("movie-modal-title").textContent = movieInfo.title;
   document.getElementById("movie-modal-meta").innerHTML = `
-    <li><strong>Year:</strong> <span>${info.year}</span></li>
-    <li><strong>Age:</strong> <span>${info.age}</span></li>
-    <li><strong>Duration:</strong> <span>${info.duration}</span></li>
-    <li><strong>Origin:</strong> <span>${info.origin}</span></li>
+    <li><strong>Year:</strong> <span>${movieInfo.year}</span></li>
+    <li><strong>Age Rating:</strong> <span>${movieInfo.age}</span></li>
+    <li><strong>Duration:</strong> <span>${movieInfo.duration}</span></li>
+    <li><strong>Origin:</strong> <span>${movieInfo.origin}</span></li>
     <li><strong>Locations:</strong> <span>${
-      Array.isArray(info.locations) ? info.locations.join(" / ") : info.locations
+      Array.isArray(movieInfo.locations) ? movieInfo.locations.join(" / ") : movieInfo.locations
     }</span></li>
-    <li><strong>Director:</strong> <span>${info.director}</span></li>
-    <li><strong>Cast:</strong> <span>${info.cast.join(", ")}</span></li>
+    <li><strong>Director:</strong> <span>${movieInfo.director}</span></li>
+    <li><strong>Cast:</strong> <span>${movieInfo.cast.join(", ")}</span></li>
     <li><strong>Genre:</strong> ${genresHtml}</li>
   `;
-  document.getElementById("movie-modal-description").textContent = info.description;
+  document.getElementById("movie-modal-description").textContent = movieInfo.description;
 
-  // Check if movie is vertical
-  const isVertical = verticalMovies.includes(key);
+  // Determine if this is a vertical poster movie (different layout)
+  const isVerticalMovie = verticalMovies.includes(key);
 
-  if (isVertical) {
+  if (isVerticalMovie) {
+    // Setup vertical layout (poster + trailer toggle)
     document.querySelector(".movie-modal__media").style.display = "none";
     document.querySelector(".movie-modal__media-vertical").style.display = "flex";
-
-    document.getElementById("vertical-modal-poster").src = info.poster;
-    document.getElementById("vertical-modal-poster").alt = info.title;
-    document.getElementById("vertical-modal-trailer").src = info.trailer;
+    document.getElementById("vertical-modal-poster").src = movieInfo.poster;
+    document.getElementById("vertical-modal-poster").alt = movieInfo.title;
+    document.getElementById("vertical-modal-trailer").src = movieInfo.trailer;
     document.getElementById("vertical-modal-poster").style.display = "block";
     document.getElementById("vertical-modal-trailer").style.display = "none";
     document.getElementById("toggle-vertical-media").textContent = "See Trailer";
 
-    // Toggle between poster and trailer
+    // Toggle between poster and trailer for vertical movies
     document.getElementById("toggle-vertical-media").onclick = function () {
       const poster = document.getElementById("vertical-modal-poster");
       const trailer = document.getElementById("vertical-modal-trailer");
+
       if (poster.style.display !== "none") {
+        // Switch to trailer
         poster.style.display = "none";
         trailer.style.display = "block";
         this.textContent = "See Poster";
       } else {
+        // Switch to poster
         poster.style.display = "block";
         trailer.style.display = "none";
         this.textContent = "See Trailer";
       }
     };
   } else {
+    // Setup horizontal layout (poster + trailer side by side)
     document.querySelector(".movie-modal__media").style.display = "flex";
     document.querySelector(".movie-modal__media-vertical").style.display = "none";
-    document.getElementById("movie-modal-poster").src = info.poster;
-    document.getElementById("movie-modal-poster").alt = info.title;
-    document.getElementById("movie-modal-trailer").src = info.trailer;
+    document.getElementById("movie-modal-poster").src = movieInfo.poster;
+    document.getElementById("movie-modal-poster").alt = movieInfo.title;
+    document.getElementById("movie-modal-trailer").src = movieInfo.trailer;
   }
 
-  // Ranking
+  // Initialize ranking system for this movie
   currentMovieKey = key;
   renderRanking(currentMovieKey);
 
-  document.getElementById("movie-modal").style.display = "flex";
+  // Show the modal
+  movieModal.style.display = "flex";
 }
 
-// --- Close movie modal ---
-const closeModalBtn = document.querySelector(".movie-modal__close");
-const modalBackdrop = document.querySelector(".movie-modal__backdrop");
+// Close movie modal and clean up
 function closeMovieModal() {
-  document.getElementById("movie-modal").style.display = "none";
-  document.getElementById("movie-modal-trailer").src = "";
-  document.getElementById("vertical-modal-trailer").src = "";
-}
-if (closeModalBtn) closeModalBtn.onclick = closeMovieModal;
-if (modalBackdrop) modalBackdrop.onclick = closeMovieModal;
+  const movieModal = document.getElementById("movie-modal");
+  if (movieModal) {
+    movieModal.style.display = "none";
 
-// --- Close movie modal with ESC ---
-document.addEventListener("keydown", function (e) {
-  if (e.key === "Escape") {
-    const modal = document.getElementById("movie-modal");
-    if (modal && modal.style.display === "flex") {
-      closeMovieModal();
+    // Stop all video trailers to save bandwidth
+    const trailer = document.getElementById("movie-modal-trailer");
+    const verticalTrailer = document.getElementById("vertical-modal-trailer");
+    if (trailer) trailer.src = "";
+    if (verticalTrailer) verticalTrailer.src = "";
+
+    console.log("🔒 Movie modal closed");
+
+    // If search modal was open before movie modal, keep it open and refocus
+    const searchModal = document.getElementById("search-modal");
+    if (searchModal && searchModal.style.display === "flex") {
+      const searchInput = document.getElementById("search-input");
+      if (searchInput) {
+        setTimeout(() => searchInput.focus(), 100);
+      }
     }
+  }
+}
+
+// Setup modal close event listeners
+document.addEventListener("DOMContentLoaded", function () {
+  const movieModal = document.getElementById("movie-modal");
+
+  if (movieModal) {
+    // Close button (X) functionality
+    const closeBtn = movieModal.querySelector(".movie-modal__close");
+    if (closeBtn) {
+      closeBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        closeMovieModal();
+      });
+    }
+
+    // Click outside modal to close (only on backdrop, not content)
+    movieModal.addEventListener("click", function (e) {
+      // Only close if clicked directly on modal backdrop, not on content
+      if (e.target === movieModal || e.target.classList.contains("movie-modal__backdrop")) {
+        closeMovieModal();
+      }
+    });
   }
 });
 
+// Make closeMovieModal function available globally for main.js
+window.closeMovieModal = closeMovieModal;
+
 // ==========================
-// 2. MOVIE RANKING LOGIC
+// 4. MOVIE RANKING & COMMENT SYSTEM
 // ==========================
 
-const loggedUser = localStorage.getItem("mathflixUser");
-const userRole = localStorage.getItem("mathflixRole");
-const isAdminUser = userRole === "admin";
-let currentMovieKey = null;
-
-// --- LocalStorage helpers for rankings/comments ---
-function getSavedMovieData(key) {
-  const saved = localStorage.getItem("movieData_" + key);
-  return saved ? JSON.parse(saved) : null;
-}
-function saveMovieData(key, data) {
-  localStorage.setItem("movieData_" + key, JSON.stringify(data));
-}
-
-// Render stars for a given user, with comment button if admin
+// Generate star rating HTML for a user
 function renderStars(user, value, editable) {
-  let stars = "";
+  let starsHtml = "";
+
+  // Create 5 stars, filled based on rating value
   for (let i = 1; i <= 5; i++) {
-    stars += `<span class="star${i <= value ? " filled" : ""}" data-user="${user}" data-value="${i}" ${
+    starsHtml += `<span class="star${i <= value ? " filled" : ""}" data-user="${user}" data-value="${i}" ${
       editable ? "" : 'style="pointer-events:none"'
     }>★</span>`;
   }
-  // Add comment button if admin
+
+  // Add comment button for admin users
   if (editable) {
-    stars += `<button class="comment-btn" data-user="${user}" title="Add comment" style="margin-left:8px;padding:2px 7px;font-size:1.1rem;border-radius:5px;border:none;background:#4aa042;color:#fff;cursor:pointer;">💬</button>`;
+    starsHtml += `<button class="comment-btn" data-user="${user}" title="Add comment" style="margin-left:8px;padding:2px 7px;font-size:1.1rem;border-radius:5px;border:none;background:#4aa042;color:#fff;cursor:pointer;">💬</button>`;
   }
-  return stars;
+
+  return starsHtml;
 }
 
+// Get truncated comment preview for display
 function getCommentPreview(text) {
   if (!text) return "";
   if (text.length <= 15) return text;
   return text.slice(0, 15) + " ...";
 }
 
-// Render ranking section with comments
+// Render the complete ranking section with stars and comments
 function renderRanking(movieKey) {
-  const info = window.moviesData[movieKey];
-  if (!info || !info.ranking) return;
+  const movieInfo = window.moviesData[movieKey];
+  if (!movieInfo || !movieInfo.ranking) return;
 
-  // Load saved data from localStorage (if exists)
-  const saved = getSavedMovieData(movieKey);
-  if (saved) {
-    info.ranking = saved.ranking;
-    info.comments = saved.comments;
+  // Load any saved rankings/comments from localStorage
+  const savedData = getSavedMovieData(movieKey);
+  if (savedData) {
+    movieInfo.ranking = savedData.ranking;
+    movieInfo.comments = savedData.comments;
   }
 
   const container = document.getElementById("movie-modal-ranking");
-  if (!info.comments) info.comments = { math: "", digo: "" };
+
+  // Initialize comments object if it doesn't exist
+  if (!movieInfo.comments) movieInfo.comments = { math: "", digo: "" };
+
+  // Render ranking HTML with stars and comment previews
   container.innerHTML = `
     <div class="stars-row">
       <span class="stars-label">Math</span>
-      ${renderStars("math", info.ranking.math, isAdminUser)}
+      ${renderStars("math", movieInfo.ranking.math, isAdminUser)}
       <span class="comment-text" id="comment-math" style="cursor:pointer; color:#4aa042; text-decoration:underline; margin-left:8px;">
-        ${info.comments.math ? getCommentPreview(info.comments.math) : ""}
+        ${movieInfo.comments.math ? getCommentPreview(movieInfo.comments.math) : ""}
       </span>
     </div>
     <div class="stars-row">
       <span class="stars-label">Digo</span>
-      ${renderStars("digo", info.ranking.digo, isAdminUser)}
+      ${renderStars("digo", movieInfo.ranking.digo, isAdminUser)}
       <span class="comment-text" id="comment-digo" style="cursor:pointer; color:#4aa042; text-decoration:underline; margin-left:8px;">
-        ${info.comments.digo ? getCommentPreview(info.comments.digo) : ""}
+        ${movieInfo.comments.digo ? getCommentPreview(movieInfo.comments.digo) : ""}
       </span>
     </div>
   `;
-  // Add event to open popup on preview click
-  if (info.comments.math) {
+
+  // Add click events for existing comment previews to show full text
+  if (movieInfo.comments.math) {
     document.getElementById("comment-math").onclick = () => showCommentBox("math", true);
   }
-  if (info.comments.digo) {
+  if (movieInfo.comments.digo) {
     document.getElementById("comment-digo").onclick = () => showCommentBox("digo", true);
   }
 }
 
-// Handle star click (only in admin mode)
+// Handle star rating clicks and comment button clicks (admin only)
 document.addEventListener("click", function (e) {
+  // Star rating click handling
   if (isAdminUser && e.target.classList.contains("star")) {
     const user = e.target.dataset.user;
     const value = parseInt(e.target.dataset.value, 10);
+
     if (currentMovieKey && window.moviesData[currentMovieKey]) {
+      // Update rating
       window.moviesData[currentMovieKey].ranking[user] = value;
+
+      // Save to localStorage
       saveMovieData(currentMovieKey, {
         ranking: window.moviesData[currentMovieKey].ranking,
         comments: window.moviesData[currentMovieKey].comments,
       });
+
+      // Re-render to show updated rating
       renderRanking(currentMovieKey);
+      console.log(`⭐ Updated ${user}'s rating to ${value} stars`);
     }
   }
-  // Handle comment button click (only admin)
+
+  // Comment button click handling
   if (isAdminUser && e.target.classList.contains("comment-btn")) {
     const user = e.target.dataset.user;
     showCommentBox(user);
   }
 });
 
-// Show comment input box for admin
+// Show comment popup for adding/editing comments
 function showCommentBox(user, readOnly = false) {
-  const info = window.moviesData[currentMovieKey];
-  if (!info) return;
-  const prev = info.comments && info.comments[user] ? info.comments[user] : "";
+  const movieInfo = window.moviesData[currentMovieKey];
+  if (!movieInfo) return;
+
+  // Get existing comment or empty string
+  const existingComment = movieInfo.comments && movieInfo.comments[user] ? movieInfo.comments[user] : "";
+
+  // Get popup elements
   const popup = document.getElementById("comment-popup");
   const label = document.getElementById("comment-popup-label");
   const input = document.getElementById("comment-popup-input");
@@ -220,12 +326,14 @@ function showCommentBox(user, readOnly = false) {
   const cancelBtn = document.getElementById("comment-popup-cancel");
   const count = document.getElementById("comment-popup-count");
 
+  // Setup popup content
   label.textContent = `Comment for ${user === "math" ? "Math" : "Digo"}:`;
-  input.value = prev;
+  input.value = existingComment;
   count.textContent = `${input.value.length}/300`;
   popup.style.display = "flex";
   input.focus();
 
+  // Handle read-only mode for non-admin users
   if (readOnly && !isAdminUser) {
     input.setAttribute("readonly", "readonly");
     saveBtn.style.display = "none";
@@ -236,57 +344,87 @@ function showCommentBox(user, readOnly = false) {
     count.style.display = "";
   }
 
-  // Update counter live
+  // Update character count as user types
   input.oninput = () => {
     count.textContent = `${input.value.length}/300`;
   };
 
-  // Save comment
+  // Save comment functionality
   saveBtn.onclick = () => {
-    info.comments[user] = input.value.slice(0, 300);
+    movieInfo.comments[user] = input.value.slice(0, 300); // Limit to 300 characters
+
+    // Save to localStorage
     saveMovieData(currentMovieKey, {
-      ranking: info.ranking,
-      comments: info.comments,
+      ranking: movieInfo.ranking,
+      comments: movieInfo.comments,
     });
+
     popup.style.display = "none";
     renderRanking(currentMovieKey);
+    console.log(`💬 Updated comment for ${user}`);
   };
 
-  // Cancel
+  // Cancel functionality
   cancelBtn.onclick = () => {
     popup.style.display = "none";
   };
 }
 
 // ==========================
-// 3. SEARCH & RANDOM MOVIE (FILMES)
+// 5. SEARCH & RANDOM MOVIE FUNCTIONALITY
 // ==========================
 
-if (typeof searchSubmit !== "undefined" && searchSubmit) {
-  let currentPage = 1;
-  let currentResults = [];
+(function () {
+  // Get search elements
+  const searchSubmit = document.getElementById("search-submit");
+  const searchInput = document.getElementById("search-input");
+  const searchResult = document.getElementById("search-result");
 
-  // Section: 3. SEARCH & RANDOM MOVIE (FILMES)
+  // Exit if search elements don't exist
+  if (!searchSubmit || !searchInput || !searchResult) {
+    console.warn("⚠️ Search elements not found");
+    return;
+  }
+
+  // Render search results with pagination
   function renderSearchPage(page = 1) {
-    const perPage = 10;
+    const perPage = 8; // Maximum 8 results per page (4x2 or 5x2 grid)
     const totalPages = Math.ceil(currentResults.length / perPage);
     const start = (page - 1) * perPage;
     const end = start + perPage;
     const pageResults = currentResults.slice(start, end);
 
-    // Quantos cartões na última linha?
-    const cardsInLastRow = pageResults.length > 5 ? pageResults.length - 5 : pageResults.length;
-    const columns = Math.min(pageResults.length, 5);
+    // Adjust container height based on number of results
+    const searchResultContainer = document.getElementById("search-result");
+    if (pageResults.length > 4) {
+      searchResultContainer.classList.add("two-rows");
+    } else {
+      searchResultContainer.classList.remove("two-rows");
+    }
 
-    // Só preencher slots invisíveis à direita na última linha
-    const emptySlots = (columns - (pageResults.length % columns)) % columns;
+    // Determine optimal grid columns based on result count and screen size
+    let columns;
+    const isLargeScreen = window.innerWidth >= 1600;
 
-    // Ajustar largura da grid dinamicamente
-    const gridWidth = columns * 200 + (columns - 1) * 32; // 200px card + 2rem gap
+    if (pageResults.length === 1) {
+      columns = 1;
+    } else if (pageResults.length === 2) {
+      columns = 2;
+    } else if (pageResults.length === 3) {
+      columns = 3;
+    } else if (pageResults.length === 4) {
+      columns = 4;
+    } else {
+      // 5 or more movies - adjust for screen size
+      columns = isLargeScreen ? 5 : 4;
+    }
 
+    // Generate search results HTML
     searchResult.innerHTML = `
-      <div class="search-thumbs-wrapper" style="max-width:${gridWidth}px;">
-        <div class="search-thumbs-grid" style="max-width:${gridWidth}px; grid-template-columns: repeat(${columns}, 1fr);">
+      <div class="search-thumbs-wrapper">
+        <div class="search-thumbs-grid" style="grid-template-columns: repeat(${columns}, 1fr); max-width: ${
+      columns * 200 + (columns - 1) * 16
+    }px;">
           ${pageResults
             .map(
               (movie) => `
@@ -298,12 +436,11 @@ if (typeof searchSubmit !== "undefined" && searchSubmit) {
               `
             )
             .join("")}
-          ${"<div class='search-thumb-card' style='visibility:hidden'></div>".repeat(emptySlots)}
         </div>
         ${
           totalPages > 1
             ? `<div class="search-pagination">
-                <button ${page === 1 ? "disabled" : ""} id="search-prev">Prev</button>
+                <button ${page === 1 ? "disabled" : ""} id="search-prev">Previous</button>
                 <span>Page ${page} of ${totalPages}</span>
                 <button ${page === totalPages ? "disabled" : ""} id="search-next">Next</button>
               </div>`
@@ -312,35 +449,56 @@ if (typeof searchSubmit !== "undefined" && searchSubmit) {
       </div>
     `;
 
-    // Paginação
+    // Setup pagination click handlers
     if (totalPages > 1) {
-      const prev = document.getElementById("search-prev");
-      const next = document.getElementById("search-next");
-      if (prev)
-        prev.onclick = () => {
+      const prevBtn = document.getElementById("search-prev");
+      const nextBtn = document.getElementById("search-next");
+
+      if (prevBtn && !prevBtn.disabled) {
+        prevBtn.onclick = (e) => {
+          e.preventDefault();
+          e.stopPropagation();
           currentPage--;
           renderSearchPage(currentPage);
         };
-      if (next)
-        next.onclick = () => {
+      }
+
+      if (nextBtn && !nextBtn.disabled) {
+        nextBtn.onclick = (e) => {
+          e.preventDefault();
+          e.stopPropagation();
           currentPage++;
           renderSearchPage(currentPage);
         };
+      }
     }
   }
 
+  // Main search functionality
   searchSubmit.addEventListener("click", (e) => {
     e.preventDefault();
     const query = searchInput.value.trim().toLowerCase();
-    if (!query) return;
+    const randomHint = document.getElementById("search-random-hint");
 
-    // --- MathDigo Easter Egg ---
+    // Exit if no search query
+    if (!query) {
+      if (randomHint) randomHint.style.display = "none";
+      return;
+    }
+
+    console.log(`🔍 Searching for: "${query}"`);
+
+    // Easter Egg - show all movies
     if (query === "mathdigo") {
       currentResults = Object.keys(window.moviesData).map((key) => ({ ...window.moviesData[key], key }));
+      console.log("🥚 Easter egg activated - showing all movies!");
     } else {
+      // Regular search across multiple fields
       currentResults = [];
       for (const key in window.moviesData) {
         const movie = window.moviesData[key];
+
+        // Search in multiple movie properties
         if (
           movie.title.toLowerCase().includes(query) ||
           (movie.director && movie.director.toLowerCase().includes(query)) ||
@@ -354,121 +512,162 @@ if (typeof searchSubmit !== "undefined" && searchSubmit) {
       }
     }
 
+    // Reset to first page and display results
     currentPage = 1;
+
     if (currentResults.length > 0) {
       renderSearchPage(currentPage);
       searchResult.style.display = "block";
       searchSubmit.style.display = "inline-block";
+      if (randomHint) randomHint.style.display = "flex";
+      console.log(`✅ Found ${currentResults.length} results`);
     } else {
+      // No results found
       searchResult.textContent = "Sorry, we couldn't find that. \n Maybe try searching on our sibling Flix?";
       searchResult.style.display = "block";
       searchSubmit.style.display = "none";
+      if (randomHint) randomHint.style.display = "flex";
+      console.log("❌ No results found");
     }
   });
 
-  // Enter key triggers search
-  if (searchInput) {
-    searchInput.addEventListener("keydown", function (e) {
-      if (e.key === "Enter") {
-        e.preventDefault();
-        searchSubmit.click();
-      }
-    });
-  }
-}
+  // Allow Enter key to trigger search
+  searchInput.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      searchSubmit.click();
+    }
+  });
 
-// --- Random Movie ("Surprise Me!") ---
-function showRandomMovieCard() {
-  // Mostra o novo modal
-  const surpriseModal = document.getElementById("surprise-modal");
-  const surpriseContent = document.getElementById("surprise-modal-content");
-  surpriseModal.style.display = "flex";
+  // Random movie selection functionality
+  function showRandomMovieCard() {
+    const surpriseModal = document.getElementById("surprise-modal");
+    const surpriseContent = document.getElementById("surprise-modal-content");
 
-  const keys = Object.keys(window.moviesData);
-  if (!keys.length) return;
-  const randomKey = keys[Math.floor(Math.random() * keys.length)];
-  const info = window.moviesData[randomKey];
-  if (!info) return;
+    if (!surpriseModal || !surpriseContent || !window.moviesData) return;
 
-  let countdown = 10;
-  surpriseContent.innerHTML = `
-    <button id="surprise-close" aria-label="Close" style="position:absolute;top:0.1rem;right:1rem;background:none;border:none;color:#fff;font-size:3rem;cursor:pointer;">&times;</button>
-    <div class="random-card">
-      <div style="font-size:1.2em; color:#4caf50; font-weight:bold; margin-bottom:0.7em;">Your random pick is:</div>
-      <div style="font-size:1.5em; color:#fff; font-weight:bold; margin-bottom:1.2em;">${info.title}</div>
-      <div style="display:flex; gap:1rem;">
-        <button id="go-random-movie" class="random-movie-btn" style="margin-top:0;">Go to movie (${countdown}s)</button>
-        <button id="reroll-random-movie" class="random-movie-btn" style="margin-top:0; background:#222; color:#4caf50; border:1.5px solid #4caf50;">Reroll</button>
+    surpriseModal.style.display = "flex";
+
+    // Select random movie
+    const movieKeys = Object.keys(window.moviesData);
+    const randomKey = movieKeys[Math.floor(Math.random() * movieKeys.length)];
+    const movieInfo = window.moviesData[randomKey];
+
+    if (!movieInfo) return;
+
+    console.log(`🎲 Random movie selected: ${movieInfo.title}`);
+
+    // Setup countdown timer
+    let countdown = 10;
+    surpriseContent.innerHTML = `
+      <button id="surprise-close" aria-label="Close" style="position:absolute;top:0.1rem;right:1rem;background:none;border:none;color:#fff;font-size:3rem;cursor:pointer;">&times;</button>
+      <div class="random-card">
+        <div style="font-size:1.2em; color:#4caf50; font-weight:bold; margin-bottom:0.7em;">Your random pick is:</div>
+        <div style="font-size:1.5em; color:#fff; font-weight:bold; margin-bottom:1.2em;">${movieInfo.title}</div>
+        <div style="display:flex; gap:1rem;">
+          <button id="go-random-movie" class="random-movie-btn" style="margin-top:0;">Go to movie (${countdown}s)</button>
+          <button id="reroll-random-movie" class="random-movie-btn" style="margin-top:0; background:#222; color:#4caf50; border:1.5px solid #4caf50;">Reroll</button>
+        </div>
       </div>
-    </div>
-  `;
+    `;
 
-  const goBtn = document.getElementById("go-random-movie");
-  const rerollBtn = document.getElementById("reroll-random-movie");
-  const closeBtn = document.getElementById("surprise-close");
-  let timer = setInterval(() => {
-    countdown--;
-    if (goBtn) goBtn.textContent = `Go to movie (${countdown}s)`;
-    if (countdown <= 0) {
+    // Get button elements
+    const goBtn = document.getElementById("go-random-movie");
+    const rerollBtn = document.getElementById("reroll-random-movie");
+    const closeBtn = document.getElementById("surprise-close");
+
+    // Countdown timer that auto-opens movie after 10 seconds
+    let timer = setInterval(() => {
+      countdown--;
+      if (goBtn) goBtn.textContent = `Go to movie (${countdown}s)`;
+
+      if (countdown <= 0) {
+        clearInterval(timer);
+        surpriseModal.style.display = "none";
+        // Small delay before opening movie to allow modal to close
+        setTimeout(() => {
+          const movieThumb = document.querySelector(`img[data-movie="${randomKey}"]`);
+          if (movieThumb) movieThumb.click();
+        }, 350);
+      }
+    }, 1000);
+
+    // Manual "Go to movie" button
+    goBtn.addEventListener("click", () => {
       clearInterval(timer);
       surpriseModal.style.display = "none";
       setTimeout(() => {
-        document.querySelector(`img[data-movie="${randomKey}"]`).click();
+        const movieThumb = document.querySelector(`img[data-movie="${randomKey}"]`);
+        if (movieThumb) movieThumb.click();
       }, 350);
-    }
-  }, 1000);
+    });
 
-  goBtn.addEventListener("click", () => {
-    clearInterval(timer);
-    surpriseModal.style.display = "none";
-    setTimeout(() => {
-      document.querySelector(`img[data-movie="${randomKey}"]`).click();
-    }, 350);
-  });
+    // Reroll button - pick another random movie
+    rerollBtn.addEventListener("click", () => {
+      clearInterval(timer);
+      showRandomMovieCard(); // Recursive call for new random selection
+    });
 
-  rerollBtn.addEventListener("click", () => {
-    clearInterval(timer);
-    showRandomMovieCard();
-  });
-
-  closeBtn.addEventListener("click", () => {
-    clearInterval(timer);
-    surpriseModal.style.display = "none";
-  });
-}
-
-// Substitua o evento do botão:
-document.addEventListener("DOMContentLoaded", function () {
-  const randomBtn = document.getElementById("random-movie-btn");
-  if (randomBtn) {
-    randomBtn.addEventListener("click", showRandomMovieCard);
+    // Close button
+    closeBtn.addEventListener("click", () => {
+      clearInterval(timer);
+      surpriseModal.style.display = "none";
+    });
   }
-});
+
+  // Event listener for random movie button clicks
+  document.addEventListener("click", function (e) {
+    if (e.target.id === "random-movie-btn" || e.target.closest("#random-movie-btn")) {
+      e.preventDefault();
+      showRandomMovieCard();
+    }
+  });
+})();
 
 // ==========================
-// 4. SEARCH AUTOCOMPLETE LOGIC
+// 6. SEARCH AUTOCOMPLETE & SUGGESTIONS
 // ==========================
-if (typeof searchInput !== "undefined" && searchInput) {
-  const searchAutocomplete = document.createElement("ul");
-  searchAutocomplete.id = "search-autocomplete";
-  searchAutocomplete.className = "autocomplete-list";
-  searchInput.parentNode.insertBefore(searchAutocomplete, searchInput.nextSibling);
 
-  // Section: 5. SEARCH AUTOCOMPLETE LOGIC
+(function () {
+  const searchInput = document.getElementById("search-input");
+  const searchSubmit = document.getElementById("search-submit");
+
+  if (!searchInput) return;
+
+  // Create or get autocomplete dropdown element
+  let searchAutocomplete = document.getElementById("search-autocomplete");
+  if (!searchAutocomplete) {
+    searchAutocomplete = document.createElement("ul");
+    searchAutocomplete.id = "search-autocomplete";
+    searchAutocomplete.className = "autocomplete-list";
+    searchInput.parentNode.insertBefore(searchAutocomplete, searchInput.nextSibling);
+  }
+
+  // Generate autocomplete suggestions as user types
   searchInput.addEventListener("input", function () {
     const query = this.value.trim().toLowerCase();
     searchAutocomplete.innerHTML = "";
-    if (!query) return;
+
+    // Don't show suggestions for empty queries
+    if (!query || !window.moviesData) return;
 
     const suggestions = [];
+
+    // Search through all movie data for matches
     for (const key in window.moviesData) {
       const movie = window.moviesData[key];
+
+      // Check movie title
       if (movie.title.toLowerCase().includes(query)) {
         suggestions.push({ label: movie.title, category: "Title", key });
       }
+
+      // Check director
       if (movie.director && movie.director.toLowerCase().includes(query)) {
         suggestions.push({ label: movie.director, category: "Director", key });
       }
+
+      // Check cast members
       if (movie.cast) {
         movie.cast.forEach((actor) => {
           if (actor.toLowerCase().includes(query)) {
@@ -476,6 +675,8 @@ if (typeof searchInput !== "undefined" && searchInput) {
           }
         });
       }
+
+      // Check genres
       if (movie.genre) {
         movie.genre.forEach((genre) => {
           if (genre.toLowerCase().includes(query)) {
@@ -485,32 +686,89 @@ if (typeof searchInput !== "undefined" && searchInput) {
       }
     }
 
-    // Remove duplicates by label+category
-    const unique = [];
-    const seen = new Set();
-    for (const s of suggestions) {
-      const id = s.label + s.category;
-      if (!seen.has(id)) {
-        unique.push(s);
-        seen.add(id);
+    // Remove duplicate suggestions
+    const uniqueSuggestions = [];
+    const seenSuggestions = new Set();
+
+    for (const suggestion of suggestions) {
+      const suggestionId = suggestion.label + suggestion.category;
+      if (!seenSuggestions.has(suggestionId)) {
+        uniqueSuggestions.push(suggestion);
+        seenSuggestions.add(suggestionId);
       }
     }
 
-    unique.slice(0, 8).forEach((s) => {
-      const li = document.createElement("li");
-      li.innerHTML = `<span>${s.label}</span><span class="autocomplete-category">${s.category}</span>`;
-      li.onclick = () => {
-        searchInput.value = s.label;
+    // Display up to 8 suggestions
+    uniqueSuggestions.slice(0, 8).forEach((suggestion) => {
+      const listItem = document.createElement("li");
+      listItem.innerHTML = `<span>${suggestion.label}</span><span class="autocomplete-category">${suggestion.category}</span>`;
+
+      // Click handler for autocomplete suggestions
+      listItem.addEventListener("click", function (event) {
+        event.stopPropagation();
+        searchInput.value = suggestion.label;
         searchAutocomplete.innerHTML = "";
-        if (typeof searchSubmit !== "undefined" && searchSubmit) searchSubmit.click();
-      };
-      searchAutocomplete.appendChild(li);
+
+        // Trigger search with selected suggestion
+        if (searchSubmit) searchSubmit.click();
+      });
+
+      searchAutocomplete.appendChild(listItem);
     });
   });
 
-  document.addEventListener("click", (e) => {
-    if (!searchAutocomplete.contains(e.target) && e.target !== searchInput) {
+  // Allow Enter key to trigger search from input
+  searchInput.addEventListener("keydown", function (e) {
+    if (e.key === "Enter" && searchSubmit) {
+      e.preventDefault();
+      searchSubmit.click();
+    }
+  });
+
+  // Close autocomplete when clicking outside
+  document.addEventListener("click", function (e) {
+    if (searchAutocomplete && !searchAutocomplete.contains(e.target) && e.target !== searchInput) {
       searchAutocomplete.innerHTML = "";
     }
   });
-}
+
+  // Close search modal when clicking outside (preserving internal functionality)
+  document.addEventListener("click", function (e) {
+    const searchModal = document.getElementById("search-modal");
+    if (searchModal && searchModal.style.display === "flex") {
+      const searchModalContent = searchModal.querySelector(".search-modal__content");
+
+      // Only close if clicked outside the modal content and not on search-related elements
+      if (
+        searchModalContent &&
+        !searchModalContent.contains(e.target) &&
+        e.target.id !== "search-btn" &&
+        e.target.id !== "search-submit" &&
+        !e.target.closest("#search-btn") &&
+        !e.target.closest("#search-submit") &&
+        !e.target.closest("#search-autocomplete")
+      ) {
+        searchModal.style.display = "none";
+      }
+    }
+  });
+})();
+
+// ==========================
+// 7. INITIALIZATION & STARTUP
+// ==========================
+
+// Ensure movie data is loaded before any functionality is used
+document.addEventListener("DOMContentLoaded", function () {
+  // Check if movie data is available
+  if (!window.moviesData || Object.keys(window.moviesData).length === 0) {
+    console.warn("⚠️ Movie data not found, attempting to load...");
+
+    // Try to load movie data if the function exists
+    if (typeof loadMoviesData === "function") {
+      loadMoviesData();
+    }
+  } else {
+    console.log(`✅ Movie data loaded successfully: ${Object.keys(window.moviesData).length} movies available`);
+  }
+});
