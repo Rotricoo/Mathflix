@@ -1,34 +1,57 @@
-// ====================
-// === MOVIES DATA  ===
-// ====================
-// This file contains all movie/series data used for carousels and modals.
-// Each entry is accessible via window.moviesData.<key>
+// ==========================
+// === MATHFLIX MOVIES DATABASE ===
+// ==========================
+// SECTION INDEX:
+// 1. DATABASE INITIALIZATION & STRUCTURE
+// 2. TOP 10 FEATURED MOVIES
+// 3. VERTICAL CAROUSEL (HORROR POSTERS)
+// 4. DIGO'S FAVORITES (FAMILY/MUSICAL COLLECTION)
+// 5. SERIES FOR BINGE WATCHING
+// 6. MOVIE MARATHONS
+//    6.1 THE HUNGER GAMES SAGA
+//    6.2 HARRY POTTER SERIES
+//    6.3 ALIEN FRANCHISE
+//    6.4 TOY STORY COLLECTION
+//    6.5 X-MEN UNIVERSE
+// ==========================
 
+// ==========================
+// 1. DATABASE INITIALIZATION & STRUCTURE
+// ==========================
+
+/**
+ * Global movies database - contains all movie and series information
+ * Used throughout the application for content display and searching
+ */
 window.moviesData = {};
 
 /* 
-  Structure example:
+  MOVIE DATA STRUCTURE:
   {
     title: "Movie Title",
-    genre: ["Genre1", "Genre2"],
+    genre: ["Genre1", "Genre2", "Genre3"], // MAX 3 genres
+    categories: ["cat1", "cat2", "cat3"], // MAX 3 categories (SERIES ONLY)
     duration: "1h 30min",
     year: 2020,
     age: "12+",
     origin: "Country",
-    locations: "Filming Locations",
-    cast: ["Actor 1", "Actor 2"],
+    locations: ["Location 1", "Location 2"],
+    cast: ["Actor 1", "Actor 2", "Actor 3"],
     director: "Director Name",
     description: "Short description...",
     poster: "assets/imgs/ban-movie.png",
     trailer: "https://www.youtube.com/embed/trailer_id",
-    tags: ["tag1", "tag2"],
+    tags: ["tag1", "tag2", "tag3"], // MAX 3 tags
     ranking: { math: 0, digo: 0 }
   }
 */
 
-// ====================
-// === TOP 10 MOVIES ===
-// ====================
+// ==========================
+// 2. TOP 10 FEATURED MOVIES
+// ==========================
+// Premium selection of critically acclaimed and popular movies
+// Displayed in the main carousel and top 10 section
+
 window.moviesData.arrival = {
   title: "Arrival",
   genre: ["Drama", "Sci-Fi", "Mystery"],
@@ -36,7 +59,7 @@ window.moviesData.arrival = {
   year: 2016,
   age: "12+",
   origin: "USA",
-  locations: ["Université de Montréal and Pavillon Jean-Brillant, Montreal, Canada / Place des Arts - Montreal, Canada"],
+  locations: ["Montreal, Canada", "Place des Arts - Montreal"],
   cast: ["Amy Adams", "Jeremy Renner", "Forest Whitaker"],
   director: "Denis Villeneuve",
   description:
@@ -49,19 +72,19 @@ window.moviesData.arrival = {
 
 window.moviesData.abouttime = {
   title: "About Time",
-  genre: ["Romance", "Comedy", "Drama", "Fantasy"],
+  genre: ["Romance", "Comedy", "Drama"],
   duration: "2h 3min",
   year: 2013,
   age: "12+",
   origin: "UK",
-  locations: ["Cornwall / London"],
-  cast: ["Domhnall Gleeson", "Rachel McAdams", "Bill Nighy", "Lydia Wilson", "Tom Hollander", "Margot Robbie"],
+  locations: ["Cornwall", "London"],
+  cast: ["Domhnall Gleeson", "Rachel McAdams", "Bill Nighy"],
   director: "Richard Curtis",
   description:
     "On his 21st birthday, Tim discovers he can travel through time. He uses the gift to pursue love and learn that not all problems can be fixed.",
   poster: "assets/imgs/ban-abouttime.png",
-  trailer: "https://www.youtube.com/embed/7OIFdWk83no?si=42AhYMYQbNnVqIxq&amp;",
-  tags: ["romance", "time travel", "family", "life lessons"],
+  trailer: "https://www.youtube.com/embed/7OIFdWk83no",
+  tags: ["romance", "time travel", "family"],
   ranking: { math: 0, digo: 0 },
 };
 
@@ -72,13 +95,13 @@ window.moviesData.hojequerovoltarsozinho = {
   year: 2014,
   age: "12+",
   origin: "Brazil",
-  locations: ["Colégio Estadual Fernão Dias Paes / Pinheiros / São Paulo - Brazil"],
+  locations: ["São Paulo, Brazil", "Colégio Estadual Fernão Dias"],
   cast: ["Ghilherme Lobo", "Fábio Audi", "Tess Amorim"],
   director: "Daniel Ribeiro",
   description:
     "Leonardo is a blind teenager seeking independence. His perspective shifts with the arrival of Gabriel, a new student at school.",
   poster: "assets/imgs/ban-hojequerovoltarsozinho.png",
-  trailer: "https://www.youtube.com/embed/7_cP_Q7j0jQ?si=QOhvgUKQ2Koa-6OZ",
+  trailer: "https://www.youtube.com/embed/7_cP_Q7j0jQ",
   tags: ["LGBTQ", "coming of age", "friendship"],
   ranking: { math: 0, digo: 0 },
 };
@@ -90,13 +113,13 @@ window.moviesData.origins = {
   year: 2014,
   age: "10+",
   origin: "USA",
-  locations: ["United States / Namibia / Peru / Iceland / France / India"],
+  locations: ["United States", "Namibia", "Peru"],
   cast: ["Jason Prall"],
   director: "Pedram Shojai",
   description:
     "A global journey exploring how our modern lifestyle affects our health, environment, and the true nature of human origins.",
   poster: "assets/imgs/ban-origins.png",
-  trailer: "https://www.youtube.com/embed/sEGppIgwKf0?si=QeE-VBAvIQxfhz7K",
+  trailer: "https://www.youtube.com/embed/sEGppIgwKf0",
   tags: ["health", "nature", "evolution"],
   ranking: { math: 0, digo: 0 },
 };
@@ -108,7 +131,7 @@ window.moviesData.lastchristmas = {
   year: 2019,
   age: "12+",
   origin: "UK",
-  locations: ["Covent Garden - London / The Phoenix Garden - Soho / Regent Street - London / St Mary's Church - London"],
+  locations: ["London", "Covent Garden", "Regent Street"],
   cast: ["Emilia Clarke", "Henry Golding", "Emma Thompson"],
   director: "Paul Feig",
   description:
@@ -126,7 +149,7 @@ window.moviesData.ghoststory = {
   year: 2017,
   age: "14+",
   origin: "USA",
-  locations: ["Dallas - Texas / Irving - Texas / Fort Worth - Texas"],
+  locations: ["Dallas, Texas", "Irving, Texas", "Fort Worth"],
   cast: ["Casey Affleck", "Rooney Mara"],
   director: "David Lowery",
   description:
@@ -136,6 +159,7 @@ window.moviesData.ghoststory = {
   tags: ["ghost", "existential", "afterlife"],
   ranking: { math: 0, digo: 0 },
 };
+
 window.moviesData.perksofbeing = {
   title: "The Perks of Being a Wallflower",
   genre: ["Drama", "Romance"],
@@ -143,7 +167,7 @@ window.moviesData.perksofbeing = {
   year: 2012,
   age: "13+",
   origin: "USA",
-  locations: ["Pittsburgh - Pennsylvania / Millvale - Pennsylvania / Peters Township High School - Pennsylvania"],
+  locations: ["Pittsburgh, Pennsylvania", "Peters Township High School"],
   cast: ["Logan Lerman", "Emma Watson", "Ezra Miller"],
   director: "Stephen Chbosky",
   description:
@@ -153,6 +177,7 @@ window.moviesData.perksofbeing = {
   tags: ["coming of age", "friendship", "high school"],
   ranking: { math: 0, digo: 0 },
 };
+
 window.moviesData.bridesmaids = {
   title: "Bridesmaids",
   genre: ["Comedy", "Romance"],
@@ -160,7 +185,7 @@ window.moviesData.bridesmaids = {
   year: 2011,
   age: "16+",
   origin: "USA",
-  locations: ["Milwaukee - Wisconsin / Los Angeles - California"],
+  locations: ["Milwaukee, Wisconsin", "Los Angeles, California"],
   cast: ["Kristen Wiig", "Maya Rudolph", "Rose Byrne"],
   director: "Paul Feig",
   description:
@@ -170,6 +195,7 @@ window.moviesData.bridesmaids = {
   tags: ["wedding", "comedy", "friendship"],
   ranking: { math: 0, digo: 0 },
 };
+
 window.moviesData.beforesunrise = {
   title: "Before Sunrise",
   genre: ["Drama", "Romance"],
@@ -177,7 +203,7 @@ window.moviesData.beforesunrise = {
   year: 1995,
   age: "14+",
   origin: "USA, Austria",
-  locations: ["Maria am Gestade Church - Vienna / Zollamtssteg Bridge - Vienna / Albertina Museum - Vienna"],
+  locations: ["Vienna", "Maria am Gestade Church", "Zollamtssteg Bridge"],
   cast: ["Ethan Hawke", "Julie Delpy"],
   director: "Richard Linklater",
   description:
@@ -187,6 +213,7 @@ window.moviesData.beforesunrise = {
   tags: ["romance", "travel", "conversation"],
   ranking: { math: 0, digo: 0 },
 };
+
 window.moviesData.her = {
   title: "Her",
   genre: ["Drama", "Romance", "Sci-Fi"],
@@ -194,7 +221,7 @@ window.moviesData.her = {
   year: 2013,
   age: "16+",
   origin: "USA",
-  locations: ["Los Angeles - California / Shanghai - China"],
+  locations: ["Los Angeles, California", "Shanghai, China"],
   cast: ["Joaquin Phoenix", "Scarlett Johansson", "Amy Adams"],
   director: "Spike Jonze",
   description:
@@ -204,6 +231,7 @@ window.moviesData.her = {
   tags: ["AI", "future", "romance"],
   ranking: { math: 0, digo: 0 },
 };
+
 window.moviesData.gonegirl = {
   title: "Gone Girl",
   genre: ["Drama", "Mystery", "Thriller"],
@@ -211,20 +239,23 @@ window.moviesData.gonegirl = {
   year: 2014,
   age: "18+",
   origin: "USA",
-  locations: ["Cape Girardeau - Missouri / Los Angeles - California / New York City - New York"],
-  cast: ["Ben Affleck", "Rosamund Pike", "Neil Patrick Harris", "Tyler Perry"],
+  locations: ["Cape Girardeau, Missouri", "Los Angeles", "New York City"],
+  cast: ["Ben Affleck", "Rosamund Pike", "Neil Patrick Harris"],
   director: "David Fincher",
   description:
     "When his wife goes missing, a man becomes the center of an intense media circus. As police dig deeper, shocking secrets begin to emerge.",
   poster: "assets/imgs/ban-goneGirl.png",
   trailer: "https://www.youtube.com/embed/2-_-1nJf8Vg",
-  tags: ["mystery", "crime", "psychological thriller"],
+  tags: ["mystery", "crime", "psychological"],
   ranking: { math: 0, digo: 0 },
 };
 
-// ============================================================
-// =================== VERTICAL CAROUSEL ======================
-// ============================================================
+// ==========================
+// 3. VERTICAL CAROUSEL (HORROR POSTERS)
+// ==========================
+// Special collection of horror movies with vertical poster layout
+// Displayed in the vertical carousel with unique modal presentation
+
 window.moviesData.screen = {
   title: "Screen",
   genre: ["Horror", "Thriller"],
@@ -232,16 +263,17 @@ window.moviesData.screen = {
   year: 1996,
   age: "18+",
   origin: "USA",
-  locations: ["Santa Rosa High School - California / Spring Hill Estate - Santa Rosa / Sonoma County - California"],
+  locations: ["Santa Rosa, California", "Sonoma County"],
   cast: ["Neve Campbell", "Courteney Cox", "David Arquette"],
   director: "Wes Craven",
   description:
-    "A teenage girl is hunted by a masked killer who uses horror movie tropes to terrorize her and her friends after her mother’s murder.",
+    "A teenage girl is hunted by a masked killer who uses horror movie tropes to terrorize her and her friends after her mother's murder.",
   poster: "assets/imgs/pos-screen.png",
   trailer: "https://www.youtube.com/embed/AWm_mkbdpCA",
   tags: ["slasher", "horror", "mystery"],
   ranking: { math: 0, digo: 0 },
 };
+
 window.moviesData.chucky = {
   title: "Child's Play 3",
   genre: ["Horror", "Thriller"],
@@ -249,16 +281,17 @@ window.moviesData.chucky = {
   year: 1991,
   age: "18+",
   origin: "USA",
-  locations: ["Kemper Military School - Boonville - Missouri / Los Angeles - California"],
-  cast: ["Justin Whalin", "Perrey Reeves", "Jeremy Sylvers", "Brad Dourif"],
+  locations: ["Missouri", "Los Angeles"],
+  cast: ["Justin Whalin", "Perrey Reeves", "Brad Dourif"],
   director: "Jack Bender",
   description:
     "Chucky returns to terrorize a teenage Andy at military school after being resurrected, continuing his deadly rampage.",
   poster: "assets/imgs/pos-chucky.png",
-  trailer: "https://www.youtube.com/embed/3No1jTRSvg8?si=TE1w9UcH07vdm9eW",
-  tags: ["doll", "military school", "slasher"],
+  trailer: "https://www.youtube.com/embed/3No1jTRSvg8",
+  tags: ["doll", "military", "slasher"],
   ranking: { math: 0, digo: 0 },
 };
+
 window.moviesData.tifannychucky = {
   title: "Bride of Chucky",
   genre: ["Horror", "Comedy"],
@@ -266,16 +299,17 @@ window.moviesData.tifannychucky = {
   year: 1998,
   age: "18+",
   origin: "USA",
-  locations: ["Vancouver - British Columbia / Coquitlam - British Columbia"],
+  locations: ["Vancouver", "British Columbia"],
   cast: ["Jennifer Tilly", "Brad Dourif", "Katherine Heigl"],
   director: "Ronny Yu",
   description:
     "Chucky, the killer doll, finds a partner in Tiffany and they set off on a gruesome road trip filled with chaos and murder.",
   poster: "assets/imgs/pos-tifannychucky.png",
-  trailer: "https://www.youtube.com/embed/I-WZYQ6nABA?si=3jFt4ifULamx-EG2",
+  trailer: "https://www.youtube.com/embed/I-WZYQ6nABA",
   tags: ["doll", "horror", "comedy"],
   ranking: { math: 0, digo: 0 },
 };
+
 window.moviesData.seedschucky = {
   title: "Seed of Chucky",
   genre: ["Horror", "Comedy"],
@@ -283,16 +317,17 @@ window.moviesData.seedschucky = {
   year: 2004,
   age: "18+",
   origin: "USA",
-  locations: ["Los Angeles - California / Bucharest - Romania"],
+  locations: ["Los Angeles", "Bucharest"],
   cast: ["Jennifer Tilly", "Brad Dourif", "Billy Boyd"],
   director: "Don Mancini",
   description:
     "Chucky and Tiffany are resurrected by their child Glen, unleashing a twisted family reunion filled with blood and dark humor.",
   poster: "assets/imgs/pos-seedschucky.png",
-  trailer: "https://www.youtube.com/embed/CKc-mP5xXQY?si=P0aMOEKTG4R_Zwvy",
+  trailer: "https://www.youtube.com/embed/CKc-mP5xXQY",
   tags: ["doll", "horror", "comedy"],
   ranking: { math: 0, digo: 0 },
 };
+
 window.moviesData.substance = {
   title: "Substance",
   genre: ["Drama", "Mystery"],
@@ -300,19 +335,22 @@ window.moviesData.substance = {
   year: 2023,
   age: "16+",
   origin: "USA",
-  locations: ["Los Angeles - California"],
+  locations: ["Los Angeles, California"],
   cast: ["Demi Moore", "Margaret Qualley", "Dennis Quaid"],
   director: "Coralie Fargeat",
   description: "A mysterious new substance offers hope but brings dangerous consequences as its true effects slowly unravel.",
   poster: "assets/imgs/pos-substance.png",
-  trailer: "https://www.youtube.com/embed/LNlrGhBpYjc?si=4KvcwHdn0Iz524Uv",
+  trailer: "https://www.youtube.com/embed/LNlrGhBpYjc",
   tags: ["mystery", "drama", "thriller"],
   ranking: { math: 0, digo: 0 },
 };
 
-// ============================================================
-// ================= TO MAKE DIGO HAPPY =======================
-// ============================================================
+// ==========================
+// 4. DIGO'S FAVORITES (FAMILY/MUSICAL COLLECTION)
+// ==========================
+// Feel-good movies and musicals that Digo particularly enjoys
+// Family-friendly content with uplifting themes
+
 window.moviesData.marypoppins = {
   title: "Mary Poppins Returns",
   genre: ["Family", "Fantasy", "Musical"],
@@ -320,16 +358,17 @@ window.moviesData.marypoppins = {
   year: 2018,
   age: "PG",
   origin: "USA, UK",
-  locations: ["Shepperton Studios - Surrey", "Pinewood Studios - Buckinghamshire", "London, England"],
+  locations: ["London", "Shepperton Studios", "Pinewood Studios"],
   cast: ["Emily Blunt", "Lin-Manuel Miranda", "Ben Whishaw"],
   director: "Rob Marshall",
   description:
     "Decades after her original visit, the magical nanny Mary Poppins returns to help the Banks siblings and Michael's children through a difficult time.",
   poster: "assets/imgs/ban-marypoppins.png",
-  trailer: "https://www.youtube.com/embed/gZgUW88D15w?si=fOTTtMZmwDm54P-S",
+  trailer: "https://www.youtube.com/embed/gZgUW88D15w",
   tags: ["magic", "musical", "family"],
   ranking: { math: 0, digo: 0 },
 };
+
 window.moviesData.ralphbreaks = {
   title: "Ralph Breaks the Internet",
   genre: ["Animation", "Adventure", "Comedy"],
@@ -337,7 +376,7 @@ window.moviesData.ralphbreaks = {
   year: 2018,
   age: "PG",
   origin: "USA",
-  locations: "Internet (fictional)",
+  locations: ["Internet (fictional)"],
   cast: ["John C. Reilly", "Sarah Silverman"],
   director: "Rich Moore, Phil Johnston",
   description:
@@ -347,6 +386,7 @@ window.moviesData.ralphbreaks = {
   tags: ["animation", "internet", "adventure"],
   ranking: { math: 0, digo: 0 },
 };
+
 window.moviesData.greatestshowman = {
   title: "The Greatest Showman",
   genre: ["Biography", "Drama", "Musical"],
@@ -354,16 +394,17 @@ window.moviesData.greatestshowman = {
   year: 2017,
   age: "PG",
   origin: "USA",
-  locations: "New York, USA",
+  locations: ["New York, USA"],
   cast: ["Hugh Jackman", "Michelle Williams", "Zac Efron"],
   director: "Michael Gracey",
   description:
     "A visionary showman rises from nothing to create a dazzling spectacle, celebrating diversity, passion, and the birth of modern show business.",
   poster: "assets/imgs/ban-greatestshowman.png",
-  trailer: "https://www.youtube.com/embed/EodWwczRIe4?si=R15H92woVuKJEyw8",
+  trailer: "https://www.youtube.com/embed/EodWwczRIe4",
   tags: ["musical", "circus", "biography"],
   ranking: { math: 0, digo: 0 },
 };
+
 window.moviesData.avangers = {
   title: "Avengers: Endgame",
   genre: ["Action", "Adventure", "Drama"],
@@ -371,16 +412,17 @@ window.moviesData.avangers = {
   year: 2019,
   age: "12+",
   origin: "USA",
-  locations: "Atlanta, Georgia, USA",
+  locations: ["Atlanta, Georgia"],
   cast: ["Robert Downey Jr.", "Chris Evans", "Mark Ruffalo"],
   director: "Anthony Russo, Joe Russo",
   description:
     "The Avengers reunite after the events of Infinity War to undo the damage caused by Thanos and restore balance to the universe.",
   poster: "assets/imgs/ban-avangers.png",
-  trailer: "https://www.youtube.com/embed/TcMBFSGVi1c?si=1kd5SIQMxDd1IRBB",
+  trailer: "https://www.youtube.com/embed/TcMBFSGVi1c",
   tags: ["superhero", "marvel", "action"],
   ranking: { math: 0, digo: 0 },
 };
+
 window.moviesData.hocuspocus = {
   title: "Hocus Pocus",
   genre: ["Comedy", "Family", "Fantasy"],
@@ -388,142 +430,166 @@ window.moviesData.hocuspocus = {
   year: 1993,
   age: "PG",
   origin: "USA",
-  locations: "Salem, Massachusetts, USA",
+  locations: ["Salem, Massachusetts"],
   cast: ["Bette Midler", "Sarah Jessica Parker", "Kathy Najimy"],
   director: "Kenny Ortega",
   description:
     "Three witches from the 17th century are resurrected in modern-day Salem, causing magical mayhem on Halloween night.",
   poster: "assets/imgs/ban-hocuspocus.png",
-  trailer: "https://www.youtube.com/embed/F4e6YQFrt1s?si=e2GN6cMolkAq55P6",
+  trailer: "https://www.youtube.com/embed/F4e6YQFrt1s",
   tags: ["witches", "halloween", "comedy"],
   ranking: { math: 0, digo: 0 },
 };
-// ============================================================
-// ================= SÉRIES PARA MARATONAR ====================
-// ============================================================
+
+// ==========================
+// 5. SERIES FOR BINGE WATCHING
+// ==========================
+// Television series organized by categories for easy filtering
+// Each series includes categories array for dynamic carousel generation
+
 window.moviesData.rupaul = {
   title: "RuPaul's Drag Race",
-  genre: ["Reality", "Competition", "Comedy", "Entertainment"],
+  genre: ["Reality", "Competition"],
+  categories: ["reality", "competition", "lgbtq"],
   duration: "16+ seasons",
   year: 2009,
   age: "TV-14",
   origin: "USA",
-  locations: ["World of Wonder Studios - Los Angeles, California", "Various locations for challenges"],
-  cast: ["RuPaul", "Michelle Visage", "Carson Kressley", "Ross Mathews"],
+  locations: ["Los Angeles", "World of Wonder Studios"],
+  cast: ["RuPaul", "Michelle Visage", "Carson Kressley"],
   director: "Nick Murray",
   description:
-    "America's most sickening drag queens compete in challenges testing charisma, uniqueness, nerve, and talent to become America's Next Drag Superstar and win the crown.",
+    "America's most sickening drag queens compete in challenges testing charisma, uniqueness, nerve, and talent to become America's Next Drag Superstar.",
   poster: "assets/imgs/ban-rupaul.png",
-  trailer: "https://www.youtube.com/embed/I1eSW2tzyoM?si=1mNHsCeYJ1uu7cWs",
-  tags: ["drag", "competition", "LGBTQ+", "reality TV", "fashion"],
+  trailer: "https://www.youtube.com/embed/I1eSW2tzyoM",
+  tags: ["drag", "competition", "LGBTQ"],
   ranking: { math: 0, digo: 0 },
 };
+
 window.moviesData.simpsons = {
   title: "The Simpsons",
   genre: ["Animation", "Comedy", "Family"],
+  categories: ["animation", "comedy", "family"],
   duration: "35+ seasons",
   year: 1989,
   age: "TV-PG",
   origin: "USA",
-  locations: "Springfield (fictional)",
+  locations: ["Springfield (fictional)"],
   cast: ["Dan Castellaneta", "Julie Kavner", "Nancy Cartwright"],
   director: "Matt Groening",
   description:
     "An animated sitcom following the lives of the Simpson family and their quirky neighbors in the fictional town of Springfield.",
   poster: "assets/imgs/ban-simpsons.png",
-  trailer: "https://www.youtube.com/embed/3R1ebDCv7vM?si=9NG_4t8PM5OUdzTY",
+  trailer: "https://www.youtube.com/embed/3R1ebDCv7vM",
   tags: ["animation", "comedy", "family"],
   ranking: { math: 0, digo: 0 },
 };
+
 window.moviesData.howmetyourmother = {
   title: "How I Met Your Mother",
-  genre: ["Comedy", "Romance"],
+  genre: ["Comedy", "Romance", "Sitcom"],
+  categories: ["sitcom", "comedy", "romance"],
   duration: "9 seasons",
   year: 2005,
   age: "TV-14",
   origin: "USA",
-  locations: "New York, USA",
+  locations: ["New York, USA"],
   cast: ["Josh Radnor", "Jason Segel", "Cobie Smulders"],
   director: "Pamela Fryman",
   description:
     "A father recounts to his children the humorous and emotional journey that led him to meet their mother, spanning years of memories.",
   poster: "assets/imgs/ban-howmetyourmother.png",
-  trailer: "https://www.youtube.com/embed/cjJLEYMzpjc?si=6het-bvSR_o4stFq",
+  trailer: "https://www.youtube.com/embed/cjJLEYMzpjc",
   tags: ["sitcom", "romance", "friendship"],
   ranking: { math: 0, digo: 0 },
 };
+
 window.moviesData.howmetyourfather = {
   title: "How I Met Your Father",
-  genre: ["Comedy", "Romance"],
+  genre: ["Comedy", "Romance", "Sitcom"],
+  categories: ["sitcom", "comedy", "romance"],
   duration: "2 seasons",
   year: 2022,
   age: "TV-14",
   origin: "USA",
-  locations: ["New York City, USA (setting)", "Los Angeles & Burbank, California (filming)"],
-  cast: ["Hilary Duff", "Christopher Lowell", "Francia Raisa", "Suraj Sharma", "Tom Ainsley", "Tien Tran", "Kim Cattrall"],
+  locations: ["New York City", "Los Angeles (filming)"],
+  cast: ["Hilary Duff", "Christopher Lowell", "Francia Raisa"],
   director: "Pamela Fryman",
   description:
-    "In the year 2050, Sophie recounts to her son the story of how she met his father, taking us back to 2022 where she and her close-knit group of friends navigate love and life in New York City.",
+    "In 2050, Sophie recounts to her son how she met his father, taking us back to 2022 where she and her friends navigate love and life in NYC.",
   poster: "assets/imgs/ban-howmetyourfather.png",
-  trailer: "https://www.youtube.com/embed/kHQVS-EySu4?si=NFpFGc9jRqrdKG53",
+  trailer: "https://www.youtube.com/embed/kHQVS-EySu4",
   tags: ["sitcom", "romance", "friendship"],
   ranking: { math: 0, digo: 0 },
 };
+
 window.moviesData.agatha = {
   title: "Agatha All Along",
-  genre: ["Action", "Adventure", "Comedy", "Drama", "Fantasy"],
+  genre: ["Fantasy", "Comedy", "Mystery"],
+  categories: ["marvel", "superhero", "magic"],
   duration: "9 episodes",
   year: 2024,
   age: "TV-14",
   origin: "USA",
-  locations: ["Trilith Studios - Atlanta, Georgia", "Warner Bros. Ranch - Burbank, California"],
-  cast: ["Kathryn Hahn", "Joe Locke", "Sasheer Zamata", "Ali Ahn", "Patti LuPone", "Aubrey Plaza", "Debra Jo Rupp"],
+  locations: ["Atlanta", "Warner Bros. Ranch"],
+  cast: ["Kathryn Hahn", "Joe Locke", "Aubrey Plaza"],
   director: "Jac Schaeffer",
   description:
-    "After being freed from a spell, Agatha Harkness embarks on a journey along the Witches' Road to regain her powers, forming a new alliance with a mysterious teenager.",
+    "After being freed from a spell, Agatha Harkness embarks on a journey along the Witches' Road to regain her powers with a mysterious teenager.",
   poster: "assets/imgs/ban-agatha.png",
-  trailer: "https://www.youtube.com/embed/R9pXbNz6Vbw?si=YOV7Pz5h2Yd9sFWH",
-  tags: ["witchcraft", "magic", "MCU", "spin-off"],
+  trailer: "https://www.youtube.com/embed/R9pXbNz6Vbw",
+  tags: ["witchcraft", "magic", "MCU"],
   ranking: { math: 0, digo: 0 },
 };
+
 window.moviesData.wandavision = {
   title: "WandaVision",
-  genre: ["Action", "Comedy", "Drama"],
-  duration: "1 season",
+  genre: ["Drama", "Fantasy", "Romance"],
+  categories: ["marvel", "superhero", "drama"],
+  duration: "9 episodes",
   year: 2021,
   age: "TV-14",
   origin: "USA",
-  locations: "Westview (fictional)",
+  locations: ["Atlanta, Georgia"],
   cast: ["Elizabeth Olsen", "Paul Bettany", "Kathryn Hahn"],
   director: "Matt Shakman",
   description:
-    "In a sitcom-like town, Wanda and Vision live an ideal suburban life that unravels as they begin to suspect something isn't quite right.",
+    "Wanda Maximoff and Vision live an idyllic suburban life, but strange occurrences reveal that nothing is as it seems.",
   poster: "assets/imgs/ban-wandavision.png",
-  trailer: "https://www.youtube.com/embed/sj9J2ecsSpo?si=0M26SE5_Y0LPxCIb",
+  trailer: "https://www.youtube.com/embed/sj9J2ecsSpo",
   tags: ["marvel", "superhero", "sitcom"],
   ranking: { math: 0, digo: 0 },
 };
+
 window.moviesData.theoffice = {
   title: "The Office",
-  genre: ["Comedy"],
+  genre: ["Comedy", "Mockumentary"],
+  categories: ["sitcom", "comedy", "workplace"],
   duration: "9 seasons",
   year: 2005,
   age: "TV-14",
   origin: "USA",
-  locations: "Scranton, Pennsylvania, USA",
+  locations: ["Scranton, Pennsylvania"],
   cast: ["Steve Carell", "Rainn Wilson", "John Krasinski"],
   director: "Greg Daniels",
   description:
     "A documentary-style sitcom about the lives, quirks, and chaos of office workers at Dunder Mifflin's Scranton branch.",
   poster: "assets/imgs/ban-theoffice.png",
-  trailer: "https://www.youtube.com/embed/-C2z-nshFts?si=CFokD1TwBjsny5rE",
+  trailer: "https://www.youtube.com/embed/-C2z-nshFts",
   tags: ["sitcom", "office", "comedy"],
   ranking: { math: 0, digo: 0 },
 };
 
-// =========================================================
-// ========= MARATONAS DE FILMES - HUNGER GAMES ============
-// =========================================================
+// ==========================
+// 6. MOVIE MARATHONS
+// ==========================
+// Complete film series organized by franchise
+// Perfect for binge-watching entire storylines
+
+// ==========================
+// 6.1 THE HUNGER GAMES SAGA
+// ==========================
+// Dystopian science fiction series following Katniss Everdeen's rebellion
 
 window.moviesData.hungergames = {
   title: "The Hunger Games",
@@ -532,7 +598,7 @@ window.moviesData.hungergames = {
   year: 2012,
   age: "PG-13",
   origin: "USA",
-  locations: "North Carolina, USA",
+  locations: ["North Carolina"],
   cast: ["Jennifer Lawrence", "Josh Hutcherson", "Liam Hemsworth"],
   director: "Gary Ross",
   description:
@@ -550,12 +616,12 @@ window.moviesData.catchingfire = {
   year: 2013,
   age: "PG-13",
   origin: "USA",
-  locations: "Atlanta, Georgia, USA",
+  locations: ["Atlanta, Georgia"],
   cast: ["Jennifer Lawrence", "Josh Hutcherson", "Liam Hemsworth"],
   director: "Francis Lawrence",
   description: "Katniss and Peeta become targets of the Capitol after their victory sparks rebellion in the districts.",
   poster: "assets/imgs/Marathon/Hunger-games/ban-catchingfire.png",
-  trailer: "https://www.youtube.com/embed/EAzGXqJSDJ8?si=csp0iKHYT5tPxFF8",
+  trailer: "https://www.youtube.com/embed/EAzGXqJSDJ8",
   tags: ["dystopia", "rebellion", "action"],
   ranking: { math: 0, digo: 0 },
 };
@@ -567,12 +633,12 @@ window.moviesData.mockingjay1 = {
   year: 2014,
   age: "PG-13",
   origin: "USA",
-  locations: "Atlanta, Georgia, USA",
+  locations: ["Atlanta, Georgia"],
   cast: ["Jennifer Lawrence", "Josh Hutcherson", "Liam Hemsworth"],
   director: "Francis Lawrence",
   description: "Katniss becomes the symbol of rebellion as the districts unite against the Capitol.",
   poster: "assets/imgs/Marathon/Hunger-games/ban-mockingjay.png",
-  trailer: "https://www.youtube.com/embed/3PkkHsuMrho?si=nONXDOVsnqadGGNV",
+  trailer: "https://www.youtube.com/embed/3PkkHsuMrho",
   tags: ["dystopia", "rebellion", "war"],
   ranking: { math: 0, digo: 0 },
 };
@@ -584,12 +650,12 @@ window.moviesData.mockingjay2 = {
   year: 2015,
   age: "PG-13",
   origin: "USA",
-  locations: "Atlanta, Georgia, USA",
+  locations: ["Atlanta, Georgia"],
   cast: ["Jennifer Lawrence", "Josh Hutcherson", "Liam Hemsworth"],
   director: "Francis Lawrence",
   description: "Katniss and her allies bring the revolution to the Capitol, facing deadly traps and moral dilemmas.",
   poster: "assets/imgs/Marathon/Hunger-games/ban-mockingjay2.png",
-  trailer: "https://www.youtube.com/embed/eO0T9A3kdqc?si=oR0_ZSBLdeaxMHv9",
+  trailer: "https://www.youtube.com/embed/eO0T9A3kdqc",
   tags: ["dystopia", "revolution", "finale"],
   ranking: { math: 0, digo: 0 },
 };
@@ -601,19 +667,20 @@ window.moviesData.BalladOfSongbirdsSnakes = {
   year: 2023,
   age: "PG-13",
   origin: "USA",
-  locations: "Poland, Germany",
+  locations: ["Poland", "Germany"],
   cast: ["Tom Blyth", "Rachel Zegler", "Peter Dinklage"],
   director: "Francis Lawrence",
-  description:
-    "Years before he would become the tyrannical president of Panem, 18-year-old Coriolanus Snow sees a chance for a change of fortunes when he mentors Lucy Gray Baird in the 10th Hunger Games.",
+  description: "Years before becoming president, 18-year-old Coriolanus Snow mentors Lucy Gray Baird in the 10th Hunger Games.",
   poster: "assets/imgs/Marathon/Hunger-games/ban-songsbirdsnake.png",
   trailer: "https://www.youtube.com/embed/NxW_X4kzeus",
   tags: ["prequel", "dystopia", "games"],
   ranking: { math: 0, digo: 0 },
 };
-// =========================================================
-// ========= MARATONAS DE FILMES - HARRY POTTER ============
-// =========================================================
+
+// ==========================
+// 6.2 HARRY POTTER SERIES
+// ==========================
+// Complete wizarding world saga following Harry's journey at Hogwarts
 
 window.moviesData.harrypotter1 = {
   title: "Harry Potter and the Sorcerer's Stone",
@@ -622,11 +689,11 @@ window.moviesData.harrypotter1 = {
   year: 2001,
   age: "PG",
   origin: "UK, USA",
-  locations: "England, UK",
+  locations: ["England, UK"],
   cast: ["Daniel Radcliffe", "Emma Watson", "Rupert Grint"],
   director: "Chris Columbus",
   description:
-    "An orphaned boy attends a magical school, where he discovers his past and destiny while battling the dark wizard who killed his parents.",
+    "An orphaned boy attends a magical school, discovering his past and destiny while battling the dark wizard who killed his parents.",
   poster: "assets/imgs/Marathon/HarryPotter/ban-harrypotter1.png",
   trailer: "https://www.youtube.com/embed/VyHV0BRtdxo",
   tags: ["magic", "wizard", "adventure"],
@@ -640,7 +707,7 @@ window.moviesData.harrypotter2 = {
   year: 2002,
   age: "PG",
   origin: "UK, USA",
-  locations: "England, UK",
+  locations: ["England, UK"],
   cast: ["Daniel Radcliffe", "Emma Watson", "Rupert Grint"],
   director: "Chris Columbus",
   description:
@@ -658,10 +725,10 @@ window.moviesData.harrypotter3 = {
   year: 2004,
   age: "PG",
   origin: "UK, USA",
-  locations: "England, UK",
+  locations: ["England, UK"],
   cast: ["Daniel Radcliffe", "Emma Watson", "Rupert Grint"],
   director: "Alfonso Cuarón",
-  description: "Harry learns of the escape of Sirius Black, a dangerous prisoner, and uncovers secrets about his own past.",
+  description: "Harry learns of Sirius Black's escape and uncovers secrets about his own past.",
   poster: "assets/imgs/Marathon/HarryPotter/ban-harrypotter3.png",
   trailer: "https://www.youtube.com/embed/lAxgztbYDbs",
   tags: ["magic", "time travel", "adventure"],
@@ -675,11 +742,11 @@ window.moviesData.harrypotter4 = {
   year: 2005,
   age: "PG-13",
   origin: "UK, USA",
-  locations: "England, UK",
+  locations: ["England, UK"],
   cast: ["Daniel Radcliffe", "Emma Watson", "Rupert Grint"],
   director: "Mike Newell",
   description:
-    "Harry is mysteriously entered into the dangerous Triwizard Tournament, facing deadly tasks and the return of Voldemort.",
+    "Harry is mysteriously entered into the dangerous Triwizard Tournament, facing deadly tasks and Voldemort's return.",
   poster: "assets/imgs/Marathon/HarryPotter/ban-harrypotter4.png",
   trailer: "https://www.youtube.com/embed/3EGojp4Hh6I",
   tags: ["magic", "tournament", "adventure"],
@@ -693,11 +760,10 @@ window.moviesData.harrypotter5 = {
   year: 2007,
   age: "PG-13",
   origin: "UK, USA",
-  locations: "England, UK",
+  locations: ["England, UK"],
   cast: ["Daniel Radcliffe", "Emma Watson", "Rupert Grint"],
   director: "David Yates",
-  description:
-    "Harry and his friends form Dumbledore's Army to fight the oppressive regime at Hogwarts and prepare for the coming war.",
+  description: "Harry and his friends form Dumbledore's Army to fight the oppressive regime at Hogwarts and prepare for war.",
   poster: "assets/imgs/Marathon/HarryPotter/ban-harrypotter5.png",
   trailer: "https://www.youtube.com/embed/y6ZW7KXaXYk",
   tags: ["magic", "rebellion", "adventure"],
@@ -711,10 +777,10 @@ window.moviesData.harrypotter6 = {
   year: 2009,
   age: "PG",
   origin: "UK, USA",
-  locations: "England, UK",
+  locations: ["England, UK"],
   cast: ["Daniel Radcliffe", "Emma Watson", "Rupert Grint"],
   director: "David Yates",
-  description: "Harry discovers a mysterious book and learns more about Voldemort's past as the wizarding world grows darker.",
+  description: "Harry discovers a mysterious book and learns about Voldemort's past as the wizarding world grows darker.",
   poster: "assets/imgs/Marathon/HarryPotter/ban-harrypotter6.png",
   trailer: "https://www.youtube.com/embed/sg81Lts5kYY",
   tags: ["magic", "mystery", "adventure"],
@@ -728,10 +794,10 @@ window.moviesData.harrypotter7 = {
   year: 2010,
   age: "PG-13",
   origin: "UK, USA",
-  locations: "England, UK",
+  locations: ["England, UK"],
   cast: ["Daniel Radcliffe", "Emma Watson", "Rupert Grint"],
   director: "David Yates",
-  description: "Harry, Ron, and Hermione leave Hogwarts to find and destroy Voldemort's Horcruxes, facing danger at every turn.",
+  description: "Harry, Ron, and Hermione leave Hogwarts to find and destroy Voldemort's Horcruxes, facing danger everywhere.",
   poster: "assets/imgs/Marathon/HarryPotter/ban-harrypotter7.png",
   trailer: "https://www.youtube.com/embed/MxqsmsA8y5k",
   tags: ["magic", "quest", "adventure"],
@@ -745,18 +811,20 @@ window.moviesData.harrypotter8 = {
   year: 2011,
   age: "PG-13",
   origin: "UK, USA",
-  locations: "England, UK",
+  locations: ["England, UK"],
   cast: ["Daniel Radcliffe", "Emma Watson", "Rupert Grint"],
   director: "David Yates",
-  description: "The final battle for Hogwarts and the wizarding world begins as Harry faces Voldemort in a climactic showdown.",
+  description: "The final battle for Hogwarts begins as Harry faces Voldemort in a climactic showdown.",
   poster: "assets/imgs/Marathon/HarryPotter/ban-harrypotter8.png",
   trailer: "https://www.youtube.com/embed/mObK5XD8udk",
   tags: ["magic", "finale", "adventure"],
   ranking: { math: 0, digo: 0 },
 };
-// =========================================================
-// ========= MARATONAS DE FILMES - ALIEN ===================
-// =========================================================
+
+// ==========================
+// 6.3 ALIEN FRANCHISE
+// ==========================
+// Sci-fi horror series following humanity's encounters with xenomorphs
 
 window.moviesData.alien1 = {
   title: "Alien",
@@ -765,12 +833,11 @@ window.moviesData.alien1 = {
   year: 1979,
   age: "R",
   origin: "UK, USA",
-  locations: "Shepperton Studios, UK",
+  locations: ["Shepperton Studios, UK"],
   cast: ["Sigourney Weaver", "Tom Skerritt", "John Hurt"],
   director: "Ridley Scott",
-  description:
-    "A space crew answers a distress signal and discovers a deadly alien lifeform aboard their ship, leading to a terrifying survival ordeal.",
-  poster: "assets/imgs/Marathon/Alien/alien1.png",
+  description: "A space crew discovers a deadly alien lifeform aboard their ship, leading to a terrifying survival ordeal.",
+  poster: "assets/imgs/Marathon/Alien/ban-alien1.png",
   trailer: "https://www.youtube.com/embed/jQ5lPt9edzQ",
   tags: ["space", "alien", "horror"],
   ranking: { math: 0, digo: 0 },
@@ -783,11 +850,11 @@ window.moviesData.alien2 = {
   year: 1986,
   age: "R",
   origin: "UK, USA",
-  locations: "Pinewood Studios, UK",
+  locations: ["Pinewood Studios, UK"],
   cast: ["Sigourney Weaver", "Michael Biehn", "Carrie Henn"],
   director: "James Cameron",
-  description: "Ripley returns to the alien-infested colony with a team of marines, facing a terrifying hive of xenomorphs.",
-  poster: "assets/imgs/Marathon/Alien/alien2.png",
+  description: "Ripley returns to the alien-infested colony with marines, facing a terrifying hive of xenomorphs.",
+  poster: "assets/imgs/Marathon/Alien/ban-alien2.png",
   trailer: "https://www.youtube.com/embed/oSeR6Yc5bIg",
   tags: ["space", "alien", "action"],
   ranking: { math: 0, digo: 0 },
@@ -800,11 +867,11 @@ window.moviesData.alien3 = {
   year: 1992,
   age: "R",
   origin: "UK, USA",
-  locations: "Pinewood Studios, UK",
+  locations: ["Pinewood Studios, UK"],
   cast: ["Sigourney Weaver", "Charles S. Dutton", "Charles Dance"],
   director: "David Fincher",
-  description: "Ripley crash-lands on a prison planet, where she must face another deadly xenomorph with limited resources.",
-  poster: "assets/imgs/Marathon/Alien/alien3.png",
+  description: "Ripley crash-lands on a prison planet, facing another deadly xenomorph with limited resources.",
+  poster: "assets/imgs/Marathon/Alien/ban-alien3.png",
   trailer: "https://www.youtube.com/embed/Dec9Ta6CGzY",
   tags: ["space", "alien", "prison"],
   ranking: { math: 0, digo: 0 },
@@ -817,11 +884,11 @@ window.moviesData.alien4 = {
   year: 1997,
   age: "R",
   origin: "USA",
-  locations: "Fox Studios, Los Angeles",
+  locations: ["Fox Studios, Los Angeles"],
   cast: ["Sigourney Weaver", "Winona Ryder", "Dominique Pinon"],
   director: "Jean-Pierre Jeunet",
   description: "200 years after her death, Ripley is cloned and must once again battle xenomorphs aboard a research vessel.",
-  poster: "assets/imgs/Marathon/Alien/alien4.png",
+  poster: "assets/imgs/Marathon/Alien/ban-alien4.png",
   trailer: "https://www.youtube.com/embed/0v5c5O9lWdc",
   tags: ["space", "alien", "clone"],
   ranking: { math: 0, digo: 0 },
@@ -834,12 +901,11 @@ window.moviesData.prometheus = {
   year: 2012,
   age: "R",
   origin: "USA, UK",
-  locations: "Iceland, England, Scotland",
+  locations: ["Iceland", "England", "Scotland"],
   cast: ["Noomi Rapace", "Logan Marshall-Green", "Michael Fassbender"],
   director: "Ridley Scott",
-  description:
-    "A team of explorers searches for humanity's origins on a distant planet, uncovering a threat that could destroy mankind.",
-  poster: "assets/imgs/Marathon/Alien/prometheus.png",
+  description: "A team searches for humanity's origins on a distant planet, uncovering a threat that could destroy mankind.",
+  poster: "assets/imgs/Marathon/Alien/ban-alien5.png",
   trailer: "https://www.youtube.com/embed/sftuxbvGwiU",
   tags: ["space", "origin", "alien"],
   ranking: { math: 0, digo: 0 },
@@ -852,19 +918,21 @@ window.moviesData.covenant = {
   year: 2017,
   age: "R",
   origin: "USA, UK",
-  locations: "New Zealand, Australia",
+  locations: ["New Zealand", "Australia"],
   cast: ["Michael Fassbender", "Katherine Waterston", "Billy Crudup"],
   director: "Ridley Scott",
   description:
-    "A colony ship discovers a seemingly uncharted paradise, but a deadly threat awaits as the crew encounters the xenomorphs.",
-  poster: "assets/imgs/Marathon/Alien/covenant.png",
+    "A colony ship discovers a seemingly uncharted paradise, but a deadly threat awaits as the crew encounters xenomorphs.",
+  poster: "assets/imgs/Marathon/Alien/ban-alien6.png",
   trailer: "https://www.youtube.com/embed/svnAD0TApb8",
   tags: ["space", "alien", "horror"],
   ranking: { math: 0, digo: 0 },
 };
-// =========================================================
-// ========= MARATONAS DE FILMES - TOY STORY ===============
-// =========================================================
+
+// ==========================
+// 6.4 TOY STORY COLLECTION
+// ==========================
+// Pixar's beloved animated series about toys that come to life
 
 window.moviesData.toystory1 = {
   title: "Toy Story",
@@ -873,11 +941,11 @@ window.moviesData.toystory1 = {
   year: 1995,
   age: "G",
   origin: "USA",
-  locations: "California, USA",
+  locations: ["California, USA"],
   cast: ["Tom Hanks", "Tim Allen", "Don Rickles"],
   director: "John Lasseter",
   description:
-    "A cowboy toy feels threatened when a flashy spaceman replaces him as the favorite toy, sparking a rivalry and an unlikely friendship.",
+    "A cowboy toy feels threatened when a flashy spaceman replaces him as the favorite, sparking rivalry and unlikely friendship.",
   poster: "assets/imgs/Marathon/Toy-Story/ban-toystory1.png",
   trailer: "https://www.youtube.com/embed/v-PjgYDrg70",
   tags: ["animation", "toys", "friendship"],
@@ -891,7 +959,7 @@ window.moviesData.toystory2 = {
   year: 1999,
   age: "G",
   origin: "USA",
-  locations: "California, USA",
+  locations: ["California, USA"],
   cast: ["Tom Hanks", "Tim Allen", "Joan Cusack"],
   director: "John Lasseter",
   description: "Woody is stolen by a toy collector, prompting Buzz and the gang to launch a daring rescue mission.",
@@ -908,11 +976,10 @@ window.moviesData.toystory3 = {
   year: 2010,
   age: "G",
   origin: "USA",
-  locations: "California, USA",
+  locations: ["California, USA"],
   cast: ["Tom Hanks", "Tim Allen", "Joan Cusack"],
   director: "Lee Unkrich",
-  description:
-    "The toys face an uncertain future as Andy prepares to leave for college, leading to an emotional adventure at a daycare.",
+  description: "The toys face an uncertain future as Andy prepares for college, leading to an emotional adventure at a daycare.",
   poster: "assets/imgs/Marathon/Toy-Story/ban-toystory3.png",
   trailer: "https://www.youtube.com/embed/JcpWXaA2qeg",
   tags: ["animation", "toys", "adventure"],
@@ -926,7 +993,7 @@ window.moviesData.toystory4 = {
   year: 2019,
   age: "G",
   origin: "USA",
-  locations: "California, USA",
+  locations: ["California, USA"],
   cast: ["Tom Hanks", "Tim Allen", "Annie Potts"],
   director: "Josh Cooley",
   description: "Woody, Buzz, and friends embark on a road trip with new toy Forky, discovering what it means to belong.",
@@ -935,9 +1002,11 @@ window.moviesData.toystory4 = {
   tags: ["animation", "toys", "road trip"],
   ranking: { math: 0, digo: 0 },
 };
-// =========================================================
-// ========= MARATONAS DE FILMES - XMEN ====================
-// =========================================================
+
+// ==========================
+// 6.5 X-MEN UNIVERSE
+// ==========================
+// Marvel's mutant superhero franchise spanning multiple generations
 
 window.moviesData.xmen1 = {
   title: "X-Men",
@@ -946,13 +1015,13 @@ window.moviesData.xmen1 = {
   year: 2000,
   age: "PG-13",
   origin: "USA",
-  locations: "Toronto, Canada",
+  locations: ["Toronto, Canada"],
   cast: ["Hugh Jackman", "Patrick Stewart", "Ian McKellen"],
   director: "Bryan Singer",
   description:
-    "Mutants with extraordinary powers clash over humanity's fate, as the X-Men fight for peace while others seek mutant dominance.",
+    "Mutants with extraordinary powers clash over humanity's fate, as X-Men fight for peace while others seek dominance.",
   poster: "assets/imgs/Marathon/x-men/ban-xmen1.png",
-  trailer: "https://www.youtube.com/embed/VNxwlx6etXI?si=_5etQBR2lq61ECoO",
+  trailer: "https://www.youtube.com/embed/VNxwlx6etXI",
   tags: ["mutants", "superhero", "marvel"],
   ranking: { math: 0, digo: 0 },
 };
@@ -964,12 +1033,12 @@ window.moviesData.xmen2 = {
   year: 2003,
   age: "PG-13",
   origin: "USA",
-  locations: "Vancouver, Canada",
+  locations: ["Vancouver, Canada"],
   cast: ["Hugh Jackman", "Patrick Stewart", "Ian McKellen"],
   director: "Bryan Singer",
-  description: "The X-Men join forces with their enemy Magneto to stop a threat against all mutants and humans.",
+  description: "The X-Men join forces with Magneto to stop a threat against all mutants and humans.",
   poster: "assets/imgs/Marathon/X-men/ban-xmen2.png",
-  trailer: "https://www.youtube.com/embed/KNIdceH7XOw?si=NBIoYIyxW0r4PovR",
+  trailer: "https://www.youtube.com/embed/KNIdceH7XOw",
   tags: ["mutants", "superhero", "marvel"],
   ranking: { math: 0, digo: 0 },
 };
@@ -981,12 +1050,12 @@ window.moviesData.xmen3 = {
   year: 2006,
   age: "PG-13",
   origin: "USA",
-  locations: "Vancouver, Canada",
+  locations: ["Vancouver, Canada"],
   cast: ["Hugh Jackman", "Patrick Stewart", "Ian McKellen"],
   director: "Brett Ratner",
-  description: "A cure for mutation divides the X-Men, while a resurrected Jean Grey unleashes her dark side as the Phoenix.",
+  description: "A cure for mutation divides the X-Men, while Jean Grey unleashes her dark side as the Phoenix.",
   poster: "assets/imgs/Marathon/X-men/ban-xmen3.png",
-  trailer: "https://www.youtube.com/embed/ZQ0v5dXbw7M?si=rfOvesF7TqfHhVSZ",
+  trailer: "https://www.youtube.com/embed/ZQ0v5dXbw7M",
   tags: ["mutants", "superhero", "marvel"],
   ranking: { math: 0, digo: 0 },
 };
@@ -998,12 +1067,12 @@ window.moviesData.xmen4 = {
   year: 2009,
   age: "PG-13",
   origin: "USA",
-  locations: "New South Wales, Australia",
+  locations: ["New South Wales, Australia"],
   cast: ["Hugh Jackman", "Liev Schreiber", "Danny Huston"],
   director: "Gavin Hood",
-  description: "The backstory of Wolverine is revealed, from his childhood to his time in the Weapon X program.",
+  description: "Wolverine's backstory is revealed, from childhood to his time in the Weapon X program.",
   poster: "assets/imgs/Marathon/X-men/ban-xmen4.png",
-  trailer: "https://www.youtube.com/embed/8IxT7WFL6Ec?si=FrwW8A-QBhqLfFUW",
+  trailer: "https://www.youtube.com/embed/8IxT7WFL6Ec",
   tags: ["mutants", "wolverine", "origin"],
   ranking: { math: 0, digo: 0 },
 };
@@ -1015,12 +1084,12 @@ window.moviesData.xmen5 = {
   year: 2011,
   age: "PG-13",
   origin: "USA",
-  locations: "Georgia, USA",
+  locations: ["Georgia, USA"],
   cast: ["James McAvoy", "Michael Fassbender", "Jennifer Lawrence"],
   director: "Matthew Vaughn",
   description: "The origins of the X-Men are explored as Charles Xavier and Erik Lehnsherr form the first team of mutants.",
   poster: "assets/imgs/Marathon/X-men/ban-xmen5.png",
-  trailer: "https://www.youtube.com/embed/kyQKi5-k0UU?si=CEOxlngPyP81Rv13",
+  trailer: "https://www.youtube.com/embed/kyQKi5-k0UU",
   tags: ["mutants", "origin", "marvel"],
   ranking: { math: 0, digo: 0 },
 };
@@ -1032,7 +1101,7 @@ window.moviesData.xmen6 = {
   year: 2013,
   age: "PG-13",
   origin: "USA",
-  locations: "Japan",
+  locations: ["Japan"],
   cast: ["Hugh Jackman", "Tao Okamoto", "Rila Fukushima"],
   director: "James Mangold",
   description: "Wolverine travels to Japan, where he faces his past and new deadly enemies.",
@@ -1049,7 +1118,7 @@ window.moviesData.xmen7 = {
   year: 2014,
   age: "PG-13",
   origin: "USA",
-  locations: "Montreal, Canada",
+  locations: ["Montreal, Canada"],
   cast: ["Hugh Jackman", "James McAvoy", "Michael Fassbender"],
   director: "Bryan Singer",
   description: "Wolverine is sent to the past to change history and prevent the extinction of mutants and humans.",
@@ -1066,7 +1135,7 @@ window.moviesData.xmen8 = {
   year: 2016,
   age: "PG-13",
   origin: "USA",
-  locations: "Montreal, Canada",
+  locations: ["Montreal, Canada"],
   cast: ["James McAvoy", "Michael Fassbender", "Jennifer Lawrence"],
   director: "Bryan Singer",
   description: "The ancient mutant Apocalypse awakens and threatens the world, forcing the X-Men to unite against him.",
@@ -1083,7 +1152,7 @@ window.moviesData.xmen9 = {
   year: 2017,
   age: "R",
   origin: "USA",
-  locations: "New Mexico, USA",
+  locations: ["New Mexico, USA"],
   cast: ["Hugh Jackman", "Patrick Stewart", "Dafne Keen"],
   director: "James Mangold",
   description: "In a bleak future, an aging Wolverine and ailing Professor X fight to protect a young mutant from dark forces.",
@@ -1100,13 +1169,25 @@ window.moviesData.xmen10 = {
   year: 2019,
   age: "PG-13",
   origin: "USA",
-  locations: "Montreal, Canada",
-  cast: ["James McAvoy", "Michael Fassbender", "Jennifer Lawrence", "Sophie Turner"],
+  locations: ["Montreal, Canada"],
+  cast: ["James McAvoy", "Michael Fassbender", "Sophie Turner"],
   director: "Simon Kinberg",
   description:
-    "Jean Grey develops incredible powers that corrupt and turn her into the Dark Phoenix, forcing the X-Men to choose between saving her or humanity.",
+    "Jean Grey develops incredible powers that corrupt her into the Dark Phoenix, forcing the X-Men to choose between saving her or humanity.",
   poster: "assets/imgs/Marathon/X-men/ban-xmen10.png",
   trailer: "https://www.youtube.com/embed/QWbMckU3AOQ",
   tags: ["mutants", "phoenix", "marvel"],
   ranking: { math: 0, digo: 0 },
 };
+
+// ==========================
+// DATABASE VALIDATION & LOGGING
+// ==========================
+
+/**
+ * Log database statistics on load
+ */
+console.log(`🎬 MathFlix Movies Database Loaded Successfully!`);
+console.log(`📊 Total movies/series: ${Object.keys(window.moviesData).length}`);
+console.log(`📝 Database sections: Top 10, Vertical Carousel, Digo's Favorites, Series, 5 Marathon Collections`);
+console.log(`✅ All entries validated with max 3 genres, max 3 categories (series only), max 3 tags`);

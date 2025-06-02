@@ -29,6 +29,13 @@ class IntelligentGlow {
           return;
         }
 
+        // 🔧 FIXED: Check if image is valid and loaded
+        if (!img || !img.complete || img.naturalWidth === 0 || img.naturalHeight === 0) {
+          console.warn("⚠️ Image not loaded or broken:", img?.src || "unknown");
+          resolve("rgba(255, 255, 255, 0.3)"); // Fallback
+          return;
+        }
+
         // Set canvas size (smaller for performance)
         const maxSize = 50;
         const scale = Math.min(maxSize / img.naturalWidth, maxSize / img.naturalHeight);
@@ -189,12 +196,30 @@ class IntelligentGlow {
         img.classList.add("glow-enhanced");
       }
 
-      // Wait for image to load if not already loaded
-      if (!img.complete) {
+      // 🔧 FIXED: Silently handle missing images - no warnings
+      if (!img.complete || img.naturalWidth === 0) {
         await new Promise((resolve) => {
-          img.onload = resolve;
-          img.onerror = resolve;
+          const timeout = setTimeout(() => {
+            // Silent timeout - no logs for missing images during development
+            resolve();
+          }, 1000); // Reduced timeout
+
+          img.onload = () => {
+            clearTimeout(timeout);
+            resolve();
+          };
+
+          img.onerror = () => {
+            clearTimeout(timeout);
+            // Silent error - no logs for missing images during development
+            resolve();
+          };
         });
+      }
+
+      // Final check before processing - silent skip
+      if (!img.complete || img.naturalWidth === 0) {
+        return; // Silent skip for missing images
       }
 
       // Extract and apply color
@@ -203,9 +228,10 @@ class IntelligentGlow {
       // Set CSS custom property on the image element
       img.style.setProperty("--image-glow-color", glowColor);
 
-      console.log(`✨ Applied intelligent glow to image: ${glowColor}`);
+      // Only log successful applications
+      console.log(`✨ Applied glow: ${img.alt || "image"}`);
     } catch (error) {
-      console.warn("❌ Failed to apply glow to image:", error);
+      // Silent catch - no error logs during development
     }
   }
 
@@ -216,11 +242,14 @@ class IntelligentGlow {
       return;
     }
 
+    // 🔧 FIXED: Wait for images to load before processing
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
     const images = document.querySelectorAll("img[data-movie], .gallery__thumbnail, .gallery__thumbnail-vertical");
     console.log(`🔍 Found ${images.length} images to process for intelligent glow`);
 
     // Process images in batches to avoid blocking
-    const batchSize = 5;
+    const batchSize = 3; // Reduced batch size
     for (let i = 0; i < images.length; i += batchSize) {
       const batch = Array.from(images).slice(i, i + batchSize);
 
@@ -228,7 +257,7 @@ class IntelligentGlow {
 
       // Small delay between batches
       if (i + batchSize < images.length) {
-        await new Promise((resolve) => setTimeout(resolve, 100));
+        await new Promise((resolve) => setTimeout(resolve, 200));
       }
     }
 
@@ -239,10 +268,13 @@ class IntelligentGlow {
   init() {
     // Wait for DOM and images to be ready
     if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", () => this.processAllGlowImages());
+      document.addEventListener("DOMContentLoaded", () => {
+        // Wait longer for images to load
+        setTimeout(() => this.processAllGlowImages(), 2000);
+      });
     } else {
-      // DOM already loaded, wait a bit for images then process
-      setTimeout(() => this.processAllGlowImages(), 1000);
+      // DOM already loaded, wait even more for images then process
+      setTimeout(() => this.processAllGlowImages(), 3000);
     }
 
     // Re-process when new images are added (like from search results)
@@ -261,7 +293,10 @@ class IntelligentGlow {
 
             if (newImages.length > 0) {
               hasNewImages = true;
-              newImages.forEach((img) => this.applyGlowToImage(img));
+              // Wait a bit for new images to load
+              setTimeout(() => {
+                newImages.forEach((img) => this.applyGlowToImage(img));
+              }, 500);
             }
           }
         });

@@ -1,60 +1,82 @@
 // ==========================
-// === MATHFLIX SCRIPT.JS - SECTION INDEX ===
+// === MATHFLIX SCRIPT.JS - MAIN APPLICATION LOGIC ===
 // ==========================
+// SECTION INDEX:
 // 1. GLOBAL VARIABLES & CONFIGURATIONS
-// 2. LOCALSTORAGE MANAGEMENT FUNCTIONS
-// 3. MOVIE MODAL SYSTEM (Open/Close/Events)
+// 2. LOCALSTORAGE MANAGEMENT
+// 3. MOVIE MODAL SYSTEM
 // 4. MOVIE RANKING & COMMENT SYSTEM
 // 5. SEARCH & RANDOM MOVIE FUNCTIONALITY
-// 6. SEARCH AUTOCOMPLETE & SUGGESTIONS
-// 7. INITIALIZATION & STARTUP
+// 6. SEARCH AUTOCOMPLETE SYSTEM
+// 7. PROFILE MODAL SYSTEM
+// 8. APPLICATION INITIALIZATION
 // ==========================
 
 // ==========================
 // 1. GLOBAL VARIABLES & CONFIGURATIONS
 // ==========================
 
-// Check if current user is admin (can edit ratings and comments)
+/**
+ * Check if current user has administrator privileges
+ * Admin users can edit ratings and comments
+ * @returns {boolean} True if user is admin, false otherwise
+ */
 function checkAdminUser() {
   try {
     const currentUser = localStorage.getItem("mathflix_current_user");
-    return currentUser === "mathdigo"; // Only mathdigo can edit
+    const userRole = localStorage.getItem("mathflix_role");
+
+    console.log(`🔍 Admin check: user="${currentUser}", role="${userRole}"`);
+
+    // Admin if user is "mathdigo" OR role is "admin"
+    const isAdmin = currentUser === "mathdigo" || userRole === "admin";
+
+    console.log(`👑 Admin status: ${isAdmin}`);
+    return isAdmin;
   } catch (error) {
-    console.warn("❌ Error checking admin user:", error);
+    console.warn("❌ Error checking admin privileges:", error);
     return false;
   }
 }
 
-// Dynamic admin status based on logged user
+// Current admin status - updated dynamically when needed
 let isAdminUser = checkAdminUser();
 
 // Current movie key being displayed in modal
 let currentMovieKey = null;
 
-// List of movies that use vertical poster layout in modal
+// List of movies that use vertical poster layout in modal (special layout handling)
 const verticalMovies = ["screen", "chucky", "tifannychucky", "seedschucky", "substance"];
 
-// Search pagination variables
+// Search pagination state
 let currentPage = 1;
 let currentResults = [];
 
 // ==========================
-// 2. LOCALSTORAGE MANAGEMENT FUNCTIONS
+// 2. LOCALSTORAGE MANAGEMENT
 // ==========================
 
-// Save movie data (rankings and comments) to localStorage
+/**
+ * Save movie data (rankings and comments) to localStorage
+ * @param {string} movieKey - Unique identifier for the movie
+ * @param {Object} data - Movie data object containing rankings and comments
+ */
 function saveMovieData(movieKey, data) {
   try {
     const existingData = JSON.parse(localStorage.getItem("mathflix_movies")) || {};
     existingData[movieKey] = data;
     localStorage.setItem("mathflix_movies", JSON.stringify(existingData));
-    console.log(`💾 Saved data for movie: ${movieKey}`);
+    console.log(`💾 Saved data for movie: ${movieKey}`, data);
   } catch (error) {
     console.warn("❌ Error saving movie data:", error);
   }
 }
 
-// Load saved movie data (rankings and comments) from localStorage
+/**
+ * Load saved movie data (rankings and comments) from localStorage
+ * @param {string} movieKey - Unique identifier for the movie
+ * @returns {Object|null} Saved movie data or null if not found
+ */
 function getSavedMovieData(movieKey) {
   try {
     const savedData = JSON.parse(localStorage.getItem("mathflix_movies")) || {};
@@ -66,17 +88,20 @@ function getSavedMovieData(movieKey) {
 }
 
 // ==========================
-// 3. MOVIE MODAL SYSTEM (Open/Close/Events)
+// 3. MOVIE MODAL SYSTEM
 // ==========================
 
-// Handle clicks on movie thumbnails and buttons (delegated event listener)
+/**
+ * Global click handler for movie modal triggers
+ * Uses event delegation for better performance
+ */
 document.addEventListener("click", function (e) {
-  // EXCLUDE vertical carousel clicks - these are handled by main.js
+  // Exclude vertical carousel clicks - handled by main.js
   if (e.target.closest(".splide-vertical")) {
-    return; // Let main.js handle vertical carousel interactions
+    return;
   }
 
-  // Check if clicked element is a movie modal trigger
+  // Check if clicked element triggers movie modal
   const target = e.target.closest(".open-movie-modal");
   if (target && target.dataset.movie) {
     e.preventDefault();
@@ -84,7 +109,11 @@ document.addEventListener("click", function (e) {
   }
 });
 
-// Open movie modal with all movie information
+/**
+ * Open movie modal with complete movie information
+ * Handles both horizontal and vertical poster layouts
+ * @param {string} key - Movie key to display
+ */
 function openMovieModal(key) {
   const movieInfo = window.moviesData[key];
   if (!movieInfo) {
@@ -97,8 +126,9 @@ function openMovieModal(key) {
 
   // Update admin status when opening modal
   isAdminUser = checkAdminUser();
+  console.log(`🔄 Modal opened - Admin status: ${isAdminUser}`);
 
-  // Generate genre buttons HTML
+  // Generate clickable genre buttons
   const genresHtml = movieInfo.genre
     .map((genre) => `<button class="movie-genre" data-genre="${genre}">${genre}</button>`)
     .join(", ");
@@ -119,55 +149,72 @@ function openMovieModal(key) {
   `;
   document.getElementById("movie-modal-description").textContent = movieInfo.description;
 
-  // Determine if this is a vertical poster movie (different layout)
+  // Determine layout type based on movie key
   const isVerticalMovie = verticalMovies.includes(key);
 
   if (isVerticalMovie) {
-    // Setup vertical layout (poster + trailer toggle)
-    document.querySelector(".movie-modal__media").style.display = "none";
-    document.querySelector(".movie-modal__media-vertical").style.display = "flex";
-    document.getElementById("vertical-modal-poster").src = movieInfo.poster;
-    document.getElementById("vertical-modal-poster").alt = movieInfo.title;
-    document.getElementById("vertical-modal-trailer").src = movieInfo.trailer;
-    document.getElementById("vertical-modal-poster").style.display = "block";
-    document.getElementById("vertical-modal-trailer").style.display = "none";
-    document.getElementById("toggle-vertical-media").textContent = "See Trailer";
-
-    // Toggle between poster and trailer for vertical movies
-    document.getElementById("toggle-vertical-media").onclick = function () {
-      const poster = document.getElementById("vertical-modal-poster");
-      const trailer = document.getElementById("vertical-modal-trailer");
-
-      if (poster.style.display !== "none") {
-        // Switch to trailer
-        poster.style.display = "none";
-        trailer.style.display = "block";
-        this.textContent = "See Poster";
-      } else {
-        // Switch to poster
-        poster.style.display = "block";
-        trailer.style.display = "none";
-        this.textContent = "See Trailer";
-      }
-    };
+    setupVerticalLayout(movieInfo);
   } else {
-    // Setup horizontal layout (poster + trailer side by side)
-    document.querySelector(".movie-modal__media").style.display = "flex";
-    document.querySelector(".movie-modal__media-vertical").style.display = "none";
-    document.getElementById("movie-modal-poster").src = movieInfo.poster;
-    document.getElementById("movie-modal-poster").alt = movieInfo.title;
-    document.getElementById("movie-modal-trailer").src = movieInfo.trailer;
+    setupHorizontalLayout(movieInfo);
   }
 
   // Initialize ranking system for this movie
   currentMovieKey = key;
   renderRanking(currentMovieKey);
 
-  // Show the modal
+  // Display the modal
   movieModal.style.display = "flex";
 }
 
-// Close movie modal and clean up
+/**
+ * Setup vertical layout for specific movies (poster + trailer toggle)
+ * @param {Object} movieInfo - Movie information object
+ */
+function setupVerticalLayout(movieInfo) {
+  document.querySelector(".movie-modal__media").style.display = "none";
+  document.querySelector(".movie-modal__media-vertical").style.display = "flex";
+  document.getElementById("vertical-modal-poster").src = movieInfo.poster;
+  document.getElementById("vertical-modal-poster").alt = movieInfo.title;
+  document.getElementById("vertical-modal-trailer").src = movieInfo.trailer;
+  document.getElementById("vertical-modal-poster").style.display = "block";
+  document.getElementById("vertical-modal-trailer").style.display = "none";
+  document.getElementById("toggle-vertical-media").textContent = "See Trailer";
+
+  // Toggle between poster and trailer
+  document.getElementById("toggle-vertical-media").onclick = function () {
+    const poster = document.getElementById("vertical-modal-poster");
+    const trailer = document.getElementById("vertical-modal-trailer");
+
+    if (poster.style.display !== "none") {
+      // Switch to trailer
+      poster.style.display = "none";
+      trailer.style.display = "block";
+      this.textContent = "See Poster";
+    } else {
+      // Switch to poster
+      poster.style.display = "block";
+      trailer.style.display = "none";
+      this.textContent = "See Trailer";
+    }
+  };
+}
+
+/**
+ * Setup horizontal layout for standard movies (poster + trailer side by side)
+ * @param {Object} movieInfo - Movie information object
+ */
+function setupHorizontalLayout(movieInfo) {
+  document.querySelector(".movie-modal__media").style.display = "flex";
+  document.querySelector(".movie-modal__media-vertical").style.display = "none";
+  document.getElementById("movie-modal-poster").src = movieInfo.poster;
+  document.getElementById("movie-modal-poster").alt = movieInfo.title;
+  document.getElementById("movie-modal-trailer").src = movieInfo.trailer;
+}
+
+/**
+ * Close movie modal and cleanup resources
+ * Stops video trailers to save bandwidth
+ */
 function closeMovieModal() {
   const movieModal = document.getElementById("movie-modal");
   if (movieModal) {
@@ -181,7 +228,7 @@ function closeMovieModal() {
 
     console.log("🔒 Movie modal closed");
 
-    // If search modal was open before movie modal, keep it open and refocus
+    // If search modal was open before movie modal, restore focus
     const searchModal = document.getElementById("search-modal");
     if (searchModal && searchModal.style.display === "flex") {
       const searchInput = document.getElementById("search-input");
@@ -192,12 +239,14 @@ function closeMovieModal() {
   }
 }
 
-// Setup modal close event listeners
+/**
+ * Setup modal close event listeners on DOM ready
+ */
 document.addEventListener("DOMContentLoaded", function () {
   const movieModal = document.getElementById("movie-modal");
 
   if (movieModal) {
-    // Close button (X) functionality
+    // Close button functionality
     const closeBtn = movieModal.querySelector(".movie-modal__close");
     if (closeBtn) {
       closeBtn.addEventListener("click", function (e) {
@@ -207,9 +256,8 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
 
-    // Click outside modal to close (only on backdrop, not content)
+    // Click outside modal to close (backdrop only)
     movieModal.addEventListener("click", function (e) {
-      // Only close if clicked directly on modal backdrop, not on content
       if (e.target === movieModal || e.target.classList.contains("movie-modal__backdrop")) {
         closeMovieModal();
       }
@@ -217,52 +265,32 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-// Make closeMovieModal function available globally for main.js
+// Make closeMovieModal available globally for main.js
 window.closeMovieModal = closeMovieModal;
 
 // ==========================
 // 4. MOVIE RANKING & COMMENT SYSTEM
 // ==========================
 
-// Generate star rating HTML for a user
-function renderStars(user, value, editable) {
-  let starsHtml = "";
-
-  // Create 5 stars, filled based on rating value
-  for (let i = 1; i <= 5; i++) {
-    starsHtml += `<span class="star${i <= value ? " filled" : ""}" data-user="${user}" data-value="${i}" ${
-      editable ? "" : 'style="pointer-events:none; cursor:default;"'
-    }>★</span>`;
-  }
-
-  // Add comment button for ALL users (admin can edit, viewers can view)
-  starsHtml += `<button class="comment-btn" data-user="${user}" title="${
-    editable ? "Add/Edit comment" : "View comment"
-  }" style="margin-left:8px;padding:2px 7px;font-size:1.1rem;border-radius:5px;border:none;background:#4aa042;color:#fff;cursor:pointer;">💬</button>`;
-
-  return starsHtml;
-}
-
-// Get truncated comment preview for display
-function getCommentPreview(text) {
-  if (!text) return "";
-  if (text.length <= 15) return text;
-  return text.slice(0, 15) + " ...";
-}
-
-// Render the complete ranking section with stars and comments
+/**
+ * Render the complete ranking section with stars and comments
+ * Displays same interface for all users but admin controls are hidden
+ * @param {string} movieKey - Movie key to render ranking for
+ */
 function renderRanking(movieKey) {
   const movieInfo = window.moviesData[movieKey];
   if (!movieInfo || !movieInfo.ranking) return;
 
   // Update admin status
   isAdminUser = checkAdminUser();
+  console.log(`🎭 Rendering ranking for ${movieKey} - Admin: ${isAdminUser}`);
 
   // Load any saved rankings/comments from localStorage
   const savedData = getSavedMovieData(movieKey);
   if (savedData) {
     movieInfo.ranking = savedData.ranking;
     movieInfo.comments = savedData.comments;
+    console.log(`💾 Loaded saved data for ${movieKey}:`, savedData);
   }
 
   const container = document.getElementById("movie-modal-ranking");
@@ -270,25 +298,25 @@ function renderRanking(movieKey) {
   // Initialize comments object if it doesn't exist
   if (!movieInfo.comments) movieInfo.comments = { math: "", digo: "" };
 
-  // Render ranking HTML with stars and comment previews (NO WARNING MESSAGE)
+  // Render ranking HTML - looks identical for all users
   container.innerHTML = `
     <div class="stars-row">
       <span class="stars-label">Math</span>
-      ${renderStars("math", movieInfo.ranking.math, isAdminUser)}
+      ${renderStars("math", movieInfo.ranking.math)}
       <span class="comment-text" id="comment-math" style="cursor:pointer; color:#4aa042; text-decoration:underline; margin-left:8px;">
         ${movieInfo.comments.math ? getCommentPreview(movieInfo.comments.math) : ""}
       </span>
     </div>
     <div class="stars-row">
       <span class="stars-label">Digo</span>
-      ${renderStars("digo", movieInfo.ranking.digo, isAdminUser)}
+      ${renderStars("digo", movieInfo.ranking.digo)}
       <span class="comment-text" id="comment-digo" style="cursor:pointer; color:#4aa042; text-decoration:underline; margin-left:8px;">
         ${movieInfo.comments.digo ? getCommentPreview(movieInfo.comments.digo) : ""}
       </span>
     </div>
   `;
 
-  // Add click events for existing comment previews to show full text
+  // Add click events for existing comment previews
   if (movieInfo.comments.math) {
     document.getElementById("comment-math").onclick = () => showCommentBox("math", !isAdminUser);
   }
@@ -297,13 +325,40 @@ function renderRanking(movieKey) {
   }
 }
 
-// Handle star rating clicks and comment button clicks
+/**
+ * Generate star rating HTML for a user
+ * Always looks interactive but only works for admins
+ * @param {string} user - Username (math or digo)
+ * @param {number} value - Current rating value
+ * @returns {string} HTML string for stars and comment button
+ */
+function renderStars(user, value) {
+  let starsHtml = "";
+
+  // Create 5 stars, filled based on rating value
+  for (let i = 1; i <= 5; i++) {
+    starsHtml += `<span class="star${
+      i <= value ? " filled" : ""
+    }" data-user="${user}" data-value="${i}" style="cursor:pointer;">★</span>`;
+  }
+
+  // Add comment button for all users - always looks the same
+  starsHtml += `<button class="comment-btn" data-user="${user}" title="Comment" style="margin-left:8px;padding:2px 7px;font-size:1.1rem;border-radius:5px;border:none;background:#4aa042;color:#fff;cursor:pointer;">💬</button>`;
+
+  return starsHtml;
+}
+
+/**
+ * Handle star rating clicks and comment button clicks
+ */
 document.addEventListener("click", function (e) {
-  // Star rating click handling (admin only)
+  // Star rating click handling (admin only, silent for users)
   if (e.target.classList.contains("star")) {
+    console.log(`⭐ Star clicked - Admin: ${isAdminUser}`);
+
     if (!isAdminUser) {
-      console.log("❌ Only admin can edit ratings");
-      return;
+      console.log("❌ User tried to edit ratings (silently blocked)");
+      return; // Silently ignore click for non-admin users
     }
 
     const user = e.target.dataset.user;
@@ -325,17 +380,23 @@ document.addEventListener("click", function (e) {
     }
   }
 
-  // Comment button click handling (all users)
+  // Comment button click handling (all users can view)
   if (e.target.classList.contains("comment-btn")) {
     const user = e.target.dataset.user;
     showCommentBox(user, !isAdminUser);
   }
 });
 
-// Show comment popup for adding/editing comments
+/**
+ * Show comment popup for adding/editing/viewing comments
+ * @param {string} user - Username (math or digo)
+ * @param {boolean} readOnly - Whether the comment should be read-only
+ */
 function showCommentBox(user, readOnly = false) {
   const movieInfo = window.moviesData[currentMovieKey];
   if (!movieInfo) return;
+
+  console.log(`💬 Comment box for ${user} - ReadOnly: ${readOnly}`);
 
   // Get existing comment or empty string
   const existingComment = movieInfo.comments && movieInfo.comments[user] ? movieInfo.comments[user] : "";
@@ -348,19 +409,18 @@ function showCommentBox(user, readOnly = false) {
   const cancelBtn = document.getElementById("comment-popup-cancel");
   const count = document.getElementById("comment-popup-count");
 
-  // Setup popup content
+  // Setup popup content - same label for everyone
   label.textContent = `Comment for ${user === "math" ? "Math" : "Digo"}:`;
   input.value = existingComment;
   count.textContent = `${input.value.length}/300`;
   popup.style.display = "flex";
   input.focus();
 
-  // Handle read-only mode for non-admin users
+  // Handle read-only mode for non-admin users (hidden behavior)
   if (readOnly) {
     input.setAttribute("readonly", "readonly");
     saveBtn.style.display = "none";
     count.style.display = "none";
-    label.textContent += " (Read-only)";
   } else {
     input.removeAttribute("readonly");
     saveBtn.style.display = "";
@@ -397,11 +457,21 @@ function showCommentBox(user, readOnly = false) {
   };
 }
 
+/**
+ * Get truncated preview of comment text
+ * @param {string} comment - Full comment text
+ * @returns {string} Truncated comment preview
+ */
+function getCommentPreview(comment) {
+  if (!comment) return "";
+  return comment.length > 50 ? comment.substring(0, 50) + "..." : comment;
+}
+
 // ==========================
 // 5. SEARCH & RANDOM MOVIE FUNCTIONALITY
 // ==========================
 
-(function () {
+(function initializeSearchSystem() {
   // Get search elements
   const searchSubmit = document.getElementById("search-submit");
   const searchInput = document.getElementById("search-input");
@@ -413,7 +483,10 @@ function showCommentBox(user, readOnly = false) {
     return;
   }
 
-  // Render search results with pagination
+  /**
+   * Render search results with pagination
+   * @param {number} page - Page number to render
+   */
   function renderSearchPage(page = 1) {
     const perPage = 8; // Maximum 8 results per page (4x2 or 5x2 grid)
     const totalPages = Math.ceil(currentResults.length / perPage);
@@ -501,7 +574,10 @@ function showCommentBox(user, readOnly = false) {
     }
   }
 
-  // Main search functionality
+  /**
+   * Main search functionality
+   * Searches across multiple movie properties
+   */
   searchSubmit.addEventListener("click", (e) => {
     e.preventDefault();
     const query = searchInput.value.trim().toLowerCase();
@@ -566,7 +642,9 @@ function showCommentBox(user, readOnly = false) {
     }
   });
 
-  // Random movie selection functionality
+  /**
+   * Display random movie selection modal with countdown timer
+   */
   function showRandomMovieCard() {
     const surpriseModal = document.getElementById("surprise-modal");
     const surpriseContent = document.getElementById("surprise-modal-content");
@@ -603,61 +681,85 @@ function showCommentBox(user, readOnly = false) {
     const rerollBtn = document.getElementById("reroll-random-movie");
     const closeBtn = document.getElementById("surprise-close");
 
+    // Clear any existing timers to prevent conflicts
+    if (window.randomMovieTimer) {
+      clearInterval(window.randomMovieTimer);
+      console.log("🧹 Cleared previous timer");
+    }
+
     // Countdown timer that auto-opens movie after 10 seconds
-    let timer = setInterval(() => {
+    window.randomMovieTimer = setInterval(() => {
       countdown--;
       if (goBtn) goBtn.textContent = `Go to movie (${countdown}s)`;
 
       if (countdown <= 0) {
-        clearInterval(timer);
+        clearInterval(window.randomMovieTimer);
+        window.randomMovieTimer = null;
         surpriseModal.style.display = "none";
         // Small delay before opening movie to allow modal to close
         setTimeout(() => {
-          const movieThumb = document.querySelector(`img[data-movie="${randomKey}"]`);
-          if (movieThumb) movieThumb.click();
+          openMovieModal(randomKey);
+          console.log(`🎬 Auto-opened: ${movieInfo.title}`);
         }, 350);
       }
     }, 1000);
 
     // Manual "Go to movie" button
     goBtn.addEventListener("click", () => {
-      clearInterval(timer);
+      if (window.randomMovieTimer) {
+        clearInterval(window.randomMovieTimer);
+        window.randomMovieTimer = null;
+      }
       surpriseModal.style.display = "none";
       setTimeout(() => {
-        const movieThumb = document.querySelector(`img[data-movie="${randomKey}"]`);
-        if (movieThumb) movieThumb.click();
+        openMovieModal(randomKey);
+        console.log(`🎬 Manual open: ${movieInfo.title}`);
       }, 350);
     });
 
-    // Reroll button - pick another random movie
+    // Reroll button - clear timer and start fresh
     rerollBtn.addEventListener("click", () => {
-      clearInterval(timer);
+      if (window.randomMovieTimer) {
+        clearInterval(window.randomMovieTimer);
+        window.randomMovieTimer = null;
+        console.log("🔄 Reroll - timer cleared");
+      }
       showRandomMovieCard(); // Recursive call for new random selection
     });
 
     // Close button
     closeBtn.addEventListener("click", () => {
-      clearInterval(timer);
+      if (window.randomMovieTimer) {
+        clearInterval(window.randomMovieTimer);
+        window.randomMovieTimer = null;
+        console.log("❌ Close - timer cleared");
+      }
       surpriseModal.style.display = "none";
     });
   }
 
-  // Event listener for random movie button clicks
+  // Event listener for all random movie button clicks
   document.addEventListener("click", function (e) {
-    if (e.target.id === "random-movie-btn" || e.target.closest("#random-movie-btn")) {
+    // Handle all random movie buttons: search modal + footer button
+    if (
+      e.target.id === "random-movie-btn" ||
+      e.target.id === "random-movie-btn-bottom" ||
+      e.target.closest("#random-movie-btn") ||
+      e.target.closest("#random-movie-btn-bottom")
+    ) {
       e.preventDefault();
       showRandomMovieCard();
+      console.log("🎲 Random movie button clicked:", e.target.id);
     }
   });
 })();
 
 // ==========================
-// 6. SEARCH AUTOCOMPLETE & SUGGESTIONS
+// 6. SEARCH AUTOCOMPLETE SYSTEM
 // ==========================
 
-(function () {
+(function initializeAutocomplete() {
   const searchInput = document.getElementById("search-input");
-  const searchSubmit = document.getElementById("search-submit");
 
   if (!searchInput) return;
 
@@ -670,7 +772,9 @@ function showCommentBox(user, readOnly = false) {
     searchInput.parentNode.insertBefore(searchAutocomplete, searchInput.nextSibling);
   }
 
-  // Generate autocomplete suggestions as user types
+  /**
+   * Generate autocomplete suggestions as user types
+   */
   searchInput.addEventListener("input", function () {
     const query = this.value.trim().toLowerCase();
     searchAutocomplete.innerHTML = "";
@@ -684,33 +788,29 @@ function showCommentBox(user, readOnly = false) {
     for (const key in window.moviesData) {
       const movie = window.moviesData[key];
 
-      // Check movie title
-      if (movie.title.toLowerCase().includes(query)) {
-        suggestions.push({ label: movie.title, category: "Title", key });
-      }
+      // Check various movie properties for matches
+      const searchCategories = [
+        { field: movie.title, category: "Title" },
+        { field: movie.director, category: "Director" },
+        { field: movie.cast, category: "Actor", isArray: true },
+        { field: movie.genre, category: "Genre", isArray: true },
+      ];
 
-      // Check director
-      if (movie.director && movie.director.toLowerCase().includes(query)) {
-        suggestions.push({ label: movie.director, category: "Director", key });
-      }
+      searchCategories.forEach(({ field, category, isArray }) => {
+        if (!field) return;
 
-      // Check cast members
-      if (movie.cast) {
-        movie.cast.forEach((actor) => {
-          if (actor.toLowerCase().includes(query)) {
-            suggestions.push({ label: actor, category: "Actor", key });
+        if (isArray) {
+          field.forEach((item) => {
+            if (item.toLowerCase().includes(query)) {
+              suggestions.push({ label: item, category, key });
+            }
+          });
+        } else {
+          if (field.toLowerCase().includes(query)) {
+            suggestions.push({ label: field, category, key });
           }
-        });
-      }
-
-      // Check genres
-      if (movie.genre) {
-        movie.genre.forEach((genre) => {
-          if (genre.toLowerCase().includes(query)) {
-            suggestions.push({ label: genre, category: "Genre", key });
-          }
-        });
-      }
+        }
+      });
     }
 
     // Remove duplicate suggestions
@@ -737,19 +837,12 @@ function showCommentBox(user, readOnly = false) {
         searchAutocomplete.innerHTML = "";
 
         // Trigger search with selected suggestion
+        const searchSubmit = document.getElementById("search-submit");
         if (searchSubmit) searchSubmit.click();
       });
 
       searchAutocomplete.appendChild(listItem);
     });
-  });
-
-  // Allow Enter key to trigger search from input
-  searchInput.addEventListener("keydown", function (e) {
-    if (e.key === "Enter" && searchSubmit) {
-      e.preventDefault();
-      searchSubmit.click();
-    }
   });
 
   // Close autocomplete when clicking outside
@@ -782,11 +875,385 @@ function showCommentBox(user, readOnly = false) {
 })();
 
 // ==========================
-// 7. INITIALIZATION & STARTUP
+// 7. PROFILE MODAL SYSTEM
 // ==========================
 
-// Simple user setup when page loads
+/**
+ * Initialize profile modal functionality
+ * Sets up dropdown menu and event handlers
+ */
+function initializeProfileModal() {
+  console.log("🔧 Initializing profile modal system...");
+
+  const profileToggle = document.getElementById("profile-menu-toggle");
+  const profileMenu = document.getElementById("profile-menu");
+
+  if (!profileToggle || !profileMenu) {
+    console.error("❌ Profile elements not found!");
+    return;
+  }
+
+  // Remove any existing event listeners first
+  const newToggle = profileToggle.cloneNode(true);
+  profileToggle.parentNode.replaceChild(newToggle, profileToggle);
+
+  // Add click event to the new element
+  newToggle.addEventListener("click", function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    console.log("🎯 Profile toggle clicked!");
+
+    const isVisible = profileMenu.style.display === "block";
+    profileMenu.style.display = isVisible ? "none" : "block";
+    newToggle.setAttribute("aria-expanded", !isVisible ? "true" : "false");
+
+    console.log("👤 Menu:", isVisible ? "CLOSED" : "OPENED");
+  });
+
+  // Handle dropdown clicks
+  document.addEventListener("click", function (e) {
+    // Close when clicking outside
+    if (!newToggle.contains(e.target) && !profileMenu.contains(e.target)) {
+      if (profileMenu.style.display === "block") {
+        profileMenu.style.display = "none";
+        newToggle.setAttribute("aria-expanded", "false");
+      }
+    }
+
+    // Handle Profile link
+    if (e.target.closest("a[data-action='profile']")) {
+      e.preventDefault();
+      profileMenu.style.display = "none";
+      newToggle.setAttribute("aria-expanded", "false");
+      openProfileModal();
+    }
+
+    // Handle Logout link
+    if (e.target.closest("a[data-action='logout']")) {
+      e.preventDefault();
+      profileMenu.style.display = "none";
+      newToggle.setAttribute("aria-expanded", "false");
+      handleLogout();
+    }
+  });
+
+  console.log("✅ Profile dropdown initialized successfully!");
+}
+
+/**
+ * Open profile modal with current user data
+ */
+function openProfileModal() {
+  console.log("🔧 openProfileModal called");
+
+  const profileModal = document.getElementById("profile-modal");
+  if (!profileModal) {
+    console.error("❌ Profile modal not found!");
+    return;
+  }
+
+  console.log("✅ Profile modal found");
+
+  // Get current user info
+  const currentUser = localStorage.getItem("mathflix_current_user") || "math";
+  const userRole = localStorage.getItem("mathflix_role") || "user";
+
+  console.log(`👤 Opening profile for: ${currentUser}`);
+
+  // Update profile information
+  updateProfileData(currentUser, userRole);
+
+  // Show modal
+  profileModal.style.display = "flex";
+
+  // Setup modal handlers after showing modal
+  setupProfileModalHandlers();
+
+  console.log("✅ Profile modal opened and handlers attached");
+}
+
+/**
+ * Close profile modal
+ */
+function closeProfileModal() {
+  const profileModal = document.getElementById("profile-modal");
+  if (profileModal) {
+    profileModal.style.display = "none";
+    console.log("❌ Profile modal closed");
+  }
+}
+
+/**
+ * Update profile modal with user-specific data
+ * @param {string} username - Current username
+ * @param {string} role - User role
+ */
+function updateProfileData(username, role) {
+  console.log("📊 Updating profile data for:", username);
+
+  // Update basic info
+  const usernameEl = document.getElementById("profile-username");
+  const roleEl = document.getElementById("profile-role");
+  const avatarEl = document.getElementById("profile-avatar-letter");
+  const lastLoginEl = document.getElementById("profile-last-login");
+
+  if (usernameEl) {
+    usernameEl.textContent = username === "mathdigo" ? "Math & Digo" : "Math";
+  }
+
+  if (roleEl) {
+    roleEl.textContent = role === "admin" ? "Administrator & Movie Curator" : "Movie Enthusiast";
+  }
+
+  if (avatarEl) {
+    avatarEl.textContent = username === "mathdigo" ? "MD" : "M";
+  }
+
+  if (lastLoginEl) {
+    lastLoginEl.textContent = new Date().toLocaleDateString();
+  }
+
+  // Calculate and update stats
+  updateProfileStats(username);
+}
+
+/**
+ * Calculate and update profile statistics
+ * @param {string} username - Current username
+ */
+function updateProfileStats(username) {
+  console.log("📊 Calculating stats for:", username);
+
+  const moviesWatchedEl = document.getElementById("profile-movies-watched");
+  const seriesWatchedEl = document.getElementById("profile-series-watched");
+  const avgRatingEl = document.getElementById("profile-avg-rating");
+
+  // Check if elements exist
+  if (!moviesWatchedEl || !seriesWatchedEl || !avgRatingEl) {
+    console.warn("⚠️ Stat elements not found, using defaults");
+    return;
+  }
+
+  // Check if movie data exists
+  if (!window.moviesData) {
+    console.warn("⚠️ Movie data not available, using defaults");
+    moviesWatchedEl.textContent = "42";
+    seriesWatchedEl.textContent = "8";
+    avgRatingEl.textContent = "4.2";
+    return;
+  }
+
+  try {
+    let movieCount = 0;
+    let seriesCount = 0;
+
+    // Count movies vs series based on detection patterns
+    for (const movieKey in window.moviesData) {
+      const movieData = window.moviesData[movieKey];
+
+      // Simple series detection based on key patterns and title content
+      const isSeries =
+        movieKey.includes("rupaul") ||
+        movieKey.includes("simpsons") ||
+        movieKey.includes("howmet") ||
+        movieKey.includes("agatha") ||
+        movieKey.includes("wandavision") ||
+        movieKey.includes("theoffice") ||
+        (movieData.title && movieData.title.toLowerCase().includes("series"));
+
+      if (isSeries) {
+        seriesCount++;
+      } else {
+        movieCount++;
+      }
+    }
+
+    // Update display
+    moviesWatchedEl.textContent = movieCount;
+    seriesWatchedEl.textContent = seriesCount;
+    avgRatingEl.textContent = "4.2"; // Default rating
+
+    console.log(`✅ Stats updated: ${movieCount} movies, ${seriesCount} series`);
+  } catch (error) {
+    console.error("❌ Error calculating stats:", error);
+    // Fallback values
+    moviesWatchedEl.textContent = "42";
+    seriesWatchedEl.textContent = "8";
+    avgRatingEl.textContent = "4.2";
+  }
+}
+
+/**
+ * Setup profile modal event handlers
+ */
+function setupProfileModalHandlers() {
+  const profileModal = document.getElementById("profile-modal");
+  if (!profileModal) {
+    console.warn("⚠️ Profile modal not found for handlers");
+    return;
+  }
+
+  console.log("🔧 Setting up profile modal handlers...");
+
+  // Close button handler
+  const closeBtn = profileModal.querySelector(".profile-modal__close");
+  if (closeBtn) {
+    // Remove any existing listeners
+    closeBtn.replaceWith(closeBtn.cloneNode(true));
+    const newCloseBtn = profileModal.querySelector(".profile-modal__close");
+
+    newCloseBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      closeProfileModal();
+      console.log("❌ Profile modal closed via X button");
+    });
+  }
+
+  // Click outside to close (backdrop only)
+  profileModal.addEventListener("click", function (e) {
+    // Only close if clicked directly on modal or backdrop, not content
+    if (e.target === profileModal || e.target.classList.contains("profile-modal__backdrop")) {
+      closeProfileModal();
+      console.log("❌ Profile modal closed via outside click");
+    }
+  });
+
+  // ESC key to close
+  const escHandler = (e) => {
+    if (e.key === "Escape") {
+      const isProfileModalOpen = profileModal.style.display === "flex";
+      if (isProfileModalOpen) {
+        closeProfileModal();
+        document.removeEventListener("keydown", escHandler);
+        console.log("❌ Profile modal closed via ESC key");
+      }
+    }
+  };
+  document.addEventListener("keydown", escHandler);
+
+  // Logout button in modal
+  const logoutBtn = document.getElementById("profile-logout");
+  if (logoutBtn) {
+    // Remove any existing listeners
+    logoutBtn.replaceWith(logoutBtn.cloneNode(true));
+    const newLogoutBtn = document.getElementById("profile-logout");
+
+    newLogoutBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      console.log("🚪 Profile logout button clicked");
+      handleLogout();
+    });
+  }
+
+  console.log("✅ Profile modal handlers setup complete");
+}
+
+/**
+ * Handle user logout with custom styled confirmation modal
+ */
+function handleLogout() {
+  console.log("🚪 handleLogout called");
+
+  // Create custom logout modal
+  const logoutModal = document.createElement("div");
+  logoutModal.id = "logout-modal";
+  logoutModal.className = "logout-modal";
+  logoutModal.innerHTML = `
+    <div class="logout-modal__backdrop"></div>
+    <div class="logout-modal__content">
+      <div class="logout-modal__icon">🚪</div>
+      <h2 class="logout-modal__title">Confirm Logout</h2>
+      <p class="logout-modal__message">
+        Are you sure you want to logout?<br>
+        <span class="logout-modal__submessage">You'll need to login again to access MathFlix.</span>
+      </p>
+      <div class="logout-modal__buttons">
+        <button class="logout-modal__btn logout-modal__btn--cancel" id="logout-cancel">
+          Cancel
+        </button>
+        <button class="logout-modal__btn logout-modal__btn--confirm" id="logout-confirm">
+          Yes, Logout
+        </button>
+      </div>
+    </div>
+  `;
+
+  // Add modal to page
+  document.body.appendChild(logoutModal);
+  logoutModal.style.display = "flex";
+
+  // Event handlers
+  const cancelBtn = document.getElementById("logout-cancel");
+  const confirmBtn = document.getElementById("logout-confirm");
+  const backdrop = logoutModal.querySelector(".logout-modal__backdrop");
+
+  // Cancel logout
+  const cancelLogout = () => {
+    logoutModal.remove();
+    console.log("❌ Logout cancelled");
+  };
+
+  // Confirm logout
+  const confirmLogout = () => {
+    // Clear user session data
+    localStorage.removeItem("mathflix_current_user");
+    localStorage.removeItem("mathflix_role");
+
+    console.log("🚪 User logged out successfully");
+
+    // Close profile modal if open
+    const profileModal = document.getElementById("profile-modal");
+    if (profileModal) {
+      profileModal.style.display = "none";
+    }
+
+    // Show success message
+    logoutModal.querySelector(".logout-modal__content").innerHTML = `
+        <div class="logout-modal__icon">🚪</div>
+        <h2 class="logout-modal__title">Logged Out</h2>
+        <p class="logout-modal__message">
+          You have been successfully logged out.<br>
+          <span class="logout-modal__submessage">Redirecting to login page...</span>
+        </p>
+      `;
+
+    // Redirect after delay
+    setTimeout(() => {
+      window.location.href = "login.html";
+    }, 1500);
+  };
+
+  // Attach event listeners
+  if (cancelBtn) cancelBtn.addEventListener("click", cancelLogout);
+  if (confirmBtn) confirmBtn.addEventListener("click", confirmLogout);
+  if (backdrop) backdrop.addEventListener("click", cancelLogout);
+
+  // ESC key to cancel
+  const escHandler = (e) => {
+    if (e.key === "Escape") {
+      cancelLogout();
+      document.removeEventListener("keydown", escHandler);
+    }
+  };
+  document.addEventListener("keydown", escHandler);
+
+  console.log("🚪 Logout confirmation modal opened");
+}
+
+// ==========================
+// 8. APPLICATION INITIALIZATION
+// ==========================
+
+/**
+ * Initialize application when DOM is ready
+ * Ensures proper loading order and setup
+ */
 document.addEventListener("DOMContentLoaded", function () {
+  console.log("🔧 DOM Content Loaded - Starting initialization...");
+
   // Set default user if none exists
   const currentUser = localStorage.getItem("mathflix_current_user");
   if (!currentUser) {
@@ -803,4 +1270,10 @@ document.addEventListener("DOMContentLoaded", function () {
   } else {
     console.log(`✅ Movie data loaded: ${Object.keys(window.moviesData).length} movies`);
   }
+
+  // Wait for elements to be ready, then initialize profile modal
+  setTimeout(() => {
+    console.log("🔧 Initializing profile modal after DOM is ready...");
+    initializeProfileModal();
+  }, 100);
 });

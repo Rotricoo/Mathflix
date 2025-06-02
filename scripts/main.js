@@ -1,5 +1,5 @@
 // ==========================
-// === MATHFLIX MAIN SCRIPT - SECTION INDEX ===
+// === MATHFLIX MAIN SCRIPT - NAVIGATION INDEX ===
 // ==========================
 // 1. PAGE LOADING EFFECTS
 // 2. HERO SPOILER BUTTON FUNCTIONALITY
@@ -8,14 +8,18 @@
 // 5. HERO "SEE DETAILS" BUTTON HANDLER
 // 6. ESC KEY MODAL MANAGEMENT
 // 7. DYNAMIC HERO SECTION WITH AUTO-ROTATION
-// 8. HEADER NAVIGATION (Series/Movies Filter)
+// 8. HEADER NAVIGATION (Movies/Series Filter)
 // 9. VERTICAL CAROUSEL CLICK-TO-CENTER FUNCTIONALITY
+// 10. DYNAMIC SERIES CAROUSELS SYSTEM
+// 11. FOOTER NAVIGATION LINKS
 // ==========================
 
 // ==========================
 // 1. PAGE LOADING EFFECTS
 // ==========================
-// Add smooth page load animation when DOM is ready
+/**
+ * Add smooth page load animation when DOM is ready
+ */
 window.addEventListener("DOMContentLoaded", () => {
   document.body.classList.add("page-loaded");
 });
@@ -25,9 +29,11 @@ window.addEventListener("DOMContentLoaded", () => {
 // ==========================
 const spoilerBtn = document.getElementById("spoiler-btn");
 let spoilerFixed = false;
-let step = 0;
+let spoilerStep = 0;
 
-// Spoiler database - contains spoilers for each movie/series
+/**
+ * Spoiler database - contains spoilers for each movie/series
+ */
 const spoilers = {
   gonegirl:
     "Amy fakes her own disappearance to frame her husband Nick. In the end, she returns and forces Nick to stay with her.",
@@ -38,9 +44,15 @@ const spoilers = {
     "It's all an illusion created by Wanda to cope with grief after losing Vision. The townsfolk are hostages of her magic.",
   hungergames:
     "Across the saga, Katniss survives two Hunger Games, becomes the face of the rebellion, overthrows President Snow, and eventually finds peace in a post-war Panem with Peeta after many personal losses.",
+  alien1:
+    "The alien bursts from Kane's chest during dinner. Only Ripley survives by ejecting the xenomorph into space. Plot twist: Ash the android was programmed to bring the alien back to Earth at any cost.",
+  rupaul:
+    "They're all actually men! But seriously, the real tea is that every season someone gets eliminated for not knowing the words to the lip sync, and RuPaul's wig collection is worth more than most countries.",
 };
 
-// Initialize spoiler button behavior with multi-step confirmation
+/**
+ * Initialize spoiler button behavior with multi-step confirmation
+ */
 if (spoilerBtn) {
   // Fix spoiler button position after first interaction to prevent layout shifts
   function fixSpoilerBtn() {
@@ -60,14 +72,14 @@ if (spoilerBtn) {
 
   // Multi-step spoiler reveal process with countdown animation
   spoilerBtn.addEventListener("click", () => {
-    if (step === 0) {
+    if (spoilerStep === 0) {
       // Step 1: Ask for confirmation
       spoilerBtn.classList.add("active");
       spoilerBtn.innerText = "Are you sure?";
-      step = 1;
-    } else if (step === 1) {
+      spoilerStep = 1;
+    } else if (spoilerStep === 1) {
       // Step 2: 3-second countdown with movement animation
-      step = 2;
+      spoilerStep = 2;
       let count = 3;
       const countdown = setInterval(() => {
         spoilerBtn.innerText = count;
@@ -75,22 +87,20 @@ if (spoilerBtn) {
         count--;
         if (count < 0) {
           clearInterval(countdown);
-          // Reset button state and show spoiler
-          spoilerBtn.innerText = "Spoiler";
-          spoilerBtn.style.transform = "";
-          spoilerBtn.classList.remove("active");
-          step = 0;
-
-          // Show spoiler for current hero movie
-          const currentMovieKey = document.querySelector(".hero__see-details-btn").dataset.movie;
-          showSpoilerModal(currentMovieKey);
+          spoilerBtn.classList.add("exit");
+          // Get current hero movie key for spoiler content
+          const currentHeroKey = document.querySelector(".hero__see-details-btn").dataset.movie;
+          setTimeout(() => showSpoilerModal(currentHeroKey), 600);
         }
       }, 600);
     }
   });
 }
 
-// Create and display spoiler modal with auto-close timer
+/**
+ * Create and display spoiler modal with auto-close timer
+ * @param {string} movieKey - The movie key to show spoiler for
+ */
 function showSpoilerModal(movieKey) {
   // Create spoiler modal if it doesn't exist
   if (!document.getElementById("spoiler-modal")) {
@@ -142,72 +152,74 @@ function showSpoilerModal(movieKey) {
 // 3. SPLIDE CAROUSEL CONFIGURATIONS
 // ==========================
 
-// Top 10 Carousel with continuous auto-scroll
-new Splide(".splide-top10", {
-  type: "loop",
-  drag: "free",
-  focus: "center",
-  perPage: 4,
-  gap: "1.5rem",
-  autoScroll: {
-    speed: 0.5,
-    pauseOnHover: true,
-    pauseOnFocus: false,
-  },
-  pagination: false,
-  breakpoints: {
-    1100: { perPage: 2.5, gap: "1rem" },
-    1200: { perPage: 3, gap: "1rem" },
-    1400: { perPage: 3.5, gap: "1rem" },
-    1600: { perPage: 6, gap: "3rem" },
-    1800: { perPage: 6, gap: "5rem" },
-  },
-}).mount(window.splide.Extensions);
-
-// Standard horizontal carousels for movie/series galleries
-document.querySelectorAll(".splide-simple").forEach((el) => {
-  new Splide(el, {
+/**
+ * Initialize all carousel configurations after DOM is loaded
+ */
+document.addEventListener("DOMContentLoaded", function () {
+  // Top 10 Carousel with continuous auto-scroll
+  new Splide(".splide-top10", {
     type: "loop",
+    drag: "free",
+    focus: "center",
     perPage: 4,
-    perMove: 1,
+    gap: "1.5rem",
+    autoScroll: {
+      speed: 0.5,
+      pauseOnHover: true,
+      pauseOnFocus: false,
+    },
+    pagination: false,
+    breakpoints: {
+      1100: { perPage: 2.5, gap: "1rem" },
+      1200: { perPage: 3, gap: "1rem" },
+      1400: { perPage: 3.5, gap: "1rem" },
+      1600: { perPage: 6, gap: "3rem" },
+      1800: { perPage: 6, gap: "5rem" },
+    },
+  }).mount(window.splide.Extensions);
+
+  // Standard horizontal carousels for movie/series galleries
+  document.querySelectorAll(".splide-simple").forEach((el) => {
+    new Splide(el, {
+      type: "loop",
+      perPage: 4,
+      perMove: 1,
+      gap: "1rem",
+      pagination: false,
+      arrows: true,
+      breakpoints: {
+        1200: { perPage: 3, gap: "1rem" },
+        1600: { perPage: 4.5, gap: "2rem" },
+        1800: { perPage: 5.5, gap: "4rem" },
+      },
+    }).mount();
+  });
+
+  // Vertical poster carousel with center focus (5 visible items)
+  const verticalSplideElement = new Splide(".splide-vertical", {
+    type: "loop",
+    perPage: 5, // Show 5 posters: 1 center + 2 on each side
+    focus: "center",
     gap: "1rem",
     pagination: false,
     arrows: true,
+    autoWidth: false,
+    trimSpace: false,
+    speed: 600,
+    easing: "ease",
     breakpoints: {
+      900: { perPage: 3, gap: "1rem" },
       1200: { perPage: 3, gap: "1rem" },
-      1600: { perPage: 4.5, gap: "2rem" },
-      1800: { perPage: 5.5, gap: "4rem" },
+      1400: { perPage: 4, gap: "1rem" },
+      1600: { perPage: 5, gap: "1.5rem" },
+      1800: { perPage: 5, gap: "2rem" },
     },
   }).mount();
-});
 
-// Vertical poster carousel with center focus (5 visible items)
-const verticalSplideElement = new Splide(".splide-vertical", {
-  type: "loop",
-  perPage: 5, // Show 5 posters: 1 center + 2 on each side
-  focus: "center",
-  gap: "1rem",
-  pagination: false,
-  arrows: true,
-  autoWidth: false,
-  trimSpace: false,
-  speed: 600, // Smooth transition speed
-  easing: "ease",
-  breakpoints: {
-    900: { perPage: 3, gap: "1rem" },
-    1200: { perPage: 3, gap: "1rem" },
-    1400: { perPage: 4, gap: "1rem" },
-    1600: { perPage: 5, gap: "1.5rem" },
-    1800: { perPage: 5, gap: "2rem" },
-  },
-}).mount();
+  // Store vertical splide reference globally for external access
+  window.verticalSplide = verticalSplideElement;
 
-// Store vertical splide reference globally for external access
-window.verticalSplide = verticalSplideElement;
-
-// Marathon series carousels with delayed initialization
-document.addEventListener("DOMContentLoaded", function () {
-  // Small delay to ensure DOM is fully ready
+  // Marathon series carousels with delayed initialization
   setTimeout(() => {
     const marathonConfigs = [
       { selector: ".splide-hungergames", perPage: 4, perPageLarge: 5 },
@@ -223,12 +235,12 @@ document.addEventListener("DOMContentLoaded", function () {
         new Splide(selector, {
           type: "loop",
           perPage,
-          perMove: 1, // Move one slide at a time (like series carousels)
+          perMove: 1,
           gap: "3rem",
           pagination: false,
           arrows: true,
-          speed: 600, // Smooth transition speed
-          easing: "ease", // Smooth easing
+          speed: 600,
+          easing: "ease",
           breakpoints: {
             900: { perPage: 1, gap: "0.5rem" },
             1200: { perPage: 3, gap: "1.2rem" },
@@ -249,10 +261,10 @@ document.addEventListener("DOMContentLoaded", function () {
 // 4. HEADER FUNCTIONALITY (Search, Notifications, Profile Menu)
 // ==========================
 
-// Global variables for header modals and menus
-let searchModal, notificationModal, comingSoonModal, profileMenu, profileToggle;
-
-// Handle search modal opening with proper focus management
+/**
+ * Handle search modal opening with proper focus management
+ * @param {Event} e - Click event
+ */
 function handleSearchClick(e) {
   console.log("🔍 Search button clicked", e);
   if (e) e.preventDefault();
@@ -281,14 +293,15 @@ function handleSearchClick(e) {
   }
 }
 
-// Initialize all header button functionality
+/**
+ * Initialize all header button functionality
+ */
 function initializeHeaderButtons() {
   // Get DOM elements
-  searchModal = document.getElementById("search-modal");
-  notificationModal = document.getElementById("notification-modal");
-  comingSoonModal = document.getElementById("coming-soon-modal");
-  profileMenu = document.getElementById("profile-menu");
-  profileToggle = document.getElementById("profile-menu-toggle");
+  const searchModal = document.getElementById("search-modal");
+  const notificationModal = document.getElementById("notification-modal");
+  const profileMenu = document.getElementById("profile-menu");
+  const profileToggle = document.getElementById("profile-menu-toggle");
 
   const searchBtn = document.getElementById("search-btn");
   const searchClose = document.getElementById("search-close");
@@ -298,7 +311,7 @@ function initializeHeaderButtons() {
   // Search button functionality
   if (searchBtn) {
     searchBtn.addEventListener("click", function (e) {
-      e.stopPropagation(); // Prevent event bubbling
+      e.stopPropagation();
       handleSearchClick(e);
     });
   }
@@ -345,7 +358,7 @@ function initializeHeaderButtons() {
       if (!isOpen) {
         setTimeout(() => {
           const closeMenu = function (event) {
-            if (!profileMenu.contains(event.target) && event.target !== profileToggle) {
+            if (!profileToggle.contains(event.target) && !profileMenu.contains(event.target)) {
               profileMenu.style.display = "none";
               profileToggle.setAttribute("aria-expanded", "false");
               document.removeEventListener("click", closeMenu);
@@ -366,39 +379,120 @@ document.addEventListener("DOMContentLoaded", () => {
 // ==========================
 // 5. HERO "SEE DETAILS" BUTTON HANDLER
 // ==========================
-document.addEventListener("DOMContentLoaded", function () {
-  const heroSeeDetailsBtn = document.querySelector(".hero__see-details-btn");
-  if (heroSeeDetailsBtn) {
-    heroSeeDetailsBtn.addEventListener("click", function () {
-      const key = this.dataset.movie;
-      if (!key) return;
 
-      // Check if current hero is a marathon series
+/**
+ * Setup hero "See Details" button functionality
+ * Handles both regular movies/series and marathons
+ */
+document.addEventListener("DOMContentLoaded", function () {
+  console.log("🎬 Setting up Hero See Details handler...");
+
+  setTimeout(() => {
+    const heroSeeDetailsBtn = document.querySelector(".hero__see-details-btn");
+
+    if (!heroSeeDetailsBtn) {
+      console.error("❌ Hero See Details button not found!");
+      return;
+    }
+
+    console.log("✅ Hero See Details button found:", heroSeeDetailsBtn);
+
+    heroSeeDetailsBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      const key = this.dataset.movie;
+      console.log(`🎬 See Details clicked! Dataset movie: "${key}"`);
+      console.log("🎬 Current heroMovies array:", heroMovies);
+
+      if (!key) {
+        console.error("❌ No movie key found on See Details button");
+        return;
+      }
+
+      // Find current hero in the array
       const currentHero = heroMovies.find((hero) => hero.key === key);
-      if (currentHero && currentHero.type === "marathon") {
-        // Open search modal with pre-filled marathon name
+      console.log("🔍 Current hero found:", currentHero);
+
+      if (!currentHero) {
+        console.error(`❌ Hero not found in array for key: ${key}`);
+        return;
+      }
+
+      console.log(`🎯 Hero type detected: "${currentHero.type}"`);
+
+      if (currentHero.type === "marathon") {
+        console.log(`🏃 MARATHON DETECTED: ${currentHero.title}`);
+
+        // Get search elements
         const searchModal = document.getElementById("search-modal");
         const searchInput = document.getElementById("search-input");
         const searchSubmit = document.getElementById("search-submit");
 
-        searchModal.style.display = "flex";
-        searchInput.value = key.replace("games", " games"); // Format: "hungergames" -> "hunger games"
-        searchInput.focus();
+        if (!searchModal || !searchInput || !searchSubmit) {
+          console.error("❌ Search modal elements not found");
+          return;
+        }
 
-        // Auto-trigger search after brief delay
-        setTimeout(() => searchSubmit.click(), 300);
+        // Show search modal
+        searchModal.style.display = "flex";
+        console.log("✅ Search modal opened");
+
+        // Determine search term based on key
+        let searchTerm = "";
+        console.log(`🔍 Determining search term for key: "${key}"`);
+
+        switch (key) {
+          case "hungergames":
+            searchTerm = "hunger games";
+            break;
+          case "alien1":
+            searchTerm = "alien";
+            break;
+          default:
+            searchTerm = key;
+        }
+
+        console.log(`🔍 Search term determined: "${searchTerm}"`);
+
+        // Set search term and focus
+        searchInput.value = searchTerm;
+        setTimeout(() => searchInput.focus(), 100);
+
+        // Auto-trigger search
+        setTimeout(() => {
+          searchSubmit.click();
+          console.log("🎯 Auto-triggered search for marathon");
+        }, 400);
+
+        console.log(`🎬 Marathon search setup complete for: ${currentHero.title}`);
       } else {
-        // Default behavior for regular movies/series - trigger thumbnail click
+        // Default behavior for regular movies/series
+        console.log(`🎬 Regular content detected: ${key}`);
         const thumb = document.querySelector(`img[data-movie="${key}"]`);
-        if (thumb) thumb.click();
+
+        if (thumb) {
+          thumb.click();
+        } else {
+          // Fallback: try to open modal directly if available
+          if (typeof openMovieModal === "function") {
+            openMovieModal(key);
+          }
+        }
       }
     });
-  }
+
+    console.log("✅ Hero See Details handler successfully attached");
+  }, 2000);
 });
 
 // ==========================
 // 6. ESC KEY MODAL MANAGEMENT
 // ==========================
+
+/**
+ * Handle ESC key to close modals in priority order
+ */
 document.addEventListener("keydown", function (e) {
   if (e.key === "Escape") {
     // PRIORITY 1: Movie modal (highest priority)
@@ -419,9 +513,7 @@ document.addEventListener("keydown", function (e) {
         const searchModal = document.getElementById("search-modal");
         if (searchModal && searchModal.style.display === "flex") {
           const searchInput = document.getElementById("search-input");
-          if (searchInput) {
-            setTimeout(() => searchInput.focus(), 100);
-          }
+          if (searchInput) setTimeout(() => searchInput.focus(), 100);
         }
       }
       return; // Stop here, don't close other modals
@@ -455,8 +547,10 @@ document.addEventListener("keydown", function (e) {
 // 7. DYNAMIC HERO SECTION WITH AUTO-ROTATION
 // ==========================
 
-// Hero movie/series data for dynamic rotation
-const heroMovies = [
+/**
+ * Hero movie/series data for dynamic rotation
+ */
+const homeHeroMovies = [
   {
     key: "gonegirl",
     title: "GONE GIRL",
@@ -507,11 +601,95 @@ const heroMovies = [
   },
 ];
 
+/**
+ * Movies-only hero array (for Movies filter)
+ */
+const moviesHeroMovies = [
+  {
+    key: "alien1",
+    title: "ALIEN",
+    background: "assets/hero-banner/mainly-ban-alien.png",
+    text: "In space, no one can hear you scream. The crew of the Nostromo discovers a deadly alien life form that begins to hunt them down.",
+    textHighlight: "A sci-fi horror classic that redefined the genre and introduced the iconic character Ellen Ripley.",
+    type: "marathon",
+    textColor: "light",
+  },
+  {
+    key: "arrival",
+    title: "ARRIVAL",
+    background: "assets/hero-banner/mainly-ban-arrival.png",
+    text: "When mysterious spacecraft touch down across the globe, an elite team led by linguist Louise Banks is brought together to investigate.",
+    textHighlight: "As mankind teeters on the verge of global war, Banks races against time to decipher their intent.",
+    type: "movie",
+    textColor: "light",
+  },
+  {
+    key: "gonegirl",
+    title: "GONE GIRL",
+    background: "assets/hero-banner/mainly-ban-gonegirl.png",
+    text: "Between false leads, buried secrets, and a truth that was always an illusion, Nick and Amy play a deadly game where no one is who they seem to be.",
+    textHighlight: "In the end, the question remains: who really disappeared?",
+    type: "movie",
+    textColor: "light",
+  },
+  {
+    key: "abouttime",
+    title: "ABOUT TIME",
+    background: "assets/hero-banner/mainly-ban-abouttime.png",
+    text: "At the age of 21, Tim discovers he can travel in time and change what happens and has happened in his own life.",
+    textHighlight:
+      "His decision to make his world a better place by getting a girlfriend turns out not to be as easy as you might think.",
+    type: "movie",
+    textColor: "light",
+  },
+  {
+    key: "hungergames",
+    title: "THE HUNGER GAMES",
+    background: "assets/hero-banner/mainly-ban-hungergames.png",
+    text: "Enter the world of Panem, where the Capitol rules over 13 districts and hosts an annual televised death match called The Hunger Games.",
+    textHighlight:
+      "Follow Katniss Everdeen's journey from tribute to revolutionary symbol in this dystopian saga of survival, politics, and rebellion.",
+    type: "marathon",
+    textColor: "light",
+  },
+];
+
+/**
+ * Series-only hero array (for Series filter)
+ */
+const seriesHeroMovies = [
+  {
+    key: "rupaul",
+    title: "RUPAUL'S DRAG RACE",
+    background: "assets/hero-banner/mainly-ban-rupaul.png",
+    text: "RuPaul's Drag Race is a reality competition show where drag queens compete in various challenges to become America's Next Drag Superstar.",
+    textHighlight:
+      "The line between reality and illusion blurs in this mind-bending series that combines classic sitcoms with the Marvel Cinematic Universe.",
+    type: "Reality Show",
+    textColor: "light",
+  },
+  {
+    key: "wandavision",
+    title: "WANDAVISION",
+    background: "assets/hero-banner/mainly-ban-wandavision.png",
+    text: "Wanda Maximoff and Vision are living an idyllic suburban life, trying to conceal their true natures.",
+    textHighlight:
+      "The line between reality and illusion blurs in this mind-bending series that combines classic sitcoms with the Marvel Cinematic Universe.",
+    type: "series",
+    textColor: "light",
+  },
+];
+
+// Dynamic hero array - starts with home content
+let heroMovies = homeHeroMovies;
+
 // Hero rotation state variables
 let currentHeroIndex = 0;
 let heroInterval = null;
 
-// Create navigation dots and arrow buttons for hero section
+/**
+ * Create navigation dots and arrow buttons for hero section
+ */
 function createHeroIndicators() {
   const heroNavigation = document.createElement("div");
   heroNavigation.className = "hero-navigation";
@@ -558,7 +736,10 @@ function createHeroIndicators() {
   document.querySelector(".hero-content").appendChild(nextBtn);
 }
 
-// Update hero content with smooth fade animation
+/**
+ * Update hero content with smooth fade animation
+ * @param {number} index - Index of hero to display
+ */
 function updateHero(index) {
   const hero = heroMovies[index];
   const heroTitle = document.querySelector(".hero__title");
@@ -601,14 +782,18 @@ function updateHero(index) {
   }, 400);
 }
 
-// Start hero rotation system
+/**
+ * Start hero rotation system
+ */
 function startHeroRotation() {
   if (heroInterval) clearInterval(heroInterval);
   updateHero(currentHeroIndex);
   restartHeroInterval();
 }
 
-// Restart auto-rotation timer (8 seconds interval)
+/**
+ * Restart auto-rotation timer (8 seconds interval)
+ */
 function restartHeroInterval() {
   if (heroInterval) clearInterval(heroInterval);
   heroInterval = setInterval(() => {
@@ -617,7 +802,27 @@ function restartHeroInterval() {
   }, 8000);
 }
 
-// Initialize hero system with hover pause functionality
+/**
+ * Recreate hero indicators when switching between pages
+ */
+function recreateHeroIndicators() {
+  // Remove existing navigation
+  const existingNavigation = document.querySelector(".hero-navigation");
+  const existingPrevBtn = document.querySelector(".hero-nav-prev");
+  const existingNextBtn = document.querySelector(".hero-nav-next");
+
+  if (existingNavigation) existingNavigation.remove();
+  if (existingPrevBtn) existingPrevBtn.remove();
+  if (existingNextBtn) existingNextBtn.remove();
+
+  // Create new navigation based on current heroMovies array
+  createHeroIndicators();
+  console.log(`🔄 Recreated hero indicators for ${heroMovies.length} items`);
+}
+
+/**
+ * Initialize hero system with hover pause functionality
+ */
 let heroInitialized = false;
 document.addEventListener("DOMContentLoaded", function () {
   if (!heroInitialized) {
@@ -645,52 +850,24 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // ==========================
-// 8. HEADER NAVIGATION (Series/Movies Filter)
+// 8. HEADER NAVIGATION (Movies/Series Filter)
 // ==========================
+
+/**
+ * Setup header navigation for filtering content
+ */
 document.addEventListener("DOMContentLoaded", function () {
-  const seriesBtn = document.querySelector(".header__nav-tittle:nth-child(2) a");
-  const moviesBtn = document.querySelector(".header__nav-tittle:nth-child(3) a");
+  const homeBtn = document.querySelector(".header__nav-tittle:nth-child(1) a"); // Home (position 1)
+  const moviesBtn = document.querySelector(".header__nav-tittle:nth-child(2) a"); // Movies (position 2)
+  const seriesBtn = document.querySelector(".header__nav-tittle:nth-child(3) a"); // Series (position 3)
 
-  // Series filter - show only series content
-  if (seriesBtn) {
-    seriesBtn.addEventListener("click", function (e) {
-      e.preventDefault();
+  console.log("🔧 Navigation buttons found:", { homeBtn, moviesBtn, seriesBtn });
 
-      // Update active navigation state
-      document.querySelectorAll(".header__nav-tittle").forEach((item) => {
-        item.classList.remove("header__nav-tittle--active");
-      });
-      this.parentElement.classList.add("header__nav-tittle--active");
-
-      // Hide non-series sections
-      document
-        .querySelectorAll(".gallery__container.marathon-section, .gallery__container-vertical, .gallery__container.top10")
-        .forEach((section) => {
-          section.style.display = "none";
-        });
-
-      // Show only series sections
-      document.querySelectorAll(".gallery__container.series").forEach((section) => {
-        section.style.display = "block";
-      });
-
-      // Update hero to show a series
-      for (let i = 0; i < heroMovies.length; i++) {
-        if (heroMovies[i].type === "series") {
-          clearInterval(heroInterval);
-          currentHeroIndex = i;
-          updateHero(currentHeroIndex);
-          restartHeroInterval();
-          break;
-        }
-      }
-    });
-  }
-
-  // Movies filter - show only movie content
+  // MOVIES filter - show only movie content
   if (moviesBtn) {
     moviesBtn.addEventListener("click", function (e) {
       e.preventDefault();
+      console.log("🎬 Movies filter activated");
 
       // Update active navigation state
       document.querySelectorAll(".header__nav-tittle").forEach((item) => {
@@ -698,11 +875,17 @@ document.addEventListener("DOMContentLoaded", function () {
       });
       this.parentElement.classList.add("header__nav-tittle--active");
 
-      // Hide series sections (except "To Make Digo Happy" which stays visible)
+      // Hide ALL series sections (including Digo Happy for movies mode)
       document.querySelectorAll(".gallery__container.series").forEach((section) => {
-        if (!section.classList.contains("digo-happy")) {
+        if (!section.classList.contains("digohappy")) {
           section.style.display = "none";
         }
+      });
+
+      // Show "Digo Happy" section in Movies mode
+      document.querySelectorAll(".gallery__container.digohappy").forEach((section) => {
+        section.style.display = "block";
+        console.log("✅ Showed Digo Happy section:", section);
       });
 
       // Show movie sections
@@ -710,27 +893,87 @@ document.addEventListener("DOMContentLoaded", function () {
         .querySelectorAll(".gallery__container.marathon-section, .gallery__container-vertical, .gallery__container.top10")
         .forEach((section) => {
           section.style.display = "";
+          console.log("✅ Showed movie section:", section);
         });
 
-      // Update hero to show a movie
-      for (let i = 0; i < heroMovies.length; i++) {
-        if (heroMovies[i].type === "movie") {
-          clearInterval(heroInterval);
-          currentHeroIndex = i;
-          updateHero(currentHeroIndex);
-          restartHeroInterval();
-          break;
-        }
-      }
+      // Switch to movies-only hero array
+      heroMovies = moviesHeroMovies;
+      clearInterval(heroInterval);
+      currentHeroIndex = 0;
+
+      // Recreate hero indicators for new array
+      recreateHeroIndicators();
+      updateHero(currentHeroIndex);
+      restartHeroInterval();
+      console.log(`🎬 Switched to movies hero with ${heroMovies.length} options`);
     });
   }
 
-  // Home button - reset to show all content
-  const homeBtn = document.querySelector(".header__nav-tittle:first-child a");
+  // SERIES filter - show only series content
+  if (seriesBtn) {
+    seriesBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      console.log("📺 Series filter activated");
+
+      // Update active navigation state
+      document.querySelectorAll(".header__nav-tittle").forEach((item) => {
+        item.classList.remove("header__nav-tittle--active");
+      });
+      this.parentElement.classList.add("header__nav-tittle--active");
+
+      // Hide non-series sections (movies, marathons, etc.)
+      document
+        .querySelectorAll(".gallery__container.marathon-section, .gallery__container-vertical, .gallery__container.top10")
+        .forEach((section) => {
+          section.style.display = "none";
+          console.log("🚫 Hidden movie section:", section);
+        });
+
+      // Hide "Digo Happy" section when in Series mode
+      document.querySelectorAll(".gallery__container.digohappy").forEach((section) => {
+        section.style.display = "none";
+        console.log("🚫 Hidden Digo Happy section:", section);
+      });
+
+      // Hide ALL original series carousels (non-dynamic ones)
+      document.querySelectorAll(".gallery__container.series").forEach((section) => {
+        // Hide if it's NOT a dynamic carousel and NOT digo happy
+        if (!section.classList.contains("series-dynamic") && !section.classList.contains("digohappy")) {
+          section.style.display = "none";
+          console.log("🚫 Hidden original series section:", section);
+        }
+      });
+
+      // Create dynamic series carousels when entering series mode
+      createDynamicSeriesCarousels();
+
+      // Show only the dynamic series carousels that were just created
+      setTimeout(() => {
+        document.querySelectorAll(".gallery__container.series-dynamic").forEach((section) => {
+          section.style.display = "block";
+          console.log("✅ Showed dynamic series section:", section);
+        });
+      }, 200);
+
+      // Switch to series-only hero array
+      heroMovies = seriesHeroMovies;
+      clearInterval(heroInterval);
+      currentHeroIndex = 0;
+
+      // Recreate hero indicators for new array
+      recreateHeroIndicators();
+      updateHero(currentHeroIndex);
+      restartHeroInterval();
+      console.log(`📺 Switched to series hero with ${heroMovies.length} options`);
+    });
+  }
+
+  // HOME button - reset to show all content
   if (homeBtn) {
     homeBtn.addEventListener("click", function (e) {
       if (window.location.pathname.endsWith("index.html")) {
         e.preventDefault();
+        console.log("🏠 Home filter activated - showing all content");
 
         // Reset navigation active state
         document.querySelectorAll(".header__nav-tittle").forEach((item) => {
@@ -738,10 +981,32 @@ document.addEventListener("DOMContentLoaded", function () {
         });
         this.parentElement.classList.add("header__nav-tittle--active");
 
-        // Show all sections
-        document.querySelectorAll(".gallery__container, .gallery__container-vertical, .marathon-section").forEach((section) => {
-          section.style.display = "";
+        // Show basic sections (NOT the new categorized carousels)
+        document
+          .querySelectorAll(".gallery__container.top10, .gallery__container-vertical, .marathon-section")
+          .forEach((section) => {
+            section.style.display = "";
+          });
+
+        // Show only the original "Series" carousel and "Digo Happy" on HOME
+        document.querySelectorAll(".gallery__container.series").forEach((section) => {
+          if (!section.classList.contains("series-dynamic")) {
+            section.style.display = "block";
+          } else {
+            section.style.display = "none";
+          }
         });
+
+        // Switch back to home hero array
+        heroMovies = homeHeroMovies;
+        clearInterval(heroInterval);
+        currentHeroIndex = 0;
+
+        // Recreate hero indicators for home array
+        recreateHeroIndicators();
+        updateHero(currentHeroIndex);
+        restartHeroInterval();
+        console.log(`🏠 Switched to home hero with ${heroMovies.length} options`);
       }
     });
   }
@@ -754,7 +1019,9 @@ document.addEventListener("DOMContentLoaded", function () {
 // Flag to prevent multiple simultaneous carousel movements
 let isVerticalSplideMoving = false;
 
-// Handle clicks on vertical carousel posters
+/**
+ * Handle clicks on vertical carousel posters
+ */
 document.addEventListener("click", function (e) {
   // Only process clicks on images within the vertical carousel
   if (e.target.tagName === "IMG" && e.target.closest(".splide-vertical")) {
@@ -772,7 +1039,7 @@ document.addEventListener("click", function (e) {
 
     console.log("🎬 Clicked on vertical carousel:", movieKey);
 
-    if (verticalSplide && clickedSlide) {
+    if (window.verticalSplide && clickedSlide) {
       // Check if clicked slide is already centered (active)
       const isActive = clickedSlide.classList.contains("is-active");
 
@@ -784,8 +1051,7 @@ document.addEventListener("click", function (e) {
         let targetIndex = -1;
 
         originalSlides.forEach((slide, index) => {
-          const imgInSlide = slide.querySelector("img[data-movie]");
-          if (imgInSlide && imgInSlide.dataset.movie === movieKey) {
+          if (slide.querySelector(`img[data-movie="${movieKey}"]`)) {
             targetIndex = index;
           }
         });
@@ -793,37 +1059,24 @@ document.addEventListener("click", function (e) {
         console.log("🎯 Target slide index found:", targetIndex);
 
         if (targetIndex !== -1) {
-          // Start carousel movement
+          // Set flag to prevent multiple movements
           isVerticalSplideMoving = true;
-          console.log("🔄 Moving carousel to slide:", targetIndex);
-          verticalSplide.go(targetIndex);
 
-          // Wait for carousel transition to complete
-          const handleMoved = function () {
-            console.log("✅ Carousel transition completed, opening modal");
+          // Move to the target slide
+          window.verticalSplide.go(targetIndex);
+
+          // Reset flag after movement completes
+          setTimeout(() => {
             isVerticalSplideMoving = false;
+            console.log("✅ Vertical carousel movement completed");
 
-            // Check if modal wasn't manually closed during transition
-            const movieModal = document.getElementById("movie-modal");
-            if (!movieModal || movieModal.style.display !== "flex") {
-              // Small delay to ensure visual transition is complete
-              setTimeout(() => {
-                if (typeof openMovieModal === "function") {
-                  openMovieModal(movieKey);
-                }
-              }, 650); // 650ms delay for smooth UX
+            // Now open the modal since slide is centered
+            if (typeof openMovieModal === "function") {
+              openMovieModal(movieKey);
             }
-
-            // Clean up event listener
-            verticalSplide.off("moved", handleMoved);
-          };
-
-          // Listen for carousel movement completion
-          verticalSplide.on("moved", handleMoved);
-          return;
+          }, 700); // Wait for slide transition to complete
         } else {
-          console.warn("❌ Target slide index not found for movie:", movieKey);
-          return;
+          console.warn("❌ Could not find target slide index");
         }
       } else {
         // Slide is already centered - open modal immediately
@@ -837,4 +1090,211 @@ document.addEventListener("click", function (e) {
 
     console.log("❌ Something went wrong, NOT opening modal");
   }
+});
+
+// ==========================
+// 10. DYNAMIC SERIES CAROUSELS SYSTEM
+// ==========================
+
+/**
+ * Configuration for dynamic series carousels
+ */
+const seriesCarouselConfigs = [
+  {
+    id: "sitcoms-carousel",
+    title: "Sitcoms",
+    filter: (movie) => movie.categories && movie.categories.includes("sitcom"),
+    containerClass: "series-dynamic",
+  },
+  {
+    id: "reality-carousel",
+    title: "Reality Shows",
+    filter: (movie) => movie.categories && (movie.categories.includes("reality") || movie.categories.includes("competition")),
+    containerClass: "series-dynamic",
+  },
+  {
+    id: "marvel-carousel",
+    title: "Marvel Universe",
+    filter: (movie) => movie.categories && movie.categories.includes("marvel"),
+    containerClass: "series-dynamic",
+  },
+  {
+    id: "animation-carousel",
+    title: "Animation",
+    filter: (movie) => movie.categories && movie.categories.includes("animation"),
+    containerClass: "series-dynamic",
+  },
+];
+
+/**
+ * Create dynamic series carousels based on filters
+ */
+function createDynamicSeriesCarousels() {
+  console.log("🔧 Creating dynamic series carousels...");
+
+  if (!window.moviesData) {
+    console.warn("⚠️ Movie data not available for dynamic carousels");
+    return;
+  }
+
+  // Find the first series container that is NOT digo happy and NOT dynamic
+  const insertPoint = document.querySelector(".gallery__container.series:not(.digohappy):not(.series-dynamic)");
+  if (!insertPoint) {
+    console.warn("⚠️ Insert point not found for dynamic carousels");
+    return;
+  }
+
+  // Clear existing dynamic carousels
+  document.querySelectorAll(".gallery__container.series-dynamic").forEach((el) => {
+    el.remove();
+    console.log("🧹 Removed existing dynamic carousel");
+  });
+
+  seriesCarouselConfigs.forEach((config) => {
+    // Filter series based on configuration
+    const filteredSeries = [];
+
+    for (const key in window.moviesData) {
+      const movie = window.moviesData[key];
+      if (config.filter(movie)) {
+        filteredSeries.push({ key, ...movie });
+      }
+    }
+
+    // Only create carousel if there are enough series
+    if (filteredSeries.length === 0) {
+      console.log(`📺 No series found for ${config.title}`);
+      return;
+    }
+
+    // Create carousel HTML
+    const carouselHTML = `
+      <div class="gallery__container series ${config.containerClass}" data-carousel="${config.id}">
+        <h2 class="gallery__title">${config.title}</h2>
+        <div class="splide splide-simple" id="${config.id}">
+          <div class="splide__track">
+            <ul class="splide__list">
+              ${filteredSeries
+                .map(
+                  (series) => `
+                <li class="splide__slide">
+                  <img
+                    class="gallery__thumbnail open-movie-modal glow-img"
+                    src="${series.poster}"
+                    alt="${series.title}"
+                    data-movie="${series.key}"
+                  />
+                </li>
+              `
+                )
+                .join("")}
+            </ul>
+          </div>
+        </div>
+      </div>
+    `;
+
+    // Insert after the main carousel
+    insertPoint.insertAdjacentHTML("afterend", carouselHTML);
+
+    // Initialize Splide for this carousel
+    setTimeout(() => {
+      const splideElement = document.getElementById(config.id);
+      if (splideElement) {
+        new Splide(`#${config.id}`, {
+          type: "loop",
+          perPage: 4,
+          perMove: 1,
+          gap: "1rem",
+          pagination: false,
+          arrows: true,
+          breakpoints: {
+            1200: { perPage: 3, gap: "1rem" },
+            1600: { perPage: 4.5, gap: "2rem" },
+            1800: { perPage: 5.5, gap: "4rem" },
+          },
+        }).mount();
+
+        console.log(`✅ Dynamic carousel created: ${config.title} (${filteredSeries.length} series)`);
+      }
+    }, 100);
+  });
+}
+
+// ==========================
+// 11. FOOTER NAVIGATION LINKS
+// ==========================
+
+/**
+ * Setup footer navigation links to trigger header navigation
+ */
+document.addEventListener("DOMContentLoaded", function () {
+  const footerHome = document.getElementById("footer-home");
+  const footerMovies = document.getElementById("footer-movies");
+  const footerSeries = document.getElementById("footer-series");
+
+  // Footer Home button
+  if (footerHome) {
+    footerHome.addEventListener("click", function (e) {
+      e.preventDefault();
+      console.log("🏠 Footer Home clicked");
+
+      // Trigger the header home button click
+      const headerHomeBtn = document.querySelector(".header__nav-tittle:nth-child(1) a");
+      if (headerHomeBtn) {
+        headerHomeBtn.click();
+        console.log("✅ Footer Home: Triggered header home navigation");
+      }
+
+      // Scroll to top smoothly
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    });
+  }
+
+  // Footer Movies button
+  if (footerMovies) {
+    footerMovies.addEventListener("click", function (e) {
+      e.preventDefault();
+      console.log("🎬 Footer Movies clicked");
+
+      // Trigger the header movies button click
+      const headerMoviesBtn = document.querySelector(".header__nav-tittle:nth-child(2) a");
+      if (headerMoviesBtn) {
+        headerMoviesBtn.click();
+        console.log("✅ Footer Movies: Triggered header movies navigation");
+      }
+
+      // Scroll to top smoothly
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    });
+  }
+
+  // Footer Series button
+  if (footerSeries) {
+    footerSeries.addEventListener("click", function (e) {
+      e.preventDefault();
+      console.log("📺 Footer Series clicked");
+
+      // Trigger the header series button click
+      const headerSeriesBtn = document.querySelector(".header__nav-tittle:nth-child(3) a");
+      if (headerSeriesBtn) {
+        headerSeriesBtn.click();
+        console.log("✅ Footer Series: Triggered header series navigation");
+      }
+
+      // Scroll to top smoothly
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    });
+  }
+
+  console.log("✅ Footer navigation links initialized");
 });

@@ -34,8 +34,8 @@
             <li class="header__nav-tittle header__nav-tittle--active">
               <a href="index.html">Home</a>
             </li>
-            <li class="header__nav-tittle"><a href="#">Series</a></li>
             <li class="header__nav-tittle"><a href="#">Movies</a></li>
+            <li class="header__nav-tittle"><a href="#">Series</a></li>
           </ul>
         </nav>
         <div class="header__icons">
@@ -64,17 +64,16 @@
             aria-haspopup="true"
             aria-expanded="false"
             title="Profile menu"
+            style="cursor: pointer"
           >
-            <a href="#">
-              <img src="assets/icons/mathflix-icon.svg" alt="Mathflix icon" />
-            </a>
+            <img src="assets/icons/mathflix-icon.svg" alt="Mathflix icon" />
           </div>
         </div>
         <!-- Profile dropdown menu -->
         <div id="profile-menu" class="profile-menu" style="display: none">
           <ul>
-            <li><a href="#">Profile</a></li>
-            <li><a href="login.html">Logout</a></li>
+            <li><a href="#" data-action="profile">Profile</a></li>
+            <li><a href="#" data-action="logout">Logout</a></li>
           </ul>
         </div>
         <!-- Search modal -->
@@ -553,7 +552,7 @@
                 <li class="splide__slide">
                   <img
                     class="gallery__thumbnail open-movie-modal"
-                    src="assets/imgs/Marathon/Alien/alien1.png"
+                    src="assets/imgs/Marathon/Alien/ban-alien1.png"
                     alt="Alien (1979)"
                     data-movie="alien1"
                   />
@@ -561,7 +560,7 @@
                 <li class="splide__slide">
                   <img
                     class="gallery__thumbnail open-movie-modal"
-                    src="assets/imgs/Marathon/Alien/alien2.png"
+                    src="assets/imgs/Marathon/Alien/ban-alien2.png"
                     alt="Aliens (1986)"
                     data-movie="alien2"
                   />
@@ -569,7 +568,7 @@
                 <li class="splide__slide">
                   <img
                     class="gallery__thumbnail open-movie-modal"
-                    src="assets/imgs/Marathon/Alien/alien3.png"
+                    src="assets/imgs/Marathon/Alien/ban-alien3.png"
                     alt="Alien 3 (1992)"
                     data-movie="alien3"
                   />
@@ -577,7 +576,7 @@
                 <li class="splide__slide">
                   <img
                     class="gallery__thumbnail open-movie-modal"
-                    src="assets/imgs/Marathon/Alien/alien4.png"
+                    src="assets/imgs/Marathon/Alien/ban-alien4.png"
                     alt="Alien: Resurrection (1997)"
                     data-movie="alien4"
                   />
@@ -585,7 +584,7 @@
                 <li class="splide__slide">
                   <img
                     class="gallery__thumbnail open-movie-modal"
-                    src="assets/imgs/Marathon/Alien/prometheus.png"
+                    src="assets/imgs/Marathon/Alien/ban-alien5.png"
                     alt="Prometheus (2012)"
                     data-movie="prometheus"
                   />
@@ -593,7 +592,7 @@
                 <li class="splide__slide">
                   <img
                     class="gallery__thumbnail open-movie-modal"
-                    src="assets/imgs/Marathon/Alien/covenant.png"
+                    src="assets/imgs/Marathon/Alien/ban-alien6.png"
                     alt="Alien: Covenant (2017)"
                     data-movie="covenant"
                   />
@@ -804,9 +803,9 @@
           <img src="assets/icons/mathflix-logo.svg" alt="Mathflix Logo" />
         </div>
         <nav class="footer__nav">
-          <a href="#">Home</a>
-          <a href="#">Series</a>
-          <a href="#">Movies</a>
+          <a href="#" id="footer-home">Home</a>
+          <a href="#" id="footer-movies">Movies</a>
+          <a href="#" id="footer-series">Series</a>
         </nav>
         <div class="footer__social">
           <!-- Instagram -->
@@ -886,6 +885,75 @@
     <div id="surprise-modal" class="search-modal" style="display: none">
       <div class="search-modal__backdrop"></div>
       <div class="search-modal__content" id="surprise-modal-content"></div>
+    </div>
+    <!-- PROFILE MODAL -->
+    <div id="profile-modal" class="profile-modal" style="display: none">
+      <div class="profile-modal__backdrop"></div>
+      <div class="profile-modal__content">
+        <button class="profile-modal__close" aria-label="Close">&times;</button>
+
+        <div class="profile-modal__header">
+          <div class="profile-modal__avatar">
+            <div class="profile-avatar-circle">
+              <span id="profile-avatar-letter">M</span>
+            </div>
+          </div>
+          <div class="profile-modal__info">
+            <h2 id="profile-username">Math</h2>
+            <p id="profile-role">Movie Enthusiast</p>
+          </div>
+        </div>
+
+        <div class="profile-modal__stats">
+          <div class="profile-stat">
+            <span class="profile-stat-number" id="profile-movies-watched">42</span>
+            <span class="profile-stat-label">Movies Watched</span>
+          </div>
+          <div class="profile-stat">
+            <span class="profile-stat-number" id="profile-series-watched">42</span>
+            <span class="profile-stat-label">Series Watched</span>
+          </div>
+          <div class="profile-stat">
+            <span class="profile-stat-number" id="profile-avg-rating">4.2</span>
+            <span class="profile-stat-label">Avg Rating</span>
+          </div>
+        </div>
+
+        <div class="profile-modal__sections">
+          <div class="profile-section">
+            <h3>Account Information</h3>
+            <div class="profile-info-grid">
+              <div class="profile-info-item">
+                <span class="profile-info-label">Member Since:</span>
+                <span class="profile-info-value">January 2024</span>
+              </div>
+              <div class="profile-info-item">
+                <span class="profile-info-label">Last Login:</span>
+                <span class="profile-info-value" id="profile-last-login">Today</span>
+              </div>
+              <div class="profile-info-item">
+                <span class="profile-info-label">Subscription:</span>
+                <span class="profile-info-value">MathFlix Premium</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="profile-section">
+            <h3>Settings & Support</h3>
+            <div class="profile-settings">
+              <p class="profile-settings-notice">🔒 <strong>Profile Customization Locked</strong><br /></p>
+              <p class="profile-support-text">
+                Need to update your information or have questions?<br />
+                Please contact our support team!
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="profile-modal__footer">
+          <button class="profile-logout-btn" id="profile-logout">🚪 Logout</button>
+        </div>
+      </div>
     </div>
   </body>
 </html>

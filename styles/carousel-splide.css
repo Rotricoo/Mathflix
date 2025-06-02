@@ -302,7 +302,8 @@ h2.marathon-title {
   color: var(--white-50);
   font-weight: bold;
   margin: 1rem 0;
-  padding-left: 0; /* No additional padding - already aligned with container */
+  padding-left: 0;
+  transition: color 0.4s ease-in-out;
 }
 
 h2.marathon-title:hover {
@@ -335,11 +336,19 @@ h2.marathon-title:hover {
   border-radius: 50%;
   color: #fff;
   font-size: 2.5rem;
-  transition: background 0.2s;
+  transition: background 0.6s ease, border-color 0.6s ease, box-shadow 0.6s ease;
+  border: 2px solid transparent;
+  width: 4rem;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .splide__arrow:hover {
   background: var(--green-lighter);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 15px rgba(74, 160, 66, 0.4);
 }
 
 .splide__track,
@@ -357,14 +366,45 @@ h2.marathon-title:hover {
 /* Show arrows on hover/focus (except vertical) */
 .gallery__container:hover .splide__arrow,
 .gallery__container:focus-within .splide__arrow {
-  opacity: 1;
+  opacity: 0.8;
   pointer-events: auto;
+}
+.gallery__container:hover .splide__arrow:hover,
+.gallery__container:focus-within .splide__arrow:hover {
+  opacity: 1;
+  color: #222;
 }
 
 /* Keep vertical carousel arrows always visible */
 .gallery__container-vertical .splide__arrow {
   opacity: 1 !important;
   pointer-events: auto !important;
+}
+
+.gallery__container-vertical:hover .splide__arrow {
+  opacity: 1 !important;
+}
+
+/* 🔧 VERTICAL CAROUSEL - REDUCE GAP BETWEEN ARROWS */
+.gallery__container-vertical .splide__arrow--prev {
+  left: 15rem; /* Reduced from default to bring closer */
+}
+
+.gallery__container-vertical .splide__arrow--next {
+  right: 15rem; /* Reduced from default to bring closer */
+}
+
+/* Enhanced styling for vertical carousel arrows */
+.gallery__container-vertical .splide__arrow {
+  background: rgba(0, 0, 0, 0.8);
+  border: 2px solid rgba(74, 160, 66, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.gallery__container-vertical .splide__arrow:hover {
+  background: var(--green-lighter);
+  border-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 6px 20px rgba(74, 160, 66, 0.5);
 }
 
 /* =========================

@@ -1,5 +1,9 @@
+/* =====================================================================
+   === MATHFLIX LOGIN PAGE STYLES ===
+   ===================================================================== */
+
 /* =========================
-   === PAGE BACKGROUND ===
+   === 1. BASE CONFIGURATION ===
    ========================= */
 html {
   font-size: 62.5%; /* 1rem = 10px for easier rem calculations */
@@ -21,6 +25,9 @@ body.login-page {
   overflow-x: hidden;
 }
 
+/* =========================
+   === 2. BACKGROUND ANIMATIONS ===
+   ========================= */
 @keyframes gradientMove {
   0% {
     background-position: 0% 50%;
@@ -31,7 +38,7 @@ body.login-page {
 }
 
 /* =========================
-   === LOGIN CONTAINER ===
+   === 3. LOGIN CONTAINER ===
    ========================= */
 .login {
   position: relative;
@@ -52,14 +59,13 @@ body.login-page {
   z-index: 10;
 }
 
-/* === LOGIN CONTAINER VISIBLE ANIMATION === */
 .login.login--visible {
   opacity: 1;
   transform: scale(1);
 }
 
 /* =========================
-   === LOGO ANIMATION ===
+   === 4. LOGO & ANIMATIONS ===
    ========================= */
 .login__icon {
   position: absolute;
@@ -70,47 +76,39 @@ body.login-page {
   display: flex;
   justify-content: center;
   align-items: center;
-  animation: rotating 1s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  animation: infiniteRotation 8s linear infinite;
   z-index: 11;
 }
 
 .login__icon:hover {
-  animation: rotating2 2s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  animation: hoverRotation 2s ease-in-out infinite alternate;
 }
 
-@keyframes rotating {
+@keyframes hoverRotation {
   0% {
-    transform: rotate(0deg);
+    transform: rotate(-15deg) scale(1.1);
   }
   100% {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes rotating2 {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(-360deg);
+    transform: rotate(15deg) scale(1.1);
   }
 }
 
 /* =========================
-   === LOGIN FORM ===
+   === 5. FORM STRUCTURE ===
    ========================= */
 .login__form {
   width: 100%;
 }
 
-/* === FORM FIELD GROUP === */
 .login__field {
   text-align: left;
   position: relative;
   margin-bottom: 1.5rem;
 }
 
-/* === LABELS === */
+/* =========================
+   === 6. LABELS ===
+   ========================= */
 .login__label {
   display: block;
   font-size: 1.2rem;
@@ -120,7 +118,9 @@ body.login-page {
   font-weight: 500;
 }
 
-/* === INPUTS (TEXT, PASSWORD, EMAIL) === */
+/* =========================
+   === 7. INPUT FIELDS ===
+   ========================= */
 .login__input,
 input[type="text"],
 input[type="password"],
@@ -139,7 +139,7 @@ input[type="email"] {
   transition: all 0.3s ease;
 }
 
-/* === INPUT FOCUS STATE === */
+/* Input focus states */
 .login__input:focus,
 input[type="text"]:focus,
 input[type="password"]:focus,
@@ -149,7 +149,7 @@ input[type="email"]:focus {
   transform: none;
 }
 
-/* === INPUT FEEDBACK (ERROR & SUCCESS) === */
+/* Input validation states */
 .login__input.error {
   border-color: #e74c3c !important;
   box-shadow: 0 0 5px #e74c3c !important;
@@ -160,7 +160,46 @@ input[type="email"]:focus {
   box-shadow: 0 0 5px #27ae60 !important;
 }
 
-/* === ERROR MESSAGE === */
+/* =========================
+   === 8. PASSWORD VISIBILITY TOGGLE ===
+   ========================= */
+.eye-icon {
+  position: absolute;
+  right: 4rem;
+  top: 45%;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 12;
+  color: var(--green-dark, #277028);
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  transition: background-color 0.8s ease-in-out, color 0.8s ease-in-out, transform 0.8s ease-in-out;
+}
+
+.eye-icon:hover {
+  transform: translateX(-1rem);
+  background-color: rgba(39, 112, 40, 1);
+  color: var(--green-lighter, white);
+}
+
+.eye-icon svg {
+  width: 1.6rem;
+  height: 1.6rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  flex-shrink: 0;
+}
+
+/* =========================
+   === 9. ERROR MESSAGES ===
+   ========================= */
 #error-message {
   font-size: 1.4rem;
   line-height: 1.3;
@@ -173,14 +212,15 @@ input[type="email"]:focus {
 }
 
 /* =========================
-   === SUBTEXT & CHECKBOX ===
+   === 10. CHECKBOX & FORGOT PASSWORD ===
    ========================= */
 .login__subtext-group {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
-  margin-top: 1rem;
   width: 100%;
+  margin-top: 0.5rem;
+  gap: 10rem;
 }
 
 .login__checkbox {
@@ -196,12 +236,14 @@ input[type="email"]:focus {
   padding: 0;
   margin: 0;
   border-radius: 3px;
+  flex-shrink: 0;
 }
 
 .login__checkbox label {
   color: var(--white, #ffffff);
   font-size: 1.3rem;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .login__forgot {
@@ -209,13 +251,20 @@ input[type="email"]:focus {
   font-size: 1.3rem;
   text-decoration: none;
   cursor: pointer;
+  white-space: nowrap;
+  transition: color 0.2s ease;
+}
+
+.login__forgot:hover {
+  color: var(--green-lighter, #4aa042);
 }
 
 /* =========================
-   === BUTTONS ===
+   === 11. BUTTONS ===
    ========================= */
 .login__button,
-button {
+button[type="submit"],
+.login__button-secondary {
   all: unset;
   display: inline-block;
   cursor: pointer;
@@ -230,17 +279,31 @@ button {
   transition: all 0.3s ease;
   font-weight: 500;
   min-width: 120px;
+  -webkit-tap-highlight-color: rgba(74, 160, 66, 0.3);
+  user-select: none;
 }
 
+/* Button hover states */
 .login__button:hover,
-button:hover {
+.login__button:active,
+button[type="submit"]:hover,
+button[type="submit"]:active,
+.login__button-secondary:hover,
+.login__button-secondary:active {
   background: linear-gradient(45deg, var(--green-lighter, #4aa042), var(--green-dark, #277028));
   color: var(--white, #ffffff);
   box-shadow: 0 0 16px var(--green-lighter, #4aa042), 0 2px 8px rgba(0, 0, 0, 0.25);
-  transform: translateY(-2px);
+  transform: translateY(-2px) scale(1.02);
 }
 
-/* === SECONDARY BUTTON (SIGN UP, ETC) === */
+/* Button active states */
+.login__button:active,
+button[type="submit"]:active {
+  transform: translateY(0px) scale(0.98);
+  box-shadow: 0 0 8px var(--green-lighter, #4aa042), 0 1px 4px rgba(0, 0, 0, 0.25);
+}
+
+/* Secondary button styles */
 .login__button-secondary {
   background-color: var(--white, #ffffff);
   border: 2px solid var(--green-dark, #277028);
@@ -248,15 +311,23 @@ button:hover {
   padding: 1rem 2rem;
   margin: 0;
   font-size: 1.5rem;
+  -webkit-tap-highlight-color: rgba(39, 112, 40, 0.2);
 }
 
-.login__button-secondary:hover {
+.login__button-secondary:hover,
+.login__button-secondary:active {
   background-color: rgba(255, 255, 255, 0.9);
-  transform: translateY(-2px);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 0 12px rgba(74, 160, 66, 0.4);
+}
+
+.login__button-secondary:active {
+  transform: translateY(0px) scale(0.98);
+  background-color: rgba(255, 255, 255, 0.8);
 }
 
 /* =========================
-   === FOOTER SECTION ===
+   === 12. FOOTER SECTION ===
    ========================= */
 .login__footer {
   display: flex;
@@ -285,39 +356,7 @@ button:hover {
 }
 
 /* =========================
-   === SHOW/HIDE PASSWORD ICON ===
-   ========================= */
-/* =========================
-   === SHOW/HIDE PASSWORD ICON ===
-   ========================= */
-.eye-icon {
-  position: absolute;
-  right: 1.5rem;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0.3rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 12;
-  color: var(--green-dark, #277028);
-}
-
-.eye-icon:hover {
-  background-color: rgba(39, 112, 40, 0.1);
-}
-
-.eye-icon svg {
-  width: 1.4rem;
-  height: 1.4rem;
-  fill: currentColor;
-}
-
-/* =========================
-   === CUSTOM POPUP ===
+   === 13. CUSTOM POPUP ===
    ========================= */
 .custom-popup {
   position: fixed;
@@ -364,7 +403,60 @@ button:hover {
 }
 
 /* =========================
+   === 14. CONFLICT PREVENTION ===
+   ========================= */
+body.login-page * {
+  box-sizing: border-box;
+}
+
+body.login-page .login *:not(.eye-icon):not(.eye-icon svg) {
+  transform: none !important;
+}
+
+body.login-page .login *,
+body.login-page .login *:hover {
+  filter: none !important;
+  box-shadow: inherit !important;
+}
+
+body.login-page .login input:hover,
+body.login-page .login input:focus {
+  transform: none !important;
+  filter: none !important;
+}
+
+body.login-page .login button:not(:hover) {
+  transform: none !important;
+  filter: none !important;
+}
+
+/* =========================
+   === 15. MOBILE TOUCH ENHANCEMENTS ===
+   ========================= */
+.login__forgot,
+.login__checkbox label {
+  -webkit-tap-highlight-color: rgba(74, 160, 66, 0.2);
+  user-select: none;
+}
+
+.login__forgot:active {
+  transform: scale(0.98);
+  color: var(--green-dark, #277028);
+}
+
+.login__checkbox input[type="checkbox"] {
+  width: 1.8rem;
+  height: 1.8rem;
+  cursor: pointer;
+  -webkit-tap-highlight-color: rgba(74, 160, 66, 0.3);
+}
+
+/* =====================================================================
    === RESPONSIVE DESIGN ===
+   ===================================================================== */
+
+/* =========================
+   === MOBILE (300px - 768px) ===
    ========================= */
 @media (min-width: 300px) and (max-width: 768px) {
   body.login-page {
@@ -373,41 +465,75 @@ button:hover {
   }
 
   .login {
-    max-width: 90vw;
+    max-width: 75vw;
     padding: 2rem 1.5rem;
     margin: 1rem;
   }
 
+  /* Logo mobile adjustments */
   .login__icon {
-    width: 4rem;
-    height: 4rem;
-    top: -2rem;
+    width: 5rem;
+    height: 5rem;
+    top: -2.5rem;
+    animation: infiniteRotation 6s linear infinite;
   }
 
+  /* Logo animations */
+  @keyframes infiniteRotation {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* Labels */
   .login__label {
     font-size: 1rem;
     margin-left: 0.5rem;
     margin-bottom: 0.3rem;
   }
 
+  /* Inputs */
   .login__input {
     font-size: 1.2rem;
     padding: 0.8rem 1rem;
     min-height: 2rem;
   }
 
-  .login__button {
-    font-size: 1.1rem;
-    padding: 0.8rem 1.5rem;
+  /* Buttons with enhanced mobile feedback */
+  .login__button,
+  button[type="submit"],
+  .login__button-secondary {
+    padding: 1.2rem 2.5rem;
+    font-size: 1.4rem;
+    min-height: 4.5rem;
+    min-width: 150px;
   }
 
+  .login__button:active,
+  button[type="submit"]:active {
+    transform: scale(0.95);
+    background: linear-gradient(45deg, var(--green-dark, #277028), var(--green-lighter, #4aa042));
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .login__button-secondary:active {
+    transform: scale(0.95);
+    background-color: rgba(255, 255, 255, 0.7);
+    box-shadow: inset 0 2px 8px rgba(39, 112, 40, 0.2);
+  }
+
+  /* Error messages */
   #error-message {
-    font-size: 1rem;
+    font-size: 1.2rem;
     line-height: 1.2;
     margin-top: 1rem;
     margin-bottom: 1rem;
   }
 
+  /* Checkbox and forgot password */
   .login__checkbox label,
   .login__checkbox input,
   .login__forgot {
@@ -418,6 +544,22 @@ button:hover {
     gap: 0.3rem;
   }
 
+  /* Eye icon mobile enhancements */
+  .eye-icon {
+    right: 1rem;
+    top: 2rem;
+    padding: 0.6rem;
+    width: 3rem;
+    height: 3rem;
+    -webkit-tap-highlight-color: rgba(74, 160, 66, 0.2);
+  }
+
+  .eye-icon:active {
+    background-color: rgba(39, 112, 40, 0.2);
+    transform: translateY(-50%) scale(0.9);
+  }
+
+  /* Custom popup mobile */
   .custom-popup__content {
     width: 85vw !important;
     max-width: 95vw !important;
@@ -435,23 +577,29 @@ button:hover {
     padding: 0.8rem 2rem !important;
   }
 
-  .eye-icon {
-    right: 1rem;
-    padding: 0.3rem;
+  /* Enhanced checkbox for mobile */
+  .login__checkbox input[type="checkbox"] {
+    width: 2rem;
+    height: 2rem;
   }
 }
 
+/* =========================
+   === DESKTOP 4K (1800px+) ===
+   ========================= */
 @media (min-width: 1800px) {
   body.login-page {
     font-size: 1.4rem;
   }
 
   .login {
+    width: 100%;
+    max-width: 80vw;
     margin-top: 5rem;
-    max-width: 60rem;
     padding: 5rem 7rem;
   }
 
+  /* Logo desktop 4K */
   .login__icon {
     width: 8rem;
     height: 8rem;
@@ -463,34 +611,68 @@ button:hover {
     height: 3rem;
   }
 
+  /* Labels */
   .login__label {
     font-size: 1.8rem;
     margin-left: 1rem;
   }
 
+  /* Inputs */
   .login__input {
     min-height: 3.5rem;
     font-size: 1.8rem;
     padding: 1.2rem 2rem;
   }
 
+  /* Buttons */
   .login__button {
     font-size: 1.8rem;
     padding: 1.5rem 4rem;
     margin-top: 2rem;
   }
 
+  .login__button-secondary {
+    font-size: 2rem;
+    margin: 1rem;
+    padding: 1.5rem 3rem;
+  }
+
+  /* Error messages */
   #error-message {
     font-size: 1.8rem;
     line-height: 1.4;
   }
 
+  /* Checkbox and forgot password */
   .login__checkbox label,
   .login__checkbox input,
   .login__forgot {
     font-size: 1.5rem;
   }
 
+  /* Eye icon */
+  .eye-icon {
+    right: 2rem;
+    padding: 0.5rem;
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .eye-icon svg {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  /* Footer */
+  .login__footer {
+    margin-top: 5rem;
+  }
+
+  .login__subtext {
+    font-size: 2rem;
+  }
+
+  /* Custom popup 4K */
   .custom-popup__content {
     font-size: 1.5rem;
     min-width: 350px;
@@ -507,52 +689,4 @@ button:hover {
     font-size: 1.6rem !important;
     padding: 1rem 3rem !important;
   }
-
-  .login__footer {
-    margin-top: 5rem;
-  }
-
-  .login__subtext {
-    font-size: 2rem;
-  }
-
-  .login__button-secondary {
-    font-size: 2rem;
-    margin: 1rem;
-    padding: 1.5rem 3rem;
-  }
-
-  .eye-icon {
-    right: 2rem;
-  }
-}
-
-/* =========================
-   === PREVENT CONFLICTS ===
-   ========================= */
-/* Ensure login page styles don't get overridden by main site styles */
-body.login-page * {
-  box-sizing: border-box;
-}
-
-body.login-page .login *:not(.eye-icon):not(.eye-icon svg) {
-  transform: none !important;
-}
-
-/* Reset any potential carousel/glow effects that might leak */
-body.login-page .login *,
-body.login-page .login *:hover {
-  filter: none !important;
-  box-shadow: inherit !important;
-}
-
-body.login-page .login input:hover,
-body.login-page .login input:focus {
-  transform: none !important;
-  filter: none !important;
-}
-
-body.login-page .login button:not(:hover) {
-  transform: none !important;
-  filter: none !important;
 }
