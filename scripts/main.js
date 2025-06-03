@@ -156,105 +156,135 @@ function showSpoilerModal(movieKey) {
  * Initialize all carousel configurations after DOM is loaded
  */
 document.addEventListener("DOMContentLoaded", function () {
-  // Top 10 Carousel with continuous auto-scroll
-  new Splide(".splide-top10", {
-    type: "loop",
-    drag: "free",
-    focus: "center",
-    perPage: 4,
-    gap: "1.5rem",
-    autoScroll: {
-      speed: 0.5,
-      pauseOnHover: true,
-      pauseOnFocus: false,
-    },
-    pagination: false,
-    breakpoints: {
-      1100: { perPage: 2.5, gap: "1rem" },
-      1200: { perPage: 3, gap: "1rem" },
-      1400: { perPage: 3.5, gap: "1rem" },
-      1600: { perPage: 6, gap: "3rem" },
-      1800: { perPage: 6, gap: "5rem" },
-    },
-  }).mount(window.splide.Extensions);
+  // AGUARDAR UM POUCO PARA GARANTIR QUE TODO O CSS CARREGOU
+  setTimeout(() => {
+    console.log("🔍 Initializing Top 10 carousel...");
 
-  // Standard horizontal carousels for movie/series galleries
-  document.querySelectorAll(".splide-simple").forEach((el) => {
-    new Splide(el, {
+    // VERIFICAR SE O ELEMENTO EXISTE
+    const top10Element = document.querySelector(".splide-top10");
+    if (!top10Element) {
+      console.error("❌ Top 10 element not found!");
+      return;
+    }
+
+    // INICIALIZAR TOP 10 COM CONFIGURAÇÃO MAIS SIMPLES
+    try {
+      const top10Splide = new Splide(".splide-top10", {
+        type: "loop",
+        drag: "free",
+        focus: "center",
+        perPage: 4,
+        gap: "3rem",
+        autoScroll: {
+          speed: 0.5,
+          pauseOnHover: true,
+          pauseOnFocus: false,
+        },
+        pagination: false,
+        // BREAKPOINTS SIMPLIFICADOS
+        breakpoints: {
+          480: {
+            perPage: 1.8,
+            gap: "1rem",
+          },
+          768: {
+            perPage: 2.3,
+            gap: "1.5rem",
+          },
+          1024: {
+            perPage: 3,
+            gap: "2rem",
+          },
+          1440: {
+            perPage: 3.5,
+            gap: "2.5rem",
+          },
+        },
+      }).mount(window.splide.Extensions);
+
+      console.log("✅ Top 10 carousel initialized successfully");
+    } catch (error) {
+      console.error("❌ Error initializing Top 10:", error);
+    }
+
+    // DEPOIS inicializar outros carrosséis
+    // Standard horizontal carousels
+    document.querySelectorAll(".splide-simple").forEach((el) => {
+      new Splide(el, {
+        type: "loop",
+        perPage: 4,
+        perMove: 1,
+        gap: "1rem",
+        pagination: false,
+        arrows: true,
+        breakpoints: {
+          480: { perPage: 2.3, gap: "0.5rem" },
+          768: { perPage: 3.5, gap: "0.8rem" },
+          1024: { perPage: 3, gap: "1rem" },
+          1440: { perPage: 4.5, gap: "2rem" },
+          1441: { perPage: 3.5, gap: "4rem" },
+        },
+      }).mount();
+    });
+
+    // Vertical carousel
+    const verticalSplideElement = new Splide(".splide-vertical", {
       type: "loop",
-      perPage: 4,
-      perMove: 1,
+      perPage: 5,
+      focus: "center",
       gap: "1rem",
       pagination: false,
       arrows: true,
+      autoWidth: false,
+      trimSpace: false,
+      speed: 600,
+      easing: "ease",
       breakpoints: {
-        1200: { perPage: 3, gap: "1rem" },
-        1600: { perPage: 4.5, gap: "2rem" },
-        1800: { perPage: 5.5, gap: "4rem" },
+        480: { perPage: 2.5, gap: "0.5rem" },
+        768: { perPage: 3.5, gap: "0.8rem" },
+        1024: { perPage: 3, gap: "1rem" },
+        1440: { perPage: 4.5, gap: "2rem" },
+        1441: { perPage: 5.5, gap: "4rem" },
       },
     }).mount();
-  });
 
-  // Vertical poster carousel with center focus (5 visible items)
-  const verticalSplideElement = new Splide(".splide-vertical", {
-    type: "loop",
-    perPage: 5, // Show 5 posters: 1 center + 2 on each side
-    focus: "center",
-    gap: "1rem",
-    pagination: false,
-    arrows: true,
-    autoWidth: false,
-    trimSpace: false,
-    speed: 600,
-    easing: "ease",
-    breakpoints: {
-      900: { perPage: 3, gap: "1rem" },
-      1200: { perPage: 3, gap: "1rem" },
-      1400: { perPage: 4, gap: "1rem" },
-      1600: { perPage: 5, gap: "1.5rem" },
-      1800: { perPage: 5, gap: "2rem" },
-    },
-  }).mount();
+    window.verticalSplide = verticalSplideElement;
 
-  // Store vertical splide reference globally for external access
-  window.verticalSplide = verticalSplideElement;
+    // Marathon carousels com delay maior
+    setTimeout(() => {
+      const marathonConfigs = [
+        { selector: ".splide-hungergames", perPage: 4, perPageLarge: 5, gap: "3rem" }, // VOLTA para 3rem
+        { selector: ".splide-harrypotter", perPage: 3, perPageLarge: 4, gap: "3rem" }, // VOLTA para 3rem
+        { selector: ".splide-alien", perPage: 3, perPageLarge: 4, gap: "3rem" }, // VOLTA para 3rem
+        { selector: ".splide-toystory", perPage: 3, perPageLarge: 4, gap: "3rem" }, // VOLTA para 3rem
+        { selector: ".splide-xmen", perPage: 3, perPageLarge: 4, gap: "3rem" }, // VOLTA para 3rem
+      ];
 
-  // Marathon series carousels with delayed initialization
-  setTimeout(() => {
-    const marathonConfigs = [
-      { selector: ".splide-hungergames", perPage: 4, perPageLarge: 5 },
-      { selector: ".splide-harrypotter", perPage: 3, perPageLarge: 4 },
-      { selector: ".splide-alien", perPage: 3, perPageLarge: 4 },
-      { selector: ".splide-toystory", perPage: 3, perPageLarge: 4 },
-      { selector: ".splide-xmen", perPage: 3, perPageLarge: 4 },
-    ];
-
-    marathonConfigs.forEach(({ selector, perPage, perPageLarge }) => {
-      const element = document.querySelector(selector);
-      if (element) {
-        new Splide(selector, {
-          type: "loop",
-          perPage,
-          perMove: 1,
-          gap: "3rem",
-          pagination: false,
-          arrows: true,
-          speed: 600,
-          easing: "ease",
-          breakpoints: {
-            900: { perPage: 1, gap: "0.5rem" },
-            1200: { perPage: 3, gap: "1.2rem" },
-            1400: { perPage: 3.5, gap: "2.5rem" },
-            1600: { perPage: perPageLarge, gap: "2rem" },
-            1800: { perPage: perPageLarge + 1, gap: "2.5rem" },
-          },
-        }).mount();
-        console.log(`✅ Marathon carousel mounted: ${selector}`);
-      } else {
-        console.warn(`❌ Marathon carousel element not found: ${selector}`);
-      }
-    });
-  }, 1000);
+      marathonConfigs.forEach(({ selector, perPage, perPageLarge, gap }) => {
+        const element = document.querySelector(selector);
+        if (element) {
+          new Splide(selector, {
+            type: "loop",
+            perPage,
+            perMove: 1,
+            gap: gap || "2rem",
+            pagination: false,
+            arrows: true,
+            speed: 600,
+            easing: "ease",
+            breakpoints: {
+              480: { perPage: 2.2, gap: "1rem" },
+              768: { perPage: 3.2, gap: "1.5rem" },
+              1024: { perPage: 3.5, gap: "2rem" },
+              1440: { perPage: perPageLarge, gap: "2rem" },
+              1441: { perPage: perPageLarge + 1, gap: "2rem" },
+            },
+          }).mount();
+          console.log(`✅ Marathon carousel mounted: ${selector}`);
+        }
+      });
+    }, 1500);
+  }, 500); // Delay inicial para aguardar CSS
 });
 
 // ==========================
@@ -317,9 +347,31 @@ function initializeHeaderButtons() {
   }
 
   if (searchClose && searchModal) {
-    searchClose.onclick = () => {
+    // Remover qualquer listener anterior
+    const newSearchClose = searchClose.cloneNode(true);
+    searchClose.parentNode.replaceChild(newSearchClose, searchClose);
+
+    // Adicionar novo listener
+    newSearchClose.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
       searchModal.style.display = "none";
-    };
+      console.log("❌ Search modal closed via X button");
+    });
+
+    console.log("✅ Search close button fixed");
+  }
+
+  // ADICIONAR também esta funcionalidade NOVA:
+  // ADICIONAR fechar com clique fora
+  if (searchModal) {
+    searchModal.addEventListener("click", function (e) {
+      // Só fechar se clicar diretamente no backdrop
+      if (e.target === searchModal || e.target.classList.contains("search-modal__backdrop")) {
+        searchModal.style.display = "none";
+        console.log("❌ Search modal closed via outside click");
+      }
+    });
   }
 
   // Notification button with click-outside-to-close

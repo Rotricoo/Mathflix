@@ -1277,3 +1277,237 @@ document.addEventListener("DOMContentLoaded", function () {
     initializeProfileModal();
   }, 100);
 });
+
+// ==========================
+// 9. Mobile Menu
+// ==========================
+function initializeMobileMenu() {
+  console.log("🍔 Starting mobile menu initialization...");
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initializeMobileMenu);
+    return;
+  }
+
+  setTimeout(() => {
+    createMobileMenuElements();
+    setupMobileMenuEventListeners();
+  }, 500);
+}
+
+function createMobileMenuElements() {
+  console.log("🔧 Creating mobile menu elements...");
+
+  const header = document.querySelector(".header");
+  if (!header) {
+    console.error("❌ Header not found");
+    return;
+  }
+
+  // Remove existing elements
+  const existingToggle = document.querySelector(".mobile-menu-toggle");
+  const existingOverlay = document.querySelector(".mobile-menu-overlay");
+
+  if (existingToggle) existingToggle.remove();
+  if (existingOverlay) existingOverlay.remove();
+
+  // Create hamburger button (CSS handles ALL styling)
+  const hamburger = document.createElement("button");
+  hamburger.className = "mobile-menu-toggle";
+  hamburger.setAttribute("aria-label", "Mobile menu");
+  hamburger.innerHTML = `
+    <span class="hamburger-line"></span>
+    <span class="hamburger-line"></span>
+    <span class="hamburger-line"></span>
+  `;
+
+  // Insert at beginning of header
+  header.insertBefore(hamburger, header.firstChild);
+  console.log("✅ Hamburger button created");
+
+  // Create menu overlay (CSS handles ALL styling)
+  const overlay = document.createElement("div");
+  overlay.className = "mobile-menu-overlay";
+  overlay.innerHTML = `
+    <div class="mobile-menu-content">
+      <!-- Logo -->
+      <div class="mobile-menu-logo">
+        <img src="assets/icons/mathflix-logo.svg" alt="Mathflix">
+      </div>
+      
+      <!-- Profile -->
+      <div class="mobile-menu-profile">
+        <img src="assets/profile/userPhoto.svg" alt="Profile">
+        <span>Profile</span>
+      </div>
+      
+      <!-- Action buttons -->
+      <div class="mobile-menu-actions">
+        <button class="mobile-menu-action-btn" id="mobile-search-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="M21 21l-4.35-4.35"></path>
+          </svg>
+          <span>Search</span>
+        </button>
+        <button class="mobile-menu-action-btn" id="mobile-notification-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+          </svg>
+          <span>Alerts</span>
+        </button>
+      </div>
+      
+      <!-- Navigation -->
+      <nav class="mobile-menu-nav">
+        <a href="#" id="mobile-home">Home</a>
+        <a href="#" id="mobile-movies">Movies</a>
+        <a href="#" id="mobile-series">Series</a>
+      </nav>
+      
+      <!-- Logout -->
+      <button class="mobile-menu-logout" id="mobile-logout">
+        Logout
+      </button>
+    </div>
+  `;
+
+  document.body.appendChild(overlay);
+  console.log("✅ Mobile overlay created");
+}
+
+function setupMobileMenuEventListeners() {
+  console.log("🔧 Setting up mobile menu event listeners...");
+
+  const mobileToggle = document.querySelector(".mobile-menu-toggle");
+  const mobileOverlay = document.querySelector(".mobile-menu-overlay");
+
+  if (!mobileToggle || !mobileOverlay) {
+    console.error("❌ Mobile menu elements not found");
+    return;
+  }
+
+  // Main hamburger click - just toggle CSS classes
+  mobileToggle.addEventListener("click", function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    console.log("🍔 Hamburger clicked!");
+
+    const isActive = mobileToggle.classList.contains("active");
+
+    if (isActive) {
+      closeMobileMenu();
+    } else {
+      // Open menu - CSS handles everything
+      mobileToggle.classList.add("active");
+      mobileOverlay.classList.add("active");
+      document.body.style.overflow = "hidden";
+      console.log("📱 Mobile menu OPENED");
+    }
+  });
+
+  // Close when clicking outside
+  mobileOverlay.addEventListener("click", function (e) {
+    if (e.target === mobileOverlay) {
+      closeMobileMenu();
+    }
+  });
+
+  // Setup action buttons
+  setupMobileMenuActions();
+
+  console.log("✅ Mobile menu event listeners configured");
+}
+
+function setupMobileMenuActions() {
+  // Search button
+  const mobileSearchBtn = document.getElementById("mobile-search-btn");
+  if (mobileSearchBtn) {
+    mobileSearchBtn.addEventListener("click", () => {
+      console.log("🔍 Mobile search clicked");
+      closeMobileMenu();
+      setTimeout(() => {
+        const searchBtn = document.getElementById("search-btn");
+        if (searchBtn) searchBtn.click();
+      }, 300);
+    });
+  }
+
+  // Notification button
+  const mobileNotificationBtn = document.getElementById("mobile-notification-btn");
+  if (mobileNotificationBtn) {
+    mobileNotificationBtn.addEventListener("click", () => {
+      console.log("🔔 Mobile notification clicked");
+      closeMobileMenu();
+      setTimeout(() => {
+        const notificationBtn = document.getElementById("notification-btn");
+        if (notificationBtn) notificationBtn.click();
+      }, 300);
+    });
+  }
+
+  // Profile
+  const mobileProfile = document.querySelector(".mobile-menu-profile");
+  if (mobileProfile) {
+    mobileProfile.addEventListener("click", () => {
+      console.log("👤 Mobile profile clicked");
+      closeMobileMenu();
+      setTimeout(() => {
+        if (typeof openProfileModal === "function") {
+          openProfileModal();
+        }
+      }, 300);
+    });
+  }
+
+  // Logout
+  const mobileLogout = document.getElementById("mobile-logout");
+  if (mobileLogout) {
+    mobileLogout.addEventListener("click", () => {
+      console.log("🚪 Mobile logout clicked");
+      closeMobileMenu();
+      setTimeout(() => {
+        if (typeof handleLogout === "function") {
+          handleLogout();
+        }
+      }, 300);
+    });
+  }
+
+  // Navigation links
+  const mobileLinks = document.querySelectorAll(".mobile-menu-nav a");
+  mobileLinks.forEach((link) => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      console.log(`📱 Mobile nav clicked: ${link.textContent}`);
+      closeMobileMenu();
+    });
+  });
+}
+
+function closeMobileMenu() {
+  const mobileToggle = document.querySelector(".mobile-menu-toggle");
+  const mobileOverlay = document.querySelector(".mobile-menu-overlay");
+
+  if (mobileToggle && mobileOverlay) {
+    // CSS handles everything - just remove classes
+    mobileToggle.classList.remove("active");
+    mobileOverlay.classList.remove("active");
+    document.body.style.overflow = "";
+
+    console.log("❌ Mobile menu closed");
+  }
+}
+
+// Initialize
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initializeMobileMenu);
+} else {
+  initializeMobileMenu();
+}
+
+window.addEventListener("load", () => {
+  setTimeout(initializeMobileMenu, 100);
+});

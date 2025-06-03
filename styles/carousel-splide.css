@@ -325,7 +325,7 @@ h2.marathon-title:hover {
 }
 
 .marathon-carousel .splide__list {
-  gap: 3rem !important;
+  gap: 2rem !important;
 }
 
 /* =========================
@@ -410,21 +410,397 @@ h2.marathon-title:hover {
 /* =========================
    8. RESPONSIVE BREAKPOINTS
    ========================= */
-@media (min-width: 1600px) {
+/* MOBILE (≤480px) */
+@media (max-width: 480px) {
+  /* Gallery Containers */
+  div.gallery__container.top10 {
+    display: block !important;
+    margin: 0 auto 2rem auto;
+    padding: 0;
+    visibility: visible !important;
+    overflow: visible !important;
+    width: 100% !important; /* NOVA LINHA */
+    max-width: 100% !important; /* NOVA LINHA */
+  }
+
+  /* TÍTULOS CENTRALIZADOS para os 4 primeiros carrosséis */
+  h2.gallery__title {
+    font-size: 1.3rem;
+    margin-left: 0; /* Centralizado */
+    text-align: center; /* Centralizado */
+    margin-bottom: 0.5rem !important; /* NOVA LINHA */
+  }
+
+  div.gallery__container-vertical h2.gallery__title {
+    margin-left: 0; /* Centralizado */
+    text-align: center; /* Centralizado */
+  }
+
+  div.gallery__container-vertical {
+    padding: 2rem 0;
+    margin: -1rem auto -2rem auto;
+  }
+
+  /* TOP 10 CAROUSEL - FORÇA MÁXIMA */
   .gallery__container.top10 .gallery__thumbnail {
+    width: 16rem;
+    min-width: 16rem;
+    margin-right: 1rem;
+    border-radius: 1em;
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    height: auto !important; /* NOVA LINHA */
+  }
+
+  /* SPLIDE TOP10 - CORREÇÃO COMPLETA */
+  .splide-top10 {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    height: auto !important;
+    min-height: 100px !important;
+    overflow: visible !important;
+  }
+
+  .splide-top10 .splide__track {
+    display: block !important;
+    visibility: visible !important;
+    height: auto !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+
+  .splide-top10 .splide__list {
+    display: flex !important;
+    visibility: visible !important;
+    height: auto !important;
+    align-items: center !important;
+    overflow: visible !important;
+    gap: 1rem !important;
+  }
+
+  .splide-top10 .splide__slide {
+    visibility: visible !important;
+    opacity: 1 !important;
+    display: block !important;
+    flex-shrink: 0 !important;
+    width: 16rem !important;
+    min-width: 16rem !important;
+    margin-right: 1rem !important;
+    height: auto !important;
+  }
+
+  .splide-top10 .splide__slide img {
+    visibility: visible !important;
+    opacity: 1 !important;
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    object-fit: cover !important;
+    border-radius: 1em !important;
+  }
+
+  /* FORÇAR REMOÇÃO DE TRANSFORMS PROBLEMÁTICOS */
+  .splide-top10 .splide__slide:not(.is-active) {
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .splide-top10 .splide__slide.is-active {
+    transform: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transition: none !important;
+  }
+
+  /* HOVER SIMPLIFICADO PARA MOBILE */
+  .splide-top10 .splide__slide:hover {
+    transform: scale(1.05) !important;
+  }
+
+  /* Vertical Carousel */
+  .splide-vertical {
+    padding: 3rem 0;
+  }
+
+  .gallery__thumbnail-vertical {
+    width: 120px;
+  }
+
+  .gallery__container-vertical .splide__arrow--prev {
+    left: 5rem;
+  }
+
+  .gallery__container-vertical .splide__arrow--next {
+    right: 5rem;
+  }
+
+  /* Series & Marathon normais - padding consistente */
+  div.gallery__container.series .splide,
+  div.gallery__container.digo-happy .splide {
+    padding-left: 0; /* Centralizado para mobile */
+    padding-right: 0;
+  }
+
+  div.gallery__container.series .gallery__thumbnail {
+    width: 14rem;
+    min-width: 14rem;
+    margin-right: 1rem;
+  }
+
+  /* MARATHON SECTION - LAYOUT VERTICAL COM GRADIENTE */
+  .marathon-section {
+    flex-direction: column; /* Vertical no mobile */
+    position: relative;
+    margin: 2rem 0;
+    background: transparent;
+    overflow: hidden;
+    min-height: 100px;
+  }
+
+  /* CARROSSEL DA MARATONA EM CIMA */
+  .marathon-carousel {
+    width: 100%;
+    order: 1; /* Carrossel primeiro */
+    padding: 1rem 0;
+    background: transparent;
+  }
+
+  .marathon-carousel .splide {
+    padding-left: 0; /* Centralizado */
+    padding-right: 0;
+  }
+
+  div.marathon-carousel .gallery__thumbnail {
+    width: 14rem;
+    min-width: 14rem;
+    margin-right: 1rem;
+  }
+
+  .marathon-carousel .splide__list {
+    gap: 1rem !important;
+  }
+
+  /* INFO DA MARATONA EMBAIXO COM GRADIENTE */
+  .marathon-info {
+    width: 100%;
+    order: 2; /* Info depois do carrossel */
+    position: relative;
+    background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.7) 20%, rgba(0, 0, 0, 0.9) 60%, rgba(0, 0, 0, 1) 100%);
+    padding: 2rem 1.5rem 1.5rem 1.5rem;
+    text-align: center;
+    margin-top: -4rem; /* Sobreposição sobre o carrossel */
+    z-index: 3;
+    display: flex; /* NOVA LINHA */
+    flex-direction: column; /* NOVA LINHA */
+    justify-content: center; /* NOVA LINHA - centralizar verticalmente */
+    align-items: center; /* NOVA LINHA - centralizar horizontalmente */
+  }
+
+  span.marathon-label {
+    font-size: 1.1rem;
+    color: var(--green-lighter, #4caf50);
+    display: block;
+  }
+
+  h2.marathon-title {
+    font-size: 2.5rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    color: #fff;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+  }
+
+  /* Arrows */
+  .splide__arrow {
+    width: 3rem;
+    height: 3rem;
+    font-size: 1.8rem;
+  }
+
+  /* Ocultar setas no mobile (exceto vertical) */
+  .gallery__container .splide__arrow {
+    display: none;
+  }
+
+  .gallery__container-vertical .splide__arrow {
+    display: flex !important;
+  }
+}
+
+/* TABLET (481px-768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+  /* TÍTULOS CENTRALIZADOS para os 4 primeiros carrosséis */
+  h2.gallery__title {
+    font-size: 1.4rem;
+    margin-left: 0; /* Centralizado */
+    text-align: center; /* Centralizado */
+  }
+
+  .gallery__container.top10 .gallery__thumbnail {
+    width: 18rem;
+    min-width: 18rem;
     margin-right: 1.5rem;
+  }
+
+  .splide-simple .splide__slide img {
+    width: 16rem;
+    min-width: 16rem;
+  }
+
+  div.gallery__container.series .splide,
+  div.gallery__container.digo-happy .splide {
+    padding-left: 0; /* Centralizado para tablet */
+    padding-right: 0;
+  }
+
+  div.gallery__container.series .gallery__thumbnail {
+    width: 16rem;
+    min-width: 16rem;
+    margin-right: 1.2rem;
+  }
+
+  /* MARATHON SECTION - LAYOUT VERTICAL COM GRADIENTE (igual mobile) */
+  .marathon-section {
+    flex-direction: column;
+    position: relative;
+    margin: 2rem 0;
+    background: transparent;
+    overflow: hidden;
+  }
+
+  /* CARROSSEL DA MARATONA EM CIMA */
+  .marathon-carousel {
+    width: 100%;
+    order: 1;
+    padding: 1.5rem 0;
+    background: transparent;
+  }
+
+  .marathon-carousel .splide {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  div.marathon-carousel .gallery__thumbnail {
+    width: 16rem;
+    min-width: 16rem;
+    margin-right: 1.2rem;
+  }
+
+  .marathon-carousel .splide__list {
+    gap: 1.5rem !important;
+  }
+
+  /* INFO DA MARATONA EMBAIXO COM GRADIENTE */
+  .marathon-info {
+    width: 100%;
+    order: 2;
+    position: relative;
+    background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.7) 20%, rgba(0, 0, 0, 0.9) 60%, rgba(0, 0, 0, 1) 100%);
+    padding: 2.5rem 2rem 2rem 2rem;
+    text-align: center;
+    margin-top: -4rem; /* Sobreposição sobre o carrossel */
+    z-index: 3;
+    display: flex; /* NOVA LINHA */
+    flex-direction: column; /* NOVA LINHA */
+    justify-content: center; /* NOVA LINHA - centralizar verticalmente */
+    align-items: center; /* NOVA LINHA - centralizar horizontalmente */
+  }
+
+  span.marathon-label {
+    font-size: 1.2rem;
+    color: var(--green-lighter, #4caf50);
+    margin-bottom: 0.8rem;
+    display: block;
+  }
+
+  h2.marathon-title {
+    font-size: 2.5rem;
+    margin: 0;
+    color: #fff;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+  }
+
+  .gallery__thumbnail-vertical {
+    width: 140px;
+  }
+
+  .gallery__container-vertical .splide__arrow--prev {
+    left: 8rem;
+  }
+
+  .gallery__container-vertical .splide__arrow--next {
+    right: 8rem;
+  }
+
+  .splide__arrow {
+    width: 3.5rem;
+    height: 3.5rem;
+    font-size: 2rem;
+  }
+}
+
+/* LARGE DESKTOP (≥1441px) - Layout horizontal normal */
+@media (min-width: 1441px) {
+  /* Marathon mantém layout horizontal original */
+  .marathon-section {
+    flex-direction: row; /* Horizontal normal */
+    min-height: 220px;
+  }
+
+  .marathon-info {
+    width: 25%;
+    order: 1; /* Info à esquerda */
+    background: linear-gradient(to right, rgba(0, 0, 0, 1) 85%, rgba(0, 0, 0, 0) 100%);
+    padding: 2rem 2rem 0 5rem;
+    text-align: left;
+    margin-top: 0;
+    display: flex; /* MANTER flexbox */
+    flex-direction: column; /* MANTER coluna */
+    justify-content: flex-start; /* MUDANÇA: volta para topo no desktop */
+    align-items: flex-start; /* MUDANÇA: volta para esquerda no desktop */
+  }
+
+  span.marathon-label {
+    font-size: 1.4rem;
+    text-align: left;
+    margin-bottom: 0;
+    width: auto; /* MUDANÇA: largura automática no desktop */
+  }
+
+  h2.marathon-title {
+    font-size: 4rem;
+    margin: 1rem 0;
+    text-align: left;
+    text-shadow: none;
+    width: auto; /* MUDANÇA: largura automática no desktop */
+    line-height: 1.2; /* VOLTA para line-height normal no desktop */
+  }
+
+  .marathon-carousel {
+    width: 75%;
+    order: 2; /* Carrossel à direita */
+    padding: 1rem 0;
+  }
+
+  .marathon-carousel .splide {
+    padding-left: 0;
+  }
+
+  .marathon-carousel .splide__list {
+    gap: 2rem !important;
+  }
+
+  /* Outros ajustes para large desktop */
+  .gallery__container.top10 .gallery__thumbnail {
     width: 24rem;
     min-width: 24rem;
+    margin-right: 1.5rem;
   }
 
-  .gallery__thumbnail-vertical,
-  .movie-modal__poster-vertical,
-  #vertical-modal-trailer {
-    width: 340px;
-    height: 510px;
-  }
-
-  #vertical-media-container {
+  .gallery__thumbnail-vertical {
     width: 340px;
     height: 510px;
   }
@@ -434,9 +810,5 @@ h2.marathon-title:hover {
     width: 28rem;
     min-width: 28rem;
     margin-right: 1.5rem;
-  }
-
-  .marathon-carousel .splide__list {
-    gap: 2rem !important;
   }
 }
