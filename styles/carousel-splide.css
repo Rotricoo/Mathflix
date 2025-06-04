@@ -278,7 +278,11 @@ div.marathon-carousel .gallery__thumbnail:hover {
 
 .marathon-info {
   width: 25%;
-  background: linear-gradient(to right, rgba(0, 0, 0, 1) 85%, rgba(0, 0, 0, 0) 100%);
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 1) 85%,
+    rgba(0, 0, 0, 0) 100%
+  );
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -410,7 +414,16 @@ h2.marathon-title:hover {
 /* =========================
    8. RESPONSIVE BREAKPOINTS
    ========================= */
-/* MOBILE (≤480px) */
+
+/* --- GLOBAL: Remove all margin-right from thumbs (gap controlled by JS only) --- */
+.gallery__container.top10 .gallery__thumbnail,
+div.gallery__container.series .gallery__thumbnail,
+div.gallery__container.marathon .gallery__thumbnail,
+div.marathon-carousel .gallery__thumbnail {
+  margin-right: 0 !important;
+}
+
+/* --- MOBILE (≤480px) --- */
 @media (max-width: 480px) {
   /* Gallery Containers */
   div.gallery__container.top10 {
@@ -419,21 +432,21 @@ h2.marathon-title:hover {
     padding: 0;
     visibility: visible !important;
     overflow: visible !important;
-    width: 100% !important; /* NOVA LINHA */
-    max-width: 100% !important; /* NOVA LINHA */
+    width: 100% !important;
+    max-width: 100% !important;
   }
 
-  /* TÍTULOS CENTRALIZADOS para os 4 primeiros carrosséis */
+  /* Centered titles for mobile */
   h2.gallery__title {
     font-size: 1.3rem;
-    margin-left: 0; /* Centralizado */
-    text-align: center; /* Centralizado */
-    margin-bottom: 0.5rem !important; /* NOVA LINHA */
+    margin-left: 0;
+    text-align: center;
+    margin-bottom: 0.5rem !important;
   }
 
   div.gallery__container-vertical h2.gallery__title {
-    margin-left: 0; /* Centralizado */
-    text-align: center; /* Centralizado */
+    margin-left: 0;
+    text-align: center;
   }
 
   div.gallery__container-vertical {
@@ -441,19 +454,24 @@ h2.marathon-title:hover {
     margin: -1rem auto -2rem auto;
   }
 
-  /* TOP 10 CAROUSEL - FORÇA MÁXIMA */
+  /* Thumbs sizing for mobile */
   .gallery__container.top10 .gallery__thumbnail {
-    width: 16rem;
-    min-width: 16rem;
-    margin-right: 1rem;
+    width: 14rem;
+    min-width: 14rem;
     border-radius: 1em;
     display: block !important;
     opacity: 1 !important;
     visibility: visible !important;
-    height: auto !important; /* NOVA LINHA */
+    height: auto !important;
   }
 
-  /* SPLIDE TOP10 - CORREÇÃO COMPLETA */
+  div.gallery__container.series .gallery__thumbnail,
+  div.marathon-carousel .gallery__thumbnail {
+    width: 14rem;
+    min-width: 14rem;
+  }
+
+  /* SPLIDE TOP10 - Mobile force corrections */
   .splide-top10 {
     display: block !important;
     visibility: visible !important;
@@ -485,9 +503,8 @@ h2.marathon-title:hover {
     opacity: 1 !important;
     display: block !important;
     flex-shrink: 0 !important;
-    width: 16rem !important;
-    min-width: 16rem !important;
-    margin-right: 1rem !important;
+    width: 14rem !important;
+    min-width: 14rem !important;
     height: auto !important;
   }
 
@@ -501,7 +518,7 @@ h2.marathon-title:hover {
     border-radius: 1em !important;
   }
 
-  /* FORÇAR REMOÇÃO DE TRANSFORMS PROBLEMÁTICOS */
+  /* Force removal of problematic transforms */
   .splide-top10 .splide__slide:not(.is-active) {
     transform: none !important;
     transition: none !important;
@@ -514,7 +531,7 @@ h2.marathon-title:hover {
     transition: none !important;
   }
 
-  /* HOVER SIMPLIFICADO PARA MOBILE */
+  /* Simplified hover for mobile */
   .splide-top10 .splide__slide:hover {
     transform: scale(1.05) !important;
   }
@@ -536,22 +553,16 @@ h2.marathon-title:hover {
     right: 5rem;
   }
 
-  /* Series & Marathon normais - padding consistente */
+  /* Series & Marathon - consistent padding */
   div.gallery__container.series .splide,
   div.gallery__container.digo-happy .splide {
-    padding-left: 0; /* Centralizado para mobile */
+    padding-left: 0;
     padding-right: 0;
   }
 
-  div.gallery__container.series .gallery__thumbnail {
-    width: 14rem;
-    min-width: 14rem;
-    margin-right: 1rem;
-  }
-
-  /* MARATHON SECTION - LAYOUT VERTICAL COM GRADIENTE */
+  /* MARATHON SECTION - Vertical layout with gradient */
   .marathon-section {
-    flex-direction: column; /* Vertical no mobile */
+    flex-direction: column;
     position: relative;
     margin: 2rem 0;
     background: transparent;
@@ -559,43 +570,43 @@ h2.marathon-title:hover {
     min-height: 100px;
   }
 
-  /* CARROSSEL DA MARATONA EM CIMA */
+  /* Marathon carousel on top */
   .marathon-carousel {
     width: 100%;
-    order: 1; /* Carrossel primeiro */
+    order: 1;
     padding: 1rem 0;
     background: transparent;
   }
 
   .marathon-carousel .splide {
-    padding-left: 0; /* Centralizado */
+    padding-left: 0;
     padding-right: 0;
-  }
-
-  div.marathon-carousel .gallery__thumbnail {
-    width: 14rem;
-    min-width: 14rem;
-    margin-right: 1rem;
   }
 
   .marathon-carousel .splide__list {
     gap: 1rem !important;
   }
 
-  /* INFO DA MARATONA EMBAIXO COM GRADIENTE */
+  /* Marathon info below with gradient */
   .marathon-info {
     width: 100%;
-    order: 2; /* Info depois do carrossel */
+    order: 2;
     position: relative;
-    background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.7) 20%, rgba(0, 0, 0, 0.9) 60%, rgba(0, 0, 0, 1) 100%);
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(0, 0, 0, 0.7) 20%,
+      rgba(0, 0, 0, 0.9) 60%,
+      rgba(0, 0, 0, 1) 100%
+    );
     padding: 2rem 1.5rem 1.5rem 1.5rem;
     text-align: center;
-    margin-top: -4rem; /* Sobreposição sobre o carrossel */
+    margin-top: -4rem;
     z-index: 3;
-    display: flex; /* NOVA LINHA */
-    flex-direction: column; /* NOVA LINHA */
-    justify-content: center; /* NOVA LINHA - centralizar verticalmente */
-    align-items: center; /* NOVA LINHA - centralizar horizontalmente */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 
   span.marathon-label {
@@ -619,7 +630,7 @@ h2.marathon-title:hover {
     font-size: 1.8rem;
   }
 
-  /* Ocultar setas no mobile (exceto vertical) */
+  /* Hide arrows on mobile (except vertical) */
   .gallery__container .splide__arrow {
     display: none;
   }
@@ -629,19 +640,24 @@ h2.marathon-title:hover {
   }
 }
 
-/* TABLET (481px-768px) */
+/* --- TABLET (481px–768px) --- */
 @media (min-width: 481px) and (max-width: 768px) {
-  /* TÍTULOS CENTRALIZADOS para os 4 primeiros carrosséis */
+  /* Centered titles for tablet */
   h2.gallery__title {
     font-size: 1.4rem;
-    margin-left: 0; /* Centralizado */
-    text-align: center; /* Centralizado */
+    margin-left: 0;
+    text-align: center;
   }
 
+  /* Thumbs sizing for tablet */
   .gallery__container.top10 .gallery__thumbnail {
+    width: 22rem;
+    min-width: 24rem;
+  }
+  div.gallery__container.series .gallery__thumbnail,
+  div.marathon-carousel .gallery__thumbnail {
     width: 18rem;
-    min-width: 18rem;
-    margin-right: 1.5rem;
+    min-width: 20rem;
   }
 
   .splide-simple .splide__slide img {
@@ -651,17 +667,11 @@ h2.marathon-title:hover {
 
   div.gallery__container.series .splide,
   div.gallery__container.digo-happy .splide {
-    padding-left: 0; /* Centralizado para tablet */
+    padding-left: 0;
     padding-right: 0;
   }
 
-  div.gallery__container.series .gallery__thumbnail {
-    width: 16rem;
-    min-width: 16rem;
-    margin-right: 1.2rem;
-  }
-
-  /* MARATHON SECTION - LAYOUT VERTICAL COM GRADIENTE (igual mobile) */
+  /* MARATHON SECTION - Vertical layout with gradient (same as mobile) */
   .marathon-section {
     flex-direction: column;
     position: relative;
@@ -670,7 +680,6 @@ h2.marathon-title:hover {
     overflow: hidden;
   }
 
-  /* CARROSSEL DA MARATONA EM CIMA */
   .marathon-carousel {
     width: 100%;
     order: 1;
@@ -683,30 +692,29 @@ h2.marathon-title:hover {
     padding-right: 0;
   }
 
-  div.marathon-carousel .gallery__thumbnail {
-    width: 16rem;
-    min-width: 16rem;
-    margin-right: 1.2rem;
-  }
-
   .marathon-carousel .splide__list {
     gap: 1.5rem !important;
   }
 
-  /* INFO DA MARATONA EMBAIXO COM GRADIENTE */
   .marathon-info {
     width: 100%;
     order: 2;
     position: relative;
-    background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.7) 20%, rgba(0, 0, 0, 0.9) 60%, rgba(0, 0, 0, 1) 100%);
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(0, 0, 0, 0.7) 20%,
+      rgba(0, 0, 0, 0.9) 60%,
+      rgba(0, 0, 0, 1) 100%
+    );
     padding: 2.5rem 2rem 2rem 2rem;
     text-align: center;
-    margin-top: -4rem; /* Sobreposição sobre o carrossel */
+    margin-top: -4rem;
     z-index: 3;
-    display: flex; /* NOVA LINHA */
-    flex-direction: column; /* NOVA LINHA */
-    justify-content: center; /* NOVA LINHA - centralizar verticalmente */
-    align-items: center; /* NOVA LINHA - centralizar horizontalmente */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 
   span.marathon-label {
@@ -742,32 +750,73 @@ h2.marathon-title:hover {
   }
 }
 
-/* LARGE DESKTOP (≥1441px) - Layout horizontal normal */
+/* --- NOTEBOOK (769px–1024px) --- */
+@media (min-width: 769px) and (max-width: 1024px) {
+  /* Thumbs sizing for notebook */
+  .gallery__container.top10 .gallery__thumbnail,
+  div.gallery__container.series .gallery__thumbnail,
+  div.gallery__container.marathon .gallery__thumbnail,
+  div.marathon-carousel .gallery__thumbnail {
+    width: 18rem;
+    min-width: 18rem;
+  }
+}
+
+/* --- DESKTOP BASE (1025px–1440px) --- */
+@media (min-width: 1025px) and (max-width: 1440px) {
+  /* Thumbs sizing for base desktop */
+  .gallery__container.top10 .gallery__thumbnail {
+    width: 27rem;
+    min-width: 27rem;
+  }
+
+  div.gallery__container.series .gallery__thumbnail,
+  div.gallery__container.marathon .gallery__thumbnail,
+  div.marathon-carousel .gallery__thumbnail {
+    width: 22rem;
+    min-width: 22rem;
+  }
+}
+
+/* --- LARGE DESKTOP (≥1441px) --- */
 @media (min-width: 1441px) {
-  /* Marathon mantém layout horizontal original */
+  /* Thumbs sizing for large desktop */
+  .gallery__container.top10 .gallery__thumbnail,
+  div.gallery__container.series .gallery__thumbnail,
+  div.gallery__container.marathon .gallery__thumbnail,
+  div.marathon-carousel .gallery__thumbnail {
+    width: 28rem;
+    min-width: 28rem;
+  }
+
+  /* Marathon section: horizontal layout for large screens */
   .marathon-section {
-    flex-direction: row; /* Horizontal normal */
+    flex-direction: row;
     min-height: 220px;
   }
 
   .marathon-info {
     width: 25%;
-    order: 1; /* Info à esquerda */
-    background: linear-gradient(to right, rgba(0, 0, 0, 1) 85%, rgba(0, 0, 0, 0) 100%);
+    order: 1;
+    background: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 1) 85%,
+      rgba(0, 0, 0, 0) 100%
+    );
     padding: 2rem 2rem 0 5rem;
     text-align: left;
     margin-top: 0;
-    display: flex; /* MANTER flexbox */
-    flex-direction: column; /* MANTER coluna */
-    justify-content: flex-start; /* MUDANÇA: volta para topo no desktop */
-    align-items: flex-start; /* MUDANÇA: volta para esquerda no desktop */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
   }
 
   span.marathon-label {
     font-size: 1.4rem;
     text-align: left;
     margin-bottom: 0;
-    width: auto; /* MUDANÇA: largura automática no desktop */
+    width: auto;
   }
 
   h2.marathon-title {
@@ -775,13 +824,13 @@ h2.marathon-title:hover {
     margin: 1rem 0;
     text-align: left;
     text-shadow: none;
-    width: auto; /* MUDANÇA: largura automática no desktop */
-    line-height: 1.2; /* VOLTA para line-height normal no desktop */
+    width: auto;
+    line-height: 1.2;
   }
 
   .marathon-carousel {
     width: 75%;
-    order: 2; /* Carrossel à direita */
+    order: 2;
     padding: 1rem 0;
   }
 
@@ -793,22 +842,8 @@ h2.marathon-title:hover {
     gap: 2rem !important;
   }
 
-  /* Outros ajustes para large desktop */
-  .gallery__container.top10 .gallery__thumbnail {
-    width: 24rem;
-    min-width: 24rem;
-    margin-right: 1.5rem;
-  }
-
   .gallery__thumbnail-vertical {
     width: 340px;
     height: 510px;
-  }
-
-  div.gallery__container.series .gallery__thumbnail,
-  div.gallery__container.marathon .gallery__thumbnail {
-    width: 28rem;
-    min-width: 28rem;
-    margin-right: 1.5rem;
   }
 }

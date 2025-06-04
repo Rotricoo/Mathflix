@@ -1,0 +1,431 @@
+/* =========================
+   === MOVIE MODAL SYSTEM - NAVIGATION INDEX ===
+   ========================= */
+/* 
+   QUICK NAVIGATION - Use Ctrl+F to jump to sections:
+   
+   1. MOVIE MODAL BASE
+   2. MOVIE MODAL CONTENT & LAYOUT
+   3. MOVIE MODAL MEDIA (POSTER/TRAILER)
+   4. MOVIE MODAL DETAILS & INFO
+   5. MOVIE MODAL RANKING SYSTEM
+   6. MOVIE MODAL RESPONSIVE BREAKPOINTS
+   
+   TIP: Search for "===" to jump between main sections
+   ========================= */
+
+/* =========================
+   1. MOVIE MODAL BASE
+   ========================= */
+.movie-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.movie-modal[style*="display: flex"] {
+  display: flex !important;
+}
+
+.movie-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+}
+
+.movie-modal__content {
+  position: relative;
+  background: #181818;
+  border-radius: 1.5rem;
+  padding: 5rem 5rem;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 340px;
+  max-width: 940px;
+  width: 90vw;
+  box-shadow: 0 8px 48px #000b;
+}
+
+.movie-modal__close {
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 3rem;
+  cursor: pointer;
+}
+
+/* =========================
+   2. MOVIE MODAL CONTENT & LAYOUT
+   ========================= */
+.movie-modal__info {
+  display: flex;
+  gap: 3rem;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+#movie-modal-title {
+  font-size: 3.2rem;
+  font-weight: bold;
+  line-height: 1.1;
+  margin-bottom: 1.2rem;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: initial;
+  max-width: 95%;
+  word-wrap: break-word;
+  hyphens: auto;
+}
+
+/* Long titles adjustment */
+#movie-modal-title[data-title*="WandaVision"],
+#movie-modal-title[data-title*="RuPaul"],
+#movie-modal-title[data-title*="Hunger Games"],
+#movie-modal-title[data-title*="Harry Potter"],
+#movie-modal-title[data-title*="Greatest Showman"],
+#movie-modal-title[data-title*="How I Met Your"],
+#movie-modal-title[data-title*="Ballad of Songbirds"] {
+  font-size: 2.8rem;
+  line-height: 1.2;
+}
+
+.movie-modal__details {
+  flex: 2 1 0;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.movie-modal__details h2 {
+  font-size: 4rem;
+  margin-bottom: 2.5rem;
+}
+
+.movie-modal__details p {
+  font-size: 1.8rem;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+}
+
+#movie-modal-meta {
+  font-size: 1.7rem;
+  line-height: 1.5;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem 0;
+  color: #bbb;
+}
+
+#movie-modal-meta li {
+  margin-bottom: 0.3rem;
+}
+
+#movie-modal-meta li strong {
+  font-weight: var(--font-bold);
+  color: #fff;
+}
+
+#movie-modal-meta li span {
+  font-weight: normal;
+  color: #bbb;
+}
+
+.movie-genre {
+  background: none;
+  border: none;
+  color: var(--green-lighter, #4caf50);
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0 0.3em;
+  font-size: 1em;
+  transition: color 0.2s;
+}
+
+.movie-genre:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+/* =========================
+   3. MOVIE MODAL MEDIA (POSTER/TRAILER)
+   ========================= */
+.movie-modal__media {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  min-width: 220px;
+  max-width: 320px;
+}
+
+.movie-modal__poster {
+  min-width: 220px;
+  max-width: 320px;
+  object-fit: cover;
+  border-radius: 1em;
+  box-shadow: 0 4px 32px #000a;
+  opacity: 0.6;
+  transition: opacity 1s ease;
+}
+
+.movie-modal__poster:hover {
+  opacity: 1;
+}
+
+.movie-modal__trailer {
+  width: 100%;
+}
+
+.movie-modal__trailer iframe {
+  width: 100%;
+  max-width: 320px;
+  height: 180px;
+  border-radius: 1rem;
+  box-shadow: 0 2px 16px #0008;
+}
+
+/* Vertical layout for mobile/tablet */
+.movie-modal__media-vertical {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 220px;
+  max-width: 320px;
+  width: 100%;
+  gap: 1.5rem;
+  justify-content: flex-start;
+}
+
+#vertical-media-container {
+  width: 220px;
+  height: 330px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.movie-modal__poster-vertical,
+#vertical-modal-trailer {
+  width: 280px;
+  height: 420px;
+  object-fit: cover;
+  border-radius: 1em;
+  box-shadow: 0 4px 32px #000a;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.movie-modal__toggle-btn {
+  margin-top: 9rem;
+  margin-left: 4.5rem;
+  background: var(--green-gradient-buttons, #4caf50);
+  color: #fff;
+  border: none;
+  border-radius: 0.7em;
+  padding: 0.7em 1.5em;
+  font-size: 1.1em;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+
+.movie-modal__toggle-btn:hover {
+  background: #388e3c;
+}
+
+/* =========================
+   4. MOVIE MODAL DETAILS & INFO
+   ========================= */
+/* Content styles already defined above in section 2 */
+
+/* =========================
+   5. MOVIE MODAL RANKING SYSTEM
+   ========================= */
+.movie-modal__ranking {
+  margin-top: 0;
+  font-size: 1.5rem;
+}
+
+.stars-row {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 0.7rem;
+}
+
+.star {
+  font-size: 2.2rem;
+  color: #bbb;
+  cursor: pointer;
+  transition: color 0.2s;
+  user-select: none;
+}
+
+.star.filled {
+  color: #ffd700;
+  text-shadow: 0 0 6px #ffec8b;
+}
+
+.stars-label {
+  min-width: 60px;
+  font-weight: bold;
+  color: #4aa042;
+}
+
+/* =========================
+   6. MOVIE MODAL RESPONSIVE BREAKPOINTS
+   ========================= */
+
+/* --- MOBILE (≤480px) --- */
+@media (max-width: 480px) {
+  .movie-modal__content {
+    padding: 2rem 1.5rem;
+    width: 95vw;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .movie-modal__info {
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  #movie-modal-title {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .movie-modal__details {
+    order: 1;
+    text-align: center;
+  }
+
+  .movie-modal__media,
+  .movie-modal__media-vertical {
+    order: 2;
+    max-width: 280px;
+  }
+
+  .movie-modal__poster {
+    min-width: 180px;
+    max-width: 220px;
+  }
+
+  .movie-modal__trailer iframe {
+    max-width: 280px;
+    height: 160px;
+  }
+
+  .movie-modal__toggle-btn {
+    margin-top: 1rem;
+    margin-left: 0;
+    width: 100%;
+    max-width: 200px;
+  }
+
+  #vertical-media-container {
+    width: 180px;
+    height: 270px;
+  }
+
+  .movie-modal__poster-vertical,
+  #vertical-modal-trailer {
+    width: 180px;
+    height: 270px;
+  }
+}
+
+/* --- TABLET (481px–768px) --- */
+@media (min-width: 481px) and (max-width: 768px) {
+  .movie-modal__content {
+    padding: 2.5rem 2rem;
+    width: 88vw;
+    max-height: 85vh;
+  }
+
+  .movie-modal__info {
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  #movie-modal-title {
+    font-size: 2.2rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .movie-modal__details {
+    order: 1;
+    text-align: center;
+  }
+
+  .movie-modal__media,
+  .movie-modal__media-vertical {
+    order: 2;
+    max-width: 280px;
+  }
+
+  .movie-modal__toggle-btn {
+    margin-top: 1.5rem;
+    margin-left: 0;
+    width: 100%;
+    max-width: 250px;
+  }
+}
+
+/* --- NOTEBOOK (769px–1024px) --- */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .movie-modal__content {
+    padding: 4rem 3.5rem;
+    width: 85vw;
+    max-width: 800px;
+  }
+
+  .movie-modal__info {
+    gap: 2.5rem;
+  }
+
+  #movie-modal-title {
+    font-size: 2.8rem;
+  }
+}
+
+/* --- DESKTOP BASE (1025px–1440px) --- */
+@media (min-width: 1025px) and (max-width: 1440px) {
+  .movie-modal__content {
+    padding: 4.5rem 4rem;
+    width: 80vw;
+    max-width: 900px;
+  }
+
+  #movie-modal-title {
+    font-size: 3rem;
+  }
+}
+
+/* --- LARGE DESKTOP (≥1441px) --- */
+@media (min-width: 1441px) {
+  .movie-modal__content {
+    padding: 5rem 5rem;
+    width: 90vw;
+    max-width: 940px;
+  }
+
+  #movie-modal-title {
+    font-size: 3.2rem;
+  }
+}
