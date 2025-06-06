@@ -274,11 +274,7 @@ div.marathon-carousel .gallery__thumbnail:hover {
 
 .marathon-info {
   width: 25%;
-  background: linear-gradient(
-    to right,
-    rgba(0, 0, 0, 1) 85%,
-    rgba(0, 0, 0, 0) 100%
-  );
+  background: linear-gradient(to right, rgba(0, 0, 0, 1) 85%, rgba(0, 0, 0, 0) 100%);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -567,7 +563,7 @@ div.marathon-carousel .gallery__thumbnail {
   .marathon-carousel {
     width: 100%;
     order: 1;
-    padding: 1rem 0;
+    padding: 2.5rem 0 0 0;
     background: transparent;
   }
 
@@ -576,22 +572,12 @@ div.marathon-carousel .gallery__thumbnail {
     padding-right: 0;
   }
 
-  .marathon-carousel .splide__list {
-    gap: 1rem !important;
-  }
-
   /* Marathon info below with gradient */
   .marathon-info {
     width: 100%;
     order: 2;
     position: relative;
-    background: linear-gradient(
-      to bottom,
-      transparent 0%,
-      rgba(0, 0, 0, 0.7) 20%,
-      rgba(0, 0, 0, 0.9) 60%,
-      rgba(0, 0, 0, 1) 100%
-    );
+    background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.7) 20%, rgba(0, 0, 0, 0.9) 60%, rgba(0, 0, 0, 1) 100%);
     padding: 2rem 1.5rem 1.5rem 1.5rem;
     text-align: center;
     margin-top: -4rem;
@@ -681,7 +667,7 @@ div.marathon-carousel .gallery__thumbnail {
   .marathon-carousel {
     width: 100%;
     order: 1;
-    padding: 1.5rem 0;
+    padding: 2.5rem 0 0 0;
     background: transparent;
   }
 
@@ -698,13 +684,7 @@ div.marathon-carousel .gallery__thumbnail {
     width: 100%;
     order: 2;
     position: relative;
-    background: linear-gradient(
-      to bottom,
-      transparent 0%,
-      rgba(0, 0, 0, 0.7) 20%,
-      rgba(0, 0, 0, 0.9) 60%,
-      rgba(0, 0, 0, 1) 100%
-    );
+    background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.7) 20%, rgba(0, 0, 0, 0.9) 60%, rgba(0, 0, 0, 1) 100%);
     padding: 2.5rem 2rem 2rem 2rem;
     text-align: center;
     margin-top: -4rem;
@@ -769,7 +749,7 @@ div.marathon-carousel .gallery__thumbnail {
     width: 27rem;
   }
 
-  div.gallery__container.series .gallery__thumbnail,
+  div.gallery__container.series .gallsery__thumbnail,
   div.gallery__container.marathon .gallery__thumbnail,
   div.marathon-carousel .gallery__thumbnail {
     width: 22rem;
@@ -794,11 +774,7 @@ div.marathon-carousel .gallery__thumbnail {
   .marathon-info {
     width: 25%;
     order: 1;
-    background: linear-gradient(
-      to right,
-      rgba(0, 0, 0, 1) 85%,
-      rgba(0, 0, 0, 0) 100%
-    );
+    background: linear-gradient(to right, rgba(0, 0, 0, 1) 85%, rgba(0, 0, 0, 0) 100%);
     padding: 2rem 2rem 0 5rem;
     text-align: left;
     margin-top: 0;

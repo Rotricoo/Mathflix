@@ -58,11 +58,7 @@
     #398a3f 90.04%,
     #38883e 99.87%
   );
-  --green-gradient-buttons: radial-gradient(
-    circle at 40% 60%,
-    var(--green-lighter) 0%,
-    var(--green-dark) 100%
-  );
+  --green-gradient-buttons: radial-gradient(circle at 40% 60%, var(--green-lighter) 0%, var(--green-dark) 100%);
   --font-bold: 700;
   --font-regular: 500;
   --font-light: 400;
@@ -127,10 +123,8 @@ body {
    4. LOGIN PAGE BACKGROUND
    ========================= */
 body.login-page {
-  background: linear-gradient(to bottom right, #3e9238, #000) bottom right / 50%
-      50% no-repeat,
-    linear-gradient(to bottom left, #3e9238, #000) bottom left / 50% 50%
-      no-repeat,
+  background: linear-gradient(to bottom right, #3e9238, #000) bottom right / 50% 50% no-repeat,
+    linear-gradient(to bottom left, #3e9238, #000) bottom left / 50% 50% no-repeat,
     linear-gradient(to top left, #3e9238, #000) top left / 50% 50% no-repeat,
     linear-gradient(to top right, #3e9238, #000) top right / 50% 50% no-repeat;
   background-color: #000;
@@ -146,15 +140,9 @@ body.login-page {
   width: 100vw;
   height: 100vh;
   object-fit: cover;
-  background: linear-gradient(
-      to right,
-      rgba(0, 0, 0, 0.7) 0%,
-      rgba(0, 0, 0, 0.4) 20%,
-      transparent 60%
-    ),
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.4) 20%, transparent 60%),
     linear-gradient(to bottom, transparent 80%, black 100%),
-    url("../assets/hero-banner/mainly-ban-gonegirl.png") top center / cover
-      no-repeat;
+    url("../assets/hero-banner/mainly-ban-gonegirl.png") top center / cover no-repeat;
   z-index: -1;
   pointer-events: none;
   opacity: 1;
@@ -300,12 +288,7 @@ body.login-page {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(74, 160, 66, 0.2),
-    transparent
-  );
+  background: linear-gradient(90deg, transparent, rgba(74, 160, 66, 0.2), transparent);
   transition: left 0.3s ease;
 }
 
@@ -668,8 +651,7 @@ body.login-page {
   max-width: 500px;
   width: 100%;
   text-align: center;
-  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 100, 100, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 100, 100, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
   animation: logoutModalSlideIn 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
   overflow: hidden;
 }
@@ -681,12 +663,7 @@ body.login-page {
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 100, 100, 0.5),
-    transparent
-  );
+  background: linear-gradient(90deg, transparent, rgba(255, 100, 100, 0.5), transparent);
 }
 
 @keyframes logoutModalSlideIn {
@@ -776,12 +753,7 @@ body.login-page {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.2),
-    transparent
-  );
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
   transition: left 0.5s ease;
 }
 
@@ -822,9 +794,9 @@ body.login-page {
 }
 
 /* =========================
-   8. MODALS (SEARCH, NOTIFICATION, COMING SOON)
+   8. MODALS BASE (SHARED STYLES)
    ========================= */
-.search-modal {
+.modal {
   position: fixed;
   inset: 0;
   z-index: 200;
@@ -833,26 +805,50 @@ body.login-page {
   justify-content: center;
 }
 
-.search-modal__backdrop {
+.modal__backdrop {
   position: absolute;
   inset: 0;
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(4px);
 }
 
-.search-modal__content {
+.modal__content {
   position: relative;
   background: #222;
   font-size: 1.5rem;
   color: #fff;
   border-radius: 1rem;
-  padding: 2rem 5rem;
+  padding: 1rem 3rem;
   z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1rem;
-  min-width: 320px;
+  min-width: 240px;
+}
+
+.modal__close {
+  position: absolute;
+  top: 0.1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 3rem;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.modal__close:hover {
+  color: var(--green-lighter);
+}
+
+/* =========================
+   8A. SEARCH MODAL (SPECIFIC)
+   ========================= */
+.search-modal__content {
+  min-width: 400px;
+  max-width: 70vw;
 }
 
 #search-input {
@@ -874,23 +870,44 @@ body.login-page {
   font-size: 1.5rem;
 }
 
-#search-close,
-#notification-close,
-#coming-soon-close,
-.search-modal__content > button[aria-label="Close"] {
-  position: absolute;
-  top: 0.1rem;
-  right: 1rem;
-  background: none;
-  border: none;
-  color: #fff;
-  font-size: 3rem;
-  cursor: pointer;
+.search-result {
+  max-width: 70vw;
+  height: 30vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  color: var(--white-80);
+  text-align: center;
+  font-size: 2rem;
+  line-height: 1.5;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  box-sizing: border-box;
+  transition: height 0.3s ease;
 }
 
-div #notification-result {
-  margin: 2rem auto;
+/* =========================
+   8B. NOTIFICATION MODAL (SPECIFIC)
+   ========================= */
+.notification-modal__content {
+  min-width: 350px;
+  max-width: 500px;
+  text-align: center;
+}
+
+#notification-close {
+  right: 1rem;
+  font-size: 3rem;
+}
+
+.notification-result {
+  margin: 2rem 0;
+  padding: 1.5rem 2rem;
   font-size: 2rem;
+  text-align: center;
+  border-radius: 1rem;
 }
 
 /* =========================
@@ -1197,15 +1214,9 @@ div #notification-result {
   transform: scale(1);
   will-change: transform;
   transform-origin: left center;
-  transition: transform 3s cubic-bezier(0.34, 0.76, 0.33, 0.76),
-    background-position 3s cubic-bezier(0.34, 0.76, 0.33, 0.76);
+  transition: transform 3s cubic-bezier(0.34, 0.76, 0.33, 0.76), background-position 3s cubic-bezier(0.34, 0.76, 0.33, 0.76);
   z-index: 2;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0.7) 0%,
-    rgba(255, 255, 255, 0.8) 50%,
-    rgba(255, 255, 255, 0.9) 100%
-  );
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0.9) 100%);
   background-size: 200%;
   background-position: -100%;
   background-clip: text;
@@ -1318,12 +1329,7 @@ div #notification-result {
 }
 
 .hero-content.dark-text .hero__title {
-  background: linear-gradient(
-    90deg,
-    rgba(34, 34, 34, 0.7) 0%,
-    rgba(34, 34, 34, 0.8) 50%,
-    rgba(34, 34, 34, 0.9) 100%
-  );
+  background: linear-gradient(90deg, rgba(34, 34, 34, 0.7) 0%, rgba(34, 34, 34, 0.8) 50%, rgba(34, 34, 34, 0.9) 100%);
   background-size: 200%;
   background-position: -100%;
   background-clip: text;
@@ -1762,16 +1768,14 @@ div #notification-result {
 @media (hover: hover) and (pointer: fine) {
   .glow-img:hover {
     transform: scale(1.05);
-    box-shadow: 0 0 12px var(--image-glow-color),
-      0 0 24px var(--image-glow-color), 0 0 36px var(--image-glow-color),
+    box-shadow: 0 0 12px var(--image-glow-color), 0 0 24px var(--image-glow-color), 0 0 36px var(--image-glow-color),
       0 8px 32px rgba(0, 0, 0, 0.3);
     filter: brightness(1.15) saturate(1.3) contrast(1.1);
     z-index: 10;
   }
 
   .glow-img.glow-enhanced:hover {
-    box-shadow: 0 0 16px var(--image-glow-color),
-      0 0 32px var(--image-glow-color), 0 0 48px var(--image-glow-color),
+    box-shadow: 0 0 16px var(--image-glow-color), 0 0 32px var(--image-glow-color), 0 0 48px var(--image-glow-color),
       0 12px 48px rgba(0, 0, 0, 0.4);
   }
 }
@@ -1800,21 +1804,7 @@ div #notification-result {
    MOBILE SMALL (≤480px)
    ========================= */
 @media (max-width: 480px) {
-  /* Search Grid */
-  .search-thumbs-grid {
-    grid-template-columns: 1fr;
-    max-width: min(65vw, 200px);
-  }
-
-  #search-result {
-    height: 40vh;
-  }
-
-  #search-result.two-rows {
-    height: 60vh;
-  }
-
-  /* Background */
+  /* ===== 1. BODY & BACKGROUND ===== */
   body {
     padding-top: 0;
   }
@@ -1827,7 +1817,7 @@ div #notification-result {
     background-position: center center;
   }
 
-  /* Header */
+  /* ===== 2. HEADER & NAVIGATION ===== */
   .header {
     padding: 1rem 2rem;
     flex-wrap: nowrap;
@@ -1847,7 +1837,7 @@ div #notification-result {
     display: none;
   }
 
-  /* Mobile Menu Button */
+  /* ===== 3. MOBILE MENU SYSTEM ===== */
   .mobile-menu-toggle {
     display: flex !important;
     flex-direction: column;
@@ -1885,7 +1875,6 @@ div #notification-result {
     transform: rotate(-45deg) translate(6px, -6px);
   }
 
-  /* Mobile Menu Overlay */
   .mobile-menu-overlay {
     position: fixed;
     top: 0;
@@ -2024,7 +2013,76 @@ div #notification-result {
     border-color: rgba(255, 107, 107, 0.3);
   }
 
-  /* Hero */
+  /* ===== 4. MODALS (SEARCH & NOTIFICATION) ===== */
+  .profile-menu {
+    display: none;
+  }
+
+  /* Search Modal Mobile */
+  .search-modal {
+    padding: 1rem 0;
+    overflow-y: auto;
+  }
+
+  .search-modal__content {
+    padding: 3rem 1.5rem;
+    width: 95vw;
+    min-width: 280px;
+    max-height: none;
+    overflow: visible;
+  }
+
+  #search-input {
+    width: 100%;
+  }
+
+  .search-result {
+    /* ✅ ALTURA AUTOMÁTICA - cresce conforme necessário */
+    height: auto;
+    max-height: none;
+    overflow: visible;
+    font-size: 1.6rem;
+    padding: 1rem 0.5rem;
+  }
+
+  .search-result.two-rows {
+    /* ✅ ALTURA AUTOMÁTICA também */
+    height: auto;
+  }
+
+  .search-thumbs-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 colunas no mobile */
+    gap: 1rem;
+    max-width: none; /* Remove limitação de largura */
+    width: 100%;
+  }
+
+  #search-close {
+    right: -1.5rem;
+    font-size: 2.5rem;
+  }
+  .random-movie-btn {
+    margin: 0;
+    font-size: 1rem;
+  }
+
+  /* Notification Modal Mobile */
+  .notification-modal__content {
+    width: auto;
+    min-width: 230px;
+    max-width: 300px;
+    padding: 1rem 2rem;
+  }
+  #notification-close {
+    right: -1rem;
+    font-size: 2.5rem;
+  }
+  .notification-result {
+    font-size: 1.5rem;
+    padding: 1rem;
+  }
+
+  /* ===== 5. HERO SECTION ===== */
   .hero-content {
     padding: 15rem 2rem 2rem 2rem;
     margin-bottom: 4rem;
@@ -2087,7 +2145,7 @@ div #notification-result {
     display: none !important;
   }
 
-  /* Navigation */
+  /* ===== 6. HERO NAVIGATION ===== */
   .hero-navigation {
     bottom: -2rem;
   }
@@ -2098,18 +2156,10 @@ div #notification-result {
     font-size: 1.2rem;
   }
 
-  /* Modals */
-  .movie-modal__content {
-    padding: 2rem 1.5rem;
-    width: 95vw;
-    max-height: 90vh;
-    overflow-y: auto;
-  }
+  /* ===== 7. CAROUSELS SECTION ===== */
+  /* (Carousels já estão no carousel-splide.css) */
 
-  .profile-menu {
-    display: none;
-  }
-  /* random movie section */
+  /* ===== 8. RANDOM MOVIE SECTION ===== */
   .random-movie-section {
     display: flex;
     justify-content: center;
@@ -2135,7 +2185,7 @@ div #notification-result {
     margin-bottom: 0.5rem;
   }
 
-  /* Footer */
+  /* ===== 9. FOOTER ===== */
   .footer {
     padding: 2.5rem 0 1.5rem 0;
     margin-top: 4rem;
@@ -2183,6 +2233,14 @@ div #notification-result {
 
   .footer__copy {
     font-size: 0.9rem;
+  }
+
+  /* ===== 10. MOVIE MODAL ===== */
+  .movie-modal__content {
+    padding: 2rem 1.5rem;
+    width: 95vw;
+    max-height: 90vh;
+    overflow-y: auto;
   }
 }
 

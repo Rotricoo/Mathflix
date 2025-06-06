@@ -37,12 +37,9 @@ let spoilerStep = 0;
 const spoilers = {
   gonegirl:
     "Amy fakes her own disappearance to frame her husband Nick. In the end, she returns and forces Nick to stay with her.",
-  arrival:
-    "The aliens didn't come to invade, but to gift humans their language which allows seeing the future.",
-  abouttime:
-    "The secret to happiness isn't time travel, but appreciating each day as if you're living it for the second time.",
-  marypoppins:
-    "Mary Poppins didn't need magic to fix the Banks family; she just taught them to find fun in everything.",
+  arrival: "The aliens didn't come to invade, but to gift humans their language which allows seeing the future.",
+  abouttime: "The secret to happiness isn't time travel, but appreciating each day as if you're living it for the second time.",
+  marypoppins: "Mary Poppins didn't need magic to fix the Banks family; she just taught them to find fun in everything.",
   wandavision:
     "It's all an illusion created by Wanda to cope with grief after losing Vision. The townsfolk are hostages of her magic.",
   hungergames:
@@ -63,23 +60,15 @@ if (spoilerBtn) {
       spoilerBtn.classList.add("spoiler-fixed");
       spoilerFixed = true;
       spoilerBtn.removeEventListener("mouseenter", fixSpoilerBtn);
-      document
-        .querySelector(".hero-content")
-        .removeEventListener("mouseenter", fixSpoilerBtn);
-      document
-        .querySelector(".hero__see-details-btn")
-        .removeEventListener("mouseenter", fixSpoilerBtn);
+      document.querySelector(".hero-content").removeEventListener("mouseenter", fixSpoilerBtn);
+      document.querySelector(".hero__see-details-btn").removeEventListener("mouseenter", fixSpoilerBtn);
     }
   }
 
   // Attach fix function to multiple hover events for better UX
   spoilerBtn.addEventListener("mouseenter", fixSpoilerBtn);
-  document
-    .querySelector(".hero-content")
-    .addEventListener("mouseenter", fixSpoilerBtn);
-  document
-    .querySelector(".hero__see-details-btn")
-    .addEventListener("mouseenter", fixSpoilerBtn);
+  document.querySelector(".hero-content").addEventListener("mouseenter", fixSpoilerBtn);
+  document.querySelector(".hero__see-details-btn").addEventListener("mouseenter", fixSpoilerBtn);
 
   // Multi-step spoiler reveal process with countdown animation
   spoilerBtn.addEventListener("click", () => {
@@ -100,9 +89,7 @@ if (spoilerBtn) {
           clearInterval(countdown);
           spoilerBtn.classList.add("exit");
           // Get current hero movie key for spoiler content
-          const currentHeroKey = document.querySelector(
-            ".hero__see-details-btn"
-          ).dataset.movie;
+          const currentHeroKey = document.querySelector(".hero__see-details-btn").dataset.movie;
           setTimeout(() => showSpoilerModal(currentHeroKey), 600);
         }
       }, 600);
@@ -140,9 +127,7 @@ function showSpoilerModal(movieKey) {
   const spoilerClose = document.getElementById("spoiler-modal-close");
 
   // Display spoiler text for the specific movie
-  spoilerText.textContent =
-    spoilers[movieKey] ||
-    "This movie is so secret we don't even have a spoiler for it!";
+  spoilerText.textContent = spoilers[movieKey] || "This movie is so secret we don't even have a spoiler for it!";
   spoilerModal.style.display = "flex";
 
   // Auto-close timer (10 seconds)
@@ -168,48 +153,76 @@ function showSpoilerModal(movieKey) {
 // ==========================
 
 /**
- * Initialize all carousel configurations after DOM is loaded
+ * BREAKPOINT SYSTEM EXPLANATION:
+ * ===============================
+ * Splide uses "max-width" logic for breakpoints:
+ *
+ * 480: { } = Applies from 0px TO 480px (Mobile)
+ * 768: { } = Applies from 481px TO 768px (Tablet)
+ * 1024: { } = Applies from 769px TO 1024px (Notebook)
+ * 1440: { } = Applies from 1025px TO 1440px (Desktop)
+ * BASE = Applies from 1441px and UP (Large Desktop)
+ *
+ * SCREEN SIZE REFERENCE:
+ * =====================
+ * Mobile phones: 320px-480px
+ * Tablets: 481px-768px
+ * Small laptops: 769px-1024px
+ * Desktop/MacBook: 1025px-1440px
+ * Large displays: 1441px+
  */
+
 document.addEventListener("DOMContentLoaded", function () {
-  // AGUARDAR UM POUCO PARA GARANTIR QUE TODO O CSS CARREGOU
   setTimeout(() => {
     console.log("🔍 Initializing Top 10 carousel...");
 
-    // VERIFICAR SE O ELEMENTO EXISTE
     const top10Element = document.querySelector(".splide-top10");
     if (!top10Element) {
       console.error("❌ Top 10 element not found!");
       return;
     }
 
-    // INICIALIZAR TOP 10 COM CONFIGURAÇÃO MAIS SIMPLES
     try {
       const top10Splide = new Splide(".splide-top10", {
         type: "loop",
         drag: "free",
         focus: "center",
-        perPage: 6, // BASE: Para telas ≥1441px (sua tela atual 1513px)
-        gap: "2rem", // BASE: Para telas ≥1441px (sua tela atual 1513px)
+
+        // BASE CONFIGURATION (≥1441px - Large Desktop)
+        perPage: 6,
+        gap: "3rem",
+
         autoScroll: {
-          // ← SEMPRE ATIVO, SEM CONDIÇÃO!
           speed: 0.5,
           pauseOnHover: true,
           pauseOnFocus: false,
         },
         pagination: false,
+
         breakpoints: {
           480: {
+            // 0px → 480px (Mobile)
             perPage: 1.8,
             gap: "1rem",
-            autoScroll: false, // ← DESABILITAR só no mobile
+            autoScroll: false,
           },
           768: {
-            perPage: 2.2,
+            // 481px → 768px (Tablet)
+            perPage: 2.6,
             gap: "1.5rem",
-            autoScroll: false, // ← DESABILITAR só no tablet
+            autoScroll: false,
           },
-          1024: { perPage: 3, gap: "2rem" },
-          1441: { perPage: 4.5, gap: "2rem" },
+          1024: {
+            // 769px → 1024px (Notebook)
+            perPage: 3.5,
+            gap: "2rem",
+          },
+          1440: {
+            // 1025px → 1440px (Desktop)
+            perPage: 4.5,
+            gap: "2.5rem",
+          },
+          // ≥1441px uses BASE configuration above
         },
       }).mount(window.splide.Extensions);
 
@@ -218,21 +231,41 @@ document.addEventListener("DOMContentLoaded", function () {
       console.error("❌ Error initializing Top 10:", error);
     }
 
-    // DEPOIS inicializar outros carrosséis
     // Standard horizontal carousels
     document.querySelectorAll(".splide-simple").forEach((el) => {
       new Splide(el, {
         type: "loop",
-        perPage: 6, // BASE: Para telas ≥1441px (sua tela atual 1513px)
+
+        // BASE CONFIGURATION (≥1441px - Large Desktop)
+        perPage: 6,
         perMove: 1,
-        gap: "2rem", // BASE: Para telas ≥1441px (sua tela atual 1513px)
+        gap: "3rem",
+
         pagination: false,
         arrows: true,
+
         breakpoints: {
-          480: { perPage: 2.5, gap: "1rem" }, // 0px → 480px (Mobile)
-          768: { perPage: 2.8, gap: "4rem" }, // 481px → 768px (Tablet)
-          1024: { perPage: 3.5, gap: "4rem" }, // 769px → 1024px (Notebook)
-          1441: { perPage: 4.2, gap: "2rem" }, // 1025px → 1440px (MacBook M1)
+          480: {
+            // 0px → 480px (Mobile)
+            perPage: 2.5,
+            gap: "1rem",
+          },
+          768: {
+            // 481px → 768px (Tablet)
+            perPage: 2.8,
+            gap: "1.5rem",
+          },
+          1024: {
+            // 769px → 1024px (Notebook)
+            perPage: 3.5,
+            gap: "2rem",
+          },
+          1440: {
+            // 1025px → 1440px (Desktop)
+            perPage: 4.2,
+            gap: "2.5rem",
+          },
+          // ≥1441px uses BASE configuration above
         },
       }).mount();
     });
@@ -240,52 +273,73 @@ document.addEventListener("DOMContentLoaded", function () {
     // Vertical carousel
     const verticalSplideElement = new Splide(".splide-vertical", {
       type: "loop",
-      perPage: 5, // BASE: Para telas ≥1441px (sua tela atual 1513px)
       focus: "center",
-      gap: "2rem", // BASE: Para telas ≥1441px (sua tela atual 1513px)
+
+      // BASE CONFIGURATION (≥1441px - Large Desktop)
+      perPage: 5,
+      gap: "3rem",
+
       pagination: false,
       arrows: true,
       autoWidth: false,
       trimSpace: false,
       speed: 600,
       easing: "ease",
+
       breakpoints: {
-        480: { perPage: 2.5, gap: "0.5rem" }, // 0px → 480px (Mobile)
-        768: { perPage: 3, gap: "1rem" }, // 481px → 768px (Tablet)
-        1024: { perPage: 3.5, gap: "2rem" }, // 769px → 1024px (Notebook)
-        1441: { perPage: 4.5, gap: "2rem" }, // 1025px → 1440px (MacBook M1)
+        480: {
+          // 0px → 480px (Mobile)
+          perPage: 2.5,
+          gap: "1rem",
+        },
+        768: {
+          // 481px → 768px (Tablet)
+          perPage: 3.0,
+          gap: "1.5rem",
+        },
+        1024: {
+          // 769px → 1024px (Notebook)
+          perPage: 3.5,
+          gap: "2rem",
+        },
+        1440: {
+          // 1025px → 1440px (Desktop)
+          perPage: 4.5,
+          gap: "2.5rem",
+        },
+        // ≥1441px uses BASE configuration above
       },
     }).mount();
 
     window.verticalSplide = verticalSplideElement;
 
-    // Marathon carousels com delay maior
+    // Marathon carousels
     setTimeout(() => {
       const marathonConfigs = [
         {
           selector: ".splide-hungergames",
           perPage: 5,
-          gap: "2rem",
+          gap: "3rem",
         },
         {
           selector: ".splide-harrypotter",
           perPage: 5,
-          gap: "2rem",
+          gap: "3rem",
         },
         {
           selector: ".splide-alien",
           perPage: 5,
-          gap: "2rem",
+          gap: "3rem",
         },
         {
           selector: ".splide-toystory",
           perPage: 5,
-          gap: "2rem",
+          gap: "3rem",
         },
         {
           selector: ".splide-xmen",
           perPage: 5,
-          gap: "2rem",
+          gap: "3rem",
         },
       ];
 
@@ -294,25 +348,46 @@ document.addEventListener("DOMContentLoaded", function () {
         if (element) {
           new Splide(selector, {
             type: "loop",
-            perPage: 5, // BASE: Para telas ≥1441px (sua tela atual 1513px)
             perMove: 1,
-            gap: "2rem", // BASE: Para telas ≥1441px (sua tela atual 1513px)
+
+            // BASE CONFIGURATION (≥1441px - Large Desktop)
+            perPage: 5,
+            gap: "3rem",
+
             pagination: false,
             arrows: true,
             speed: 600,
             easing: "ease",
+
             breakpoints: {
-              480: { perPage: 2.7, gap: "1rem" }, // 0px → 480px (Mobile)
-              768: { perPage: 3.2, gap: "4rem" }, // 481px → 768px (Tablet)
-              1024: { perPage: 3, gap: "3rem" }, // 769px → 1024px (Notebook)
-              1441: { perPage: 4.5, gap: "2rem" }, // 1025px → 1440px (MacBook M1)
+              480: {
+                // 0px → 480px (Mobile)
+                perPage: 2.7,
+                gap: "1rem",
+              },
+              768: {
+                // 481px → 768px (Tablet)
+                perPage: 3.2,
+                gap: "1.5rem",
+              },
+              1024: {
+                // 769px → 1024px (Notebook)
+                perPage: 3.5,
+                gap: "2rem",
+              },
+              1440: {
+                // 1025px → 1440px (Desktop)
+                perPage: 4.2,
+                gap: "2.5rem",
+              },
+              // ≥1441px uses BASE configuration above
             },
           }).mount();
           console.log(`✅ Marathon carousel mounted: ${selector}`);
         }
       });
     }, 1500);
-  }, 100); // Delay inicial para aguardar CSS
+  }, 100);
 });
 
 // ==========================
@@ -395,10 +470,7 @@ function initializeHeaderButtons() {
   if (searchModal) {
     searchModal.addEventListener("click", function (e) {
       // Só fechar se clicar diretamente no backdrop
-      if (
-        e.target === searchModal ||
-        e.target.classList.contains("search-modal__backdrop")
-      ) {
+      if (e.target === searchModal || e.target.classList.contains("search-modal__backdrop")) {
         searchModal.style.display = "none";
         console.log("❌ Search modal closed via outside click");
       }
@@ -413,19 +485,14 @@ function initializeHeaderButtons() {
       // Set up click-outside-to-close listener
       const handleOutsideClick = function (event) {
         if (
-          !notificationModal
-            .querySelector(".search-modal__content")
-            .contains(event.target) &&
+          !notificationModal.querySelector(".search-modal__content").contains(event.target) &&
           event.target !== notificationBtn
         ) {
           notificationModal.style.display = "none";
           document.removeEventListener("click", handleOutsideClick);
         }
       };
-      setTimeout(
-        () => document.addEventListener("click", handleOutsideClick),
-        100
-      );
+      setTimeout(() => document.addEventListener("click", handleOutsideClick), 100);
     };
   }
 
@@ -446,10 +513,7 @@ function initializeHeaderButtons() {
       if (!isOpen) {
         setTimeout(() => {
           const closeMenu = function (event) {
-            if (
-              !profileToggle.contains(event.target) &&
-              !profileMenu.contains(event.target)
-            ) {
+            if (!profileToggle.contains(event.target) && !profileMenu.contains(event.target)) {
               profileMenu.style.display = "none";
               profileToggle.setAttribute("aria-expanded", "false");
               document.removeEventListener("click", closeMenu);
@@ -556,9 +620,7 @@ document.addEventListener("DOMContentLoaded", function () {
           console.log("🎯 Auto-triggered search for marathon");
         }, 400);
 
-        console.log(
-          `🎬 Marathon search setup complete for: ${currentHero.title}`
-        );
+        console.log(`🎬 Marathon search setup complete for: ${currentHero.title}`);
       } else {
         // Default behavior for regular movies/series
         console.log(`🎬 Regular content detected: ${key}`);
@@ -598,9 +660,7 @@ document.addEventListener("keydown", function (e) {
         // Fallback close behavior
         movieModal.style.display = "none";
         const trailer = document.getElementById("movie-modal-trailer");
-        const verticalTrailer = document.getElementById(
-          "vertical-modal-trailer"
-        );
+        const verticalTrailer = document.getElementById("vertical-modal-trailer");
         if (trailer) trailer.src = "";
         if (verticalTrailer) verticalTrailer.src = "";
 
@@ -660,8 +720,7 @@ const homeHeroMovies = [
     title: "ARRIVAL",
     background: "assets/hero-banner/mainly-ban-arrival.png",
     text: "When mysterious spacecraft touch down across the globe, an elite team led by linguist Louise Banks is brought together to investigate.",
-    textHighlight:
-      "As mankind teeters on the verge of global war, Banks races against time to decipher their intent.",
+    textHighlight: "As mankind teeters on the verge of global war, Banks races against time to decipher their intent.",
     type: "movie",
     textColor: "light",
   },
@@ -706,8 +765,7 @@ const moviesHeroMovies = [
     title: "ALIEN",
     background: "assets/hero-banner/mainly-ban-alien.png",
     text: "In space, no one can hear you scream. The crew of the Nostromo discovers a deadly alien life form that begins to hunt them down.",
-    textHighlight:
-      "A sci-fi horror classic that redefined the genre and introduced the iconic character Ellen Ripley.",
+    textHighlight: "A sci-fi horror classic that redefined the genre and introduced the iconic character Ellen Ripley.",
     type: "marathon",
     textColor: "light",
   },
@@ -716,8 +774,7 @@ const moviesHeroMovies = [
     title: "ARRIVAL",
     background: "assets/hero-banner/mainly-ban-arrival.png",
     text: "When mysterious spacecraft touch down across the globe, an elite team led by linguist Louise Banks is brought together to investigate.",
-    textHighlight:
-      "As mankind teeters on the verge of global war, Banks races against time to decipher their intent.",
+    textHighlight: "As mankind teeters on the verge of global war, Banks races against time to decipher their intent.",
     type: "movie",
     textColor: "light",
   },
@@ -812,8 +869,7 @@ function createHeroIndicators() {
   prevBtn.innerHTML = "❮";
   prevBtn.addEventListener("click", () => {
     clearInterval(heroInterval);
-    currentHeroIndex =
-      (currentHeroIndex - 1 + heroMovies.length) % heroMovies.length;
+    currentHeroIndex = (currentHeroIndex - 1 + heroMovies.length) % heroMovies.length;
     updateHero(currentHeroIndex);
     restartHeroInterval();
   });
@@ -957,12 +1013,8 @@ document.addEventListener("DOMContentLoaded", function () {
  */
 document.addEventListener("DOMContentLoaded", function () {
   const homeBtn = document.querySelector(".header__nav-tittle:nth-child(1) a"); // Home (position 1)
-  const moviesBtn = document.querySelector(
-    ".header__nav-tittle:nth-child(2) a"
-  ); // Movies (position 2)
-  const seriesBtn = document.querySelector(
-    ".header__nav-tittle:nth-child(3) a"
-  ); // Series (position 3)
+  const moviesBtn = document.querySelector(".header__nav-tittle:nth-child(2) a"); // Movies (position 2)
+  const seriesBtn = document.querySelector(".header__nav-tittle:nth-child(3) a"); // Series (position 3)
 
   console.log("🔧 Navigation buttons found:", {
     homeBtn,
@@ -983,27 +1035,21 @@ document.addEventListener("DOMContentLoaded", function () {
       this.parentElement.classList.add("header__nav-tittle--active");
 
       // Hide ALL series sections (including Digo Happy for movies mode)
-      document
-        .querySelectorAll(".gallery__container.series")
-        .forEach((section) => {
-          if (!section.classList.contains("digohappy")) {
-            section.style.display = "none";
-          }
-        });
+      document.querySelectorAll(".gallery__container.series").forEach((section) => {
+        if (!section.classList.contains("digohappy")) {
+          section.style.display = "none";
+        }
+      });
 
       // Show "Digo Happy" section in Movies mode
-      document
-        .querySelectorAll(".gallery__container.digohappy")
-        .forEach((section) => {
-          section.style.display = "block";
-          console.log("✅ Showed Digo Happy section:", section);
-        });
+      document.querySelectorAll(".gallery__container.digohappy").forEach((section) => {
+        section.style.display = "block";
+        console.log("✅ Showed Digo Happy section:", section);
+      });
 
       // Show movie sections
       document
-        .querySelectorAll(
-          ".gallery__container.marathon-section, .gallery__container-vertical, .gallery__container.top10"
-        )
+        .querySelectorAll(".gallery__container.marathon-section, .gallery__container-vertical, .gallery__container.top10")
         .forEach((section) => {
           section.style.display = "";
           console.log("✅ Showed movie section:", section);
@@ -1018,9 +1064,7 @@ document.addEventListener("DOMContentLoaded", function () {
       recreateHeroIndicators();
       updateHero(currentHeroIndex);
       restartHeroInterval();
-      console.log(
-        `🎬 Switched to movies hero with ${heroMovies.length} options`
-      );
+      console.log(`🎬 Switched to movies hero with ${heroMovies.length} options`);
     });
   }
 
@@ -1038,47 +1082,36 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // Hide non-series sections (movies, marathons, etc.)
       document
-        .querySelectorAll(
-          ".gallery__container.marathon-section, .gallery__container-vertical, .gallery__container.top10"
-        )
+        .querySelectorAll(".gallery__container.marathon-section, .gallery__container-vertical, .gallery__container.top10")
         .forEach((section) => {
           section.style.display = "none";
           console.log("🚫 Hidden movie section:", section);
         });
 
       // Hide "Digo Happy" section when in Series mode
-      document
-        .querySelectorAll(".gallery__container.digohappy")
-        .forEach((section) => {
-          section.style.display = "none";
-          console.log("🚫 Hidden Digo Happy section:", section);
-        });
+      document.querySelectorAll(".gallery__container.digohappy").forEach((section) => {
+        section.style.display = "none";
+        console.log("🚫 Hidden Digo Happy section:", section);
+      });
 
       // Hide ALL original series carousels (non-dynamic ones)
-      document
-        .querySelectorAll(".gallery__container.series")
-        .forEach((section) => {
-          // Hide if it's NOT a dynamic carousel and NOT digo happy
-          if (
-            !section.classList.contains("series-dynamic") &&
-            !section.classList.contains("digohappy")
-          ) {
-            section.style.display = "none";
-            console.log("🚫 Hidden original series section:", section);
-          }
-        });
+      document.querySelectorAll(".gallery__container.series").forEach((section) => {
+        // Hide if it's NOT a dynamic carousel and NOT digo happy
+        if (!section.classList.contains("series-dynamic") && !section.classList.contains("digohappy")) {
+          section.style.display = "none";
+          console.log("🚫 Hidden original series section:", section);
+        }
+      });
 
       // Create dynamic series carousels when entering series mode
       createDynamicSeriesCarousels();
 
       // Show only the dynamic series carousels that were just created
       setTimeout(() => {
-        document
-          .querySelectorAll(".gallery__container.series-dynamic")
-          .forEach((section) => {
-            section.style.display = "block";
-            console.log("✅ Showed dynamic series section:", section);
-          });
+        document.querySelectorAll(".gallery__container.series-dynamic").forEach((section) => {
+          section.style.display = "block";
+          console.log("✅ Showed dynamic series section:", section);
+        });
       }, 200);
 
       // Switch to series-only hero array
@@ -1090,9 +1123,7 @@ document.addEventListener("DOMContentLoaded", function () {
       recreateHeroIndicators();
       updateHero(currentHeroIndex);
       restartHeroInterval();
-      console.log(
-        `📺 Switched to series hero with ${heroMovies.length} options`
-      );
+      console.log(`📺 Switched to series hero with ${heroMovies.length} options`);
     });
   }
 
@@ -1111,23 +1142,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Show basic sections (NOT the new categorized carousels)
         document
-          .querySelectorAll(
-            ".gallery__container.top10, .gallery__container-vertical, .marathon-section"
-          )
+          .querySelectorAll(".gallery__container.top10, .gallery__container-vertical, .marathon-section")
           .forEach((section) => {
             section.style.display = "";
           });
 
         // Show only the original "Series" carousel and "Digo Happy" on HOME
-        document
-          .querySelectorAll(".gallery__container.series")
-          .forEach((section) => {
-            if (!section.classList.contains("series-dynamic")) {
-              section.style.display = "block";
-            } else {
-              section.style.display = "none";
-            }
-          });
+        document.querySelectorAll(".gallery__container.series").forEach((section) => {
+          if (!section.classList.contains("series-dynamic")) {
+            section.style.display = "block";
+          } else {
+            section.style.display = "none";
+          }
+        });
 
         // Switch back to home hero array
         heroMovies = homeHeroMovies;
@@ -1138,9 +1165,7 @@ document.addEventListener("DOMContentLoaded", function () {
         recreateHeroIndicators();
         updateHero(currentHeroIndex);
         restartHeroInterval();
-        console.log(
-          `🏠 Switched to home hero with ${heroMovies.length} options`
-        );
+        console.log(`🏠 Switched to home hero with ${heroMovies.length} options`);
       }
     });
   }
@@ -1181,9 +1206,7 @@ document.addEventListener("click", function (e) {
 
       if (!isActive) {
         // Find the index of the clicked slide (excluding clones)
-        const originalSlides = document.querySelectorAll(
-          ".splide-vertical .splide__slide:not(.splide__slide--clone)"
-        );
+        const originalSlides = document.querySelectorAll(".splide-vertical .splide__slide:not(.splide__slide--clone)");
         let targetIndex = -1;
 
         originalSlides.forEach((slide, index) => {
@@ -1245,10 +1268,7 @@ const seriesCarouselConfigs = [
   {
     id: "reality-carousel",
     title: "Reality Shows",
-    filter: (movie) =>
-      movie.categories &&
-      (movie.categories.includes("reality") ||
-        movie.categories.includes("competition")),
+    filter: (movie) => movie.categories && (movie.categories.includes("reality") || movie.categories.includes("competition")),
     containerClass: "series-dynamic",
   },
   {
@@ -1260,8 +1280,7 @@ const seriesCarouselConfigs = [
   {
     id: "animation-carousel",
     title: "Animation",
-    filter: (movie) =>
-      movie.categories && movie.categories.includes("animation"),
+    filter: (movie) => movie.categories && movie.categories.includes("animation"),
     containerClass: "series-dynamic",
   },
 ];
@@ -1278,21 +1297,17 @@ function createDynamicSeriesCarousels() {
   }
 
   // Find the first series container that is NOT digo happy and NOT dynamic
-  const insertPoint = document.querySelector(
-    ".gallery__container.series:not(.digohappy):not(.series-dynamic)"
-  );
+  const insertPoint = document.querySelector(".gallery__container.series:not(.digohappy):not(.series-dynamic)");
   if (!insertPoint) {
     console.warn("⚠️ Insert point not found for dynamic carousels");
     return;
   }
 
   // Clear existing dynamic carousels
-  document
-    .querySelectorAll(".gallery__container.series-dynamic")
-    .forEach((el) => {
-      el.remove();
-      console.log("🧹 Removed existing dynamic carousel");
-    });
+  document.querySelectorAll(".gallery__container.series-dynamic").forEach((el) => {
+    el.remove();
+    console.log("🧹 Removed existing dynamic carousel");
+  });
 
   seriesCarouselConfigs.forEach((config) => {
     // Filter series based on configuration
@@ -1313,9 +1328,7 @@ function createDynamicSeriesCarousels() {
 
     // Create carousel HTML
     const carouselHTML = `
-      <div class="gallery__container series ${
-        config.containerClass
-      }" data-carousel="${config.id}">
+      <div class="gallery__container series ${config.containerClass}" data-carousel="${config.id}">
         <h2 class="gallery__title">${config.title}</h2>
         <div class="splide splide-simple" id="${config.id}">
           <div class="splide__track">
@@ -1362,9 +1375,7 @@ function createDynamicSeriesCarousels() {
           },
         }).mount();
 
-        console.log(
-          `✅ Dynamic carousel created: ${config.title} (${filteredSeries.length} series)`
-        );
+        console.log(`✅ Dynamic carousel created: ${config.title} (${filteredSeries.length} series)`);
       }
     }, 100);
   });
@@ -1389,9 +1400,7 @@ document.addEventListener("DOMContentLoaded", function () {
       console.log("🏠 Footer Home clicked");
 
       // Trigger the header home button click
-      const headerHomeBtn = document.querySelector(
-        ".header__nav-tittle:nth-child(1) a"
-      );
+      const headerHomeBtn = document.querySelector(".header__nav-tittle:nth-child(1) a");
       if (headerHomeBtn) {
         headerHomeBtn.click();
         console.log("✅ Footer Home: Triggered header home navigation");
@@ -1412,9 +1421,7 @@ document.addEventListener("DOMContentLoaded", function () {
       console.log("🎬 Footer Movies clicked");
 
       // Trigger the header movies button click
-      const headerMoviesBtn = document.querySelector(
-        ".header__nav-tittle:nth-child(2) a"
-      );
+      const headerMoviesBtn = document.querySelector(".header__nav-tittle:nth-child(2) a");
       if (headerMoviesBtn) {
         headerMoviesBtn.click();
         console.log("✅ Footer Movies: Triggered header movies navigation");
@@ -1435,9 +1442,7 @@ document.addEventListener("DOMContentLoaded", function () {
       console.log("📺 Footer Series clicked");
 
       // Trigger the header series button click
-      const headerSeriesBtn = document.querySelector(
-        ".header__nav-tittle:nth-child(3) a"
-      );
+      const headerSeriesBtn = document.querySelector(".header__nav-tittle:nth-child(3) a");
       if (headerSeriesBtn) {
         headerSeriesBtn.click();
         console.log("✅ Footer Series: Triggered header series navigation");

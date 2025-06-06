@@ -488,38 +488,59 @@ function getCommentPreview(comment) {
    * @param {number} page - Page number to render
    */
   function renderSearchPage(page = 1) {
-    const perPage = 8; // Maximum 8 results per page (4x2 or 5x2 grid)
+    // Ajustar quantidade por página baseado no tamanho da tela
+    let perPage;
+    const screenWidth = window.innerWidth;
+
+    if (screenWidth <= 480) {
+      perPage = 4; // Mobile: máximo 4 resultados (2x2)
+    } else if (screenWidth <= 768) {
+      perPage = 6; // Tablet: máximo 6 resultados (2x3 ou 3x2)
+    } else {
+      perPage = 8; // Desktop: máximo 8 resultados (4x2 ou 5x2)
+    }
+
     const totalPages = Math.ceil(currentResults.length / perPage);
     const start = (page - 1) * perPage;
     const end = start + perPage;
     const pageResults = currentResults.slice(start, end);
 
-    // Adjust container height based on number of results
+    // Ajustar container height baseado no número de resultados
     const searchResultContainer = document.getElementById("search-result");
-    if (pageResults.length > 4) {
+    if (pageResults.length > 4 && screenWidth > 480) {
       searchResultContainer.classList.add("two-rows");
     } else {
       searchResultContainer.classList.remove("two-rows");
     }
 
-    // Determine optimal grid columns based on result count and screen size
+    // Determinar colunas baseado no resultado e tamanho da tela
     let columns;
-    const isLargeScreen = window.innerWidth >= 1600;
 
-    if (pageResults.length === 1) {
-      columns = 1;
-    } else if (pageResults.length === 2) {
-      columns = 2;
-    } else if (pageResults.length === 3) {
-      columns = 3;
-    } else if (pageResults.length === 4) {
-      columns = 4;
+    if (screenWidth <= 480) {
+      // Mobile: sempre 2 colunas máximo
+      columns = pageResults.length === 1 ? 1 : 2;
+    } else if (screenWidth <= 768) {
+      // Tablet: até 3 colunas
+      if (pageResults.length === 1) columns = 1;
+      else if (pageResults.length === 2) columns = 2;
+      else columns = 3;
     } else {
-      // 5 or more movies - adjust for screen size
-      columns = isLargeScreen ? 5 : 4;
+      // Desktop: lógica original
+      const isLargeScreen = window.innerWidth >= 1600;
+      if (pageResults.length === 1) {
+        columns = 1;
+      } else if (pageResults.length === 2) {
+        columns = 2;
+      } else if (pageResults.length === 3) {
+        columns = 3;
+      } else if (pageResults.length === 4) {
+        columns = 4;
+      } else {
+        columns = isLargeScreen ? 5 : 4;
+      }
     }
 
-    // Generate search results HTML
+    // Gerar HTML dos resultados
     searchResult.innerHTML = `
       <div class="search-thumbs-wrapper">
         <div class="search-thumbs-grid" style="grid-template-columns: repeat(${columns}, 1fr); max-width: ${
@@ -541,7 +562,7 @@ function getCommentPreview(comment) {
           totalPages > 1
             ? `<div class="search-pagination">
                 <button ${page === 1 ? "disabled" : ""} id="search-prev">Previous</button>
-                <span>Page ${page} of ${totalPages}</span>
+                <span>Page ${page} of ${totalPages} (${currentResults.length} total)</span>
                 <button ${page === totalPages ? "disabled" : ""} id="search-next">Next</button>
               </div>`
             : ""
@@ -1337,7 +1358,7 @@ function createMobileMenuElements() {
       
       <!-- Profile -->
       <div class="mobile-menu-profile">
-        <img src="assets/profile/userPhoto.svg" alt="Profile">
+        <img src="assets/icons/mathflix-icon-white.svg" alt="Profile">
         <span>Profile</span>
       </div>
       
