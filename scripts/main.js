@@ -191,6 +191,7 @@ document.addEventListener("DOMContentLoaded", function () {
         perPage: 6, // BASE: Para telas ≥1441px (sua tela atual 1513px)
         gap: "2rem", // BASE: Para telas ≥1441px (sua tela atual 1513px)
         autoScroll: {
+          // ← SEMPRE ATIVO, SEM CONDIÇÃO!
           speed: 0.5,
           pauseOnHover: true,
           pauseOnFocus: false,
@@ -198,25 +199,17 @@ document.addEventListener("DOMContentLoaded", function () {
         pagination: false,
         breakpoints: {
           480: {
-            // 0px → 480px (Mobile)
             perPage: 1.8,
             gap: "1rem",
+            autoScroll: false, // ← DESABILITAR só no mobile
           },
           768: {
-            // 481px → 768px (Tablet)
-            perPage: 2.6,
+            perPage: 2.2,
             gap: "1.5rem",
+            autoScroll: false, // ← DESABILITAR só no tablet
           },
-          1024: {
-            // 769px → 1024px (Notebook)
-            perPage: 3.5,
-            gap: "2rem",
-          },
-          1441: {
-            // 1025px → 1440px (MacBook M1 - Desktop base)
-            perPage: 4.5,
-            gap: "2rem",
-          },
+          1024: { perPage: 3, gap: "2rem" },
+          1441: { perPage: 4.5, gap: "2rem" },
         },
       }).mount(window.splide.Extensions);
 
@@ -237,8 +230,8 @@ document.addEventListener("DOMContentLoaded", function () {
         arrows: true,
         breakpoints: {
           480: { perPage: 2.5, gap: "1rem" }, // 0px → 480px (Mobile)
-          768: { perPage: 3.4, gap: "1.5rem" }, // 481px → 768px (Tablet)
-          1024: { perPage: 3.5, gap: "2rem" }, // 769px → 1024px (Notebook)
+          768: { perPage: 2.8, gap: "4rem" }, // 481px → 768px (Tablet)
+          1024: { perPage: 3.5, gap: "4rem" }, // 769px → 1024px (Notebook)
           1441: { perPage: 4.2, gap: "2rem" }, // 1025px → 1440px (MacBook M1)
         },
       }).mount();
@@ -258,8 +251,8 @@ document.addEventListener("DOMContentLoaded", function () {
       easing: "ease",
       breakpoints: {
         480: { perPage: 2.5, gap: "0.5rem" }, // 0px → 480px (Mobile)
-        768: { perPage: 4, gap: "1rem" }, // 481px → 768px (Tablet)
-        1024: { perPage: 4, gap: "1.5rem" }, // 769px → 1024px (Notebook)
+        768: { perPage: 3, gap: "1rem" }, // 481px → 768px (Tablet)
+        1024: { perPage: 3.5, gap: "2rem" }, // 769px → 1024px (Notebook)
         1441: { perPage: 4.5, gap: "2rem" }, // 1025px → 1440px (MacBook M1)
       },
     }).mount();
@@ -310,8 +303,8 @@ document.addEventListener("DOMContentLoaded", function () {
             easing: "ease",
             breakpoints: {
               480: { perPage: 2.7, gap: "1rem" }, // 0px → 480px (Mobile)
-              768: { perPage: 3.2, gap: "1.5rem" }, // 481px → 768px (Tablet)
-              1024: { perPage: 3.5, gap: "2rem" }, // 769px → 1024px (Notebook)
+              768: { perPage: 3.2, gap: "4rem" }, // 481px → 768px (Tablet)
+              1024: { perPage: 3, gap: "3rem" }, // 769px → 1024px (Notebook)
               1441: { perPage: 4.5, gap: "2rem" }, // 1025px → 1440px (MacBook M1)
             },
           }).mount();

@@ -46,7 +46,6 @@ h2.gallery__title {
    ========================= */
 .gallery__container.top10 .gallery__thumbnail {
   width: 28rem;
-  min-width: 28rem;
   aspect-ratio: 16/9;
   border-radius: 2em;
   transition: transform 0.35s cubic-bezier(0.4, 2, 0.6, 1);
@@ -183,7 +182,6 @@ div.gallery__container-vertical h2.gallery__title {
 .splide-simple .splide__slide img {
   aspect-ratio: 16 / 9;
   width: 22rem;
-  min-width: 22rem;
   border-radius: 1em;
   transition: transform 1s, filter 0.25s;
   cursor: pointer;
@@ -231,7 +229,6 @@ div.gallery__container.digo-happy .splide {
 div.gallery__container.series .gallery__thumbnail,
 div.gallery__container.marathon .gallery__thumbnail {
   width: 22rem;
-  min-width: 22rem;
   aspect-ratio: 16/9;
   border-radius: 1.5em;
   margin-right: 2rem;
@@ -262,7 +259,6 @@ div.gallery__container.digo-happy .gallery__thumbnail:hover {
 
 div.marathon-carousel .gallery__thumbnail {
   width: 24rem;
-  min-width: 24rem;
   max-width: 28rem;
   aspect-ratio: 16/9;
   height: auto;
@@ -457,7 +453,6 @@ div.marathon-carousel .gallery__thumbnail {
   /* Thumbs sizing for mobile */
   .gallery__container.top10 .gallery__thumbnail {
     width: 14rem;
-    min-width: 14rem;
     border-radius: 1em;
     display: block !important;
     opacity: 1 !important;
@@ -468,7 +463,6 @@ div.marathon-carousel .gallery__thumbnail {
   div.gallery__container.series .gallery__thumbnail,
   div.marathon-carousel .gallery__thumbnail {
     width: 14rem;
-    min-width: 14rem;
   }
 
   /* SPLIDE TOP10 - Mobile force corrections */
@@ -504,7 +498,6 @@ div.marathon-carousel .gallery__thumbnail {
     display: block !important;
     flex-shrink: 0 !important;
     width: 14rem !important;
-    min-width: 14rem !important;
     height: auto !important;
   }
 
@@ -643,26 +636,27 @@ div.marathon-carousel .gallery__thumbnail {
 /* --- TABLET (481px–768px) --- */
 @media (min-width: 481px) and (max-width: 768px) {
   /* Centered titles for tablet */
-  h2.gallery__title {
+  h2.gallery__title,
+  div.gallery__container h2.gallery__title,
+  div.gallery__container-vertical h2.gallery__title {
     font-size: 1.4rem;
     margin-left: 0;
     text-align: center;
   }
-
+  div.gallery__container.top10 {
+    margin-bottom: 1rem;
+  }
   /* Thumbs sizing for tablet */
   .gallery__container.top10 .gallery__thumbnail {
     width: 22rem;
-    min-width: 24rem;
   }
   div.gallery__container.series .gallery__thumbnail,
   div.marathon-carousel .gallery__thumbnail {
     width: 18rem;
-    min-width: 20rem;
   }
 
   .splide-simple .splide__slide img {
-    width: 16rem;
-    min-width: 16rem;
+    width: 18rem;
   }
 
   div.gallery__container.series .splide,
@@ -671,11 +665,15 @@ div.marathon-carousel .gallery__thumbnail {
     padding-right: 0;
   }
 
+  .splide-vertical {
+    padding: 3rem 0;
+  }
+
   /* MARATHON SECTION - Vertical layout with gradient (same as mobile) */
   .marathon-section {
     flex-direction: column;
     position: relative;
-    margin: 2rem 0;
+    margin: 0;
     background: transparent;
     overflow: hidden;
   }
@@ -753,12 +751,14 @@ div.marathon-carousel .gallery__thumbnail {
 /* --- NOTEBOOK (769px–1024px) --- */
 @media (min-width: 769px) and (max-width: 1024px) {
   /* Thumbs sizing for notebook */
-  .gallery__container.top10 .gallery__thumbnail,
+  .gallery__container.top10 .gallery__thumbnail {
+    width: 24rem;
+  }
+
   div.gallery__container.series .gallery__thumbnail,
   div.gallery__container.marathon .gallery__thumbnail,
   div.marathon-carousel .gallery__thumbnail {
-    width: 18rem;
-    min-width: 18rem;
+    width: 20rem;
   }
 }
 
@@ -767,14 +767,12 @@ div.marathon-carousel .gallery__thumbnail {
   /* Thumbs sizing for base desktop */
   .gallery__container.top10 .gallery__thumbnail {
     width: 27rem;
-    min-width: 27rem;
   }
 
   div.gallery__container.series .gallery__thumbnail,
   div.gallery__container.marathon .gallery__thumbnail,
   div.marathon-carousel .gallery__thumbnail {
     width: 22rem;
-    min-width: 22rem;
   }
 }
 
@@ -786,13 +784,11 @@ div.marathon-carousel .gallery__thumbnail {
   div.gallery__container.marathon .gallery__thumbnail,
   div.marathon-carousel .gallery__thumbnail {
     width: 28rem;
-    min-width: 28rem;
   }
 
   /* Marathon section: horizontal layout for large screens */
   .marathon-section {
     flex-direction: row;
-    min-height: 220px;
   }
 
   .marathon-info {
