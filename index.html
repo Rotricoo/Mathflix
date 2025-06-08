@@ -70,12 +70,92 @@
             <img src="assets/icons/mathflix-icon.svg" alt="Mathflix icon" />
           </div>
         </div>
-        <!-- Profile dropdown menu -->
+        <!-- ===== NOVOS CONTROLES MOBILE (APENAS VISÍVEIS EM MOBILE) ===== -->
+
+        <!-- Search button no header mobile -->
+        <div class="mobile-header-controls" style="display: none">
+          <button class="mobile-search-btn" id="mobile-header-search" type="button" aria-label="Search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Profile dropdown menu (desktop) -->
         <div id="profile-menu" class="profile-menu" style="display: none">
           <ul>
             <li><a href="#" data-action="profile">Profile</a></li>
             <li><a href="#" data-action="logout">Logout</a></li>
           </ul>
+        </div>
+
+        <!-- Profile modal -->
+        <div id="profile-modal" class="profile-modal" style="display: none">
+          <div class="profile-modal__backdrop"></div>
+          <div class="profile-modal__content">
+            <button class="profile-modal__close" aria-label="Close profile">&times;</button>
+
+            <div class="profile-modal__header">
+              <div class="profile-modal__avatar">
+                <div class="profile-avatar-circle">
+                  <span id="profile-avatar-letter">M</span>
+                </div>
+              </div>
+              <div class="profile-modal__info">
+                <h2 id="profile-username">Math</h2>
+                <p id="profile-role">Movie Enthusiast</p>
+              </div>
+            </div>
+
+            <div class="profile-modal__stats">
+              <div class="profile-stat">
+                <span class="profile-stat-number" id="profile-movies-watched">85</span>
+                <span class="profile-stat-label">Movies Watched</span>
+              </div>
+              <div class="profile-stat">
+                <span class="profile-stat-number" id="profile-series-watched">12</span>
+                <span class="profile-stat-label">Series Watched</span>
+              </div>
+              <div class="profile-stat">
+                <span class="profile-stat-number" id="profile-total-content">97</span>
+                <span class="profile-stat-label">Total Content</span>
+              </div>
+            </div>
+
+            <div class="profile-modal__sections">
+              <div class="profile-section">
+                <h3>Account Information</h3>
+                <div class="profile-info-grid">
+                  <div class="profile-info-item">
+                    <span class="profile-info-label">Last Login</span>
+                    <span class="profile-info-value" id="profile-last-login">Today</span>
+                  </div>
+                  <div class="profile-info-item">
+                    <span class="profile-info-label">Account Type</span>
+                    <span class="profile-info-value">Premium</span>
+                  </div>
+                  <div class="profile-info-item">
+                    <span class="profile-info-label">Member Since</span>
+                    <span class="profile-info-value">December 2024</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="profile-section">
+                <h3>Settings</h3>
+                <div class="profile-settings">
+                  <div class="profile-settings-notice">Settings and preferences are currently managed by the administrators.</div>
+                  <p class="profile-support-text">Need to change something? Contact our support team for assistance.</p>
+                  <button class="profile-support-btn" onclick="alert('Support system coming soon!')">Contact Support</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="profile-modal__footer">
+              <button id="profile-logout" class="profile-logout-btn">Logout</button>
+            </div>
+          </div>
         </div>
 
         <!-- Search modal -->
@@ -90,7 +170,7 @@
             <button id="search-submit" type="button">Search</button>
             <div id="search-result" class="search-result"></div>
             <div class="search-random-hint" id="search-random-hint" style="display: none">
-              <button id="random-movie-btn" class="random-movie-btn">Don't know what to watch? Click here!</button>
+              <button id="random-movie-btn" class="random-movie-btn">Don't know what to watch? <br />Click here!</button>
             </div>
           </div>
         </div>

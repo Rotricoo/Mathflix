@@ -1,6 +1,3 @@
-// ==========================
-// === MATHFLIX SCRIPT.JS - MAIN APPLICATION LOGIC ===
-// ==========================
 // SECTION INDEX:
 // 1. GLOBAL VARIABLES & CONFIGURATIONS
 // 2. LOCALSTORAGE MANAGEMENT
@@ -10,6 +7,7 @@
 // 6. SEARCH AUTOCOMPLETE SYSTEM
 // 7. PROFILE MODAL SYSTEM
 // 8. APPLICATION INITIALIZATION
+// 9. MOBILE MENU SYSTEM
 // ==========================
 
 // ==========================
@@ -162,8 +160,16 @@ function openMovieModal(key) {
   currentMovieKey = key;
   renderRanking(currentMovieKey);
 
-  // Display the modal
+  // ✅ FORÇAR exibição do modal
   movieModal.style.display = "flex";
+  movieModal.style.zIndex = "10000";
+
+  // ✅ FORÇAR setup dos listeners após pequeno delay
+  setTimeout(() => {
+    setupModalEventListeners();
+  }, 100);
+
+  console.log("🎬 Modal forced to display");
 }
 
 /**
@@ -171,32 +177,65 @@ function openMovieModal(key) {
  * @param {Object} movieInfo - Movie information object
  */
 function setupVerticalLayout(movieInfo) {
-  document.querySelector(".movie-modal__media").style.display = "none";
-  document.querySelector(".movie-modal__media-vertical").style.display = "flex";
-  document.getElementById("vertical-modal-poster").src = movieInfo.poster;
-  document.getElementById("vertical-modal-poster").alt = movieInfo.title;
-  document.getElementById("vertical-modal-trailer").src = movieInfo.trailer;
-  document.getElementById("vertical-modal-poster").style.display = "block";
-  document.getElementById("vertical-modal-trailer").style.display = "none";
-  document.getElementById("toggle-vertical-media").textContent = "See Trailer";
+  console.log("🎬 Setting up VERTICAL layout for:", movieInfo.title);
 
-  // Toggle between poster and trailer
-  document.getElementById("toggle-vertical-media").onclick = function () {
-    const poster = document.getElementById("vertical-modal-poster");
-    const trailer = document.getElementById("vertical-modal-trailer");
+  // ESCONDER layout horizontal e MOSTRAR layout vertical
+  const horizontalMedia = document.querySelector(".movie-modal__media");
+  const verticalMedia = document.querySelector(".movie-modal__media-vertical");
 
-    if (poster.style.display !== "none") {
-      // Switch to trailer
-      poster.style.display = "none";
-      trailer.style.display = "block";
-      this.textContent = "See Poster";
-    } else {
-      // Switch to poster
-      poster.style.display = "block";
-      trailer.style.display = "none";
-      this.textContent = "See Trailer";
-    }
-  };
+  if (horizontalMedia) {
+    horizontalMedia.style.display = "none";
+    console.log("❌ Hidden horizontal layout");
+  }
+  if (verticalMedia) {
+    verticalMedia.style.display = "flex";
+    console.log("✅ Showed vertical layout");
+  }
+
+  // Configurar poster e trailer vertical
+  const verticalPoster = document.getElementById("vertical-modal-poster");
+  const verticalTrailer = document.getElementById("vertical-modal-trailer");
+
+  if (verticalPoster) {
+    verticalPoster.src = movieInfo.poster;
+    verticalPoster.alt = movieInfo.title;
+    verticalPoster.style.display = "block";
+  }
+
+  if (verticalTrailer) {
+    verticalTrailer.src = movieInfo.trailer;
+    verticalTrailer.style.display = "none";
+  }
+
+  // Configurar botão de toggle vertical
+  const verticalToggleBtn = document.getElementById("toggle-vertical-media");
+  if (verticalToggleBtn) {
+    verticalToggleBtn.textContent = "See Trailer";
+    verticalToggleBtn.style.display = "block";
+
+    // Remover listeners anteriores
+    verticalToggleBtn.onclick = null; // Simplesmente limpar evento anterior
+
+    // Toggle entre poster e trailer
+    document.getElementById("toggle-vertical-media").onclick = function () {
+      const poster = document.getElementById("vertical-modal-poster");
+      const trailer = document.getElementById("vertical-modal-trailer");
+
+      if (poster && trailer) {
+        if (poster.style.display !== "none") {
+          // Trocar para trailer
+          poster.style.display = "none";
+          trailer.style.display = "block";
+          this.textContent = "See Poster";
+        } else {
+          // Trocar para poster
+          poster.style.display = "block";
+          trailer.style.display = "none";
+          this.textContent = "See Trailer";
+        }
+      }
+    };
+  }
 }
 
 /**
@@ -204,11 +243,94 @@ function setupVerticalLayout(movieInfo) {
  * @param {Object} movieInfo - Movie information object
  */
 function setupHorizontalLayout(movieInfo) {
-  document.querySelector(".movie-modal__media").style.display = "flex";
-  document.querySelector(".movie-modal__media-vertical").style.display = "none";
-  document.getElementById("movie-modal-poster").src = movieInfo.poster;
-  document.getElementById("movie-modal-poster").alt = movieInfo.title;
-  document.getElementById("movie-modal-trailer").src = movieInfo.trailer;
+  console.log("🎬 Setting up HORIZONTAL layout for:", movieInfo.title);
+
+  const isMobileOrTablet = window.innerWidth <= 768;
+
+  // ESCONDER layout vertical e MOSTRAR layout horizontal
+  const horizontalMedia = document.querySelector(".movie-modal__media");
+  const verticalMedia = document.querySelector(".movie-modal__media-vertical");
+
+  if (verticalMedia) {
+    verticalMedia.style.display = "none";
+    console.log("❌ Hidden vertical layout");
+  }
+  if (horizontalMedia) {
+    horizontalMedia.style.display = "flex";
+    console.log("✅ Showed horizontal layout");
+  }
+
+  if (isMobileOrTablet) {
+    // MOBILE/TABLET: Layout retangular pequeno com toggle
+    const poster = document.getElementById("movie-modal-poster");
+    const trailer = document.getElementById("movie-modal-trailer");
+    const trailerContainer = document.querySelector(".movie-modal__trailer");
+
+    if (poster && trailer) {
+      poster.src = movieInfo.poster;
+      poster.alt = movieInfo.title;
+      trailer.src = movieInfo.trailer;
+
+      // Mostrar poster por padrão, esconder trailer
+      poster.style.display = "block";
+      if (trailerContainer) trailerContainer.style.display = "none";
+    }
+
+    // Configurar botão de toggle (criar se não existir)
+    let toggleBtn = document.querySelector(".movie-modal__media .movie-modal__toggle-btn");
+    if (!toggleBtn) {
+      toggleBtn = document.createElement("button");
+      toggleBtn.className = "movie-modal__toggle-btn";
+      if (horizontalMedia) horizontalMedia.appendChild(toggleBtn);
+    }
+
+    if (toggleBtn) {
+      toggleBtn.textContent = "See Trailer";
+      toggleBtn.style.display = "block";
+
+      // Remover listeners anteriores
+      toggleBtn.onclick = null; // Simplesmente limpar evento anterior
+
+      // Função de toggle
+      document.querySelector(".movie-modal__media .movie-modal__toggle-btn").onclick = function () {
+        const poster = document.getElementById("movie-modal-poster");
+        const trailerContainer = document.querySelector(".movie-modal__trailer");
+
+        if (poster && trailerContainer) {
+          if (poster.style.display !== "none") {
+            // Trocar para trailer
+            poster.style.display = "none";
+            trailerContainer.style.display = "block";
+            this.textContent = "See Poster";
+          } else {
+            // Trocar para poster
+            poster.style.display = "block";
+            trailerContainer.style.display = "none";
+            this.textContent = "See Trailer";
+          }
+        }
+      };
+    }
+  } else {
+    // DESKTOP: Layout horizontal normal (poster + trailer lado a lado)
+    const poster = document.getElementById("movie-modal-poster");
+    const trailer = document.getElementById("movie-modal-trailer");
+    const trailerContainer = document.querySelector(".movie-modal__trailer");
+
+    if (poster && trailer) {
+      poster.src = movieInfo.poster;
+      poster.alt = movieInfo.title;
+      trailer.src = movieInfo.trailer;
+
+      // Para desktop, mostrar ambos lado a lado
+      poster.style.display = "block";
+      if (trailerContainer) trailerContainer.style.display = "block";
+    }
+
+    // Esconder botão de toggle para filmes horizontais no desktop
+    const toggleBtn = document.querySelector(".movie-modal__media .movie-modal__toggle-btn");
+    if (toggleBtn) toggleBtn.style.display = "none";
+  }
 }
 
 /**
@@ -216,6 +338,8 @@ function setupHorizontalLayout(movieInfo) {
  * Stops video trailers to save bandwidth
  */
 function closeMovieModal() {
+  console.log("🔒 closeMovieModal called");
+
   const movieModal = document.getElementById("movie-modal");
   if (movieModal) {
     movieModal.style.display = "none";
@@ -226,7 +350,7 @@ function closeMovieModal() {
     if (trailer) trailer.src = "";
     if (verticalTrailer) verticalTrailer.src = "";
 
-    console.log("🔒 Movie modal closed");
+    console.log("🔒 Movie modal closed and cleaned up");
 
     // If search modal was open before movie modal, restore focus
     const searchModal = document.getElementById("search-modal");
@@ -239,34 +363,151 @@ function closeMovieModal() {
   }
 }
 
-/**
- * Setup modal close event listeners on DOM ready
- */
-document.addEventListener("DOMContentLoaded", function () {
-  const movieModal = document.getElementById("movie-modal");
+// ✅ TORNAR FUNÇÃO GLOBAL
+window.closeMovieModal = closeMovieModal;
 
-  if (movieModal) {
-    // Close button functionality
-    const closeBtn = movieModal.querySelector(".movie-modal__close");
-    if (closeBtn) {
-      closeBtn.addEventListener("click", function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        closeMovieModal();
-      });
+// ✅ ADICIONAR como backup apenas se globalThis existir
+if (typeof globalThis !== "undefined") {
+  globalThis.closeMovieModal = closeMovieModal;
+}
+
+console.log("✅ closeMovieModal function made globally available");
+
+/**
+ * ✅ MODAL EVENT MANAGEMENT - Versão simplificada
+ */
+
+/**
+ * Setup modal event listeners - versão direta sem cloning
+ */
+function setupModalEventListeners() {
+  console.log("🔧 Setting up modal event listeners - SIMPLE VERSION");
+
+  const movieModal = document.getElementById("movie-modal");
+  if (!movieModal || movieModal.dataset.listenersAttached) {
+    console.log("❌ Modal not found or already configured");
+    return;
+  }
+
+  // Marcar como configurado
+  movieModal.dataset.listenersAttached = "true";
+
+  const closeBtn = movieModal.querySelector(".movie-modal__close");
+  if (!closeBtn) {
+    console.log("❌ Close button not found");
+    return;
+  }
+
+  // ✅ CLOSE BUTTON - evento simples
+  closeBtn.onclick = function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log("❌ Close button clicked");
+    closeMovieModal();
+  };
+
+  // ✅ BACKDROP - evento simples
+  movieModal.onclick = function (e) {
+    if (e.target === movieModal || e.target.classList.contains("movie-modal__backdrop")) {
+      console.log("❌ Backdrop clicked");
+      closeMovieModal();
+    }
+  };
+
+  console.log("✅ Modal event listeners attached successfully");
+}
+
+/**
+ * FORÇAR setup de listeners - versão simples
+ */
+function forceSetupModalListeners() {
+  const movieModal = document.getElementById("movie-modal");
+  if (movieModal && !movieModal.dataset.listenersAttached) {
+    console.log("🔧 Force setup modal listeners");
+    setupModalEventListeners();
+  }
+}
+
+/**
+ * ESC KEY handler para todos os modais
+ */
+document.addEventListener("keydown", function (e) {
+  if (e.key === "Escape" || e.keyCode === 27) {
+    console.log("⌨️ ESC key pressed");
+
+    // PRIORITY 1: Movie modal
+    const movieModal = document.getElementById("movie-modal");
+    if (movieModal && movieModal.style.display === "flex") {
+      console.log("❌ Closing movie modal via ESC");
+      closeMovieModal();
+      return;
     }
 
-    // Click outside modal to close (backdrop only)
-    movieModal.addEventListener("click", function (e) {
-      if (e.target === movieModal || e.target.classList.contains("movie-modal__backdrop")) {
-        closeMovieModal();
+    // PRIORITY 2: Search modal
+    const searchModal = document.getElementById("search-modal");
+    if (searchModal && searchModal.style.display === "flex") {
+      console.log("❌ Closing search modal via ESC");
+      searchModal.style.display = "none";
+      return;
+    }
+
+    // PRIORITY 3: Notification modal
+    const notificationModal = document.getElementById("notification-modal");
+    if (notificationModal && notificationModal.style.display === "flex") {
+      console.log("❌ Closing notification modal via ESC");
+      notificationModal.style.display = "none";
+      return;
+    }
+
+    // PRIORITY 4: Other modals
+    const modals = ["coming-soon-modal", "spoiler-modal", "surprise-modal", "comment-popup", "profile-modal"];
+
+    modals.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el && (el.style.display === "flex" || el.style.display === "block")) {
+        el.style.display = "none";
+        console.log(`❌ Closed ${id} via ESC`);
       }
     });
+
+    // PRIORITY 5: Profile menu dropdown
+    const profileMenu = document.getElementById("profile-menu");
+    const profileToggle = document.getElementById("profile-menu-toggle");
+    if (profileMenu && profileMenu.style.display === "block") {
+      profileMenu.style.display = "none";
+      if (profileToggle) profileToggle.setAttribute("aria-expanded", "false");
+      console.log("❌ Closed profile menu via ESC");
+    }
   }
 });
 
-// Make closeMovieModal available globally for main.js
-window.closeMovieModal = closeMovieModal;
+/**
+ * OBSERVER simples para detectar modal
+ */
+const modalObserver = new MutationObserver((mutations) => {
+  mutations.forEach((mutation) => {
+    // Só observar nodes adicionados
+    mutation.addedNodes.forEach((node) => {
+      if (node.nodeType === 1 && node.id === "movie-modal") {
+        console.log("🎬 MODAL DETECTED! Setting up listeners...");
+        forceSetupModalListeners();
+      }
+    });
+  });
+});
+
+// ✅ INICIAR observer quando DOM estiver pronto
+document.addEventListener("DOMContentLoaded", function () {
+  console.log("🚀 Starting SIMPLE modal observer...");
+
+  // Observar apenas adições no body
+  modalObserver.observe(document.body, {
+    childList: true,
+    subtree: true,
+  });
+
+  console.log("✅ SIMPLE modal observer started");
+});
 
 // ==========================
 // 4. MOVIE RANKING & COMMENT SYSTEM
@@ -663,117 +904,285 @@ function getCommentPreview(comment) {
     }
   });
 
-  /**
-   * Display random movie selection modal with countdown timer
-   */
-  function showRandomMovieCard() {
-    const surpriseModal = document.getElementById("surprise-modal");
-    const surpriseContent = document.getElementById("surprise-modal-content");
+  console.log("✅ Search system initialized");
+})();
 
-    if (!surpriseModal || !surpriseContent || !window.moviesData) return;
+/**
+ * ✅ SEARCH BUTTON CLICK HANDLER
+ */
+function handleSearchClick() {
+  console.log("🔍 handleSearchClick called");
+  const searchModal = document.getElementById("search-modal");
+  if (searchModal) {
+    searchModal.style.display = "flex";
+    const searchInput = document.getElementById("search-input");
+    if (searchInput) {
+      searchInput.value = "";
+      setTimeout(() => searchInput.focus(), 100);
+    }
+    console.log("✅ Search modal opened");
+  }
+}
 
-    surpriseModal.style.display = "flex";
+// ✅ SEARCH BUTTON LISTENERS
+document.addEventListener("click", function (e) {
+  if (e.target.id === "search-btn" || e.target.closest("#search-btn")) {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log("🔍 Search button clicked");
+    handleSearchClick();
+  }
+});
 
-    // Select random movie
-    const movieKeys = Object.keys(window.moviesData);
-    const randomKey = movieKeys[Math.floor(Math.random() * movieKeys.length)];
-    const movieInfo = window.moviesData[randomKey];
+// ==========================
+// 🎲 RANDOM MOVIE SYSTEM - SEÇÃO ÚNICA E COMPLETA
+// ==========================
 
-    if (!movieInfo) return;
+/**
+ * ✅ RANDOM MOVIE MAIN FUNCTION
+ * Sorteia um filme e exibe modal com countdown
+ */
+function showRandomMovieCard() {
+  console.log("🎲 showRandomMovieCard function called");
 
-    console.log(`🎲 Random movie selected: ${movieInfo.title}`);
+  if (!window.moviesData) {
+    console.error("❌ Movie data not available!");
+    return;
+  }
 
-    // Setup countdown timer
-    let countdown = 10;
-    surpriseContent.innerHTML = `
-      <button id="surprise-close" aria-label="Close" style="position:absolute;top:0.1rem;right:1rem;background:none;border:none;color:#fff;font-size:3rem;cursor:pointer;">&times;</button>
-      <div class="random-card">
-        <div style="font-size:1.2em; color:#4caf50; font-weight:bold; margin-bottom:0.7em;">Your random pick is:</div>
-        <div style="font-size:1.5em; color:#fff; font-weight:bold; margin-bottom:1.2em;">${movieInfo.title}</div>
-        <div style="display:flex; gap:1rem;">
-          <button id="go-random-movie" class="random-movie-btn" style="margin-top:0;">Go to movie (${countdown}s)</button>
-          <button id="reroll-random-movie" class="random-movie-btn" style="margin-top:0; background:#222; color:#4caf50; border:1.5px solid #4caf50;">Reroll</button>
+  // ✅ Sortear filme UMA VEZ
+  const movieKeys = Object.keys(window.moviesData);
+  const randomKey = movieKeys[Math.floor(Math.random() * movieKeys.length)];
+  const movieInfo = window.moviesData[randomKey];
+
+  if (!movieInfo) {
+    console.error("❌ Random movie not found!");
+    return;
+  }
+
+  console.log(`🎲 Random movie selected: ${movieInfo.title} (key: ${randomKey})`);
+
+  // ✅ Criar/obter modal
+  let randomModal = document.getElementById("random-movie-modal");
+  if (!randomModal) {
+    randomModal = document.createElement("div");
+    randomModal.id = "random-movie-modal";
+    randomModal.className = "modal search-modal";
+    randomModal.style.zIndex = "9999";
+    randomModal.innerHTML = `
+      <div class="modal__backdrop search-modal__backdrop"></div>
+      <div class="modal__content search-modal__content" style="border: 2px solid #4aa042; background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);">
+        <button id="random-close" class="modal__close" aria-label="Close">&times;</button>
+        <div id="random-content" style="text-align: center; padding: 2rem;">
+          <!-- Content será preenchido dinamicamente -->
         </div>
       </div>
     `;
-
-    // Get button elements
-    const goBtn = document.getElementById("go-random-movie");
-    const rerollBtn = document.getElementById("reroll-random-movie");
-    const closeBtn = document.getElementById("surprise-close");
-
-    // Clear any existing timers to prevent conflicts
-    if (window.randomMovieTimer) {
-      clearInterval(window.randomMovieTimer);
-      console.log("🧹 Cleared previous timer");
-    }
-
-    // Countdown timer that auto-opens movie after 10 seconds
-    window.randomMovieTimer = setInterval(() => {
-      countdown--;
-      if (goBtn) goBtn.textContent = `Go to movie (${countdown}s)`;
-
-      if (countdown <= 0) {
-        clearInterval(window.randomMovieTimer);
-        window.randomMovieTimer = null;
-        surpriseModal.style.display = "none";
-        // Small delay before opening movie to allow modal to close
-        setTimeout(() => {
-          openMovieModal(randomKey);
-          console.log(`🎬 Auto-opened: ${movieInfo.title}`);
-        }, 350);
-      }
-    }, 1000);
-
-    // Manual "Go to movie" button
-    goBtn.addEventListener("click", () => {
-      if (window.randomMovieTimer) {
-        clearInterval(window.randomMovieTimer);
-        window.randomMovieTimer = null;
-      }
-      surpriseModal.style.display = "none";
-      setTimeout(() => {
-        openMovieModal(randomKey);
-        console.log(`🎬 Manual open: ${movieInfo.title}`);
-      }, 350);
-    });
-
-    // Reroll button - clear timer and start fresh
-    rerollBtn.addEventListener("click", () => {
-      if (window.randomMovieTimer) {
-        clearInterval(window.randomMovieTimer);
-        window.randomMovieTimer = null;
-        console.log("🔄 Reroll - timer cleared");
-      }
-      showRandomMovieCard(); // Recursive call for new random selection
-    });
-
-    // Close button
-    closeBtn.addEventListener("click", () => {
-      if (window.randomMovieTimer) {
-        clearInterval(window.randomMovieTimer);
-        window.randomMovieTimer = null;
-        console.log("❌ Close - timer cleared");
-      }
-      surpriseModal.style.display = "none";
-    });
+    document.body.appendChild(randomModal);
+    console.log("✅ Random modal created");
   }
 
-  // Event listener for all random movie button clicks
-  document.addEventListener("click", function (e) {
-    // Handle all random movie buttons: search modal + footer button
-    if (
-      e.target.id === "random-movie-btn" ||
-      e.target.id === "random-movie-btn-bottom" ||
-      e.target.closest("#random-movie-btn") ||
-      e.target.closest("#random-movie-btn-bottom")
-    ) {
+  // ✅ Preencher conteúdo do modal
+  const randomContent = document.getElementById("random-content");
+  let countdown = 10;
+
+  randomContent.innerHTML = `
+    <div class="random-movie-container" style="gap: 1.5rem;">
+      <div class="random-movie-title" style="color: #4caf50; font-size: 1.3rem; font-weight: bold;">
+        Your random pick is:
+      </div>
+      <div style="color: #fff; font-size: 1.8rem; font-weight: bold; margin: 1rem 0;">
+        ${movieInfo.title}
+      </div>
+      <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <button id="go-random-movie" class="random-movie-btn" data-movie-key="${randomKey}">
+          Go to movie (${countdown}s)
+        </button>
+        <button id="reroll-random-movie" class="random-movie-btn" style="background: #222; border: 1.5px solid #4caf50;">
+          Reroll
+        </button>
+      </div>
+    </div>
+  `;
+
+  // ✅ Exibir modal
+  randomModal.style.display = "flex";
+
+  // ✅ Limpar timers anteriores
+  if (window.randomMovieTimer) {
+    clearInterval(window.randomMovieTimer);
+    window.randomMovieTimer = null;
+  }
+
+  // ✅ Setup dos botões - SEM event listeners duplicados
+  const goBtn = document.getElementById("go-random-movie");
+  const rerollBtn = document.getElementById("reroll-random-movie");
+  const closeBtn = document.getElementById("random-close");
+
+  // ✅ Countdown timer
+  window.randomMovieTimer = setInterval(() => {
+    countdown--;
+    if (goBtn) goBtn.textContent = `Go to movie (${countdown}s)`;
+
+    if (countdown <= 0) {
+      clearInterval(window.randomMovieTimer);
+      window.randomMovieTimer = null;
+      randomModal.style.display = "none";
+
+      // Fechar search modal se estiver aberto
+      const searchModal = document.getElementById("search-modal");
+      if (searchModal) searchModal.style.display = "none";
+
+      setTimeout(() => {
+        openMovieModal(randomKey);
+        console.log(`🎬 Auto-opened: ${movieInfo.title}`);
+      }, 350);
+    }
+  }, 1000);
+
+  // ✅ Eventos dos botões - INLINE para evitar conflitos
+  if (goBtn) {
+    goBtn.onclick = function (e) {
       e.preventDefault();
-      showRandomMovieCard();
-      console.log("🎲 Random movie button clicked:", e.target.id);
+      e.stopPropagation();
+      console.log(`🎬 Manual open: ${movieInfo.title} (key: ${randomKey})`);
+
+      if (window.randomMovieTimer) {
+        clearInterval(window.randomMovieTimer);
+        window.randomMovieTimer = null;
+      }
+
+      randomModal.style.display = "none";
+      const searchModal = document.getElementById("search-modal");
+      if (searchModal) searchModal.style.display = "none";
+
+      setTimeout(() => {
+        openMovieModal(randomKey); // USA O MESMO randomKey
+      }, 350);
+    };
+  }
+
+  if (rerollBtn) {
+    rerollBtn.onclick = function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      console.log("🔄 Reroll clicked");
+
+      if (window.randomMovieTimer) {
+        clearInterval(window.randomMovieTimer);
+        window.randomMovieTimer = null;
+      }
+
+      showRandomMovieCard(); // Nova tentativa
+    };
+  }
+
+  if (closeBtn) {
+    closeBtn.onclick = function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      console.log("❌ Random modal closed manually");
+
+      if (window.randomMovieTimer) {
+        clearInterval(window.randomMovieTimer);
+        window.randomMovieTimer = null;
+      }
+
+      randomModal.style.display = "none";
+    };
+  }
+
+  // ✅ Fechar clicando no backdrop
+  randomModal.onclick = function (e) {
+    if (e.target === randomModal || e.target.classList.contains("search-modal__backdrop")) {
+      if (window.randomMovieTimer) {
+        clearInterval(window.randomMovieTimer);
+        window.randomMovieTimer = null;
+      }
+      randomModal.style.display = "none";
+      console.log("❌ Random modal closed via backdrop");
+    }
+  };
+
+  console.log("✅ Random movie modal setup complete");
+}
+
+/**
+ * ✅ RANDOM MOVIE EVENT LISTENERS - VERSÃO LIMPA
+ */
+
+// ✅ Listener principal - EXCLUINDO cliques dentro do modal
+document.addEventListener("click", function (e) {
+  // IGNORAR cliques dentro do random modal
+  if (e.target.closest("#random-movie-modal")) {
+    return;
+  }
+
+  // Detectar botões de random movie
+  if (
+    e.target.id === "random-movie-btn" ||
+    e.target.id === "random-movie-btn-bottom" ||
+    e.target.closest("#random-movie-btn") ||
+    e.target.closest("#random-movie-btn-bottom") ||
+    (e.target.classList.contains("random-movie-btn") && !e.target.closest("#random-movie-modal"))
+  ) {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log("🎲 Random movie button clicked:", e.target.id || e.target.className);
+    showRandomMovieCard();
+  }
+});
+
+/**
+ * ✅ FORCE SETUP de botões random quando página carregar
+ */
+window.addEventListener("load", function () {
+  console.log("🔧 Force setting up random movie buttons...");
+
+  // Setup direto nos botões existentes
+  const randomButtons = document.querySelectorAll("#random-movie-btn, #random-movie-btn-bottom, .random-movie-btn");
+
+  randomButtons.forEach((btn) => {
+    if (btn && !btn.dataset.randomListenerAttached) {
+      btn.dataset.randomListenerAttached = "true";
+
+      btn.addEventListener("click", function (e) {
+        // IGNORAR se clique for dentro do modal
+        if (e.target.closest("#random-movie-modal")) {
+          return;
+        }
+
+        e.preventDefault();
+        e.stopPropagation();
+        console.log("🎲 FORCE: Random button clicked");
+        showRandomMovieCard();
+      });
+
+      console.log("✅ Force attached listener to:", btn.id || btn.className);
     }
   });
-})();
+
+  console.log("✅ Random movie force setup completed");
+});
+
+/**
+ * ✅ FUNÇÃO DE TESTE
+ */
+window.testRandomMovie = function () {
+  console.log("🧪 Testing random movie function...");
+  if (typeof showRandomMovieCard === "function") {
+    showRandomMovieCard();
+    console.log("✅ Random movie function works!");
+  } else {
+    console.error("❌ showRandomMovieCard function not found!");
+  }
+};
+
+console.log("✅ Random movie system initialized");
+
+// ==========================
+// FIM DA SEÇÃO RANDOM MOVIE
+// ==========================
 
 // ==========================
 // 6. SEARCH AUTOCOMPLETE SYSTEM
@@ -782,7 +1191,10 @@ function getCommentPreview(comment) {
 (function initializeAutocomplete() {
   const searchInput = document.getElementById("search-input");
 
-  if (!searchInput) return;
+  if (!searchInput) {
+    console.warn("⚠️ Search input not found for autocomplete");
+    return;
+  }
 
   // Create or get autocomplete dropdown element
   let searchAutocomplete = document.getElementById("search-autocomplete");
@@ -791,6 +1203,7 @@ function getCommentPreview(comment) {
     searchAutocomplete.id = "search-autocomplete";
     searchAutocomplete.className = "autocomplete-list";
     searchInput.parentNode.insertBefore(searchAutocomplete, searchInput.nextSibling);
+    console.log("✅ Autocomplete dropdown created");
   }
 
   /**
@@ -860,6 +1273,7 @@ function getCommentPreview(comment) {
         // Trigger search with selected suggestion
         const searchSubmit = document.getElementById("search-submit");
         if (searchSubmit) searchSubmit.click();
+        console.log(`🔍 Autocomplete selected: ${suggestion.label} (${suggestion.category})`);
       });
 
       searchAutocomplete.appendChild(listItem);
@@ -890,9 +1304,12 @@ function getCommentPreview(comment) {
         !e.target.closest("#search-autocomplete")
       ) {
         searchModal.style.display = "none";
+        console.log("❌ Search modal closed via outside click");
       }
     }
   });
+
+  console.log("✅ Autocomplete system initialized");
 })();
 
 // ==========================
@@ -963,6 +1380,44 @@ function initializeProfileModal() {
 }
 
 /**
+ * Update profile information in the modal
+ * @param {string} username - Current username
+ * @param {string} userRole - Current user role
+ */
+function updateProfileInfo(username, userRole) {
+  console.log(`� Updating profile info for: ${username} (${userRole})`);
+
+  // Update avatar letter
+  const avatarLetter = document.getElementById("profile-avatar-letter");
+  if (avatarLetter) {
+    avatarLetter.textContent = username.charAt(0).toUpperCase();
+  }
+
+  // Update username
+  const usernameEl = document.getElementById("profile-username");
+  if (usernameEl) {
+    usernameEl.textContent = username.charAt(0).toUpperCase() + username.slice(1);
+  }
+
+  // Update role
+  const roleEl = document.getElementById("profile-role");
+  if (roleEl) {
+    const roleText = userRole === "admin" ? "Administrator" : "Movie Enthusiast";
+    roleEl.textContent = roleText;
+  }
+
+  // Update last login
+  const lastLoginEl = document.getElementById("profile-last-login");
+  if (lastLoginEl) {
+    const now = new Date();
+    const timeString = now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    lastLoginEl.textContent = `Today at ${timeString}`;
+  }
+
+  console.log("✅ Profile info updated successfully");
+}
+
+/**
  * Open profile modal with current user data
  */
 function openProfileModal() {
@@ -970,7 +1425,7 @@ function openProfileModal() {
 
   const profileModal = document.getElementById("profile-modal");
   if (!profileModal) {
-    console.error("❌ Profile modal not found!");
+    console.error("❌ Profile modal not found in HTML!");
     return;
   }
 
@@ -982,18 +1437,21 @@ function openProfileModal() {
 
   console.log(`👤 Opening profile for: ${currentUser}`);
 
-  // Update profile information
-  updateProfileData(currentUser, userRole);
+  // ✅ ATUALIZAR informações do perfil diretamente
+  updateProfileInfo(currentUser, userRole);
 
-  // Show modal
+  // ✅ CALCULAR estatísticas
+  updateProfileStats(currentUser);
+
+  // ✅ FORÇAR exibição
   profileModal.style.display = "flex";
+  profileModal.style.zIndex = "10000";
 
   // Setup modal handlers after showing modal
   setupProfileModalHandlers();
 
   console.log("✅ Profile modal opened and handlers attached");
 }
-
 /**
  * Close profile modal
  */
@@ -1003,40 +1461,6 @@ function closeProfileModal() {
     profileModal.style.display = "none";
     console.log("❌ Profile modal closed");
   }
-}
-
-/**
- * Update profile modal with user-specific data
- * @param {string} username - Current username
- * @param {string} role - User role
- */
-function updateProfileData(username, role) {
-  console.log("📊 Updating profile data for:", username);
-
-  // Update basic info
-  const usernameEl = document.getElementById("profile-username");
-  const roleEl = document.getElementById("profile-role");
-  const avatarEl = document.getElementById("profile-avatar-letter");
-  const lastLoginEl = document.getElementById("profile-last-login");
-
-  if (usernameEl) {
-    usernameEl.textContent = username === "mathdigo" ? "Math & Digo" : "Math";
-  }
-
-  if (roleEl) {
-    roleEl.textContent = role === "admin" ? "Administrator & Movie Curator" : "Movie Enthusiast";
-  }
-
-  if (avatarEl) {
-    avatarEl.textContent = username === "mathdigo" ? "MD" : "M";
-  }
-
-  if (lastLoginEl) {
-    lastLoginEl.textContent = new Date().toLocaleDateString();
-  }
-
-  // Calculate and update stats
-  updateProfileStats(username);
 }
 
 /**
@@ -1051,7 +1475,7 @@ function updateProfileStats(username) {
   const avgRatingEl = document.getElementById("profile-avg-rating");
 
   // Check if elements exist
-  if (!moviesWatchedEl || !seriesWatchedEl || !avgRatingEl) {
+  if (!moviesWatchedEl || !seriesWatchedEl) {
     console.warn("⚠️ Stat elements not found, using defaults");
     return;
   }
@@ -1059,9 +1483,8 @@ function updateProfileStats(username) {
   // Check if movie data exists
   if (!window.moviesData) {
     console.warn("⚠️ Movie data not available, using defaults");
-    moviesWatchedEl.textContent = "42";
-    seriesWatchedEl.textContent = "8";
-    avgRatingEl.textContent = "4.2";
+    moviesWatchedEl.textContent = "85";
+    seriesWatchedEl.textContent = "12";
     return;
   }
 
@@ -1073,35 +1496,61 @@ function updateProfileStats(username) {
     for (const movieKey in window.moviesData) {
       const movieData = window.moviesData[movieKey];
 
-      // Simple series detection based on key patterns and title content
+      // Enhanced series detection with more patterns
       const isSeries =
+        // Explicit series keys
         movieKey.includes("rupaul") ||
         movieKey.includes("simpsons") ||
         movieKey.includes("howmet") ||
         movieKey.includes("agatha") ||
         movieKey.includes("wandavision") ||
         movieKey.includes("theoffice") ||
-        (movieData.title && movieData.title.toLowerCase().includes("series"));
+        // Title-based detection
+        (movieData.title &&
+          (movieData.title.toLowerCase().includes("series") ||
+            movieData.title.toLowerCase().includes("season") ||
+            movieData.title.toLowerCase().includes("drag race") ||
+            movieData.title.toLowerCase().includes("office") ||
+            movieData.title.toLowerCase().includes("simpsons"))) ||
+        // Categories-based detection
+        (movieData.categories &&
+          (movieData.categories.includes("series") ||
+            movieData.categories.includes("sitcom") ||
+            movieData.categories.includes("reality") ||
+            movieData.categories.includes("competition") ||
+            movieData.categories.includes("animation"))) ||
+        // Duration-based detection (series usually don't have duration or have multiple episodes)
+        (movieData.duration &&
+          (movieData.duration.includes("Episodes") ||
+            movieData.duration.includes("Seasons") ||
+            movieData.duration.includes("Season")));
 
       if (isSeries) {
         seriesCount++;
+        console.log(`📺 Series detected: ${movieKey} - ${movieData.title}`);
       } else {
         movieCount++;
+        console.log(`🎬 Movie detected: ${movieKey} - ${movieData.title}`);
       }
     }
 
     // Update display
     moviesWatchedEl.textContent = movieCount;
     seriesWatchedEl.textContent = seriesCount;
-    avgRatingEl.textContent = "4.2"; // Default rating
+
+    // Update total if element exists
+    const totalContentEl = document.getElementById("profile-total-content");
+    if (totalContentEl) {
+      totalContentEl.textContent = movieCount + seriesCount;
+    }
 
     console.log(`✅ Stats updated: ${movieCount} movies, ${seriesCount} series`);
+    console.log(`📊 Total content: ${movieCount + seriesCount} items`);
   } catch (error) {
     console.error("❌ Error calculating stats:", error);
     // Fallback values
-    moviesWatchedEl.textContent = "42";
-    seriesWatchedEl.textContent = "8";
-    avgRatingEl.textContent = "4.2";
+    moviesWatchedEl.textContent = "85";
+    seriesWatchedEl.textContent = "12";
   }
 }
 
@@ -1300,22 +1749,34 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // ==========================
-// 9. Mobile Menu
+// 9. MOBILE MENU SYSTEM
 // ==========================
+
 function initializeMobileMenu() {
-  console.log("🍔 Starting mobile menu initialization...");
+  console.log("📱 Initializing mobile menu system...");
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initializeMobileMenu);
-    return;
-  }
-
-  setTimeout(() => {
+  if (window.innerWidth <= 768) {
     createMobileMenuElements();
     setupMobileMenuEventListeners();
-  }, 500);
+    setupMobileMenuActions();
+    setupMobileHeaderControls();
+    setupBackupMobileControls();
+
+    // Setup resize handler
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 768) {
+        const mobileOverlay = document.querySelector(".mobile-menu-overlay");
+        if (mobileOverlay) mobileOverlay.classList.remove("active");
+      }
+    });
+
+    console.log("✅ Mobile menu system initialized");
+  }
 }
 
+/**
+ * Create mobile menu DOM elements
+ */
 function createMobileMenuElements() {
   console.log("🔧 Creating mobile menu elements...");
 
@@ -1325,14 +1786,21 @@ function createMobileMenuElements() {
     return;
   }
 
-  // Remove existing elements
+  // Remove existing elements to prevent duplicates
   const existingToggle = document.querySelector(".mobile-menu-toggle");
   const existingOverlay = document.querySelector(".mobile-menu-overlay");
 
   if (existingToggle) existingToggle.remove();
   if (existingOverlay) existingOverlay.remove();
 
-  // Create hamburger button (CSS handles ALL styling)
+  // Show APENAS mobile search controls
+  const mobileControls = document.querySelector(".mobile-header-controls");
+  if (mobileControls && window.innerWidth <= 480) {
+    mobileControls.style.display = "flex";
+    console.log("✅ Mobile search controls activated");
+  }
+
+  // Create hamburger button
   const hamburger = document.createElement("button");
   hamburger.className = "mobile-menu-toggle";
   hamburger.setAttribute("aria-label", "Mobile menu");
@@ -1346,48 +1814,40 @@ function createMobileMenuElements() {
   header.insertBefore(hamburger, header.firstChild);
   console.log("✅ Hamburger button created");
 
-  // Create menu overlay (CSS handles ALL styling)
+  // Create menu overlay (COM notification DENTRO do menu)
   const overlay = document.createElement("div");
   overlay.className = "mobile-menu-overlay";
   overlay.innerHTML = `
     <div class="mobile-menu-content">
-      <!-- Logo -->
+      <!-- Logo MAIOR (120px) -->
       <div class="mobile-menu-logo">
         <img src="assets/icons/mathflix-logo.svg" alt="Mathflix">
       </div>
       
-      <!-- Profile -->
+      <!-- Profile DISCRETO como botão -->
       <div class="mobile-menu-profile">
         <img src="assets/icons/mathflix-icon-white.svg" alt="Profile">
         <span>Profile</span>
       </div>
       
-      <!-- Action buttons -->
-      <div class="mobile-menu-actions">
-        <button class="mobile-menu-action-btn" id="mobile-search-btn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="11" cy="11" r="8"></circle>
-            <path d="M21 21l-4.35-4.35"></path>
-          </svg>
-          <span>Search</span>
-        </button>
-        <button class="mobile-menu-action-btn" id="mobile-notification-btn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-          </svg>
-          <span>Alerts</span>
-        </button>
-      </div>
-      
-      <!-- Navigation -->
+      <!-- Navigation (SEM search) -->
       <nav class="mobile-menu-nav">
         <a href="#" id="mobile-home">Home</a>
         <a href="#" id="mobile-movies">Movies</a>
         <a href="#" id="mobile-series">Series</a>
       </nav>
       
-      <!-- Logout -->
+      <!-- NOTIFICATION BUTTON DENTRO DO MENU -->
+      <button class="mobile-menu-notification" id="mobile-menu-notification">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 16v-5a6 6 0 0 0-12 0v5"></path>
+          <rect x="6" y="16" width="12" height="2" rx="1"></rect>
+          <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+        </svg>
+        <span>Notifications</span>
+      </button>
+      
+      <!-- Logout no mesmo lugar -->
       <button class="mobile-menu-logout" id="mobile-logout">
         Logout
       </button>
@@ -1395,9 +1855,12 @@ function createMobileMenuElements() {
   `;
 
   document.body.appendChild(overlay);
-  console.log("✅ Mobile overlay created");
+  console.log("✅ Mobile overlay created (notification inside menu)");
 }
 
+/**
+ * Setup mobile menu event listeners
+ */
 function setupMobileMenuEventListeners() {
   console.log("🔧 Setting up mobile menu event listeners...");
 
@@ -1409,7 +1872,7 @@ function setupMobileMenuEventListeners() {
     return;
   }
 
-  // Main hamburger click - just toggle CSS classes
+  // Main hamburger click
   mobileToggle.addEventListener("click", function (e) {
     e.preventDefault();
     e.stopPropagation();
@@ -1421,7 +1884,7 @@ function setupMobileMenuEventListeners() {
     if (isActive) {
       closeMobileMenu();
     } else {
-      // Open menu - CSS handles everything
+      // Open menu
       mobileToggle.classList.add("active");
       mobileOverlay.classList.add("active");
       document.body.style.overflow = "hidden";
@@ -1436,40 +1899,16 @@ function setupMobileMenuEventListeners() {
     }
   });
 
-  // Setup action buttons
-  setupMobileMenuActions();
-
   console.log("✅ Mobile menu event listeners configured");
 }
 
+/**
+ * Setup mobile menu action buttons
+ */
 function setupMobileMenuActions() {
-  // Search button
-  const mobileSearchBtn = document.getElementById("mobile-search-btn");
-  if (mobileSearchBtn) {
-    mobileSearchBtn.addEventListener("click", () => {
-      console.log("🔍 Mobile search clicked");
-      closeMobileMenu();
-      setTimeout(() => {
-        const searchBtn = document.getElementById("search-btn");
-        if (searchBtn) searchBtn.click();
-      }, 300);
-    });
-  }
+  console.log("🔧 Setting up mobile menu actions...");
 
-  // Notification button
-  const mobileNotificationBtn = document.getElementById("mobile-notification-btn");
-  if (mobileNotificationBtn) {
-    mobileNotificationBtn.addEventListener("click", () => {
-      console.log("🔔 Mobile notification clicked");
-      closeMobileMenu();
-      setTimeout(() => {
-        const notificationBtn = document.getElementById("notification-btn");
-        if (notificationBtn) notificationBtn.click();
-      }, 300);
-    });
-  }
-
-  // Profile
+  // Profile discreto
   const mobileProfile = document.querySelector(".mobile-menu-profile");
   if (mobileProfile) {
     mobileProfile.addEventListener("click", () => {
@@ -1478,9 +1917,36 @@ function setupMobileMenuActions() {
       setTimeout(() => {
         if (typeof openProfileModal === "function") {
           openProfileModal();
+        } else {
+          console.error("❌ openProfileModal function not found");
         }
       }, 300);
     });
+    console.log("✅ Mobile profile connected");
+  }
+
+  // Notification DENTRO do menu
+  const mobileNotification = document.getElementById("mobile-menu-notification");
+  if (mobileNotification) {
+    mobileNotification.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      console.log("🔔 Mobile menu notification clicked");
+
+      closeMobileMenu();
+
+      setTimeout(() => {
+        console.log("🔔 Opening notification modal...");
+        const notificationModal = document.getElementById("notification-modal");
+        if (notificationModal) {
+          notificationModal.style.display = "flex";
+          console.log("✅ Notification modal opened successfully");
+        } else {
+          console.error("❌ Notification modal not found!");
+        }
+      }, 300);
+    });
+    console.log("✅ Mobile notification connected");
   }
 
   // Logout
@@ -1492,9 +1958,12 @@ function setupMobileMenuActions() {
       setTimeout(() => {
         if (typeof handleLogout === "function") {
           handleLogout();
+        } else {
+          console.error("❌ handleLogout function not found");
         }
       }, 300);
     });
+    console.log("✅ Mobile logout connected");
   }
 
   // Navigation links
@@ -1502,33 +1971,180 @@ function setupMobileMenuActions() {
   mobileLinks.forEach((link) => {
     link.addEventListener("click", (e) => {
       e.preventDefault();
-      console.log(`📱 Mobile nav clicked: ${link.textContent}`);
+      const action = e.target.id.replace("mobile-", "");
+      console.log(`🔗 Mobile nav clicked: ${action}`);
+
       closeMobileMenu();
+
+      // Trigger header navigation
+      setTimeout(() => {
+        const headerNavItems = document.querySelectorAll(".header__nav-tittle a");
+        if (action === "home" && headerNavItems[0]) headerNavItems[0].click();
+        if (action === "movies" && headerNavItems[1]) headerNavItems[1].click();
+        if (action === "series" && headerNavItems[2]) headerNavItems[2].click();
+        console.log(`✅ Triggered header navigation for: ${action}`);
+      }, 300);
     });
   });
+
+  console.log("✅ Mobile navigation connected");
 }
 
+/**
+ * Setup mobile header controls (APENAS search no header) - FUNÇÃO COMPLETA
+ */
+function setupMobileHeaderControls() {
+  console.log("🔧 Setting up mobile header controls...");
+
+  // Search button no header mobile
+  const mobileSearchBtn = document.getElementById("mobile-header-search");
+  if (mobileSearchBtn) {
+    mobileSearchBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      console.log("🔍 Mobile header search clicked");
+
+      // Abre o modal diretamente
+      const searchModal = document.getElementById("search-modal");
+      if (searchModal) {
+        searchModal.style.display = "flex";
+        const searchInput = document.getElementById("search-input");
+        if (searchInput) {
+          searchInput.value = "";
+          setTimeout(() => searchInput.focus(), 100);
+        }
+        console.log("✅ Search modal opened from mobile header");
+      } else {
+        console.error("❌ Search modal not found!");
+      }
+    });
+    console.log("✅ Mobile search button connected");
+  } else {
+    console.error("❌ Mobile search button not found!");
+  }
+}
+
+/**
+ * Close mobile menu
+ */
 function closeMobileMenu() {
   const mobileToggle = document.querySelector(".mobile-menu-toggle");
   const mobileOverlay = document.querySelector(".mobile-menu-overlay");
 
   if (mobileToggle && mobileOverlay) {
-    // CSS handles everything - just remove classes
     mobileToggle.classList.remove("active");
     mobileOverlay.classList.remove("active");
     document.body.style.overflow = "";
-
     console.log("❌ Mobile menu closed");
   }
 }
 
-// Initialize
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", initializeMobileMenu);
-} else {
-  initializeMobileMenu();
+/**
+ * BACKUP MOBILE CONTROLS - Se as outras funções falharem
+ */
+function setupBackupMobileControls() {
+  console.log("🛡️ Setting up backup mobile controls...");
+
+  // BACKUP Search
+  document.addEventListener("click", function (e) {
+    if (e.target.closest("#mobile-header-search")) {
+      e.preventDefault();
+      e.stopPropagation();
+      console.log("🔍 BACKUP: Mobile search clicked");
+
+      const searchModal = document.getElementById("search-modal");
+      if (searchModal) {
+        searchModal.style.display = "flex";
+        const searchInput = document.getElementById("search-input");
+        if (searchInput) {
+          searchInput.value = "";
+          setTimeout(() => searchInput.focus(), 100);
+        }
+        console.log("✅ BACKUP: Search modal opened");
+      }
+    }
+  });
+
+  // BACKUP Notification
+  document.addEventListener("click", function (e) {
+    if (e.target.closest("#mobile-menu-notification")) {
+      e.preventDefault();
+      e.stopPropagation();
+      console.log("🔔 BACKUP: Mobile notification clicked");
+
+      // Close mobile menu first
+      const mobileOverlay = document.querySelector(".mobile-menu-overlay");
+      const mobileToggle = document.querySelector(".mobile-menu-toggle");
+      if (mobileOverlay && mobileToggle) {
+        mobileToggle.classList.remove("active");
+        mobileOverlay.classList.remove("active");
+        document.body.style.overflow = "";
+      }
+
+      setTimeout(() => {
+        const notificationModal = document.getElementById("notification-modal");
+        if (notificationModal) {
+          notificationModal.style.display = "flex";
+          console.log("✅ BACKUP: Notification modal opened");
+        }
+      }, 300);
+    }
+  });
+
+  console.log("✅ Backup mobile controls activated");
 }
 
-window.addEventListener("load", () => {
+// ✅ MÚLTIPLAS INICIALIZAÇÕES para garantir que funcione
+document.addEventListener("DOMContentLoaded", function () {
+  console.log("🚀 DOM Ready - initializing mobile menu...");
   setTimeout(initializeMobileMenu, 100);
 });
+
+window.addEventListener("load", function () {
+  console.log("🚀 Window Load - initializing mobile menu...");
+  setTimeout(initializeMobileMenu, 200);
+});
+
+// ✅ BACKUP caso as outras falhem
+setTimeout(() => {
+  console.log("🚀 Timeout backup - initializing mobile menu...");
+  initializeMobileMenu();
+}, 1000);
+
+console.log("✅ Mobile menu system loaded and ready");
+
+// ✅ TESTE FUNCTION para debug
+window.testRandomMovie = function () {
+  console.log("🧪 Testing random movie function...");
+  if (typeof showRandomMovieCard === "function") {
+    showRandomMovieCard();
+    console.log("✅ Random movie function works!");
+  } else {
+    console.error("❌ showRandomMovieCard function not found!");
+  }
+};
+
+// ✅ FORCE SETUP quando página carregar
+window.addEventListener("load", function () {
+  console.log("🔧 Window loaded - setting up random movie buttons...");
+
+  // Force setup all random buttons
+  document.querySelectorAll(".random-movie-btn, #random-movie-btn, #random-movie-btn-bottom").forEach((btn) => {
+    if (btn && !btn.dataset.listenerAttached) {
+      btn.dataset.listenerAttached = "true";
+      btn.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log("🎲 FORCE: Random button clicked");
+        if (typeof showRandomMovieCard === "function") {
+          showRandomMovieCard();
+        } else {
+          console.error("❌ showRandomMovieCard not available!");
+        }
+      });
+      console.log("✅ Force attached listener to:", btn.id || btn.className);
+    }
+  });
+});
+
+console.log("✅ Random movie force setup completed");

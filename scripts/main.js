@@ -6,12 +6,11 @@
 // 3. SPLIDE CAROUSEL CONFIGURATIONS
 // 4. HEADER FUNCTIONALITY (Search, Notifications, Profile Menu)
 // 5. HERO "SEE DETAILS" BUTTON HANDLER
-// 6. ESC KEY MODAL MANAGEMENT
-// 7. DYNAMIC HERO SECTION WITH AUTO-ROTATION
-// 8. HEADER NAVIGATION (Movies/Series Filter)
-// 9. VERTICAL CAROUSEL CLICK-TO-CENTER FUNCTIONALITY
-// 10. DYNAMIC SERIES CAROUSELS SYSTEM
-// 11. FOOTER NAVIGATION LINKS
+// 6. DYNAMIC HERO SECTION WITH AUTO-ROTATION
+// 7. HEADER NAVIGATION (Movies/Series Filter)
+// 8. VERTICAL CAROUSEL CLICK-TO-CENTER FUNCTIONALITY
+// 9. DYNAMIC SERIES CAROUSELS SYSTEM
+// 10. FOOTER NAVIGATION LINKS
 // ==========================
 
 // ==========================
@@ -208,19 +207,19 @@ document.addEventListener("DOMContentLoaded", function () {
           },
           768: {
             // 481px → 768px (Tablet)
-            perPage: 2.6,
-            gap: "1.5rem",
+            perPage: 2.3,
+            gap: "2rem",
             autoScroll: false,
           },
           1024: {
             // 769px → 1024px (Notebook)
-            perPage: 3.5,
+            perPage: 3,
             gap: "2rem",
           },
           1440: {
             // 1025px → 1440px (Desktop)
-            perPage: 4.5,
-            gap: "2.5rem",
+            perPage: 4,
+            gap: "4rem",
           },
           // ≥1441px uses BASE configuration above
         },
@@ -372,13 +371,13 @@ document.addEventListener("DOMContentLoaded", function () {
               },
               1024: {
                 // 769px → 1024px (Notebook)
-                perPage: 3.5,
-                gap: "2rem",
+                perPage: 3,
+                gap: "3rem",
               },
               1440: {
                 // 1025px → 1440px (Desktop)
-                perPage: 4.2,
-                gap: "2.5rem",
+                perPage: 3.5,
+                gap: "4rem",
               },
               // ≥1441px uses BASE configuration above
             },
@@ -449,12 +448,11 @@ function initializeHeaderButtons() {
     });
   }
 
+  // Search close button with proper cleanup
   if (searchClose && searchModal) {
-    // Remover qualquer listener anterior
     const newSearchClose = searchClose.cloneNode(true);
     searchClose.parentNode.replaceChild(newSearchClose, searchClose);
 
-    // Adicionar novo listener
     newSearchClose.addEventListener("click", function (e) {
       e.preventDefault();
       e.stopPropagation();
@@ -465,11 +463,9 @@ function initializeHeaderButtons() {
     console.log("✅ Search close button fixed");
   }
 
-  // ADICIONAR também esta funcionalidade NOVA:
-  // ADICIONAR fechar com clique fora
+  // Search modal - close with click outside
   if (searchModal) {
     searchModal.addEventListener("click", function (e) {
-      // Só fechar se clicar diretamente no backdrop
       if (e.target === searchModal || e.target.classList.contains("search-modal__backdrop")) {
         searchModal.style.display = "none";
         console.log("❌ Search modal closed via outside click");
@@ -484,10 +480,8 @@ function initializeHeaderButtons() {
 
       // Set up click-outside-to-close listener
       const handleOutsideClick = function (event) {
-        if (
-          !notificationModal.querySelector(".search-modal__content").contains(event.target) &&
-          event.target !== notificationBtn
-        ) {
+        const modalContent = notificationModal.querySelector(".search-modal__content");
+        if (modalContent && !modalContent.contains(event.target) && event.target !== notificationBtn) {
           notificationModal.style.display = "none";
           document.removeEventListener("click", handleOutsideClick);
         }
@@ -496,6 +490,7 @@ function initializeHeaderButtons() {
     };
   }
 
+  // Notification close button
   if (notificationClose && notificationModal) {
     notificationClose.onclick = () => {
       notificationModal.style.display = "none";
@@ -642,64 +637,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // ==========================
-// 6. ESC KEY MODAL MANAGEMENT
-// ==========================
-
-/**
- * Handle ESC key to close modals in priority order
- */
-document.addEventListener("keydown", function (e) {
-  if (e.key === "Escape") {
-    // PRIORITY 1: Movie modal (highest priority)
-    const movieModal = document.getElementById("movie-modal");
-    if (movieModal && movieModal.style.display === "flex") {
-      // Use proper close function from script.js if available
-      if (typeof closeMovieModal === "function") {
-        closeMovieModal();
-      } else {
-        // Fallback close behavior
-        movieModal.style.display = "none";
-        const trailer = document.getElementById("movie-modal-trailer");
-        const verticalTrailer = document.getElementById("vertical-modal-trailer");
-        if (trailer) trailer.src = "";
-        if (verticalTrailer) verticalTrailer.src = "";
-
-        // Maintain search modal open if it was open before movie modal
-        const searchModal = document.getElementById("search-modal");
-        if (searchModal && searchModal.style.display === "flex") {
-          const searchInput = document.getElementById("search-input");
-          if (searchInput) setTimeout(() => searchInput.focus(), 100);
-        }
-      }
-      return; // Stop here, don't close other modals
-    }
-
-    // PRIORITY 2: Other modals
-    const modals = [
-      "search-modal",
-      "notification-modal",
-      "coming-soon-modal",
-      "spoiler-modal",
-      "surprise-modal",
-      "comment-popup",
-    ];
-    modals.forEach((id) => {
-      const el = document.getElementById(id);
-      if (el && el.style.display === "flex") el.style.display = "none";
-    });
-
-    // PRIORITY 3: Profile menu dropdown
-    const profileMenu = document.getElementById("profile-menu");
-    const profileToggle = document.getElementById("profile-menu-toggle");
-    if (profileMenu && profileMenu.style.display === "block") {
-      profileMenu.style.display = "none";
-      if (profileToggle) profileToggle.setAttribute("aria-expanded", "false");
-    }
-  }
-});
-
-// ==========================
-// 7. DYNAMIC HERO SECTION WITH AUTO-ROTATION
+// 6. DYNAMIC HERO SECTION WITH AUTO-ROTATION
 // ==========================
 
 /**
@@ -1005,7 +943,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // ==========================
-// 8. HEADER NAVIGATION (Movies/Series Filter)
+// 7. HEADER NAVIGATION (Movies/Series Filter)
 // ==========================
 
 /**
@@ -1172,7 +1110,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // ==========================
-// 9. VERTICAL CAROUSEL CLICK-TO-CENTER FUNCTIONALITY
+// 8. VERTICAL CAROUSEL CLICK-TO-CENTER FUNCTIONALITY
 // ==========================
 
 // Flag to prevent multiple simultaneous carousel movements
@@ -1252,7 +1190,7 @@ document.addEventListener("click", function (e) {
 });
 
 // ==========================
-// 10. DYNAMIC SERIES CAROUSELS SYSTEM
+// 9. DYNAMIC SERIES CAROUSELS SYSTEM
 // ==========================
 
 /**
@@ -1382,7 +1320,7 @@ function createDynamicSeriesCarousels() {
 }
 
 // ==========================
-// 11. FOOTER NAVIGATION LINKS
+// 10. FOOTER NAVIGATION LINKS
 // ==========================
 
 /**
@@ -1458,3 +1396,5 @@ document.addEventListener("DOMContentLoaded", function () {
 
   console.log("✅ Footer navigation links initialized");
 });
+
+console.log("✅ Main.js cleaned and organized");

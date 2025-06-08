@@ -1801,7 +1801,7 @@ body.login-page {
 }
 
 /* =========================
-   MOBILE SMALL (≤480px)
+   MOBILE SMALL (≤480px) - VERSÃO ATUALIZADA
    ========================= */
 @media (max-width: 480px) {
   /* ===== 1. BODY & BACKGROUND ===== */
@@ -1837,7 +1837,61 @@ body.login-page {
     display: none;
   }
 
-  /* ===== 3. MOBILE MENU SYSTEM ===== */
+  /* ===== 3. MOBILE HEADER CONTROLS - NOVOS ===== */
+  .mobile-header-controls {
+    display: flex !important;
+    align-items: center;
+    gap: 1.5rem;
+    margin-left: auto;
+  }
+
+  /* Search button no header mobile */
+  .mobile-search-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+  }
+
+  .mobile-search-btn svg {
+    width: 28px;
+    height: 28px;
+    color: #fff;
+    transition: color 0.3s ease;
+  }
+
+  .mobile-search-btn:hover svg {
+    color: #4aa042;
+  }
+
+  /* Notification button no cantinho superior */
+  .mobile-notification-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.3rem;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    position: absolute;
+    top: 1rem;
+    right: 6rem;
+    display: block !important;
+  }
+
+  .mobile-notification-btn svg {
+    width: 20px;
+    height: 20px;
+    color: rgba(255, 255, 255, 0.8);
+    transition: color 0.3s ease;
+  }
+
+  .mobile-notification-btn:hover svg {
+    color: #4aa042;
+  }
+
+  /* ===== 4. MOBILE MENU SYSTEM ===== */
   .mobile-menu-toggle {
     display: flex !important;
     flex-direction: column;
@@ -1904,73 +1958,88 @@ body.login-page {
     text-align: center;
   }
 
+  /* ===== 5. LOGO MAIOR (120px) ===== */
   .mobile-menu-logo {
-    margin-bottom: 1.5rem;
+    margin-bottom: 2.5rem;
   }
 
   .mobile-menu-logo img {
-    width: 80px;
+    width: 120px; /* 50% maior que antes (80px → 120px) */
     filter: brightness(1.2);
   }
 
+  /* ===== 6. PROFILE DISCRETO COMO BOTÃO ===== */
   .mobile-menu-profile {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-bottom: 2rem;
     cursor: pointer;
+    border-radius: 1rem;
+    padding: 1rem 2rem;
+    transition: all 0.3s ease;
+    min-width: 120px;
   }
 
   .mobile-menu-profile img {
-    width: 60px;
+    width: 60px; /* Mais discreto (60px → 45px) */
     height: 60px;
     border-radius: 50%;
     border: 2px solid #4aa042;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
   }
 
   .mobile-menu-profile span {
+    font-size: 2.5rem; /* Texto menor e discreto */
     color: #4aa042;
-    font-size: 1.1rem;
+    padding: 1rem 2rem;
+    background: rgba(74, 160, 66, 0.1);
+    border: 1px solid rgba(74, 160, 66, 0.2);
+    border-radius: 1rem;
     font-weight: 500;
   }
 
-  .mobile-menu-actions {
-    display: flex;
-    gap: 2rem;
-    margin-bottom: 2.5rem;
-  }
-
-  .mobile-menu-action-btn {
-    background: rgba(74, 160, 66, 0.1);
-    border: 1px solid rgba(74, 160, 66, 0.3);
-    border-radius: 1rem;
-    color: #fff;
-    padding: 1rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
+  /* ===== NOTIFICATION BUTTON DENTRO DO MENU ===== */
+  .mobile-menu-notification {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.3rem;
-    min-width: 70px;
+    margin-bottom: 1.5rem;
+    cursor: pointer;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 1rem;
+    padding: 1rem 2rem;
+    transition: all 0.3s ease;
+    min-width: 120px;
   }
 
-  .mobile-menu-action-btn:hover {
+  .mobile-menu-notification:hover {
     background: rgba(74, 160, 66, 0.2);
     border-color: #4aa042;
+    transform: translateY(-2px);
   }
 
-  .mobile-menu-action-btn svg {
-    width: 24px;
-    height: 24px;
+  .mobile-menu-notification svg {
+    width: 28px;
+    height: 28px;
+    color: #4aa042;
+    margin-bottom: 0.5rem;
+    transition: color 0.3s ease;
   }
 
-  .mobile-menu-action-btn span {
-    font-size: 0.9rem;
-    color: #ccc;
+  .mobile-menu-notification span {
+    color: #4aa042;
+    font-size: 1rem;
+    font-weight: 500;
   }
 
+  .mobile-menu-notification:hover svg,
+  .mobile-menu-notification:hover span {
+    color: #5bb854;
+  }
+
+  /* ===== 7. NAVIGATION SEM SEARCH ===== */
   .mobile-menu-nav {
     display: flex;
     flex-direction: column;
@@ -1995,6 +2064,7 @@ body.login-page {
     background: rgba(74, 160, 66, 0.1);
   }
 
+  /* ===== 8. LOGOUT NO MESMO LUGAR ===== */
   .mobile-menu-logout {
     background: none;
     border: 1px solid rgba(255, 255, 255, 0.2);
@@ -2013,57 +2083,112 @@ body.login-page {
     border-color: rgba(255, 107, 107, 0.3);
   }
 
-  /* ===== 4. MODALS (SEARCH & NOTIFICATION) ===== */
+  /* ===== RESTO DOS ESTILOS MOBILE (mantidos iguais) ===== */
+
+  /* Profile menu */
   .profile-menu {
     display: none;
   }
 
   /* Search Modal Mobile */
   .search-modal {
-    padding: 1rem 0;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem 0 1rem 0;
     overflow-y: auto;
   }
 
   .search-modal__content {
-    padding: 3rem 1.5rem;
+    padding: 2rem 1.5rem 0 1.5rem;
     width: 95vw;
     min-width: 280px;
-    max-height: none;
+    max-height: none !important;
     overflow: visible;
+    margin-top: 1rem;
   }
 
   #search-input {
     width: 100%;
+    max-width: 280px;
+    font-size: 1.4rem;
+    padding: 0.8rem 1.5rem;
+    margin-top: 1rem;
+  }
+
+  #search-submit {
+    font-size: 1.4rem;
+    padding: 0.8rem 2rem;
+    margin-top: 1rem;
   }
 
   .search-result {
-    /* ✅ ALTURA AUTOMÁTICA - cresce conforme necessário */
-    height: auto;
-    max-height: none;
-    overflow: visible;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
     font-size: 1.6rem;
-    padding: 1rem 0.5rem;
-  }
-
-  .search-result.two-rows {
-    /* ✅ ALTURA AUTOMÁTICA também */
-    height: auto;
-  }
-
-  .search-thumbs-grid {
-    grid-template-columns: repeat(2, 1fr); /* 2 colunas no mobile */
-    gap: 1rem;
-    max-width: none; /* Remove limitação de largura */
+    padding: auto 0.5rem;
     width: 100%;
   }
 
-  #search-close {
-    right: -1.5rem;
-    font-size: 2.5rem;
+  .search-result.two-rows {
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
   }
+
+  .search-thumbs-wrapper {
+    width: 100%;
+    overflow: visible;
+  }
+
+  .search-thumbs-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    max-width: none;
+    width: 100%;
+    overflow: visible;
+  }
+
+  .search-thumb-card {
+    max-width: none;
+    width: 100%;
+  }
+
+  .search-thumb-img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16/9;
+  }
+
+  #search-close {
+    right: -1rem;
+    top: 0.5rem;
+    font-size: 2.2rem;
+  }
+
   .random-movie-btn {
     margin: 0;
+    font-size: 1.2rem;
+    padding: 0.8rem 1.5rem;
+    min-width: 200px;
+  }
+
+  .search-random-hint {
+    margin: 1.5rem 0;
+  }
+
+  .search-pagination {
+    margin: 2rem 0 1rem 0;
+    gap: 1rem;
+  }
+
+  .search-pagination button {
+    padding: 0.6rem 1.5rem;
     font-size: 1rem;
+  }
+
+  .search-pagination span {
+    font-size: 0.8rem;
   }
 
   /* Notification Modal Mobile */
@@ -2073,22 +2198,27 @@ body.login-page {
     max-width: 300px;
     padding: 1rem 2rem;
   }
+
   #notification-close {
     right: -1rem;
     font-size: 2.5rem;
   }
+
   .notification-result {
     font-size: 1.5rem;
     padding: 1rem;
   }
 
-  /* ===== 5. HERO SECTION ===== */
+  /* Hero Section */
   .hero-content {
     padding: 15rem 2rem 2rem 2rem;
     margin-bottom: 4rem;
     text-align: center;
     align-items: center;
-    min-height: auto;
+    height: 40rem;
+    min-height: 40rem;
+    display: flex;
+    justify-self: center;
     position: relative;
     z-index: 2;
   }
@@ -2106,11 +2236,12 @@ body.login-page {
   }
 
   .hero__title {
-    font-size: 2.5rem !important;
+    font-size: 3rem !important;
     line-height: 0.95 !important;
     max-width: 100% !important;
     text-align: center;
-    margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
   }
 
   .hero__title:hover {
@@ -2119,19 +2250,43 @@ body.login-page {
   }
 
   .hero__text {
-    font-size: 1.2rem;
-    line-height: 1.4;
+    font-size: 1.3rem;
+    line-height: 1.3;
     width: 100%;
-    max-width: 320px;
+    max-width: 300px;
     text-align: center;
-    margin: 0.5rem auto 0 auto;
+    margin: 0 auto;
+    height: 6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-overflow: ellipsis;
+  }
+
+  .hero__text-bold {
+    font-size: 1.1rem;
+    line-height: 1.2;
+    width: 100%;
+    max-width: 280px;
+    text-align: center;
+    margin: 0 auto;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: var(--font-bold);
   }
 
   .hero__button {
     flex-direction: column;
     align-items: center;
     margin-top: 1.5rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0;
+    height: 4rem;
+    display: flex;
+    justify-content: center;
   }
 
   .hero__button-group {
@@ -2145,9 +2300,12 @@ body.login-page {
     display: none !important;
   }
 
-  /* ===== 6. HERO NAVIGATION ===== */
+  /* Hero Navigation */
   .hero-navigation {
-    bottom: -2rem;
+    bottom: 1rem;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   .hero-nav-btn {
@@ -2156,36 +2314,71 @@ body.login-page {
     font-size: 1.2rem;
   }
 
-  /* ===== 7. CAROUSELS SECTION ===== */
-  /* (Carousels já estão no carousel-splide.css) */
-
-  /* ===== 8. RANDOM MOVIE SECTION ===== */
+  /* Random Movie Section - MOBILE FLEXÍVEL */
   .random-movie-section {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 1.5rem 2rem;
+    padding: 1.5rem 2rem; /* ← MAIS ESPAÇO */
     background: #181818;
     border-radius: 1.5rem;
-    margin: 2rem auto 0 auto;
-    max-width: 200px;
+    margin: 2rem auto; /* ← MAIS MARGEM */
+    min-width: 250px; /* ← TAMANHO MÍNIMO */
+    max-width: 70%; /* ← FLEXÍVEL */
+    width: auto; /* ← LARGURA AUTOMÁTICA */
     box-shadow: 0 4px 24px #000a;
+    transition: all 0.3s ease; /* ← TRANSIÇÕES SUAVES */
+  }
+
+  .random-movie-section:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 32px #000c;
   }
 
   .random-movie-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.2rem;
+    gap: 1rem; /* ← ESPAÇAMENTO ENTRE ELEMENTOS */
+    width: 100%;
+    padding: 0; /* ← REMOVE PADDING EXTRA */
   }
 
   .random-movie-title {
     color: #bbb;
-    font-size: 1.3rem;
+    font-size: 1.5rem; /* ← TÍTULO MAIOR */
     margin-bottom: 0.5rem;
+    text-align: center;
+    font-weight: 500;
   }
 
-  /* ===== 9. FOOTER ===== */
+  /* ===== RANDOM MOVIE BUTTON CUSTOMIZÁVEL ===== */
+  .random-movie-btn {
+    background: var(--green-gradient-buttons, #4caf50);
+    color: #fff;
+    border: none;
+    border-radius: 1.2rem;
+    padding: 1rem; /* ← BOTÃO MAIOR */
+    font-size: 1.1rem; /* ← TEXTO MAIOR */
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 3px 12px rgba(74, 160, 66, 0.3);
+    transition: all 0.3s ease;
+    min-width: 130px; /* ← LARGURA MÍNIMA */
+    margin: 0; /* ← REMOVE MARGENS CONFLITANTES */
+  }
+
+  .random-movie-btn:hover {
+    background: #388e3c;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(74, 160, 66, 0.4);
+  }
+
+  .random-movie-btn:active {
+    transform: translateY(0);
+  }
+
+  /* Footer */
   .footer {
     padding: 2.5rem 0 1.5rem 0;
     margin-top: 4rem;
@@ -2235,7 +2428,7 @@ body.login-page {
     font-size: 0.9rem;
   }
 
-  /* ===== 10. MOVIE MODAL ===== */
+  /* Movie Modal */
   .movie-modal__content {
     padding: 2rem 1.5rem;
     width: 95vw;
@@ -2245,66 +2438,462 @@ body.login-page {
 }
 
 /* =========================
-   MOBILE/TABLET (481px-768px)
+   MOBILE/TABLET (481px-768px) - VERSÃO AMPLIADA DO MOBILE PEQUENO
    ========================= */
 @media (min-width: 481px) and (max-width: 768px) {
-  .search-thumbs-grid {
-    grid-template-columns: repeat(2, 1fr);
-    max-width: min(65vw, 400px);
+  /* ===== 1. BODY & BACKGROUND ===== */
+  body {
+    padding-top: 0;
   }
 
   #background {
     top: 0;
+    height: 45vh; /* Maior que mobile (30vh → 45vh) */
     width: 100%;
-    height: 50vh;
     background-size: cover;
     background-position: center center;
   }
 
+  /* ===== 2. HEADER & NAVIGATION ===== */
   .header {
-    padding: 1.5rem 3rem;
-  }
-
-  .header__logo img {
-    width: 120px;
-    max-width: 150px;
-  }
-
-  .header__nav-tittle {
-    font-size: 1.5rem;
-    margin: 0 1.2rem;
-  }
-
-  .header__icon-user img {
-    width: 40px;
-    margin-left: 0.5rem;
-  }
-
-  #search-btn svg,
-  #notification-btn svg {
-    width: 2.4rem !important;
-    height: 2.4rem !important;
-  }
-
-  .hero-content {
-    padding: 10rem 3rem 0 3rem;
-    margin-bottom: 2rem;
+    padding: 1.8rem 3rem; /* Mais padding que mobile (1rem 2rem → 1.8rem 3rem) */
+    flex-wrap: nowrap;
+    justify-content: space-between;
     align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    height: 85px; /* Maior que mobile (70px → 85px) */
+  }
+
+  .header__logo,
+  .header__nav,
+  .header__icons {
+    display: none;
+  }
+
+  /* ===== 3. MOBILE HEADER CONTROLS - AMPLIADOS ===== */
+  .mobile-header-controls {
+    display: flex !important;
+    align-items: center;
+    gap: 2rem; /* Maior gap (1.5rem → 2rem) */
+    margin-left: auto;
+  }
+
+  /* Search button no header mobile - MAIOR */
+  .mobile-search-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.8rem; /* Maior (0.5rem → 0.8rem) */
+    border-radius: 50%;
+    transition: all 0.3s ease;
+  }
+
+  .mobile-search-btn svg {
+    width: 32px; /* Maior (28px → 32px) */
+    height: 32px;
+    color: #fff;
+    transition: color 0.3s ease;
+  }
+
+  .mobile-search-btn:hover svg {
+    color: #4aa042;
+    transform: scale(1.1);
+  }
+
+  /* Notification button no cantinho superior - MAIOR */
+  .mobile-notification-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem; /* Maior (0.3rem → 0.5rem) */
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    position: absolute;
+    top: 1.5rem; /* Mais baixo (1rem → 1.5rem) */
+    right: 7rem; /* Mais espaçado (6rem → 7rem) */
+    display: block !important;
+  }
+
+  .mobile-notification-btn svg {
+    width: 24px; /* Maior (20px → 24px) */
+    height: 24px;
+    color: rgba(255, 255, 255, 0.8);
+    transition: color 0.3s ease;
+  }
+
+  .mobile-notification-btn:hover svg {
+    color: #4aa042;
+    transform: scale(1.1);
+  }
+
+  /* ===== 4. MOBILE MENU SYSTEM - AMPLIADO ===== */
+  .mobile-menu-toggle {
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50px; /* Maior (40px → 50px) */
+    height: 50px; /* Maior (40px → 50px) */
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1001;
+    position: relative;
+  }
+
+  .hamburger-line {
+    width: 30px; /* Maior (25px → 30px) */
+    height: 4px; /* Maior (3px → 4px) */
+    background: #fff;
+    margin: 4px 0; /* Maior (3px → 4px) */
+    border-radius: 3px; /* Maior (2px → 3px) */
+    transition: all 0.3s ease;
+    display: block;
+  }
+
+  .mobile-menu-toggle.active .hamburger-line:nth-child(1) {
+    transform: rotate(45deg) translate(7px, 7px); /* Ajustado para tamanho maior */
+  }
+
+  .mobile-menu-toggle.active .hamburger-line:nth-child(2) {
+    opacity: 0;
+  }
+
+  .mobile-menu-toggle.active .hamburger-line:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px); /* Ajustado para tamanho maior */
+  }
+
+  .mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.85); /* Mais escuro (0.8 → 0.85) */
+    backdrop-filter: blur(20px); /* Mais blur (15px → 20px) */
+    z-index: 999;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .mobile-menu-overlay.active {
+    display: flex !important;
+    opacity: 1;
+  }
+
+  .mobile-menu-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 8rem 2rem 3rem 2rem; /* Mais padding (6rem 1.5rem 2rem → 8rem 2rem 3rem) */
     text-align: center;
-    min-height: 400px;
+  }
+
+  /* ===== 5. LOGO MUITO MAIOR (180px) ===== */
+  .mobile-menu-logo {
+    margin-bottom: 3rem; /* Mais margem (2.5rem → 3rem) */
+  }
+
+  .mobile-menu-logo img {
+    width: 180px; /* MUITO maior (120px → 180px) */
+    filter: brightness(1.3);
+  }
+
+  /* ===== 6. PROFILE MAIOR E MAIS ELEGANTE ===== */
+  .mobile-menu-profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2.5rem; /* Mais margem (2rem → 2.5rem) */
+    cursor: pointer;
+    border-radius: 1.2rem; /* Mais arredondado (1rem → 1.2rem) */
+    padding: 1.5rem 2.5rem; /* Mais padding (1rem 2rem → 1.5rem 2.5rem) */
+    transition: all 0.3s ease;
+    min-width: 150px; /* Maior (120px → 150px) */
+  }
+
+  .mobile-menu-profile img {
+    width: 75px; /* Maior (60px → 75px) */
+    height: 75px;
+    border-radius: 50%;
+    border: 3px solid #4aa042; /* Borda mais grossa (2px → 3px) */
+    margin-bottom: 1.8rem; /* Mais margem (1.5rem → 1.8rem) */
+    box-shadow: 0 4px 16px rgba(74, 160, 66, 0.3);
+  }
+
+  .mobile-menu-profile span {
+    font-size: 3rem; /* Maior (2.5rem → 3rem) */
+    color: #4aa042;
+    padding: 1.2rem 2.5rem; /* Mais padding (1rem 2rem → 1.2rem 2.5rem) */
+    background: rgba(74, 160, 66, 0.15); /* Mais transparência (0.1 → 0.15) */
+    border: 1px solid rgba(74, 160, 66, 0.3); /* Borda mais visível (0.2 → 0.3) */
+    border-radius: 1.2rem; /* Mais arredondado (1rem → 1.2rem) */
+    font-weight: 600; /* Mais bold (500 → 600) */
+    box-shadow: 0 2px 12px rgba(74, 160, 66, 0.2);
+  }
+
+  /* ===== NOTIFICATION BUTTON DENTRO DO MENU - MAIOR ===== */
+  .mobile-menu-notification {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem; /* Mais margem (1.5rem → 2rem) */
+    cursor: pointer;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 1.2rem; /* Mais arredondado (1rem → 1.2rem) */
+    padding: 1.3rem 2.5rem; /* Mais padding (1rem 2rem → 1.3rem 2.5rem) */
+    transition: all 0.3s ease;
+    min-width: 150px; /* Maior (120px → 150px) */
+  }
+
+  .mobile-menu-notification:hover {
+    background: rgba(74, 160, 66, 0.25); /* Mais transparência (0.2 → 0.25) */
+    border-color: #4aa042;
+    transform: translateY(-3px); /* Mais movimento (-2px → -3px) */
+    box-shadow: 0 4px 16px rgba(74, 160, 66, 0.3);
+  }
+
+  .mobile-menu-notification svg {
+    width: 32px; /* Maior (28px → 32px) */
+    height: 32px;
+    color: #4aa042;
+    margin-bottom: 0.8rem; /* Mais margem (0.5rem → 0.8rem) */
+    transition: color 0.3s ease;
+  }
+
+  .mobile-menu-notification span {
+    color: #4aa042;
+    font-size: 1.2rem; /* Maior (1rem → 1.2rem) */
+    font-weight: 600; /* Mais bold (500 → 600) */
+  }
+
+  .mobile-menu-notification:hover svg,
+  .mobile-menu-notification:hover span {
+    color: #5bb854;
+  }
+
+  /* ===== 7. NAVIGATION MAIOR ===== */
+  .mobile-menu-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem; /* Maior gap (2rem → 2.5rem) */
+    text-align: center;
+    margin-bottom: 4rem; /* Mais margem (3rem → 4rem) */
+  }
+
+  .mobile-menu-nav a {
+    color: #fff;
+    font-size: 2.3rem; /* Maior (2rem → 2.3rem) */
+    font-weight: 700; /* Mais bold (600 → 700) */
+    text-decoration: none;
+    transition: all 0.3s ease;
+    padding: 1.3rem 2.5rem; /* Mais padding (1rem 2rem → 1.3rem 2.5rem) */
+    border-radius: 1.2rem; /* Mais arredondado (1rem → 1.2rem) */
+  }
+
+  .mobile-menu-nav a:hover,
+  .mobile-menu-nav a.active {
+    color: #4aa042;
+    background: rgba(74, 160, 66, 0.15); /* Mais transparência (0.1 → 0.15) */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(74, 160, 66, 0.2);
+  }
+
+  /* ===== 8. LOGOUT MAIOR ===== */
+  .mobile-menu-logout {
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Borda mais visível (0.2 → 0.3) */
+    border-radius: 1rem; /* Mais arredondado (0.8rem → 1rem) */
+    color: #999; /* Cor mais clara (#888 → #999) */
+    padding: 1rem 2rem; /* Mais padding (0.7rem 1.5rem → 1rem 2rem) */
+    font-size: 1.2rem; /* Maior (1rem → 1.2rem) */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: auto;
+    margin-bottom: 2.5rem; /* Mais margem (2rem → 2.5rem) */
+    font-weight: 500;
+  }
+
+  .mobile-menu-logout:hover {
+    color: #ff6b6b;
+    border-color: rgba(255, 107, 107, 0.4); /* Mais transparência (0.3 → 0.4) */
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(255, 107, 107, 0.2);
+  }
+
+  /* ===== 9. SEARCH MODAL - AMPLIADO ===== */
+  .search-modal {
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 0 1.5rem 0; /* Mais padding (1.5rem 0 1rem → 2rem 0 1.5rem) */
+    overflow-y: auto;
+  }
+
+  .search-modal__content {
+    padding: 2.5rem 2rem 0 2rem; /* Mais padding (2rem 1.5rem → 2.5rem 2rem) */
+    width: 90vw; /* Maior (95vw → 90vw) */
+    min-width: 350px; /* Maior (280px → 350px) */
+    max-height: none !important;
+    overflow: visible;
+    margin-top: 1.5rem; /* Mais margem (1rem → 1.5rem) */
+  }
+
+  #search-input {
+    width: 100%;
+    max-width: 400px; /* Maior (280px → 400px) */
+    font-size: 1.6rem; /* Maior (1.4rem → 1.6rem) */
+    padding: 1rem 2rem; /* Mais padding (0.8rem 1.5rem → 1rem 2rem) */
+    margin-top: 1.5rem; /* Mais margem (1rem → 1.5rem) */
+  }
+
+  #search-submit {
+    font-size: 1.6rem; /* Maior (1.4rem → 1.6rem) */
+    padding: 1rem 2.5rem; /* Mais padding (0.8rem 2rem → 1rem 2.5rem) */
+    margin-top: 1.5rem; /* Mais margem (1rem → 1.5rem) */
+  }
+
+  .search-result {
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    font-size: 1.8rem; /* Maior (1.6rem → 1.8rem) */
+    padding: 1rem 0.8rem; /* Mais padding (auto 0.5rem → 1rem 0.8rem) */
+    width: 100%;
+  }
+
+  .search-result.two-rows {
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  .search-thumbs-wrapper {
+    width: 100%;
+    overflow: visible;
+  }
+
+  .search-thumbs-grid {
+    grid-template-columns: repeat(3, 1fr); /* 3 colunas em vez de 2 */
+    gap: 1.5rem; /* Maior gap (1rem → 1.5rem) */
+    max-width: none;
+    width: 100%;
+    overflow: visible;
+  }
+
+  .search-thumb-card {
+    max-width: none;
+    width: 100%;
+    padding: 1rem; /* Mais padding */
+  }
+
+  .search-thumb-img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16/9;
+  }
+
+  .search-thumb-title {
+    font-size: 1.2rem; /* Maior (padrão → 1.2rem) */
+  }
+
+  .search-thumb-btn {
+    font-size: 1rem; /* Maior (padrão → 1rem) */
+    padding: 0.5rem 1.2rem; /* Mais padding */
+  }
+
+  #search-close {
+    right: 1rem; /* Melhor posição (-1rem → -0.5rem) */
+    top: 1rem; /* Melhor posição (0.5rem → 1rem) */
+    font-size: 2.5rem; /* Maior (2.2rem → 2.5rem) */
+  }
+
+  .random-movie-btn {
+    margin: 0;
+    font-size: 1.4rem; /* Maior (1.2rem → 1.4rem) */
+    padding: 1rem 2rem; /* Mais padding (0.8rem 1.5rem → 1rem 2rem) */
+    min-width: 250px; /* Maior (200px → 250px) */
+  }
+
+  .search-random-hint {
+    margin: 2rem 0; /* Mais margem (1.5rem → 2rem) */
+    font-size: 1.6rem; /* Maior (padrão → 1.6rem) */
+  }
+
+  .search-pagination {
+    margin: 2.5rem 0 1.5rem 0; /* Mais margem (2rem 0 1rem → 2.5rem 0 1.5rem) */
+    gap: 1.5rem; /* Maior gap (1rem → 1.5rem) */
+  }
+
+  .search-pagination button {
+    padding: 0.8rem 2rem; /* Mais padding (0.6rem 1.5rem → 0.8rem 2rem) */
+    font-size: 1.2rem; /* Maior (1rem → 1.2rem) */
+  }
+
+  .search-pagination span {
+    font-size: 1rem; /* Maior (0.8rem → 1rem) */
+  }
+
+  /* ===== 10. NOTIFICATION MODAL - AMPLIADO ===== */
+  .notification-modal__content {
+    width: auto;
+    min-width: 350px; /* Maior (230px → 350px) */
+    max-width: 450px; /* Maior (300px → 450px) */
+    padding: 1.5rem 2.5rem; /* Mais padding (1rem 2rem → 1.5rem 2.5rem) */
+  }
+
+  #notification-close {
+    right: -0.5rem; /* Melhor posição (-1rem → -0.5rem) */
+    font-size: 2.8rem; /* Maior (2.5rem → 2.8rem) */
+  }
+
+  .notification-result {
+    font-size: 1.8rem; /* Maior (1.5rem → 1.8rem) */
+    padding: 1.5rem; /* Mais padding (1rem → 1.5rem) */
+  }
+
+  /* ===== 11. HERO SECTION - AMPLIADO ===== */
+  .hero-content {
+    padding: 18rem 3rem 3rem 3rem; /* Mais padding (15rem 2rem 2rem → 18rem 3rem 3rem) */
+    margin-bottom: 5rem; /* Mais margem (4rem → 5rem) */
+    text-align: center;
+    align-items: center;
+    height: 50rem; /* Maior (40rem → 50rem) */
+    min-height: 50rem;
+    display: flex;
+    justify-self: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero__icon {
+    width: 1.8rem; /* Maior (1.4rem → 1.8rem) */
+    height: 1.8rem;
+    opacity: 0.9; /* Mais opaco (0.8 → 0.9) */
+  }
+
+  .hero__icon-text {
+    font-size: 1.4rem; /* Maior (1.2rem → 1.4rem) */
+    margin-left: 0.8rem; /* Mais margem (0.5rem → 0.8rem) */
+    opacity: 0.9; /* Mais opaco (0.8 → 0.9) */
   }
 
   .hero__title {
-    font-size: 4rem !important;
-    line-height: 1 !important;
+    font-size: 4rem !important; /* Maior (3rem → 4rem) */
+    line-height: 1 !important; /* Melhor (0.95 → 1) */
     max-width: 100% !important;
     text-align: center;
-    margin-bottom: 1rem !important;
-    background: none !important;
-    color: #fff !important;
-    -webkit-text-fill-color: #fff !important;
-    transition: none !important;
-    transform: none !important;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem !important; /* Mais margem */
   }
 
   .hero__title:hover {
@@ -2313,117 +2902,163 @@ body.login-page {
   }
 
   .hero__text {
-    font-size: 1.3rem;
+    font-size: 1.5rem; /* Maior (1.3rem → 1.5rem) */
+    line-height: 1.4; /* Melhor (1.3 → 1.4) */
     width: 100%;
-    max-width: 400px;
+    max-width: 450px; /* Maior (300px → 450px) */
     text-align: center;
-    margin: 1rem auto 0 auto;
+    margin: 0 auto 1.5rem auto; /* Mais margem (0 auto → 0 auto 1.5rem auto) */
+    height: 7rem; /* Maior (6rem → 7rem) */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-overflow: ellipsis;
+  }
+
+  .hero__text-bold {
+    font-size: 1.3rem; /* Maior (1.1rem → 1.3rem) */
+    line-height: 1.3; /* Melhor (1.2 → 1.3) */
+    width: 100%;
+    max-width: 420px; /* Maior (280px → 420px) */
+    text-align: center;
+    margin: 0 auto;
+    height: 5rem; /* Maior (4rem → 5rem) */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: var(--font-bold);
   }
 
   .hero__button {
-    flex-direction: row;
+    flex-direction: row; /* Em linha em vez de coluna */
     justify-content: center;
-    gap: 1rem;
-    margin-top: 2rem;
-    margin-bottom: 1rem;
+    gap: 1.5rem; /* Gap entre botões */
+    align-items: center;
+    margin-top: 2rem; /* Mais margem (1.5rem → 2rem) */
+    margin-bottom: 1rem; /* Mais margem (0 → 1rem) */
+    height: 5rem; /* Maior (4rem → 5rem) */
+    display: flex;
   }
 
   .hero__button-group {
-    padding: 1rem 2rem;
-    font-size: 1.3rem;
-  }
-
-  .hero-navigation {
-    bottom: -1rem;
-  }
-
-  .hero-nav-btn {
-    width: 3rem;
-    height: 3rem;
-    font-size: 1.4rem;
-  }
-
-  .hero-nav-dot {
-    width: 1rem;
-    height: 1rem;
+    width: auto; /* Largura automática */
+    max-width: 220px; /* Maior (260px → 220px cada botão) */
+    font-size: 1.3rem; /* Maior (1.1rem → 1.3rem) */
+    padding: 1.2rem 2rem; /* Mais padding */
+    justify-content: center;
   }
 
   #spoiler-btn {
-    animation: none !important;
+    display: block !important; /* Mostrar spoiler button */
+    padding: 1.2rem 2rem; /* Mesmo padding do botão principal */
+    font-size: 1.2rem; /* Tamanho adequado */
+    min-width: 180px; /* Largura mínima */
+    opacity: 0.8; /* Levemente transparente */
   }
 
-  .movie-modal__content {
-    padding: 2.5rem 2rem;
-    width: 88vw;
-    max-height: 85vh;
+  /* ===== 12. HERO NAVIGATION - AMPLIADO ===== */
+  .hero-navigation {
+    bottom: 1.5rem; /* Mais baixo (1rem → 1.5rem) */
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
   }
 
-  .movie-modal__info {
-    flex-direction: column;
-    gap: 2rem;
-    align-items: center;
+  .hero-nav-btn {
+    width: 3rem; /* Maior (2.5rem → 3rem) */
+    height: 3rem;
+    font-size: 1.4rem; /* Maior (1.2rem → 1.4rem) */
   }
 
-  #movie-modal-title {
-    font-size: 2.2rem;
-    text-align: center;
-    margin-bottom: 1.5rem;
+  .hero-nav-dot {
+    width: 1.3rem; /* Maior (padrão → 1.3rem) */
+    height: 1.3rem;
   }
 
-  .movie-modal__media,
-  .movie-modal__media-vertical {
-    max-width: 280px;
-  }
-
-  .profile-menu {
-    right: 2rem;
-    top: 7rem;
-  }
-  /* random movie section */
+  /* ===== 13. RANDOM MOVIE SECTION - MUITO AMPLIADO ===== */
   .random-movie-section {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 1.5rem 2rem;
+    padding: 2.5rem 3.5rem; /* Muito mais padding (1.5rem 2rem → 2.5rem 3.5rem) */
     background: #181818;
-    border-radius: 1.5rem;
-    margin: 0 auto 0 auto;
-    max-width: 450px;
-    box-shadow: 0 4px 24px #000a;
+    border-radius: 2rem; /* Mais arredondado (1.5rem → 2rem) */
+    margin: 3.5rem auto; /* Mais margem (2rem → 3.5rem) */
+    min-width: 400px; /* Maior (250px → 400px) */
+    max-width: 80%; /* Maior (70% → 80%) */
+    width: auto;
+    box-shadow: 0 6px 32px #000c; /* Sombra mais forte */
+    transition: all 0.3s ease;
+  }
+
+  .random-movie-section:hover {
+    transform: translateY(-4px); /* Mais movimento (-2px → -4px) */
+    box-shadow: 0 10px 48px #000e; /* Sombra muito maior */
   }
 
   .random-movie-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.2rem;
+    gap: 1.8rem; /* Maior gap (1rem → 1.8rem) */
+    width: 100%;
+    padding: 0;
   }
 
   .random-movie-title {
     color: #bbb;
-    font-size: 1.3rem;
-    margin-bottom: 0.5rem;
+    font-size: 2rem; /* Muito maior (1.5rem → 2rem) */
+    margin-bottom: 1rem; /* Mais margem (0.5rem → 1rem) */
+    text-align: center;
+    font-weight: 600; /* Mais bold (500 → 600) */
   }
 
-  /* Footer - Column layout for tablet */
+  .random-movie-btn {
+    background: var(--green-gradient-buttons, #4caf50);
+    color: #fff;
+    border: none;
+    border-radius: 1.5rem; /* Mais arredondado (1.2rem → 1.5rem) */
+    padding: 1.5rem 3rem; /* Muito mais padding (1rem → 1.5rem 3rem) */
+    font-size: 1.4rem; /* Maior (1.1rem → 1.4rem) */
+    font-weight: 700; /* Mais bold (600 → 700) */
+    cursor: pointer;
+    box-shadow: 0 5px 20px rgba(74, 160, 66, 0.4); /* Sombra maior */
+    transition: all 0.3s ease;
+    min-width: 280px; /* Muito maior (130px → 280px) */
+    margin: 0;
+  }
+
+  .random-movie-btn:hover {
+    background: #388e3c;
+    transform: translateY(-3px); /* Mais movimento (-2px → -3px) */
+    box-shadow: 0 8px 32px rgba(74, 160, 66, 0.6); /* Sombra muito maior */
+  }
+
+  .random-movie-btn:active {
+    transform: translateY(-1px); /* Ajustado (0 → -1px) */
+  }
+
+  /* ===== 14. FOOTER - AMPLIADO ===== */
   .footer {
-    padding: 2.5rem 0 1.5rem 0;
-    margin-top: 4rem;
-    font-size: 1.2rem;
+    padding: 3.5rem 0 2rem 0; /* Mais padding (2.5rem 0 1.5rem → 3.5rem 0 2rem) */
+    margin-top: 5rem; /* Mais margem (4rem → 5rem) */
+    font-size: 1.4rem; /* Maior (1.2rem → 1.4rem) */
   }
 
   .footer__container {
     flex-direction: column;
     align-items: center;
-    padding: 0 2.5rem;
-    gap: 1.5rem;
+    padding: 0 3.5rem; /* Mais padding (0 2.5rem → 0 3.5rem) */
+    gap: 2rem; /* Mais gap (1.5rem → 2rem) */
   }
 
   .footer__top-row {
     flex-direction: column;
     align-items: center;
-    gap: 1.5rem;
-    margin-bottom: 1rem;
+    gap: 2rem; /* Mais gap (1.5rem → 2rem) */
+    margin-bottom: 1.5rem; /* Mais margem (1rem → 1.5rem) */
   }
 
   .footer__logo,
@@ -2435,107 +3070,387 @@ body.login-page {
   }
 
   .footer__logo img {
-    width: 90px;
+    width: 120px; /* Maior (80px → 120px) */
   }
 
   .footer__nav {
-    gap: 1.5rem;
+    flex-direction: column;
+    gap: 1.5rem; /* Mais gap (1rem → 1.5rem) */
   }
 
   .footer__nav a {
-    font-size: 1.1rem;
+    font-size: 1.3rem; /* Maior (1.1rem → 1.3rem) */
+  }
+
+  .footer__social {
+    gap: 1.8rem; /* Mais gap */
   }
 
   .footer__social svg {
-    width: 24px;
+    width: 26px; /* Maior (20px → 26px) */
   }
 
   .footer__copy {
-    font-size: 1rem;
+    font-size: 1.1rem; /* Maior (0.9rem → 1.1rem) */
   }
 }
 
 /* =========================
-   TABLET/LAPTOP (769px-1024px)
+   TABLET/LAPTOP (769px-1024px) - VERSÃO MELHORADA
    ========================= */
 @media (min-width: 769px) and (max-width: 1024px) {
-  .search-thumbs-grid {
-    grid-template-columns: repeat(2, 1fr);
-    max-width: min(65vw, 400px);
+  /* ===== 1. BODY & BACKGROUND ===== */
+  body {
+    padding-top: 0;
   }
 
   #background {
     top: 0;
     width: 100%;
-    height: 80vh;
+    height: 80vh; /* Já estava certo! */
     background-size: cover;
     background-position: center center;
   }
 
+  /* ===== 2. HEADER - DESKTOP COMPLETO ===== */
   .header {
-    padding: 1.5rem 4rem;
+    padding: 1.5rem 4rem; /* Já estava certo! */
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    height: 90px; /* Mais alto que tablet */
+  }
+
+  /* ===== MOSTRAR NAVEGAÇÃO DESKTOP COMPLETA ===== */
+  .header__logo,
+  .header__nav,
+  .header__icons {
+    display: flex !important;
   }
 
   .header__logo img {
-    width: 140px;
+    width: 140px; /* Já estava certo! */
     max-width: 170px;
   }
 
+  .header__nav-tittle {
+    font-size: 1.8rem; /* Maior que tablet */
+    margin: 0 1.2rem;
+    transition: all 0.3s ease;
+  }
+
+  .header__nav-tittle:hover {
+    color: #4aa042;
+    transform: translateY(-2px);
+  }
+
+  .header__icon-user img {
+    width: 50px; /* Maior que tablet */
+    margin-left: 1rem;
+  }
+
+  #search-btn svg,
+  #notification-btn svg {
+    width: 32px !important; /* Maior que tablet */
+    height: 32px !important;
+  }
+
+  /* ===== ESCONDER MOBILE SYSTEM ===== */
+  .mobile-menu-toggle,
+  .mobile-menu-overlay,
+  .mobile-header-controls {
+    display: none !important;
+  }
+
+  /* ===== 3. PROFILE MENU ===== */
+  .profile-menu {
+    right: 3rem; /* Já estava certo! */
+    top: 7.5rem; /* Ajustado para nova altura header */
+    font-size: 1.5rem;
+    padding: 1.2rem;
+    min-width: 10rem;
+  }
+
+  /* ===== 4. SEARCH MODAL ===== */
+  .search-modal {
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 0;
+  }
+
+  .search-modal__content {
+    width: 65vw;
+    max-width: 500px;
+    min-width: 400px;
+  }
+
+  #search-input {
+    width: 100%;
+    max-width: 450px;
+    font-size: 1.6rem;
+    padding: 1rem 2rem;
+    margin-top: 1rem;
+  }
+
+  #search-submit {
+    font-size: 1.6rem;
+    padding: 1rem 2.5rem;
+    margin-top: 1rem;
+  }
+
+  .search-result {
+    height: auto !important;
+    max-height: 50vh !important;
+    overflow-y: auto !important;
+    font-size: 1.8rem;
+    padding: 1.5rem;
+    width: 100%;
+  }
+
+  .search-thumbs-grid {
+    grid-template-columns: repeat(2, 1fr); /* Já estava certo! */
+    gap: 1.5rem;
+    max-width: min(65vw, 400px); /* Já estava certo! */
+    width: 100%;
+  }
+
+  .search-thumb-card {
+    max-width: none;
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .search-thumb-title {
+    font-size: 1.2rem;
+  }
+
+  .search-thumb-btn {
+    font-size: 1rem;
+    padding: 0.5rem 1.2rem;
+  }
+
+  .search-pagination {
+    margin: 2rem 0 1rem 0;
+    gap: 1.5rem;
+  }
+
+  .search-pagination button {
+    padding: 0.8rem 2rem;
+    font-size: 1.2rem;
+  }
+
+  .random-movie-btn {
+    margin: 0;
+    font-size: 1.4rem;
+    padding: 1rem 2.5rem;
+    min-width: 200px;
+  }
+
+  .modal__content {
+    padding: 1rem;
+  }
+
+  /* ===== 5. NOTIFICATION MODAL ===== */
+  .notification-modal__content {
+    width: auto;
+    min-width: 400px;
+    max-width: 500px;
+    padding: 2rem 3rem;
+  }
+
+  .notification-result {
+    font-size: 1.8rem;
+    padding: 1.5rem;
+  }
+
+  /* ===== 6. HERO SECTION - DESKTOP STYLE ===== */
   .hero-content {
-    padding: 10rem 0 0 5.5rem;
+    padding: 20rem 0 0 5rem; /* Já estava certo! */
     margin-bottom: 7rem;
-    min-height: 450px;
+    text-align: left; /* Desktop alinhado à esquerda */
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .hero__icon {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .hero__icon-text {
+    font-size: 1.4rem;
+    margin-left: 0.8rem;
   }
 
   .hero__title {
-    font-size: 5rem !important;
+    font-size: 5rem !important; /* Já estava certo! */
     line-height: 1 !important;
     max-width: 90% !important;
+    text-align: left;
+    margin-bottom: 1.5rem !important;
   }
 
   .hero__text {
-    font-size: 1.4rem;
+    font-size: 1.4rem; /* Já estava certo! */
+    line-height: 1.4;
+    width: auto;
     max-width: 400px;
+    text-align: left;
+    margin: 0 0 1rem 0;
+    height: auto;
   }
 
+  .hero__text-bold {
+    font-size: 1.2rem;
+    line-height: 1.3;
+    width: auto;
+    max-width: 380px;
+    text-align: left;
+    margin: 0 0 1rem 0;
+    height: auto;
+    font-weight: var(--font-bold);
+  }
+
+  .hero__button {
+    flex-direction: row;
+    justify-content: flex-start; /* Alinhado à esquerda */
+    gap: 1.5rem;
+    align-items: center;
+    margin-top: 2rem;
+    margin-bottom: 0;
+    height: auto;
+  }
+
+  .hero__button-group {
+    width: auto;
+    max-width: 240px;
+    font-size: 1.4rem;
+    padding: 1.2rem 2.2rem;
+    justify-content: center;
+  }
+
+  #spoiler-btn {
+    display: block !important;
+    padding: 1.2rem 2rem;
+    font-size: 1.2rem;
+    min-width: 160px;
+    opacity: 0.8;
+  }
+
+  /* ===== 7. HERO NAVIGATION ===== */
+  .hero-navigation {
+    bottom: -2rem;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .hero-nav-btn {
+    width: 3.5rem;
+    height: 3.5rem;
+    font-size: 1.6rem;
+  }
+
+  .hero-nav-dot {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+
+  /* ===== 8. RANDOM MOVIE SECTION ===== */
+  .random-movie-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem 4rem;
+    background: #181818;
+    border-radius: 2rem;
+    margin: 4rem auto;
+    max-width: 600px;
+    box-shadow: 0 8px 40px #000c;
+    transition: all 0.3s ease;
+  }
+
+  .random-movie-section:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 56px #000e;
+  }
+
+  .random-movie-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    width: 100%;
+  }
+
+  .random-movie-title {
+    color: #bbb;
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    font-weight: 600;
+  }
+
+  .random-movie-btn {
+    background: var(--green-gradient-buttons, #4caf50);
+    color: #fff;
+    border: none;
+    border-radius: 1.5rem;
+    padding: 1.5rem 3rem;
+    font-size: 1.4rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 6px 24px rgba(74, 160, 66, 0.4);
+    transition: all 0.3s ease;
+    min-width: 240px;
+    margin: 0;
+  }
+
+  .random-movie-btn:hover {
+    background: #388e3c;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 32px rgba(74, 160, 66, 0.6);
+  }
+
+  /* ===== 9. MOVIE MODAL ===== */
   .movie-modal__content {
-    padding: 4rem 3.5rem;
+    padding: 4rem 3.5rem; /* Já estava certo! */
     width: 85vw;
     max-width: 800px;
   }
 
   .movie-modal__info {
-    gap: 2.5rem;
+    gap: 2.5rem; /* Já estava certo! */
   }
 
   #movie-modal-title {
-    font-size: 2.8rem;
+    font-size: 2.8rem; /* Já estava certo! */
   }
 
-  .search-modal__content {
-    padding: 2.5rem 4rem;
-  }
-
-  .profile-menu {
-    right: 3rem;
-  }
-
-  /* Footer - Horizontal layout starts here */
+  /* ===== 10. FOOTER - HORIZONTAL LAYOUT ===== */
   .footer {
-    padding: 3rem 0 1.5rem 0;
+    padding: 3rem 0 1.5rem 0; /* Já estava certo! */
     margin-top: 6rem;
     font-size: 1.3rem;
   }
 
   .footer__container {
-    flex-direction: column;
+    flex-direction: column; /* Já estava certo! */
     align-items: center;
     padding: 0 3rem;
     gap: 0;
   }
 
   .footer__top-row {
-    flex-direction: row;
+    flex-direction: row; /* Já estava certo! */
     align-items: center;
     justify-content: space-between;
     width: 100%;
@@ -2550,7 +3465,7 @@ body.login-page {
   .footer__nav {
     flex: 2;
     justify-content: center;
-    gap: 2rem;
+    gap: 2rem; /* Já estava certo! */
   }
 
   .footer__social {
@@ -2559,95 +3474,377 @@ body.login-page {
   }
 
   .footer__logo img {
-    width: 100px;
+    width: 100px; /* Já estava certo! */
   }
 
   .footer__nav a {
-    font-size: 1.2rem;
+    font-size: 1.2rem; /* Já estava certo! */
   }
 
   .footer__social svg {
-    width: 24px;
+    width: 24px; /* Já estava certo! */
   }
 
   .footer__copy {
-    font-size: 1rem;
+    font-size: 1rem; /* Já estava certo! */
   }
 }
 
 /* =========================
-   DESKTOP (1025px-1440px)
+   DESKTOP (1025px-1440px) - VERSÃO DESKTOP PADRÃO
    ========================= */
 @media (min-width: 1025px) and (max-width: 1440px) {
-  .search-thumbs-grid {
-    grid-template-columns: repeat(3, 1fr);
-    max-width: min(65vw, 600px);
+  /* ===== 1. BODY & BACKGROUND ===== */
+  body {
+    padding-top: 0;
   }
 
+  #background {
+    top: 0;
+    width: 100%;
+    height: 100vh; /* Tela cheia no desktop */
+    background-size: cover;
+    background-position: center center;
+  }
+
+  /* ===== 2. HEADER - DESKTOP COMPLETO ===== */
   .header {
-    padding: 1.5rem 5rem;
+    padding: 2rem 5rem; /* Padding desktop padrão */
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    height: 95px; /* Altura desktop */
+  }
+
+  /* ===== NAVEGAÇÃO DESKTOP COMPLETA ===== */
+  .header__logo,
+  .header__nav,
+  .header__icons {
+    display: flex !important;
   }
 
   .header__logo img {
-    width: 160px;
-    max-width: 180px;
+    width: 160px; /* Tamanho desktop */
+    max-width: 200px;
   }
 
+  .header__nav-tittle {
+    font-size: 1.9rem; /* Desktop padrão */
+    margin: 0 1.5rem;
+    transition: all 0.3s ease;
+  }
+
+  .header__nav-tittle:hover {
+    color: #4aa042;
+    transform: translateY(-2px);
+  }
+
+  .header__icon-user img {
+    width: 55px; /* Desktop padrão */
+    margin-left: 1.5rem;
+  }
+
+  #search-btn svg,
+  #notification-btn svg {
+    width: 34px !important; /* Desktop padrão */
+    height: 34px !important;
+  }
+
+  /* ===== ESCONDER MOBILE SYSTEM ===== */
+  .mobile-menu-toggle,
+  .mobile-menu-overlay,
+  .mobile-header-controls {
+    display: none !important;
+  }
+
+  /* ===== 3. PROFILE MENU ===== */
+  .profile-menu {
+    right: 4rem; /* Desktop padrão */
+    top: 8rem; /* Ajustado para nova altura header */
+    font-size: 1.6rem;
+    padding: 1.5rem;
+    min-width: 12rem;
+  }
+
+  /* ===== 4. SEARCH MODAL ===== */
+  .search-modal {
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 0;
+  }
+
+  .search-modal__content {
+    padding: 3rem 4.5rem 0 4.5rem; /* Desktop padrão */
+    width: auto;
+    min-width: 450px;
+    max-width: 900px;
+    height: auto;
+  }
+
+  #search-input {
+    width: 100%;
+    max-width: 500px; /* Desktop padrão */
+    font-size: 1.7rem;
+    padding: 1.2rem 2.5rem;
+    margin-top: 1rem;
+  }
+
+  #search-submit {
+    font-size: 1.7rem;
+    padding: 1.2rem 3rem;
+    margin-top: 1rem;
+  }
+
+  .search-result {
+    height: auto !important;
+    max-height: 55vh !important;
+    overflow-y: auto !important;
+    font-size: 1.9rem;
+    padding: 2rem;
+    width: 100%;
+  }
+
+  .search-thumbs-grid {
+    grid-template-columns: repeat(3, 1fr); /* 3 colunas desktop */
+    gap: 2rem;
+    max-width: min(70vw, 600px);
+    width: 100%;
+  }
+
+  .search-thumb-card {
+    max-width: none;
+    width: 100%;
+    padding: 1.2rem;
+  }
+
+  .search-thumb-title {
+    font-size: 1.3rem;
+  }
+
+  .search-thumb-btn {
+    font-size: 1.1rem;
+    padding: 0.6rem 1.5rem;
+  }
+
+  .search-pagination {
+    margin: 2.5rem 0 1.5rem 0;
+    gap: 2rem;
+  }
+
+  .search-pagination button {
+    padding: 1rem 2.5rem;
+    font-size: 1.3rem;
+  }
+
+  .random-movie-btn {
+    margin: 0;
+    font-size: 1.5rem;
+    padding: 1.2rem 3rem;
+    min-width: 280px;
+  }
+
+  /* ===== 5. NOTIFICATION MODAL ===== */
+  .notification-modal__content {
+    width: auto;
+    min-width: 450px;
+    max-width: 600px;
+    padding: 2.5rem 3.5rem;
+  }
+
+  .notification-result {
+    font-size: 1.9rem;
+    padding: 2rem;
+  }
+
+  /* ===== 6. HERO SECTION - DESKTOP STYLE ===== */
   .hero-content {
-    padding: 15rem 0 0 8rem;
-    margin-bottom: 8rem;
+    padding: 15rem 0 0 7rem; /* Desktop padrão */
+    text-align: left; /* Desktop alinhado à esquerda */
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .hero__icon {
+    width: 2.2rem;
+    height: 2.2rem;
+  }
+
+  .hero__icon-text {
+    font-size: 1.5rem;
+    margin-left: 1rem;
   }
 
   .hero__title {
-    font-size: 7.5rem !important;
-    line-height: 1.1 !important;
+    font-size: 5.5rem !important; /* Desktop padrão */
+    line-height: 1 !important;
     max-width: 85% !important;
+    text-align: left;
+    margin-bottom: 2rem !important;
   }
 
   .hero__text {
-    font-size: 1.7rem;
-    width: 480px;
+    font-size: 2rem; /* Desktop padrão */
+    line-height: 1.4;
+    width: auto;
+    max-width: 450px;
+    text-align: left;
+    margin: 0 0 1.5rem 0;
+    height: auto;
   }
 
+  .hero__text-bold {
+    font-size: 1.5rem;
+    line-height: 1.5;
+    width: auto;
+    max-width: 420px;
+    text-align: left;
+    margin: 0 0 1rem 0;
+    height: auto;
+    font-weight: var(--font-bold);
+  }
+
+  .hero__button {
+    flex-direction: row;
+    justify-content: flex-start; /* Alinhado à esquerda */
+    gap: 0.5rem; /* Gap maior */
+    align-items: center;
+    margin-top: 1rem;
+    margin-bottom: 0;
+    height: auto;
+  }
+
+  .hero__button-group {
+    width: auto;
+    max-width: 260px; /* Desktop padrão */
+    font-size: 1.5rem;
+    justify-content: center;
+  }
+
+  #spoiler-btn {
+    display: block !important;
+    padding: 1.5rem 2rem;
+    font-size: 1rem;
+    min-width: 150px;
+    opacity: 0.8;
+  }
+
+  /* ===== 7. HERO NAVIGATION ===== */
+  .hero-navigation {
+    bottom: -3rem;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .hero-nav-btn {
+    width: 4rem;
+    height: 4rem;
+    font-size: 1.8rem;
+  }
+
+  .hero-nav-dot {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  /* ===== 8. RANDOM MOVIE SECTION ===== */
+  .random-movie-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2.5rem;
+    background: #181818;
+    border-radius: 2rem;
+    margin: 1rem auto;
+    max-width: 550px;
+    box-shadow: 0 10px 48px #000c;
+    transition: all 0.3s ease;
+  }
+
+  .random-movie-section:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 64px #000e;
+  }
+
+  .random-movie-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5rem;
+    width: 100%;
+  }
+
+  .random-movie-title {
+    color: #bbb;
+    font-size: 2.4rem;
+    margin-bottom: 1.2rem;
+    text-align: center;
+    font-weight: 600;
+  }
+
+  .random-movie-btn {
+    background: var(--green-gradient-buttons, #4caf50);
+    color: #fff;
+    border: none;
+    border-radius: 1.8rem;
+    padding: 1.8rem 3.5rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 8px 32px rgba(74, 160, 66, 0.4);
+    transition: all 0.3s ease;
+    min-width: 300px;
+    margin: 0;
+  }
+
+  .random-movie-btn:hover {
+    background: #388e3c;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(74, 160, 66, 0.6);
+  }
+
+  /* ===== 9. MOVIE MODAL ===== */
   .movie-modal__content {
-    padding: 4.5rem 4rem;
+    padding: 4.5rem 4rem; /* Desktop padrão */
     width: 80vw;
     max-width: 900px;
   }
 
+  .movie-modal__info {
+    gap: 3rem; /* Desktop padrão */
+  }
+
   #movie-modal-title {
-    font-size: 3rem;
+    font-size: 3rem; /* Desktop padrão */
   }
 
-  .search-modal__content {
-    padding: 2.5rem 4.5rem;
-  }
-
-  .profile-menu {
-    right: 4rem;
-    top: 8rem;
-  }
-
-  /* Footer - Full horizontal layout */
+  /* ===== 10. FOOTER - HORIZONTAL LAYOUT ===== */
   .footer {
-    padding: 3rem 0 1.5rem 0;
-    margin-top: 6rem;
-    font-size: 1.3rem;
+    padding: 3.5rem 0 2rem 0; /* Desktop padrão */
+    margin-top: 3rem;
+    font-size: 1.4rem;
   }
 
   .footer__container {
-    flex-direction: column;
+    flex-direction: column; /* Ainda vertical no desktop médio */
     align-items: center;
-    padding: 0 3rem;
+    padding: 0 4rem;
     gap: 0;
   }
 
   .footer__top-row {
-    flex-direction: row;
+    flex-direction: row; /* Horizontal no desktop */
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
   }
 
   .footer__logo {
@@ -2658,7 +3855,7 @@ body.login-page {
   .footer__nav {
     flex: 2;
     justify-content: center;
-    gap: 2.5rem;
+    gap: 2.5rem; /* Desktop padrão */
   }
 
   .footer__social {
@@ -2667,19 +3864,19 @@ body.login-page {
   }
 
   .footer__logo img {
-    width: 140px;
+    width: 120px; /* Desktop padrão */
   }
 
   .footer__nav a {
-    font-size: 1.4rem;
+    font-size: 1.3rem; /* Desktop padrão */
   }
 
   .footer__social svg {
-    width: 28px;
+    width: 26px; /* Desktop padrão */
   }
 
   .footer__copy {
-    font-size: 1.2rem;
+    font-size: 1.1rem; /* Desktop padrão */
   }
 }
 
