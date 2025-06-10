@@ -163,7 +163,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
+  gap: 1rem;
   min-width: 220px;
   max-width: 320px;
 }
@@ -205,7 +205,7 @@
   display: none; /* ❌ NUNCA mostrar por padrão */
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1rem;
   min-width: 280px;
   max-width: 380px;
 }
@@ -215,7 +215,7 @@
   display: flex; /* ✅ Mostrar por padrão */
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
+  gap: 1rem;
   min-width: 220px;
   max-width: 320px;
 }
@@ -287,7 +287,234 @@
 }
 
 /* =========================
-   6. MOVIE MODAL RESPONSIVE BREAKPOINTS
+   6. MOVIE MODAL SPOILER SYSTEM
+   ========================= */
+
+.movie-modal__spoiler-section,
+.movie-modal__spoiler-section-vertical {
+  margin-top: 0.5rem;
+  text-align: center;
+  width: 50%;
+}
+
+.modal-spoiler-btn {
+  background: var(--green-gradient-buttons);
+  color: #fff;
+  border: none;
+  border-radius: 0.8rem;
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.4s ease-in-out;
+  box-shadow: 0 4px 12px rgba(255, 71, 87, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  width: 100%;
+  max-width: 200px;
+  opacity: 0.1;
+}
+
+.modal-spoiler-btn:hover {
+  opacity: 0.8;
+  background: var(--green-gradient-buttons);
+  transform: translateY(-2px);
+  box-shadow: 0 0px 10px var(--green-lighter);
+}
+
+.modal-spoiler-btn:active {
+  transform: translateY(0);
+}
+
+.modal-spoiler-text {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: rgba(255, 71, 87, 0.1);
+  border: 1px solid rgba(255, 71, 87, 0.3);
+  border-radius: 0.8rem;
+  color: #fff;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  animation: spoilerFadeIn 0.5s ease;
+  text-align: center;
+}
+
+@keyframes spoilerFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================
+   7. SPOILER OVERLAY SYSTEM
+   ========================= */
+
+.spoiler-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  animation: spoilerOverlayFadeIn 0.4s ease;
+}
+
+@keyframes spoilerOverlayFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.spoiler-overlay__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  cursor: pointer;
+}
+
+.spoiler-overlay__content {
+  position: relative;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+  border-radius: 2rem;
+  padding: 3rem;
+  max-width: 800px;
+  width: 90vw;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(74, 175, 79, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  animation: spoilerModalSlideIn 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  text-align: center;
+}
+
+@keyframes spoilerModalSlideIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.7) translateY(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.spoiler-overlay__close {
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 3rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 1;
+  border-radius: 50%;
+  width: 4rem;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spoiler-overlay__close:hover {
+  color: var(--green-lighter);
+  background: rgba(255, 71, 87, 0.1);
+  transform: scale(1.1);
+}
+
+.spoiler-overlay__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2.5rem;
+}
+
+.spoiler-overlay__title {
+  color: var(--green-lighter);
+  margin: 0;
+  font-size: 2.2rem;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  letter-spacing: 0.5px;
+  text-align: center;
+  max-width: 100%;
+  word-wrap: break-word;
+  text-shadow: 0 0 10px rgba(74, 175, 79, 0.3);
+}
+
+.spoiler-overlay__body {
+  margin-bottom: 2.5rem;
+}
+
+.spoiler-overlay__text {
+  color: #fff;
+  font-size: 1.8rem;
+  line-height: 1.6;
+  margin: 0;
+  padding: 2rem;
+  background: rgba(74, 175, 79, 0.1);
+  border: 1px solid rgba(74, 175, 79, 0.3);
+  border-radius: 1.5rem;
+  text-align: center;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+  animation: spoilerTextReveal 0.8s ease 0.3s both;
+}
+
+@keyframes spoilerTextReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.spoiler-overlay__footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.spoiler-overlay__progress {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.spoiler-overlay__progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #4caf50, #388e3c);
+  border-radius: 3px;
+  transition: width 10s linear;
+  box-shadow: 0 0 10px rgba(74, 175, 79, 0.6);
+}
+
+.spoiler-overlay__timer {
+  color: #bbb;
+  font-size: 1.1rem;
+  font-style: italic;
+  color: #4caf50;
+  font-weight: 500;
+}
+
+/* =========================
+   8. MOVIE MODAL RESPONSIVE BREAKPOINTS
    ========================= */
 
 /* --- MOBILE (≤480px) --- */
@@ -576,6 +803,48 @@
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(74, 160, 66, 0.4);
   }
+  /* ✅ SPOILER MOBILE - MOVER PARA BAIXO DO TRAILER */
+  .movie-modal__spoiler-section,
+  .movie-modal__spoiler-section-vertical {
+    order: 4; /* ✅ DEPOIS do media (order: 3) */
+    width: 30% !important;
+    max-width: 200px !important;
+    margin: 1rem auto 0 auto !important; /* ✅ MARGEM TOP para separar do botão trailer */
+    text-align: center !important;
+    opacity: 0.2;
+    transition: opacity 0.3s ease-in-out;
+  }
+  .movie-modal__spoiler-section:hover,
+  .movie-modal__spoiler-section-vertical:hover {
+    opacity: 0.7;
+  }
+
+  .modal-spoiler-btn {
+    width: 200px !important; /* ✅ MESMA largura do botão trailer */
+    max-width: 100% !important;
+    background: var(--green-gradient-buttons, #4caf50) !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 0.6rem !important;
+    padding: 0.6rem 1rem !important;
+    font-size: 1rem !important;
+    cursor: pointer !important;
+    font-weight: bold !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 2px 8px rgba(74, 160, 66, 0.3) !important;
+    margin: 0 auto !important;
+    opacity: 1 !important; /* ✅ VISÍVEL no mobile */
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+  }
+
+  .modal-spoiler-btn:hover,
+  .modal-spoiler-btn:active {
+    background: #388e3c !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(74, 160, 66, 0.4) !important;
+    opacity: 1 !important;
+  }
 }
 
 /* --- TABLET (481px–768px) --- */
@@ -830,6 +1099,44 @@
     box-shadow: 0 2px 6px rgba(74, 160, 66, 0.3); /* Menor */
     margin: 0 auto !important;
   }
+
+  /* ✅ SPOILER TABLET - MOVER PARA BAIXO DO TRAILER */
+  .movie-modal__spoiler-section,
+  .movie-modal__spoiler-section-vertical {
+    order: 4; /* ✅ DEPOIS do media (order: 3) */
+    width: 40% !important;
+    max-width: 240px !important; /* ✅ MESMA largura do botão trailer tablet */
+    margin: 0.5rem auto 0 auto !important; /* ✅ MARGEM TOP maior para tablet */
+    text-align: center !important;
+    opacity: 0.2;
+  }
+
+  .modal-spoiler-btn {
+    width: 240px !important; /* ✅ MESMA largura do botão trailer tablet */
+    max-width: 100% !important;
+    background: var(--green-gradient-buttons, #4caf50) !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 0.6rem !important;
+    padding: 0.8rem 1.2rem !important; /* ✅ PADDING maior para tablet */
+    font-size: 1.1rem !important; /* ✅ FONTE maior para tablet */
+    cursor: pointer !important;
+    font-weight: bold !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 2px 8px rgba(74, 160, 66, 0.3) !important;
+    margin: 0 auto !important;
+    opacity: 1 !important; /* ✅ VISÍVEL no tablet */
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+  }
+
+  .modal-spoiler-btn:hover,
+  .modal-spoiler-btn:active {
+    background: #388e3c !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(74, 160, 66, 0.4) !important;
+    opacity: 1 !important;
+  }
 }
 
 /* --- DESKTOP (≥769px) - RESTORE ORIGINAL BEHAVIOR --- */
@@ -839,7 +1146,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2rem;
+    gap: 1rem;
     min-width: 220px;
     max-width: 320px;
     width: auto;
@@ -879,7 +1186,7 @@
   .movie-modal__media-vertical {
     flex-direction: column;
     align-items: center;
-    gap: 1.5rem;
+    gap: 1rem;
     min-width: 220px;
     max-width: 320px;
   }
@@ -948,5 +1255,40 @@
     flex-direction: row;
     gap: 3rem;
     align-items: flex-start;
+  }
+
+  /* ✅ SPOILER DESKTOP - COMPORTAMENTO ORIGINAL */
+  .movie-modal__spoiler-section,
+  .movie-modal__spoiler-section-vertical {
+    order: initial; /* ✅ POSIÇÃO original */
+    width: 50%; /* ✅ LARGURA original */
+    max-width: 200px; /* ✅ LARGURA original */
+    margin-top: 0.5rem; /* ✅ MARGEM original */
+    text-align: center;
+  }
+
+  .modal-spoiler-btn {
+    width: 100%; /* ✅ LARGURA original */
+    max-width: 200px; /* ✅ LARGURA original */
+    background: var(--green-gradient-buttons);
+    color: #fff;
+    border: none;
+    border-radius: 0.8rem;
+    padding: 0.8rem 1rem;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.4s ease-in-out;
+    box-shadow: 0 4px 12px rgba(74, 160, 66, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    opacity: 0.1; /* ✅ COMPORTAMENTO original */
+  }
+
+  .modal-spoiler-btn:hover {
+    opacity: 0.8;
+    background: var(--green-gradient-buttons);
+    transform: translateY(-2px);
+    box-shadow: 0 0px 10px var(--green-lighter);
   }
 }

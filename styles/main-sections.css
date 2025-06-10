@@ -4,69 +4,70 @@
 /* 
    QUICK NAVIGATION - Use Ctrl+F to jump to sections:
    
-   1. CSS VARIABLES: COLORS & FONTS
-   2. HTML & BODY BASE
-   3. MAIN PAGE BACKGROUND & FADE-IN
+   1. CSS VARIABLES & GLOBAL COLORS
+   2. HTML & BODY BASE SETUP
+   3. PAGE LOADING & FADE ANIMATIONS
    4. LOGIN PAGE BACKGROUND
-   5. GLOBAL BACKGROUND
+   5. GLOBAL BACKGROUND SYSTEM
    6. HEADER & NAVIGATION
-   7. PROFILE DROPDOWN
-   8. MODALS (SEARCH, NOTIFICATION, COMING SOON)
-   9. SEARCH AUTOCOMPLETE
-   10. HEADER ICON BUTTONS
-   11. SEARCH RESULTS SECTION
-   12. RANDOM MOVIE BUTTONS
-   13. ACCESSIBILITY FOCUS
-   14. HERO SECTION
-   15. HERO NAVIGATION
-   16. HERO DARK TEXT VARIANT
-   17. HERO ANIMATIONS
-   18. HERO BUTTONS
-   19. GENERAL ICONS
-   22. CUSTOM POPUP
-   23. RANDOM MOVIE SECTION
-   24. FOOTER
-   25. SPOILER MODAL
-   26. DEVICE CAPABILITY DETECTION
-   27. RESPONSIVE STYLES 
+   7. PROFILE DROPDOWN SYSTEM
+   8. PROFILE MODAL
+   9. LOGOUT MODAL
+   10. MODAL BASE SYSTEM
+   11. SEARCH MODAL
+   12. NOTIFICATION MODAL
+   13. SEARCH AUTOCOMPLETE
+   14. HEADER ICON BUTTONS
+   15. SEARCH RESULTS DISPLAY
+   16. RANDOM MOVIE BUTTONS
+   17. ACCESSIBILITY FOCUS
+   18. HERO SECTION
+   19. HERO NAVIGATION
+   20. HERO TEXT VARIANTS
+   21. HERO ANIMATIONS
+   22. HERO BUTTONS
+   23. GENERAL ICONS
+   24. CUSTOM POPUP SYSTEM
+   25. RANDOM MOVIE SECTION
+   26. FOOTER
+   27. DEVICE CAPABILITY DETECTION
+   28. RESPONSIVE BREAKPOINT SYSTEM
+   29. MOBILE SMALL (≤480px) - COMPREHENSIVE MOBILE EXPERIENCE
+   30. MOBILE/TABLET (481px-768px) - ENHANCED MOBILE EXPERIENCE
+   31. TABLET/LAPTOP (769px-1024px) - DESKTOP TRANSITION
+   32. DESKTOP (1025px-1440px) - STANDARD DESKTOP EXPERIENCE
+   33. RESPONSIVE DEVELOPMENT HELPERS
    
    TIP: Search for "===" to jump between main sections
    ========================= */
 
 /* =========================
-   1. CSS VARIABLES: COLORS & FONTS
+   1. CSS VARIABLES & GLOBAL COLORS
    ========================= */
 :root {
+  /* Color palette */
   --white: #ffffff;
   --white-50: rgba(250, 250, 250, 0.5);
   --white-80: rgba(250, 250, 250, 0.8);
   --white-10: rgba(250, 250, 250, 0.1);
   --black: #000000;
+
+  /* Brand colors */
   --green-dark: #277028;
   --green-lighter: #4aa042;
-  --green-gradient: linear-gradient(
-    91deg,
-    #38883e 1.53%,
-    #398a3f 11.36%,
-    #4aa148 21.19%,
-    #51ab47 31.03%,
-    #3f9439 40.86%,
-    #3e9238 50.7%,
-    #409539 60.53%,
-    #54b04a 70.37%,
-    #4aa148 80.2%,
-    #398a3f 90.04%,
-    #38883e 99.87%
-  );
   --green-gradient-buttons: radial-gradient(circle at 40% 60%, var(--green-lighter) 0%, var(--green-dark) 100%);
+
+  /* Typography weights */
   --font-bold: 700;
   --font-regular: 500;
   --font-light: 400;
   --font-thin: 300;
+
+  /* Effects */
   --image-glow-color: rgba(255, 255, 255, 0.3);
 }
 
-/* Intelligent glow effect (hover only) */
+/* Universal glow effect for images (hover-enabled devices only) */
 .glow-img {
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: inherit;
@@ -75,14 +76,14 @@
 }
 
 /* =========================
-   2. HTML & BODY BASE
+   2. HTML & BODY BASE SETUP
    ========================= */
 html {
   box-sizing: border-box;
   width: 100%;
   max-width: 100vw;
   overflow-x: hidden;
-  font-size: 62.5%;
+  font-size: 62.5%; /* 1rem = 10px for easier calculations */
 }
 
 *,
@@ -104,7 +105,7 @@ body {
 }
 
 /* =========================
-   3. MAIN PAGE BACKGROUND & FADE-IN
+   3. PAGE LOADING & FADE ANIMATIONS
    ========================= */
 .body {
   background-color: var(--black);
@@ -124,14 +125,12 @@ body {
    ========================= */
 body.login-page {
   background: linear-gradient(to bottom right, #3e9238, #000) bottom right / 50% 50% no-repeat,
-    linear-gradient(to bottom left, #3e9238, #000) bottom left / 50% 50% no-repeat,
-    linear-gradient(to top left, #3e9238, #000) top left / 50% 50% no-repeat,
     linear-gradient(to top right, #3e9238, #000) top right / 50% 50% no-repeat;
   background-color: #000;
 }
 
 /* =========================
-   5. GLOBAL BACKGROUND
+   5. GLOBAL BACKGROUND SYSTEM
    ========================= */
 #background {
   position: absolute;
@@ -141,7 +140,6 @@ body.login-page {
   height: 100vh;
   object-fit: cover;
   background: linear-gradient(to right, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.4) 20%, transparent 60%),
-    linear-gradient(to bottom, transparent 80%, black 100%),
     url("../assets/hero-banner/mainly-ban-gonegirl.png") top center / cover no-repeat;
   z-index: -1;
   pointer-events: none;
@@ -225,7 +223,7 @@ body.login-page {
 }
 
 /* =========================
-   7. PROFILE DROPDOWN
+   7. PROFILE DROPDOWN SYSTEM
    ========================= */
 .profile-menu {
   position: absolute;
@@ -333,6 +331,7 @@ body.login-page {
   transform: scale(1.2);
 }
 
+/* Dropdown animation keyframes */
 @keyframes dropdownFadeIn {
   0% {
     opacity: 0;
@@ -348,6 +347,7 @@ body.login-page {
   animation: dropdownFadeIn 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
 }
 
+/* Profile icon states */
 .header__icon-user.dropdown-active {
   background: rgba(74, 160, 66, 0.2);
 }
@@ -357,6 +357,7 @@ body.login-page {
   box-shadow: 0 0 16px rgba(74, 160, 66, 0.4);
 }
 
+/* Accessibility focus states */
 .header__icon-user:focus-visible {
   outline: 2px solid var(--green-lighter);
   outline-offset: 2px;
@@ -368,6 +369,7 @@ body.login-page {
   outline-offset: 2px;
 }
 
+/* Universal transitions for profile system */
 .header__icon-user,
 .header__icon-user img,
 .profile-menu,
@@ -376,7 +378,7 @@ body.login-page {
 }
 
 /* =========================
-   7B. PROFILE MODAL
+   8. PROFILE MODAL
    ========================= */
 .profile-modal {
   position: fixed;
@@ -607,7 +609,7 @@ body.login-page {
 }
 
 /* =========================
-   7C. LOGOUT MODAL
+   9. LOGOUT MODAL
    ========================= */
 .logout-modal {
   position: fixed;
@@ -794,7 +796,7 @@ body.login-page {
 }
 
 /* =========================
-   8. MODALS BASE (SHARED STYLES)
+   10. MODAL BASE SYSTEM
    ========================= */
 .modal {
   position: fixed;
@@ -844,7 +846,7 @@ body.login-page {
 }
 
 /* =========================
-   8A. SEARCH MODAL (SPECIFIC)
+   11. SEARCH MODAL
    ========================= */
 .search-modal__content {
   min-width: 400px;
@@ -889,7 +891,7 @@ body.login-page {
 }
 
 /* =========================
-   8B. NOTIFICATION MODAL (SPECIFIC)
+   12. NOTIFICATION MODAL
    ========================= */
 .notification-modal__content {
   min-width: 350px;
@@ -911,7 +913,7 @@ body.login-page {
 }
 
 /* =========================
-   9. SEARCH AUTOCOMPLETE
+   13. SEARCH AUTOCOMPLETE
    ========================= */
 .search-bar-wrapper {
   position: relative;
@@ -925,24 +927,28 @@ body.login-page {
   top: 100%;
   left: 0;
   width: 100%;
-  background: #222;
+  background: #1a1a1a;
   color: #fff;
-  border-radius: 0 0 1rem 1rem;
-  box-shadow: 0 4px 16px #0008;
+  border-radius: 0 0 0.8rem 0.8rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   z-index: 10;
-  max-height: 11.5em;
+  max-height: 12rem;
   overflow-y: auto;
   margin: 0;
   padding: 0;
   list-style: none;
+  border: 1px solid #333;
+  border-top: none;
 }
 
 .autocomplete-list li {
-  padding: 0.7rem 1.2rem;
+  padding: 0.8rem 1rem;
   cursor: pointer;
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid #333;
+  align-items: center;
+  border-bottom: 1px solid #2a2a2a;
+  transition: background 0.2s ease;
 }
 
 .autocomplete-list li:last-child {
@@ -950,17 +956,43 @@ body.login-page {
 }
 
 .autocomplete-list li:hover {
-  background: #333;
+  background: #2a2a2a;
+}
+
+.autocomplete-title {
+  font-weight: 500;
+  color: #fff;
+  font-size: 1rem;
 }
 
 .autocomplete-category {
   color: #4caf50;
-  font-size: 0.95em;
-  margin-left: 1.2em;
+  font-size: 0.85rem;
+  font-weight: 500;
+  white-space: nowrap;
+  opacity: 0.9;
+}
+
+/* Scrollbar styling for autocomplete */
+.autocomplete-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.autocomplete-list::-webkit-scrollbar-track {
+  background: #2a2a2a;
+}
+
+.autocomplete-list::-webkit-scrollbar-thumb {
+  background: #4caf50;
+  border-radius: 2px;
+}
+
+.autocomplete-list::-webkit-scrollbar-thumb:hover {
+  background: #5bb854;
 }
 
 /* =========================
-   10. HEADER ICON BUTTONS
+   14. HEADER ICON BUTTONS
    ========================= */
 #search-btn,
 #notification-btn {
@@ -994,6 +1026,9 @@ body.login-page {
   pointer-events: auto !important;
 }
 
+/* =========================
+   15. SEARCH RESULTS DISPLAY
+   ========================= */
 /* =========================
    11. SEARCH RESULTS SECTION
    ========================= */
@@ -1123,7 +1158,7 @@ body.login-page {
 }
 
 /* =========================
-   12. RANDOM MOVIE BUTTONS
+   16. RANDOM MOVIE BUTTONS
    ========================= */
 .search-random-hint {
   display: flex;
@@ -1156,7 +1191,7 @@ body.login-page {
 }
 
 /* =========================
-   13. ACCESSIBILITY FOCUS
+   17. ACCESSIBILITY FOCUS
    ========================= */
 .header__icon-button button:focus-visible,
 .header__icon-user:focus-visible {
@@ -1165,7 +1200,7 @@ body.login-page {
 }
 
 /* =========================
-   14. HERO SECTION
+   18. HERO SECTION
    ========================= */
 .hero {
   width: 100%;
@@ -1177,7 +1212,7 @@ body.login-page {
 .hero-content {
   position: relative;
   z-index: 2;
-  padding: 12rem 0 0 8rem;
+  padding: 15rem 0 0 10rem;
   margin-bottom: 8rem;
   display: flex;
   flex-direction: column;
@@ -1249,7 +1284,7 @@ body.login-page {
 }
 
 /* =========================
-   15. HERO NAVIGATION
+   19. HERO NAVIGATION
    ========================= */
 .hero-navigation {
   position: absolute;
@@ -1318,7 +1353,7 @@ body.login-page {
 }
 
 /* =========================
-   16. HERO DARK TEXT VARIANT
+   20. HERO TEXT VARIANTS
    ========================= */
 .hero-content.dark-text .hero__title,
 .hero-content.dark-text .hero__text,
@@ -1339,7 +1374,7 @@ body.login-page {
 }
 
 /* =========================
-   17. HERO ANIMATIONS
+   21. HERO ANIMATIONS
    ========================= */
 .hero-content {
   transition: opacity 0.5s ease;
@@ -1365,12 +1400,13 @@ body.login-page {
   }
 }
 
+/* Hero background transition */
 #background {
   transition: background 0.8s ease-in-out;
 }
 
 /* =========================
-   18. HERO BUTTONS
+   22. HERO BUTTONS
    ========================= */
 .hero__button {
   display: flex;
@@ -1397,35 +1433,6 @@ body.login-page {
   opacity: 1;
 }
 
-.hero__button--secondary {
-  background: var(--green-gradient-buttons);
-  color: var(--white);
-  position: relative;
-  margin-left: 1rem;
-  overflow: hidden;
-  transition: all 0.3s ease;
-}
-
-.hero__button--secondary.warning {
-  background-color: #ff000080;
-  animation: shake 0.5s ease-in-out;
-}
-
-@keyframes shake {
-  0%,
-  100% {
-    transform: translateX(0);
-  }
-  20%,
-  60% {
-    transform: translateX(-3px);
-  }
-  40%,
-  80% {
-    transform: translateX(3px);
-  }
-}
-
 .hero__button-icon {
   width: 24px;
   height: 24px;
@@ -1439,71 +1446,11 @@ body.login-page {
   transform: scale(1.1);
 }
 
-.hero__title:hover ~ .hero__button .hero__button--secondary {
-  display: flex;
-  animation: glitch 0.3s ease infinite;
-}
-
-@keyframes shakeSlideOut {
-  0% {
-    transform: translateX(0);
-  }
-  50% {
-    transform: translateX(100%);
-  }
-  100% {
-    transform: translateX(100vw);
-    opacity: 0;
-  }
-}
-
-#spoiler-btn {
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s;
-  background: var(--green-gradient-buttons);
-  color: white;
-  border: none;
-  border-radius: 1rem;
-  padding: 0.5rem 2rem;
-  font-size: 1.3rem;
-  cursor: pointer;
-  min-width: 10rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
-
-.hero-content:hover #spoiler-btn,
-.hero__see-details-btn:hover + #spoiler-btn,
-#spoiler-btn.spoiler-fixed {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-#spoiler-btn.active {
-  background: red;
-  animation: shake 0.2s infinite;
-}
-
-#spoiler-btn.exit {
-  animation: shakeSlideOut 1.2s ease forwards;
-}
-
-.hero__button--secondary:hover,
-.hero__title:hover ~ .hero__button .hero__button--secondary {
-  background: red;
-  color: #fff;
-  animation: shake 0.3s infinite;
-}
-
 /* =========================
-   19. GENERAL ICONS
+   23. GENERAL ICONS
    ========================= */
 .icon-search,
-.icon-notification,
-.icon-spoiler {
+.icon-notification {
   width: 1.5rem;
   height: 1.5rem;
   vertical-align: middle;
@@ -1521,21 +1468,13 @@ body.login-page {
   color: #fff;
 }
 
-.icon-spoiler {
-  color: var(--green-lighter);
-}
-
 .header__icon-button:hover .icon-search,
 .header__icon-button:hover .icon-notification {
   color: var(--green-lighter);
 }
 
-.hero__button-group.hero__button--secondary:hover .icon-spoiler {
-  color: #fff;
-}
-
 /* =========================
-   20. CUSTOM POPUP
+   24. CUSTOM POPUP SYSTEM
    ========================= */
 .custom-popup {
   position: fixed;
@@ -1601,7 +1540,7 @@ body.login-page {
 }
 
 /* =========================
-   23. RANDOM MOVIE SECTION
+   25. RANDOM MOVIE SECTION
    ========================= */
 .random-movie-section {
   display: flex;
@@ -1629,7 +1568,7 @@ body.login-page {
 }
 
 /* =========================
-   24. FOOTER
+   26. FOOTER
    ========================= */
 .footer {
   background: #181818;
@@ -1715,55 +1654,7 @@ body.login-page {
 }
 
 /* =========================
-   SPOILER MODAL
-   ========================= */
-#spoiler-modal .search-modal__content {
-  max-width: 500px;
-  border-top: 4px solid red;
-}
-
-.spoiler-content {
-  text-align: center;
-  padding: 1rem;
-}
-
-.spoiler-content h2 {
-  color: red;
-  font-size: 2.2rem;
-  margin-bottom: 2rem;
-  animation: blink 1s infinite;
-}
-
-.spoiler-content p {
-  font-size: 1.8rem;
-  line-height: 1.5;
-  margin-bottom: 2.5rem;
-  padding: 1.5rem;
-  background: rgba(255, 0, 0, 0.1);
-  border-radius: 1rem;
-}
-
-.spoiler-timer {
-  font-size: 1.2rem;
-  color: #888;
-}
-
-@keyframes blink {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
-}
-
-#spoiler-btn {
-  min-height: 40px;
-}
-
-/* =========================
-   26. DEVICE CAPABILITY DETECTION
+   27. DEVICE CAPABILITY DETECTION
    ========================= */
 @media (hover: hover) and (pointer: fine) {
   .glow-img:hover {
@@ -1788,20 +1679,17 @@ body.login-page {
 }
 
 /* =========================
-   27. RESPONSIVE STYLES
+   28. RESPONSIVE BREAKPOINT SYSTEM
    ========================= */
 
-/* Mobile Menu Styles */
-.mobile-menu-toggle {
-  display: none;
-}
-
+/* Hide mobile menu components by default (desktop-first approach) */
+.mobile-menu-toggle,
 .mobile-menu-overlay {
   display: none;
 }
 
 /* =========================
-   MOBILE SMALL (≤480px) - VERSÃO ATUALIZADA
+   29. MOBILE SMALL (≤480px) - COMPREHENSIVE MOBILE EXPERIENCE
    ========================= */
 @media (max-width: 480px) {
   /* ===== 1. BODY & BACKGROUND ===== */
@@ -1837,15 +1725,16 @@ body.login-page {
     display: none;
   }
 
-  /* ===== 3. MOBILE HEADER CONTROLS - NOVOS ===== */
+  /* ===== 3. MOBILE HEADER CONTROLS ===== */
   .mobile-header-controls {
     display: flex !important;
     align-items: center;
-    gap: 1.5rem;
+    justify-content: flex-end;
     margin-left: auto;
+    position: relative;
   }
 
-  /* Search button no header mobile */
+  /* Search button */
   .mobile-search-btn {
     background: none;
     border: none;
@@ -1853,6 +1742,8 @@ body.login-page {
     padding: 0.5rem;
     border-radius: 50%;
     transition: all 0.3s ease;
+    order: 2;
+    margin-left: auto;
   }
 
   .mobile-search-btn svg {
@@ -1866,32 +1757,7 @@ body.login-page {
     color: #4aa042;
   }
 
-  /* Notification button no cantinho superior */
-  .mobile-notification-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0.3rem;
-    border-radius: 50%;
-    transition: all 0.3s ease;
-    position: absolute;
-    top: 1rem;
-    right: 6rem;
-    display: block !important;
-  }
-
-  .mobile-notification-btn svg {
-    width: 20px;
-    height: 20px;
-    color: rgba(255, 255, 255, 0.8);
-    transition: color 0.3s ease;
-  }
-
-  .mobile-notification-btn:hover svg {
-    color: #4aa042;
-  }
-
-  /* ===== 4. MOBILE MENU SYSTEM ===== */
+  /* ===== 4. MOBILE MENU SYSTEM (criado dinamicamente pelo JS) ===== */
   .mobile-menu-toggle {
     display: flex !important;
     flex-direction: column;
@@ -1935,7 +1801,7 @@ body.login-page {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.95);
     backdrop-filter: blur(15px);
     z-index: 999;
     display: none;
@@ -1956,6 +1822,7 @@ body.login-page {
     height: 100%;
     padding: 6rem 1.5rem 2rem 1.5rem;
     text-align: center;
+    overflow-y: auto;
   }
 
   /* ===== 5. LOGO MAIOR (120px) ===== */
@@ -1964,7 +1831,7 @@ body.login-page {
   }
 
   .mobile-menu-logo img {
-    width: 120px; /* 50% maior que antes (80px → 120px) */
+    width: 120px;
     filter: brightness(1.2);
   }
 
@@ -1982,7 +1849,7 @@ body.login-page {
   }
 
   .mobile-menu-profile img {
-    width: 60px; /* Mais discreto (60px → 45px) */
+    width: 60px;
     height: 60px;
     border-radius: 50%;
     border: 2px solid #4aa042;
@@ -1990,12 +1857,9 @@ body.login-page {
   }
 
   .mobile-menu-profile span {
-    font-size: 2.5rem; /* Texto menor e discreto */
+    font-size: 2.5rem;
     color: #4aa042;
     padding: 1rem 2rem;
-    background: rgba(74, 160, 66, 0.1);
-    border: 1px solid rgba(74, 160, 66, 0.2);
-    border-radius: 1rem;
     font-weight: 500;
   }
 
@@ -2083,9 +1947,7 @@ body.login-page {
     border-color: rgba(255, 107, 107, 0.3);
   }
 
-  /* ===== RESTO DOS ESTILOS MOBILE (mantidos iguais) ===== */
-
-  /* Profile menu */
+  /* ===== RESTO DOS ESTILOS MOBILE ===== */
   .profile-menu {
     display: none;
   }
@@ -2130,17 +1992,6 @@ body.login-page {
     width: 100%;
   }
 
-  .search-result.two-rows {
-    height: auto !important;
-    max-height: none !important;
-    overflow: visible !important;
-  }
-
-  .search-thumbs-wrapper {
-    width: 100%;
-    overflow: visible;
-  }
-
   .search-thumbs-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
@@ -2154,41 +2005,10 @@ body.login-page {
     width: 100%;
   }
 
-  .search-thumb-img {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 16/9;
-  }
-
   #search-close {
-    right: -1rem;
-    top: 0.5rem;
+    right: 0rem;
+    top: 0rem;
     font-size: 2.2rem;
-  }
-
-  .random-movie-btn {
-    margin: 0;
-    font-size: 1.2rem;
-    padding: 0.8rem 1.5rem;
-    min-width: 200px;
-  }
-
-  .search-random-hint {
-    margin: 1.5rem 0;
-  }
-
-  .search-pagination {
-    margin: 2rem 0 1rem 0;
-    gap: 1rem;
-  }
-
-  .search-pagination button {
-    padding: 0.6rem 1.5rem;
-    font-size: 1rem;
-  }
-
-  .search-pagination span {
-    font-size: 0.8rem;
   }
 
   /* Notification Modal Mobile */
@@ -2296,11 +2116,6 @@ body.login-page {
     justify-content: center;
   }
 
-  #spoiler-btn {
-    display: none !important;
-  }
-
-  /* Hero Navigation */
   .hero-navigation {
     bottom: 1rem;
     position: absolute;
@@ -2319,63 +2134,58 @@ body.login-page {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 1.5rem 2rem; /* ← MAIS ESPAÇO */
+    padding: 1.5rem 2rem;
     background: #181818;
     border-radius: 1.5rem;
-    margin: 2rem auto; /* ← MAIS MARGEM */
-    min-width: 250px; /* ← TAMANHO MÍNIMO */
-    max-width: 70%; /* ← FLEXÍVEL */
-    width: auto; /* ← LARGURA AUTOMÁTICA */
-    box-shadow: 0 4px 24px #000a;
-    transition: all 0.3s ease; /* ← TRANSIÇÕES SUAVES */
+    margin: 2rem auto;
+    min-width: 250px;
+    max-width: 70%;
+    width: auto;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s ease;
   }
 
   .random-movie-section:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 32px #000c;
+    box-shadow: 0 6px 32px rgba(0, 0, 0, 0.6);
   }
 
   .random-movie-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem; /* ← ESPAÇAMENTO ENTRE ELEMENTOS */
+    gap: 1rem;
     width: 100%;
-    padding: 0; /* ← REMOVE PADDING EXTRA */
+    padding: 0;
   }
 
   .random-movie-title {
     color: #bbb;
-    font-size: 1.5rem; /* ← TÍTULO MAIOR */
+    font-size: 1.5rem;
     margin-bottom: 0.5rem;
     text-align: center;
     font-weight: 500;
   }
 
-  /* ===== RANDOM MOVIE BUTTON CUSTOMIZÁVEL ===== */
   .random-movie-btn {
     background: var(--green-gradient-buttons, #4caf50);
     color: #fff;
     border: none;
     border-radius: 1.2rem;
-    padding: 1rem; /* ← BOTÃO MAIOR */
-    font-size: 1.1rem; /* ← TEXTO MAIOR */
+    padding: 1rem;
+    font-size: 1.1rem;
     font-weight: 600;
     cursor: pointer;
     box-shadow: 0 3px 12px rgba(74, 160, 66, 0.3);
     transition: all 0.3s ease;
-    min-width: 130px; /* ← LARGURA MÍNIMA */
-    margin: 0; /* ← REMOVE MARGENS CONFLITANTES */
+    min-width: 130px;
+    margin: 0;
   }
 
   .random-movie-btn:hover {
     background: #388e3c;
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(74, 160, 66, 0.4);
-  }
-
-  .random-movie-btn:active {
-    transform: translateY(0);
   }
 
   /* Footer */
@@ -2438,25 +2248,25 @@ body.login-page {
 }
 
 /* =========================
-   MOBILE/TABLET (481px-768px) - VERSÃO AMPLIADA DO MOBILE PEQUENO
+   30. MOBILE/TABLET (481px-768px) - ENHANCED MOBILE EXPERIENCE
    ========================= */
 @media (min-width: 481px) and (max-width: 768px) {
-  /* ===== 1. BODY & BACKGROUND ===== */
+  /* ===== ENHANCED BACKGROUND ===== */
   body {
     padding-top: 0;
   }
 
   #background {
     top: 0;
-    height: 45vh; /* Maior que mobile (30vh → 45vh) */
+    height: 45vh;
     width: 100%;
     background-size: cover;
     background-position: center center;
   }
 
-  /* ===== 2. HEADER & NAVIGATION ===== */
+  /* ===== ENHANCED HEADER ===== */
   .header {
-    padding: 1.8rem 3rem; /* Mais padding que mobile (1rem 2rem → 1.8rem 3rem) */
+    padding: 1.8rem 3rem;
     flex-wrap: nowrap;
     justify-content: space-between;
     align-items: center;
@@ -2465,7 +2275,7 @@ body.login-page {
     left: 0;
     right: 0;
     z-index: 1000;
-    height: 85px; /* Maior que mobile (70px → 85px) */
+    height: 85px;
   }
 
   .header__logo,
@@ -2474,26 +2284,24 @@ body.login-page {
     display: none;
   }
 
-  /* ===== 3. MOBILE HEADER CONTROLS - AMPLIADOS ===== */
   .mobile-header-controls {
     display: flex !important;
     align-items: center;
-    gap: 2rem; /* Maior gap (1.5rem → 2rem) */
+    gap: 2rem;
     margin-left: auto;
   }
 
-  /* Search button no header mobile - MAIOR */
   .mobile-search-btn {
     background: none;
     border: none;
     cursor: pointer;
-    padding: 0.8rem; /* Maior (0.5rem → 0.8rem) */
+    padding: 0.8rem;
     border-radius: 50%;
     transition: all 0.3s ease;
   }
 
   .mobile-search-btn svg {
-    width: 32px; /* Maior (28px → 32px) */
+    width: 32px;
     height: 32px;
     color: #fff;
     transition: color 0.3s ease;
@@ -2504,22 +2312,21 @@ body.login-page {
     transform: scale(1.1);
   }
 
-  /* Notification button no cantinho superior - MAIOR */
   .mobile-notification-btn {
     background: none;
     border: none;
     cursor: pointer;
-    padding: 0.5rem; /* Maior (0.3rem → 0.5rem) */
+    padding: 0.5rem;
     border-radius: 50%;
     transition: all 0.3s ease;
     position: absolute;
-    top: 1.5rem; /* Mais baixo (1rem → 1.5rem) */
-    right: 7rem; /* Mais espaçado (6rem → 7rem) */
+    top: 1.5rem;
+    right: 7rem;
     display: block !important;
   }
 
   .mobile-notification-btn svg {
-    width: 24px; /* Maior (20px → 24px) */
+    width: 24px;
     height: 24px;
     color: rgba(255, 255, 255, 0.8);
     transition: color 0.3s ease;
@@ -2530,14 +2337,14 @@ body.login-page {
     transform: scale(1.1);
   }
 
-  /* ===== 4. MOBILE MENU SYSTEM - AMPLIADO ===== */
+  /* ===== ENHANCED HAMBURGER MENU ===== */
   .mobile-menu-toggle {
     display: flex !important;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 50px; /* Maior (40px → 50px) */
-    height: 50px; /* Maior (40px → 50px) */
+    width: 50px;
+    height: 50px;
     background: none;
     border: none;
     cursor: pointer;
@@ -2547,17 +2354,17 @@ body.login-page {
   }
 
   .hamburger-line {
-    width: 30px; /* Maior (25px → 30px) */
-    height: 4px; /* Maior (3px → 4px) */
+    width: 30px;
+    height: 4px;
     background: #fff;
-    margin: 4px 0; /* Maior (3px → 4px) */
-    border-radius: 3px; /* Maior (2px → 3px) */
+    margin: 4px 0;
+    border-radius: 3px;
     transition: all 0.3s ease;
     display: block;
   }
 
   .mobile-menu-toggle.active .hamburger-line:nth-child(1) {
-    transform: rotate(45deg) translate(7px, 7px); /* Ajustado para tamanho maior */
+    transform: rotate(45deg) translate(7px, 7px);
   }
 
   .mobile-menu-toggle.active .hamburger-line:nth-child(2) {
@@ -2565,7 +2372,7 @@ body.login-page {
   }
 
   .mobile-menu-toggle.active .hamburger-line:nth-child(3) {
-    transform: rotate(-45deg) translate(7px, -7px); /* Ajustado para tamanho maior */
+    transform: rotate(-45deg) translate(7px, -7px);
   }
 
   .mobile-menu-overlay {
@@ -2574,8 +2381,8 @@ body.login-page {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.85); /* Mais escuro (0.8 → 0.85) */
-    backdrop-filter: blur(20px); /* Mais blur (15px → 20px) */
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(20px);
     z-index: 999;
     display: none;
     opacity: 0;
@@ -2593,197 +2400,178 @@ body.login-page {
     align-items: center;
     width: 100%;
     height: 100%;
-    padding: 8rem 2rem 3rem 2rem; /* Mais padding (6rem 1.5rem 2rem → 8rem 2rem 3rem) */
+    padding: 8rem 2rem 3rem 2rem;
     text-align: center;
+    overflow-y: auto;
   }
 
-  /* ===== 5. LOGO MUITO MAIOR (180px) ===== */
+  /* ===== ENHANCED MENU COMPONENTS ===== */
   .mobile-menu-logo {
-    margin-bottom: 3rem; /* Mais margem (2.5rem → 3rem) */
+    margin-bottom: 3rem;
   }
 
   .mobile-menu-logo img {
-    width: 180px; /* MUITO maior (120px → 180px) */
+    width: 180px;
     filter: brightness(1.3);
   }
 
-  /* ===== 6. PROFILE MAIOR E MAIS ELEGANTE ===== */
   .mobile-menu-profile {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 2.5rem; /* Mais margem (2rem → 2.5rem) */
+    margin-bottom: 2.5rem;
     cursor: pointer;
-    border-radius: 1.2rem; /* Mais arredondado (1rem → 1.2rem) */
-    padding: 1.5rem 2.5rem; /* Mais padding (1rem 2rem → 1.5rem 2.5rem) */
+    border-radius: 1.2rem;
+    padding: 1.5rem 2.5rem;
     transition: all 0.3s ease;
-    min-width: 150px; /* Maior (120px → 150px) */
+    min-width: 150px;
   }
 
   .mobile-menu-profile img {
-    width: 75px; /* Maior (60px → 75px) */
+    width: 75px;
     height: 75px;
     border-radius: 50%;
-    border: 3px solid #4aa042; /* Borda mais grossa (2px → 3px) */
-    margin-bottom: 1.8rem; /* Mais margem (1.5rem → 1.8rem) */
+    border: 3px solid #4aa042;
+    margin-bottom: 1.8rem;
     box-shadow: 0 4px 16px rgba(74, 160, 66, 0.3);
   }
 
   .mobile-menu-profile span {
-    font-size: 3rem; /* Maior (2.5rem → 3rem) */
+    font-size: 3rem;
     color: #4aa042;
-    padding: 1.2rem 2.5rem; /* Mais padding (1rem 2rem → 1.2rem 2.5rem) */
-    background: rgba(74, 160, 66, 0.15); /* Mais transparência (0.1 → 0.15) */
-    border: 1px solid rgba(74, 160, 66, 0.3); /* Borda mais visível (0.2 → 0.3) */
-    border-radius: 1.2rem; /* Mais arredondado (1rem → 1.2rem) */
-    font-weight: 600; /* Mais bold (500 → 600) */
+    padding: 1.2rem 2.5rem;
+    background: rgba(74, 160, 66, 0.15);
+    border: 1px solid rgba(74, 160, 66, 0.3);
+    border-radius: 1.2rem;
+    font-weight: 600;
     box-shadow: 0 2px 12px rgba(74, 160, 66, 0.2);
   }
 
-  /* ===== NOTIFICATION BUTTON DENTRO DO MENU - MAIOR ===== */
   .mobile-menu-notification {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 2rem; /* Mais margem (1.5rem → 2rem) */
+    margin-bottom: 2rem;
     cursor: pointer;
     background: transparent;
     border: 1px solid transparent;
-    border-radius: 1.2rem; /* Mais arredondado (1rem → 1.2rem) */
-    padding: 1.3rem 2.5rem; /* Mais padding (1rem 2rem → 1.3rem 2.5rem) */
+    border-radius: 1.2rem;
+    padding: 1.3rem 2.5rem;
     transition: all 0.3s ease;
-    min-width: 150px; /* Maior (120px → 150px) */
+    min-width: 150px;
   }
 
   .mobile-menu-notification:hover {
-    background: rgba(74, 160, 66, 0.25); /* Mais transparência (0.2 → 0.25) */
+    background: rgba(74, 160, 66, 0.25);
     border-color: #4aa042;
-    transform: translateY(-3px); /* Mais movimento (-2px → -3px) */
+    transform: translateY(-3px);
     box-shadow: 0 4px 16px rgba(74, 160, 66, 0.3);
   }
 
   .mobile-menu-notification svg {
-    width: 32px; /* Maior (28px → 32px) */
+    width: 32px;
     height: 32px;
     color: #4aa042;
-    margin-bottom: 0.8rem; /* Mais margem (0.5rem → 0.8rem) */
+    margin-bottom: 0.8rem;
     transition: color 0.3s ease;
   }
 
   .mobile-menu-notification span {
     color: #4aa042;
-    font-size: 1.2rem; /* Maior (1rem → 1.2rem) */
-    font-weight: 600; /* Mais bold (500 → 600) */
+    font-size: 1.2rem;
+    font-weight: 600;
   }
 
-  .mobile-menu-notification:hover svg,
-  .mobile-menu-notification:hover span {
-    color: #5bb854;
-  }
-
-  /* ===== 7. NAVIGATION MAIOR ===== */
   .mobile-menu-nav {
     display: flex;
     flex-direction: column;
-    gap: 2.5rem; /* Maior gap (2rem → 2.5rem) */
+    gap: 2.5rem;
     text-align: center;
-    margin-bottom: 4rem; /* Mais margem (3rem → 4rem) */
+    margin-bottom: 4rem;
   }
 
   .mobile-menu-nav a {
     color: #fff;
-    font-size: 2.3rem; /* Maior (2rem → 2.3rem) */
-    font-weight: 700; /* Mais bold (600 → 700) */
+    font-size: 2.3rem;
+    font-weight: 700;
     text-decoration: none;
     transition: all 0.3s ease;
-    padding: 1.3rem 2.5rem; /* Mais padding (1rem 2rem → 1.3rem 2.5rem) */
-    border-radius: 1.2rem; /* Mais arredondado (1rem → 1.2rem) */
+    padding: 1.3rem 2.5rem;
+    border-radius: 1.2rem;
   }
 
   .mobile-menu-nav a:hover,
   .mobile-menu-nav a.active {
     color: #4aa042;
-    background: rgba(74, 160, 66, 0.15); /* Mais transparência (0.1 → 0.15) */
+    background: rgba(74, 160, 66, 0.15);
     transform: translateY(-2px);
     box-shadow: 0 4px 16px rgba(74, 160, 66, 0.2);
   }
 
-  /* ===== 8. LOGOUT MAIOR ===== */
   .mobile-menu-logout {
     background: none;
-    border: 1px solid rgba(255, 255, 255, 0.3); /* Borda mais visível (0.2 → 0.3) */
-    border-radius: 1rem; /* Mais arredondado (0.8rem → 1rem) */
-    color: #999; /* Cor mais clara (#888 → #999) */
-    padding: 1rem 2rem; /* Mais padding (0.7rem 1.5rem → 1rem 2rem) */
-    font-size: 1.2rem; /* Maior (1rem → 1.2rem) */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 1rem;
+    color: #999;
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
     cursor: pointer;
     transition: all 0.3s ease;
     margin-top: auto;
-    margin-bottom: 2.5rem; /* Mais margem (2rem → 2.5rem) */
+    margin-bottom: 2.5rem;
     font-weight: 500;
   }
 
   .mobile-menu-logout:hover {
     color: #ff6b6b;
-    border-color: rgba(255, 107, 107, 0.4); /* Mais transparência (0.3 → 0.4) */
+    border-color: rgba(255, 107, 107, 0.4);
     transform: translateY(-1px);
     box-shadow: 0 2px 8px rgba(255, 107, 107, 0.2);
   }
 
-  /* ===== 9. SEARCH MODAL - AMPLIADO ===== */
+  /* ===== ENHANCED MODALS ===== */
   .search-modal {
     align-items: center;
     justify-content: center;
-    padding: 2rem 0 1.5rem 0; /* Mais padding (1.5rem 0 1rem → 2rem 0 1.5rem) */
+    padding: 2rem 0 1.5rem 0;
     overflow-y: auto;
   }
 
   .search-modal__content {
-    padding: 2.5rem 2rem 0 2rem; /* Mais padding (2rem 1.5rem → 2.5rem 2rem) */
-    width: 90vw; /* Maior (95vw → 90vw) */
-    min-width: 350px; /* Maior (280px → 350px) */
+    padding: 2.5rem 2rem 0 2rem;
+    width: 90vw;
+    min-width: 350px;
     max-height: none !important;
     overflow: visible;
-    margin-top: 1.5rem; /* Mais margem (1rem → 1.5rem) */
+    margin-top: 1.5rem;
   }
 
   #search-input {
     width: 100%;
-    max-width: 400px; /* Maior (280px → 400px) */
-    font-size: 1.6rem; /* Maior (1.4rem → 1.6rem) */
-    padding: 1rem 2rem; /* Mais padding (0.8rem 1.5rem → 1rem 2rem) */
-    margin-top: 1.5rem; /* Mais margem (1rem → 1.5rem) */
+    max-width: 400px;
+    font-size: 1.6rem;
+    padding: 1rem 2rem;
+    margin-top: 1.5rem;
   }
 
   #search-submit {
-    font-size: 1.6rem; /* Maior (1.4rem → 1.6rem) */
-    padding: 1rem 2.5rem; /* Mais padding (0.8rem 2rem → 1rem 2.5rem) */
-    margin-top: 1.5rem; /* Mais margem (1rem → 1.5rem) */
+    font-size: 1.6rem;
+    padding: 1rem 2.5rem;
+    margin-top: 1.5rem;
   }
 
   .search-result {
     height: auto !important;
     max-height: none !important;
     overflow: visible !important;
-    font-size: 1.8rem; /* Maior (1.6rem → 1.8rem) */
-    padding: 1rem 0.8rem; /* Mais padding (auto 0.5rem → 1rem 0.8rem) */
+    font-size: 1.8rem;
+    padding: 1rem 0.8rem;
     width: 100%;
-  }
-
-  .search-result.two-rows {
-    height: auto !important;
-    max-height: none !important;
-    overflow: visible !important;
-  }
-
-  .search-thumbs-wrapper {
-    width: 100%;
-    overflow: visible;
   }
 
   .search-thumbs-grid {
-    grid-template-columns: repeat(3, 1fr); /* 3 colunas em vez de 2 */
-    gap: 1.5rem; /* Maior gap (1rem → 1.5rem) */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
     max-width: none;
     width: 100%;
     overflow: visible;
@@ -2792,81 +2580,48 @@ body.login-page {
   .search-thumb-card {
     max-width: none;
     width: 100%;
-    padding: 1rem; /* Mais padding */
-  }
-
-  .search-thumb-img {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 16/9;
+    padding: 1rem;
   }
 
   .search-thumb-title {
-    font-size: 1.2rem; /* Maior (padrão → 1.2rem) */
+    font-size: 1.2rem;
   }
 
   .search-thumb-btn {
-    font-size: 1rem; /* Maior (padrão → 1rem) */
-    padding: 0.5rem 1.2rem; /* Mais padding */
+    font-size: 1rem;
+    padding: 0.5rem 1.2rem;
   }
 
   #search-close {
-    right: 1rem; /* Melhor posição (-1rem → -0.5rem) */
-    top: 1rem; /* Melhor posição (0.5rem → 1rem) */
-    font-size: 2.5rem; /* Maior (2.2rem → 2.5rem) */
+    right: 1rem;
+    top: 1rem;
+    font-size: 2.5rem;
   }
 
-  .random-movie-btn {
-    margin: 0;
-    font-size: 1.4rem; /* Maior (1.2rem → 1.4rem) */
-    padding: 1rem 2rem; /* Mais padding (0.8rem 1.5rem → 1rem 2rem) */
-    min-width: 250px; /* Maior (200px → 250px) */
-  }
-
-  .search-random-hint {
-    margin: 2rem 0; /* Mais margem (1.5rem → 2rem) */
-    font-size: 1.6rem; /* Maior (padrão → 1.6rem) */
-  }
-
-  .search-pagination {
-    margin: 2.5rem 0 1.5rem 0; /* Mais margem (2rem 0 1rem → 2.5rem 0 1.5rem) */
-    gap: 1.5rem; /* Maior gap (1rem → 1.5rem) */
-  }
-
-  .search-pagination button {
-    padding: 0.8rem 2rem; /* Mais padding (0.6rem 1.5rem → 0.8rem 2rem) */
-    font-size: 1.2rem; /* Maior (1rem → 1.2rem) */
-  }
-
-  .search-pagination span {
-    font-size: 1rem; /* Maior (0.8rem → 1rem) */
-  }
-
-  /* ===== 10. NOTIFICATION MODAL - AMPLIADO ===== */
   .notification-modal__content {
     width: auto;
-    min-width: 350px; /* Maior (230px → 350px) */
-    max-width: 450px; /* Maior (300px → 450px) */
-    padding: 1.5rem 2.5rem; /* Mais padding (1rem 2rem → 1.5rem 2.5rem) */
+    min-width: 350px;
+    max-width: 450px;
+    padding: 1.5rem 2.5rem;
   }
 
   #notification-close {
-    right: -0.5rem; /* Melhor posição (-1rem → -0.5rem) */
-    font-size: 2.8rem; /* Maior (2.5rem → 2.8rem) */
+    right: -0.5rem;
+    font-size: 2.8rem;
   }
 
   .notification-result {
-    font-size: 1.8rem; /* Maior (1.5rem → 1.8rem) */
-    padding: 1.5rem; /* Mais padding (1rem → 1.5rem) */
+    font-size: 1.8rem;
+    padding: 1.5rem;
   }
 
-  /* ===== 11. HERO SECTION - AMPLIADO ===== */
+  /* ===== ENHANCED HERO SECTION ===== */
   .hero-content {
-    padding: 18rem 3rem 3rem 3rem; /* Mais padding (15rem 2rem 2rem → 18rem 3rem 3rem) */
-    margin-bottom: 5rem; /* Mais margem (4rem → 5rem) */
+    padding: 18rem 3rem 3rem 3rem;
+    margin-bottom: 5rem;
     text-align: center;
     align-items: center;
-    height: 50rem; /* Maior (40rem → 50rem) */
+    height: 50rem;
     min-height: 50rem;
     display: flex;
     justify-self: center;
@@ -2875,40 +2630,35 @@ body.login-page {
   }
 
   .hero__icon {
-    width: 1.8rem; /* Maior (1.4rem → 1.8rem) */
+    width: 1.8rem;
     height: 1.8rem;
-    opacity: 0.9; /* Mais opaco (0.8 → 0.9) */
+    opacity: 0.9;
   }
 
   .hero__icon-text {
-    font-size: 1.4rem; /* Maior (1.2rem → 1.4rem) */
-    margin-left: 0.8rem; /* Mais margem (0.5rem → 0.8rem) */
-    opacity: 0.9; /* Mais opaco (0.8 → 0.9) */
+    font-size: 1.4rem;
+    margin-left: 0.8rem;
+    opacity: 0.9;
   }
 
   .hero__title {
-    font-size: 4rem !important; /* Maior (3rem → 4rem) */
-    line-height: 1 !important; /* Melhor (0.95 → 1) */
+    font-size: 4rem !important;
+    line-height: 1 !important;
     max-width: 100% !important;
     text-align: center;
     display: flex;
     justify-content: center;
-    margin-bottom: 1.5rem !important; /* Mais margem */
-  }
-
-  .hero__title:hover {
-    transform: none !important;
-    background-position: initial !important;
+    margin-bottom: 1.5rem !important;
   }
 
   .hero__text {
-    font-size: 1.5rem; /* Maior (1.3rem → 1.5rem) */
-    line-height: 1.4; /* Melhor (1.3 → 1.4) */
+    font-size: 1.5rem;
+    line-height: 1.4;
     width: 100%;
-    max-width: 450px; /* Maior (300px → 450px) */
+    max-width: 450px;
     text-align: center;
-    margin: 0 auto 1.5rem auto; /* Mais margem (0 auto → 0 auto 1.5rem auto) */
-    height: 7rem; /* Maior (6rem → 7rem) */
+    margin: 0 auto 1.5rem auto;
+    height: 7rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2916,13 +2666,13 @@ body.login-page {
   }
 
   .hero__text-bold {
-    font-size: 1.3rem; /* Maior (1.1rem → 1.3rem) */
-    line-height: 1.3; /* Melhor (1.2 → 1.3) */
+    font-size: 1.3rem;
+    line-height: 1.3;
     width: 100%;
-    max-width: 420px; /* Maior (280px → 420px) */
+    max-width: 420px;
     text-align: center;
     margin: 0 auto;
-    height: 5rem; /* Maior (4rem → 5rem) */
+    height: 5rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2932,174 +2682,148 @@ body.login-page {
   }
 
   .hero__button {
-    flex-direction: row; /* Em linha em vez de coluna */
+    flex-direction: row;
     justify-content: center;
-    gap: 1.5rem; /* Gap entre botões */
+    gap: 1.5rem;
     align-items: center;
-    margin-top: 2rem; /* Mais margem (1.5rem → 2rem) */
-    margin-bottom: 1rem; /* Mais margem (0 → 1rem) */
-    height: 5rem; /* Maior (4rem → 5rem) */
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    height: 5rem;
     display: flex;
   }
 
   .hero__button-group {
-    width: auto; /* Largura automática */
-    max-width: 220px; /* Maior (260px → 220px cada botão) */
-    font-size: 1.3rem; /* Maior (1.1rem → 1.3rem) */
-    padding: 1.2rem 2rem; /* Mais padding */
+    width: auto;
+    max-width: 220px;
+    font-size: 1.3rem;
+    padding: 1.2rem 2rem;
     justify-content: center;
   }
 
-  #spoiler-btn {
-    display: block !important; /* Mostrar spoiler button */
-    padding: 1.2rem 2rem; /* Mesmo padding do botão principal */
-    font-size: 1.2rem; /* Tamanho adequado */
-    min-width: 180px; /* Largura mínima */
-    opacity: 0.8; /* Levemente transparente */
-  }
-
-  /* ===== 12. HERO NAVIGATION - AMPLIADO ===== */
   .hero-navigation {
-    bottom: 1.5rem; /* Mais baixo (1rem → 1.5rem) */
+    bottom: 1.5rem;
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
   }
 
   .hero-nav-btn {
-    width: 3rem; /* Maior (2.5rem → 3rem) */
+    width: 3rem;
     height: 3rem;
-    font-size: 1.4rem; /* Maior (1.2rem → 1.4rem) */
+    font-size: 1.4rem;
   }
 
   .hero-nav-dot {
-    width: 1.3rem; /* Maior (padrão → 1.3rem) */
+    width: 1.3rem;
     height: 1.3rem;
   }
 
-  /* ===== 13. RANDOM MOVIE SECTION - MUITO AMPLIADO ===== */
+  /* ===== ENHANCED COMPONENTS ===== */
   .random-movie-section {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 2.5rem 3.5rem; /* Muito mais padding (1.5rem 2rem → 2.5rem 3.5rem) */
+    padding: 2.5rem 3.5rem;
     background: #181818;
-    border-radius: 2rem; /* Mais arredondado (1.5rem → 2rem) */
-    margin: 3.5rem auto; /* Mais margem (2rem → 3.5rem) */
-    min-width: 400px; /* Maior (250px → 400px) */
-    max-width: 80%; /* Maior (70% → 80%) */
+    border-radius: 2rem;
+    margin: 3.5rem auto;
+    min-width: 400px;
+    max-width: 80%;
     width: auto;
-    box-shadow: 0 6px 32px #000c; /* Sombra mais forte */
+    box-shadow: 0 6px 32px rgba(0, 0, 0, 0.6);
     transition: all 0.3s ease;
   }
 
   .random-movie-section:hover {
-    transform: translateY(-4px); /* Mais movimento (-2px → -4px) */
-    box-shadow: 0 10px 48px #000e; /* Sombra muito maior */
+    transform: translateY(-4px);
+    box-shadow: 0 10px 48px rgba(0, 0, 0, 0.8);
   }
 
   .random-movie-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.8rem; /* Maior gap (1rem → 1.8rem) */
+    gap: 1.8rem;
     width: 100%;
     padding: 0;
   }
 
   .random-movie-title {
     color: #bbb;
-    font-size: 2rem; /* Muito maior (1.5rem → 2rem) */
-    margin-bottom: 1rem; /* Mais margem (0.5rem → 1rem) */
+    font-size: 2rem;
+    margin-bottom: 1rem;
     text-align: center;
-    font-weight: 600; /* Mais bold (500 → 600) */
+    font-weight: 600;
   }
 
   .random-movie-btn {
     background: var(--green-gradient-buttons, #4caf50);
     color: #fff;
     border: none;
-    border-radius: 1.5rem; /* Mais arredondado (1.2rem → 1.5rem) */
-    padding: 1.5rem 3rem; /* Muito mais padding (1rem → 1.5rem 3rem) */
-    font-size: 1.4rem; /* Maior (1.1rem → 1.4rem) */
-    font-weight: 700; /* Mais bold (600 → 700) */
+    border-radius: 1.5rem;
+    padding: 1.5rem 3rem;
+    font-size: 1.4rem;
+    font-weight: 700;
     cursor: pointer;
-    box-shadow: 0 5px 20px rgba(74, 160, 66, 0.4); /* Sombra maior */
+    box-shadow: 0 5px 20px rgba(74, 160, 66, 0.4);
     transition: all 0.3s ease;
-    min-width: 280px; /* Muito maior (130px → 280px) */
+    min-width: 280px;
     margin: 0;
   }
 
   .random-movie-btn:hover {
     background: #388e3c;
-    transform: translateY(-3px); /* Mais movimento (-2px → -3px) */
-    box-shadow: 0 8px 32px rgba(74, 160, 66, 0.6); /* Sombra muito maior */
+    transform: translateY(-3px);
+    box-shadow: 0 8px 32px rgba(74, 160, 66, 0.6);
   }
 
-  .random-movie-btn:active {
-    transform: translateY(-1px); /* Ajustado (0 → -1px) */
-  }
-
-  /* ===== 14. FOOTER - AMPLIADO ===== */
+  /* ===== ENHANCED FOOTER ===== */
   .footer {
-    padding: 3.5rem 0 2rem 0; /* Mais padding (2.5rem 0 1.5rem → 3.5rem 0 2rem) */
-    margin-top: 5rem; /* Mais margem (4rem → 5rem) */
-    font-size: 1.4rem; /* Maior (1.2rem → 1.4rem) */
+    padding: 3.5rem 0 2rem 0;
+    margin-top: 5rem;
+    font-size: 1.4rem;
   }
 
   .footer__container {
     flex-direction: column;
     align-items: center;
-    padding: 0 3.5rem; /* Mais padding (0 2.5rem → 0 3.5rem) */
-    gap: 2rem; /* Mais gap (1.5rem → 2rem) */
+    padding: 0 3.5rem;
+    gap: 2rem;
   }
 
   .footer__top-row {
     flex-direction: column;
     align-items: center;
-    gap: 2rem; /* Mais gap (1.5rem → 2rem) */
-    margin-bottom: 1.5rem; /* Mais margem (1rem → 1.5rem) */
-  }
-
-  .footer__logo,
-  .footer__nav,
-  .footer__social {
-    flex: none;
-    width: auto;
-    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
   }
 
   .footer__logo img {
-    width: 120px; /* Maior (80px → 120px) */
+    width: 120px;
   }
 
   .footer__nav {
     flex-direction: column;
-    gap: 1.5rem; /* Mais gap (1rem → 1.5rem) */
+    gap: 1.5rem;
   }
 
   .footer__nav a {
-    font-size: 1.3rem; /* Maior (1.1rem → 1.3rem) */
-  }
-
-  .footer__social {
-    gap: 1.8rem; /* Mais gap */
+    font-size: 1.3rem;
   }
 
   .footer__social svg {
-    width: 26px; /* Maior (20px → 26px) */
+    width: 26px;
   }
 
   .footer__copy {
-    font-size: 1.1rem; /* Maior (0.9rem → 1.1rem) */
+    font-size: 1.1rem;
   }
 }
 
 /* =========================
-   TABLET/LAPTOP (769px-1024px) - VERSÃO MELHORADA
+   31. TABLET/LAPTOP (769px-1024px) - DESKTOP TRANSITION
    ========================= */
 @media (min-width: 769px) and (max-width: 1024px) {
-  /* ===== 1. BODY & BACKGROUND ===== */
   body {
     padding-top: 0;
   }
@@ -3107,14 +2831,14 @@ body.login-page {
   #background {
     top: 0;
     width: 100%;
-    height: 80vh; /* Já estava certo! */
+    height: 80vh;
     background-size: cover;
     background-position: center center;
   }
 
-  /* ===== 2. HEADER - DESKTOP COMPLETO ===== */
+  /* ===== FULL DESKTOP HEADER ===== */
   .header {
-    padding: 1.5rem 4rem; /* Já estava certo! */
+    padding: 1.5rem 4rem;
     display: flex;
     flex-wrap: nowrap;
     justify-content: space-between;
@@ -3124,10 +2848,10 @@ body.login-page {
     left: 0;
     right: 0;
     z-index: 1000;
-    height: 90px; /* Mais alto que tablet */
+    height: 90px;
   }
 
-  /* ===== MOSTRAR NAVEGAÇÃO DESKTOP COMPLETA ===== */
+  /* Show full desktop navigation */
   .header__logo,
   .header__nav,
   .header__icons {
@@ -3135,12 +2859,12 @@ body.login-page {
   }
 
   .header__logo img {
-    width: 140px; /* Já estava certo! */
+    width: 140px;
     max-width: 170px;
   }
 
   .header__nav-tittle {
-    font-size: 1.8rem; /* Maior que tablet */
+    font-size: 1.8rem;
     margin: 0 1.2rem;
     transition: all 0.3s ease;
   }
@@ -3151,33 +2875,32 @@ body.login-page {
   }
 
   .header__icon-user img {
-    width: 50px; /* Maior que tablet */
+    width: 50px;
     margin-left: 1rem;
   }
 
   #search-btn svg,
   #notification-btn svg {
-    width: 32px !important; /* Maior que tablet */
+    width: 32px !important;
     height: 32px !important;
   }
 
-  /* ===== ESCONDER MOBILE SYSTEM ===== */
+  /* Hide mobile components */
   .mobile-menu-toggle,
   .mobile-menu-overlay,
   .mobile-header-controls {
     display: none !important;
   }
 
-  /* ===== 3. PROFILE MENU ===== */
   .profile-menu {
-    right: 3rem; /* Já estava certo! */
-    top: 7.5rem; /* Ajustado para nova altura header */
+    right: 3rem;
+    top: 7.5rem;
     font-size: 1.5rem;
     padding: 1.2rem;
     min-width: 10rem;
   }
 
-  /* ===== 4. SEARCH MODAL ===== */
+  /* ===== OPTIMIZED MODALS ===== */
   .search-modal {
     align-items: center;
     justify-content: center;
@@ -3214,49 +2937,12 @@ body.login-page {
   }
 
   .search-thumbs-grid {
-    grid-template-columns: repeat(2, 1fr); /* Já estava certo! */
+    grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
-    max-width: min(65vw, 400px); /* Já estava certo! */
+    max-width: min(65vw, 400px);
     width: 100%;
   }
 
-  .search-thumb-card {
-    max-width: none;
-    width: 100%;
-    padding: 1rem;
-  }
-
-  .search-thumb-title {
-    font-size: 1.2rem;
-  }
-
-  .search-thumb-btn {
-    font-size: 1rem;
-    padding: 0.5rem 1.2rem;
-  }
-
-  .search-pagination {
-    margin: 2rem 0 1rem 0;
-    gap: 1.5rem;
-  }
-
-  .search-pagination button {
-    padding: 0.8rem 2rem;
-    font-size: 1.2rem;
-  }
-
-  .random-movie-btn {
-    margin: 0;
-    font-size: 1.4rem;
-    padding: 1rem 2.5rem;
-    min-width: 200px;
-  }
-
-  .modal__content {
-    padding: 1rem;
-  }
-
-  /* ===== 5. NOTIFICATION MODAL ===== */
   .notification-modal__content {
     width: auto;
     min-width: 400px;
@@ -3269,11 +2955,11 @@ body.login-page {
     padding: 1.5rem;
   }
 
-  /* ===== 6. HERO SECTION - DESKTOP STYLE ===== */
+  /* ===== DESKTOP-STYLE HERO ===== */
   .hero-content {
-    padding: 20rem 0 0 5rem; /* Já estava certo! */
+    padding: 20rem 0 0 5rem;
     margin-bottom: 7rem;
-    text-align: left; /* Desktop alinhado à esquerda */
+    text-align: left;
     align-items: flex-start;
     display: flex;
     flex-direction: column;
@@ -3291,7 +2977,7 @@ body.login-page {
   }
 
   .hero__title {
-    font-size: 5rem !important; /* Já estava certo! */
+    font-size: 5rem !important;
     line-height: 1 !important;
     max-width: 90% !important;
     text-align: left;
@@ -3299,7 +2985,7 @@ body.login-page {
   }
 
   .hero__text {
-    font-size: 1.4rem; /* Já estava certo! */
+    font-size: 1.4rem;
     line-height: 1.4;
     width: auto;
     max-width: 400px;
@@ -3321,7 +3007,7 @@ body.login-page {
 
   .hero__button {
     flex-direction: row;
-    justify-content: flex-start; /* Alinhado à esquerda */
+    justify-content: flex-start;
     gap: 1.5rem;
     align-items: center;
     margin-top: 2rem;
@@ -3337,15 +3023,6 @@ body.login-page {
     justify-content: center;
   }
 
-  #spoiler-btn {
-    display: block !important;
-    padding: 1.2rem 2rem;
-    font-size: 1.2rem;
-    min-width: 160px;
-    opacity: 0.8;
-  }
-
-  /* ===== 7. HERO NAVIGATION ===== */
   .hero-navigation {
     bottom: -2rem;
     position: absolute;
@@ -3364,7 +3041,7 @@ body.login-page {
     height: 1.4rem;
   }
 
-  /* ===== 8. RANDOM MOVIE SECTION ===== */
+  /* ===== OPTIMIZED COMPONENTS ===== */
   .random-movie-section {
     display: flex;
     justify-content: center;
@@ -3374,13 +3051,13 @@ body.login-page {
     border-radius: 2rem;
     margin: 4rem auto;
     max-width: 600px;
-    box-shadow: 0 8px 40px #000c;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
     transition: all 0.3s ease;
   }
 
   .random-movie-section:hover {
     transform: translateY(-3px);
-    box-shadow: 0 12px 56px #000e;
+    box-shadow: 0 12px 56px rgba(0, 0, 0, 0.8);
   }
 
   .random-movie-container {
@@ -3420,37 +3097,36 @@ body.login-page {
     box-shadow: 0 10px 32px rgba(74, 160, 66, 0.6);
   }
 
-  /* ===== 9. MOVIE MODAL ===== */
   .movie-modal__content {
-    padding: 4rem 3.5rem; /* Já estava certo! */
+    padding: 4rem 3.5rem;
     width: 85vw;
     max-width: 800px;
   }
 
   .movie-modal__info {
-    gap: 2.5rem; /* Já estava certo! */
+    gap: 2.5rem;
   }
 
   #movie-modal-title {
-    font-size: 2.8rem; /* Já estava certo! */
+    font-size: 2.8rem;
   }
 
-  /* ===== 10. FOOTER - HORIZONTAL LAYOUT ===== */
+  /* ===== OPTIMIZED FOOTER ===== */
   .footer {
-    padding: 3rem 0 1.5rem 0; /* Já estava certo! */
+    padding: 3rem 0 1.5rem 0;
     margin-top: 6rem;
     font-size: 1.3rem;
   }
 
   .footer__container {
-    flex-direction: column; /* Já estava certo! */
+    flex-direction: column;
     align-items: center;
     padding: 0 3rem;
     gap: 0;
   }
 
   .footer__top-row {
-    flex-direction: row; /* Já estava certo! */
+    flex-direction: row;
     align-items: center;
     justify-content: space-between;
     width: 100%;
@@ -3465,7 +3141,7 @@ body.login-page {
   .footer__nav {
     flex: 2;
     justify-content: center;
-    gap: 2rem; /* Já estava certo! */
+    gap: 2rem;
   }
 
   .footer__social {
@@ -3474,27 +3150,26 @@ body.login-page {
   }
 
   .footer__logo img {
-    width: 100px; /* Já estava certo! */
+    width: 100px;
   }
 
   .footer__nav a {
-    font-size: 1.2rem; /* Já estava certo! */
+    font-size: 1.2rem;
   }
 
   .footer__social svg {
-    width: 24px; /* Já estava certo! */
+    width: 24px;
   }
 
   .footer__copy {
-    font-size: 1rem; /* Já estava certo! */
+    font-size: 1rem;
   }
 }
 
 /* =========================
-   DESKTOP (1025px-1440px) - VERSÃO DESKTOP PADRÃO
+   32. DESKTOP (1025px-1440px) - STANDARD DESKTOP EXPERIENCE
    ========================= */
 @media (min-width: 1025px) and (max-width: 1440px) {
-  /* ===== 1. BODY & BACKGROUND ===== */
   body {
     padding-top: 0;
   }
@@ -3502,14 +3177,14 @@ body.login-page {
   #background {
     top: 0;
     width: 100%;
-    height: 100vh; /* Tela cheia no desktop */
+    height: 100vh;
     background-size: cover;
     background-position: center center;
   }
 
-  /* ===== 2. HEADER - DESKTOP COMPLETO ===== */
+  /* ===== STANDARD DESKTOP HEADER ===== */
   .header {
-    padding: 2rem 5rem; /* Padding desktop padrão */
+    padding: 2rem 5rem;
     display: flex;
     flex-wrap: nowrap;
     justify-content: space-between;
@@ -3518,10 +3193,9 @@ body.login-page {
     left: 0;
     right: 0;
     z-index: 1000;
-    height: 95px; /* Altura desktop */
+    height: 95px;
   }
 
-  /* ===== NAVEGAÇÃO DESKTOP COMPLETA ===== */
   .header__logo,
   .header__nav,
   .header__icons {
@@ -3529,12 +3203,12 @@ body.login-page {
   }
 
   .header__logo img {
-    width: 160px; /* Tamanho desktop */
+    width: 160px;
     max-width: 200px;
   }
 
   .header__nav-tittle {
-    font-size: 1.9rem; /* Desktop padrão */
+    font-size: 1.9rem;
     margin: 0 1.5rem;
     transition: all 0.3s ease;
   }
@@ -3545,27 +3219,25 @@ body.login-page {
   }
 
   .header__icon-user img {
-    width: 55px; /* Desktop padrão */
+    width: 55px;
     margin-left: 1.5rem;
   }
 
   #search-btn svg,
   #notification-btn svg {
-    width: 34px !important; /* Desktop padrão */
+    width: 34px !important;
     height: 34px !important;
   }
 
-  /* ===== ESCONDER MOBILE SYSTEM ===== */
   .mobile-menu-toggle,
   .mobile-menu-overlay,
   .mobile-header-controls {
     display: none !important;
   }
 
-  /* ===== 3. PROFILE MENU ===== */
   .profile-menu {
-    right: 4rem; /* Desktop padrão */
-    top: 8rem; /* Ajustado para nova altura header */
+    right: 4rem;
+    top: 8rem;
     font-size: 1.6rem;
     padding: 1.5rem;
     min-width: 12rem;
@@ -3602,7 +3274,7 @@ body.login-page {
 
   .search-result {
     height: auto !important;
-    max-height: 55vh !important;
+    max-height: 60vh !important;
     overflow-y: auto !important;
     font-size: 1.9rem;
     padding: 2rem;
@@ -3648,23 +3320,10 @@ body.login-page {
     min-width: 280px;
   }
 
-  /* ===== 5. NOTIFICATION MODAL ===== */
-  .notification-modal__content {
-    width: auto;
-    min-width: 450px;
-    max-width: 600px;
-    padding: 2.5rem 3.5rem;
-  }
-
-  .notification-result {
-    font-size: 1.9rem;
-    padding: 2rem;
-  }
-
-  /* ===== 6. HERO SECTION - DESKTOP STYLE ===== */
+  /* ===== DESKTOP HERO ===== */
   .hero-content {
-    padding: 15rem 0 0 7rem; /* Desktop padrão */
-    text-align: left; /* Desktop alinhado à esquerda */
+    padding: 13rem 0 0 7rem;
+    text-align: left;
     align-items: flex-start;
     display: flex;
     flex-direction: column;
@@ -3682,38 +3341,24 @@ body.login-page {
   }
 
   .hero__title {
-    font-size: 5.5rem !important; /* Desktop padrão */
-    line-height: 1 !important;
-    max-width: 85% !important;
     text-align: left;
-    margin-bottom: 2rem !important;
+    margin-bottom: 0.5rem !important;
   }
 
   .hero__text {
-    font-size: 2rem; /* Desktop padrão */
-    line-height: 1.4;
-    width: auto;
-    max-width: 450px;
     text-align: left;
     margin: 0 0 1.5rem 0;
-    height: auto;
   }
 
   .hero__text-bold {
-    font-size: 1.5rem;
-    line-height: 1.5;
-    width: auto;
-    max-width: 420px;
     text-align: left;
     margin: 0 0 1rem 0;
-    height: auto;
-    font-weight: var(--font-bold);
   }
 
   .hero__button {
     flex-direction: row;
-    justify-content: flex-start; /* Alinhado à esquerda */
-    gap: 0.5rem; /* Gap maior */
+    justify-content: flex-start;
+    gap: 0.5rem;
     align-items: center;
     margin-top: 1rem;
     margin-bottom: 0;
@@ -3722,20 +3367,11 @@ body.login-page {
 
   .hero__button-group {
     width: auto;
-    max-width: 260px; /* Desktop padrão */
+    max-width: 260px;
     font-size: 1.5rem;
     justify-content: center;
   }
 
-  #spoiler-btn {
-    display: block !important;
-    padding: 1.5rem 2rem;
-    font-size: 1rem;
-    min-width: 150px;
-    opacity: 0.8;
-  }
-
-  /* ===== 7. HERO NAVIGATION ===== */
   .hero-navigation {
     bottom: -3rem;
     position: absolute;
@@ -3754,37 +3390,35 @@ body.login-page {
     height: 1.5rem;
   }
 
-  /* ===== 8. RANDOM MOVIE SECTION ===== */
+  /* ===== DESKTOP COMPONENTS ===== */
   .random-movie-section {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 2.5rem;
+    padding: 1.5rem;
     background: #181818;
     border-radius: 2rem;
     margin: 1rem auto;
-    max-width: 550px;
-    box-shadow: 0 10px 48px #000c;
+    box-shadow: 0 10px 48px rgba(0, 0, 0, 0.6);
     transition: all 0.3s ease;
   }
 
   .random-movie-section:hover {
     transform: translateY(-4px);
-    box-shadow: 0 15px 64px #000e;
+    box-shadow: 0 15px 64px rgba(0, 0, 0, 0.8);
   }
 
   .random-movie-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2.5rem;
-    width: 100%;
+    gap: 1rem;
   }
 
   .random-movie-title {
     color: #bbb;
-    font-size: 2.4rem;
-    margin-bottom: 1.2rem;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
     text-align: center;
     font-weight: 600;
   }
@@ -3793,14 +3427,14 @@ body.login-page {
     background: var(--green-gradient-buttons, #4caf50);
     color: #fff;
     border: none;
-    border-radius: 1.8rem;
-    padding: 1.8rem 3.5rem;
-    font-size: 1.5rem;
+    border-radius: 1.5rem;
+    padding: 1rem;
+    font-size: 1rem;
     font-weight: 700;
     cursor: pointer;
     box-shadow: 0 8px 32px rgba(74, 160, 66, 0.4);
     transition: all 0.3s ease;
-    min-width: 300px;
+    min-width: 150px;
     margin: 0;
   }
 
@@ -3810,37 +3444,36 @@ body.login-page {
     box-shadow: 0 12px 40px rgba(74, 160, 66, 0.6);
   }
 
-  /* ===== 9. MOVIE MODAL ===== */
   .movie-modal__content {
-    padding: 4.5rem 4rem; /* Desktop padrão */
+    padding: 4.5rem 4rem;
     width: 80vw;
     max-width: 900px;
   }
 
   .movie-modal__info {
-    gap: 3rem; /* Desktop padrão */
+    gap: 3rem;
   }
 
   #movie-modal-title {
-    font-size: 3rem; /* Desktop padrão */
+    font-size: 3rem;
   }
 
-  /* ===== 10. FOOTER - HORIZONTAL LAYOUT ===== */
+  /* ===== DESKTOP FOOTER ===== */
   .footer {
-    padding: 3.5rem 0 2rem 0; /* Desktop padrão */
+    padding: 3.5rem 0 2rem 0;
     margin-top: 3rem;
     font-size: 1.4rem;
   }
 
   .footer__container {
-    flex-direction: column; /* Ainda vertical no desktop médio */
+    flex-direction: column;
     align-items: center;
     padding: 0 4rem;
     gap: 0;
   }
 
   .footer__top-row {
-    flex-direction: row; /* Horizontal no desktop */
+    flex-direction: row;
     align-items: center;
     justify-content: space-between;
     width: 100%;
@@ -3855,118 +3488,6 @@ body.login-page {
   .footer__nav {
     flex: 2;
     justify-content: center;
-    gap: 2.5rem; /* Desktop padrão */
-  }
-
-  .footer__social {
-    flex: 1;
-    justify-content: flex-end;
-  }
-
-  .footer__logo img {
-    width: 120px; /* Desktop padrão */
-  }
-
-  .footer__nav a {
-    font-size: 1.3rem; /* Desktop padrão */
-  }
-
-  .footer__social svg {
-    width: 26px; /* Desktop padrão */
-  }
-
-  .footer__copy {
-    font-size: 1.1rem; /* Desktop padrão */
-  }
-}
-
-/* =========================
-   LARGE DESKTOP (≥1441px)
-   ========================= */
-@media (min-width: 1441px) {
-  .search-thumbs-grid {
-    grid-template-columns: repeat(5, 1fr);
-    max-width: min(65vw, 1000px);
-  }
-
-  .search-thumb-card {
-    max-width: 200px;
-  }
-
-  .search-thumb-title {
-    font-size: 1.25rem;
-  }
-
-  .search-thumb-btn {
-    font-size: 1rem;
-    padding: 0.5rem 1.2rem;
-  }
-
-  .header__logo img {
-    width: 180px;
-    max-width: 200px;
-  }
-  .header__nav-tittle {
-    font-size: 2.2rem;
-    margin: 0 1.5rem;
-  }
-
-  .hero-content {
-    padding: 20rem 0 0 10rem;
-    margin-bottom: 8rem;
-  }
-
-  .hero__title {
-    font-size: 9rem !important;
-    line-height: 1.1 !important;
-    max-width: 85% !important;
-  }
-
-  .hero__text {
-    font-size: 2rem;
-    width: 560px;
-  }
-
-  .profile-menu {
-    top: 9rem;
-    right: 6rem;
-    z-index: 9999;
-  }
-
-  .hero-navigation {
-    bottom: -8rem;
-  }
-
-  /* Footer - Large desktop layout */
-  .footer {
-    padding: 3rem 0 1.5rem 0;
-    margin-top: 6rem;
-    font-size: 1.3rem;
-  }
-
-  .footer__container {
-    flex-direction: column;
-    align-items: center;
-    padding: 0 3rem;
-    gap: 0;
-  }
-
-  .footer__top-row {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    margin-bottom: 1.5rem;
-  }
-
-  .footer__logo {
-    flex: 1;
-    justify-content: flex-start;
-  }
-
-  .footer__nav {
-    flex: 2;
-    justify-content: center;
     gap: 2.5rem;
   }
 
@@ -3976,24 +3497,24 @@ body.login-page {
   }
 
   .footer__logo img {
-    width: 160px;
+    width: 120px;
   }
 
   .footer__nav a {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
   }
 
   .footer__social svg {
-    width: 28px;
+    width: 26px;
   }
 
   .footer__copy {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
   }
 }
 
 /* =========================
-   RESPONSIVE TESTING HELPERS
+   33. RESPONSIVE DEVELOPMENT HELPERS
    ========================= */
 body::before {
   content: "MOBILE SMALL ≤480px";
@@ -4005,6 +3526,8 @@ body::before {
   padding: 0.5rem;
   z-index: 999999;
   font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 0 0 0.5rem 0;
 }
 
 @media (min-width: 481px) and (max-width: 768px) {

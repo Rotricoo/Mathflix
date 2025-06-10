@@ -324,6 +324,29 @@ h2.marathon-title:hover {
   gap: 2rem !important;
 }
 
+/* ===== CAROUSEL POINTER CURSOR ===== */
+.gallery__thumbnail,
+.gallery__thumbnail-vertical,
+.open-movie-modal {
+  cursor: pointer !important;
+  transition: all 0.3s ease;
+}
+
+.gallery__thumbnail:hover,
+.gallery__thumbnail-vertical:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}
+
+/* Marathon carousel specific styling */
+.marathon-section .gallery__thumbnail {
+  cursor: pointer !important;
+}
+
+.splide__slide img {
+  cursor: pointer !important;
+}
+
 /* =========================
    7. SPLIDE ARROWS & CONTROLS
    ========================= */

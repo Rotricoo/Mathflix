@@ -5,31 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MathFlix</title>
     <link rel="icon" href="assets/icons/mathflix-icon.png" type="image/x-icon" />
+
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+
+    <!-- External Libraries -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glider-js@1/glider.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4/dist/css/splide.min.css" />
-    <script src="https://cdn.jsdelivr.net/npm/glider-js@1/glider.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4/dist/js/splide.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide-extension-auto-scroll@0/dist/js/splide-extension-auto-scroll.min.js"></script>
+
+    <!-- Custom Stylesheets -->
     <link rel="stylesheet" href="styles/reset.css" />
     <link rel="stylesheet" href="styles/main-sections.css" />
     <link rel="stylesheet" href="styles/carousel-splide.css" />
     <link rel="stylesheet" href="styles/modal.css" />
+
+    <!-- External Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/glider-js@1/glider.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4/dist/js/splide.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide-extension-auto-scroll@0/dist/js/splide-extension-auto-scroll.min.js"></script>
+
+    <!-- Custom Scripts -->
     <script src="scripts/main.js" defer></script>
     <script src="scripts/script.js" defer></script>
     <script src="scripts/movies.js" defer></script>
     <script src="scripts/intelligent-glow.js" defer></script>
   </head>
+
   <body class="body">
     <div id="background"></div>
+
     <main id="main-content">
-      <!-- HEADER SECTION -->
+      <!-- =========================
+           HEADER SECTION
+           ========================= -->
       <header class="header">
+        <!-- Desktop Logo -->
         <div class="header__logo">
           <img src="assets/icons/mathflix-logo.svg" alt="Mathflix Logo" />
         </div>
+
+        <!-- Desktop Navigation -->
         <nav aria-label="Main navigation">
           <ul class="header__nav">
             <li class="header__nav-tittle header__nav-tittle--active">
@@ -39,6 +56,8 @@
             <li class="header__nav-tittle"><a href="#">Series</a></li>
           </ul>
         </nav>
+
+        <!-- Desktop Icons -->
         <div class="header__icons">
           <div class="header__icon-button">
             <button id="search-btn" type="button" aria-label="Open search" title="Search">
@@ -70,10 +89,10 @@
             <img src="assets/icons/mathflix-icon.svg" alt="Mathflix icon" />
           </div>
         </div>
-        <!-- ===== NOVOS CONTROLES MOBILE (APENAS VISÍVEIS EM MOBILE) ===== -->
 
-        <!-- Search button no header mobile -->
+        <!-- Mobile Header Controls -->
         <div class="mobile-header-controls" style="display: none">
+          <!-- Search Button -->
           <button class="mobile-search-btn" id="mobile-header-search" type="button" aria-label="Search">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <circle cx="11" cy="11" r="8"></circle>
@@ -82,7 +101,47 @@
           </button>
         </div>
 
-        <!-- Profile dropdown menu (desktop) -->
+        <!-- Mobile Menu Overlay -->
+        <div class="mobile-menu-overlay" id="mobile-menu-overlay">
+          <div class="mobile-menu-content">
+            <!-- Logo -->
+            <div class="mobile-menu-logo">
+              <img src="assets/icons/mathflix-logo.svg" alt="Mathflix Logo" />
+            </div>
+
+            <!-- Profile -->
+            <div class="mobile-menu-profile" id="mobile-profile-btn">
+              <img src="assets/icons/mathflix-icon.svg" alt="Profile" />
+              <span>Math</span>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="mobile-menu-nav">
+              <a href="index.html" class="active">Home</a>
+              <a href="#">Movies</a>
+              <a href="#">Series</a>
+            </nav>
+
+            <!-- Notification -->
+            <div class="mobile-menu-notification" id="mobile-notification-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 16v-5a6 6 0 0 0-12 0v5" />
+                <rect x="6" y="16" width="12" height="2" rx="1" />
+                <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+              </svg>
+              <span>Notifications</span>
+            </div>
+
+            <!-- Logout -->
+            <button class="mobile-menu-logout" id="mobile-logout-btn">Logout</button>
+          </div>
+        </div>
+
+        <!-- =========================
+             MODAL SYSTEMS
+             ========================= -->
+
+        <!-- Profile Dropdown Menu (Desktop) -->
         <div id="profile-menu" class="profile-menu" style="display: none">
           <ul>
             <li><a href="#" data-action="profile">Profile</a></li>
@@ -90,7 +149,7 @@
           </ul>
         </div>
 
-        <!-- Profile modal -->
+        <!-- Profile Modal -->
         <div id="profile-modal" class="profile-modal" style="display: none">
           <div class="profile-modal__backdrop"></div>
           <div class="profile-modal__content">
@@ -158,7 +217,7 @@
           </div>
         </div>
 
-        <!-- Search modal -->
+        <!-- Search Modal -->
         <div id="search-modal" class="modal search-modal" style="display: none">
           <div class="modal__backdrop search-modal__backdrop"></div>
           <div class="modal__content search-modal__content">
@@ -175,7 +234,7 @@
           </div>
         </div>
 
-        <!-- Notification modal -->
+        <!-- Notification Modal -->
         <div id="notification-modal" class="modal notification-modal" style="display: none">
           <div class="modal__backdrop notification-modal__backdrop"></div>
           <div class="modal__content notification-modal__content">
@@ -187,7 +246,9 @@
         </div>
       </header>
 
-      <!-- HERO SECTION -->
+      <!-- =========================
+           HERO SECTION
+           ========================= -->
       <section class="hero">
         <div class="hero-content">
           <div class="hero__icon-container">
@@ -202,22 +263,20 @@
           <p class="hero__text hero__text-bold">In the end, the question remains: who really disappeared?</p>
           <div class="hero__button">
             <button class="hero__button-group hero__see-details-btn" data-movie="gonegirl">See details</button>
-            <button class="hero__button-group hero__button--secondary" id="spoiler-btn">Spoiler</button>
           </div>
         </div>
       </section>
 
       <!-- =========================
-           === CAROUSELS         ===
+           CAROUSEL SECTIONS
            ========================= -->
 
-      <!-- TOP 10 CAROUSEL -->
+      <!-- Math Top 10 -->
       <div class="gallery__container top10">
         <h2 class="gallery__title">MATH TOP 10</h2>
         <div class="splide splide-top10">
           <div class="splide__track">
             <ul class="splide__list">
-              <!-- Adicione os filmes do Top 10 aqui, exemplo: -->
               <li class="splide__slide">
                 <img
                   class="gallery__thumbnail open-movie-modal"
@@ -306,7 +365,7 @@
         </div>
       </div>
 
-      <!-- VERTICAL CAROUSEL -->
+      <!-- Vertical Carousel - For Sleepless Nights -->
       <div class="gallery__container-vertical">
         <h2 class="gallery__title">For Sleepless Nights</h2>
         <div class="splide splide-vertical">
@@ -357,7 +416,7 @@
         </div>
       </div>
 
-      <!-- CARROSSEL TO MAKE DIGO HAPPY -->
+      <!-- This is about Digo -->
       <div class="gallery__container series digohappy">
         <h2 class="gallery__title">This is about Digo</h2>
         <div class="splide splide-simple">
@@ -408,7 +467,7 @@
         </div>
       </div>
 
-      <!-- CARROSSEL DE SÉRIES -->
+      <!-- Series Section -->
       <div class="gallery__container series">
         <h2 class="gallery__title">Series</h2>
         <div class="splide splide-simple">
@@ -442,7 +501,7 @@
                 <img
                   class="gallery__thumbnail open-movie-modal"
                   src="assets/imgs/ban-howmetyourfather.png"
-                  alt="How I Met Your Mother"
+                  alt="How I Met Your Father"
                   data-movie="howmetyourfather"
                 />
               </li>
@@ -475,7 +534,11 @@
         </div>
       </div>
 
-      <!-- MARATONA: HUNGER GAMES -->
+      <!-- =========================
+           MARATHON SECTIONS
+           ========================= -->
+
+      <!-- Marathon: The Hunger Games -->
       <div class="gallery__container marathon-section">
         <div class="marathon-info">
           <span class="marathon-label">Marathon</span>
@@ -531,7 +594,7 @@
         </div>
       </div>
 
-      <!-- MARATONA: HARRY POTTER -->
+      <!-- Marathon: Harry Potter -->
       <div class="gallery__container marathon-section">
         <div class="marathon-info">
           <span class="marathon-label">Marathon</span>
@@ -611,7 +674,7 @@
         </div>
       </div>
 
-      <!-- MARATONA: ALIEN -->
+      <!-- Marathon: Alien -->
       <div class="gallery__container marathon-section">
         <div class="marathon-info">
           <span class="marathon-label">Marathon</span>
@@ -675,7 +738,7 @@
         </div>
       </div>
 
-      <!-- MARATONA: TOY STORY -->
+      <!-- Marathon: Toy Story -->
       <div class="gallery__container marathon-section">
         <div class="marathon-info">
           <span class="marathon-label">Marathon</span>
@@ -723,7 +786,7 @@
         </div>
       </div>
 
-      <!-- MARATONA: X-MEN -->
+      <!-- Marathon: X-Men -->
       <div class="gallery__container marathon-section">
         <div class="marathon-info">
           <span class="marathon-label">Marathon</span>
@@ -820,20 +883,23 @@
       </div>
     </main>
 
-    <!-- MOVIE MODAL -->
+    <!-- =========================
+         MOVIE MODAL
+         ========================= -->
     <div id="movie-modal" class="movie-modal" style="display: none">
       <div class="movie-modal__backdrop"></div>
       <div class="movie-modal__content">
         <button class="movie-modal__close" aria-label="Close">&times;</button>
         <div class="movie-modal__info">
-          <!-- LEFT: Info -->
+          <!-- Movie Details Section -->
           <div class="movie-modal__details">
             <h2 id="movie-modal-title"></h2>
             <p id="movie-modal-description"></p>
             <ul id="movie-modal-meta"></ul>
             <div id="movie-modal-ranking" class="movie-modal__ranking"></div>
           </div>
-          <!-- RIGHT: Poster+trailer for verticals -->
+
+          <!-- Vertical Media Section (For Vertical Posters) -->
           <div class="movie-modal__media-vertical" style="display: none">
             <div id="vertical-media-container">
               <img id="vertical-modal-poster" src="" alt="Poster" class="movie-modal__poster-vertical" />
@@ -848,19 +914,34 @@
               ></iframe>
             </div>
             <button id="toggle-vertical-media" class="movie-modal__toggle-btn">See Trailer</button>
+
+            <!-- Spoiler Section for Vertical Layout -->
+            <div class="movie-modal__spoiler-section-vertical">
+              <button id="modal-spoiler-btn-vertical" class="modal-spoiler-btn">Spoiler</button>
+              <div id="modal-spoiler-text-vertical" class="modal-spoiler-text" style="display: none"></div>
+            </div>
           </div>
-          <!-- RIGHT: Poster+trailer for normal -->
+
+          <!-- Normal Media Section (For Horizontal Posters) -->
           <div class="movie-modal__media">
             <img id="movie-modal-poster" src="" alt="Poster" class="movie-modal__poster" />
             <div class="movie-modal__trailer">
               <iframe id="movie-modal-trailer" width="320" height="180" src="" frameborder="0" allowfullscreen></iframe>
+            </div>
+
+            <!-- Spoiler Section for Normal Layout -->
+            <div class="movie-modal__spoiler-section">
+              <button id="modal-spoiler-btn-normal" class="modal-spoiler-btn">Spoiler</button>
+              <div id="modal-spoiler-text-normal" class="modal-spoiler-text" style="display: none"></div>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Random Movie Section (antes do footer) -->
+    <!-- =========================
+         RANDOM MOVIE SECTION
+         ========================= -->
     <section class="random-movie-section">
       <div class="random-movie-container">
         <span class="random-movie-title">Don't know what to watch?</span>
@@ -868,7 +949,9 @@
       </div>
     </section>
 
-    <!-- FOOTER SECTION -->
+    <!-- =========================
+         FOOTER SECTION
+         ========================= -->
     <footer class="footer">
       <div class="footer__container">
         <div class="footer__top-row">
