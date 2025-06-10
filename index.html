@@ -132,8 +132,8 @@
               <span>Notifications</span>
             </div>
 
-            <!-- Logout -->
-            <button class="mobile-menu-logout" id="mobile-logout-btn">Logout</button>
+            <!-- Logout Button Mobile Menu -->
+            <button class="mobile-menu-logout" id="mobile-logout">Logout</button>
           </div>
         </div>
 
@@ -241,6 +241,24 @@
             <button id="notification-close" class="modal__close" aria-label="Close notifications">&times;</button>
             <div id="notification-result" class="notification-result">
               <div>No notifications for you, Math! 🍿</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- =========================
+             LOGOUT MODAL
+             ========================= -->
+        <div id="logout-modal" class="logout-modal" style="display: none">
+          <div class="logout-modal__backdrop"></div>
+          <div class="logout-modal__content">
+            <h2 class="logout-modal__title">Ready to Leave?</h2>
+            <p class="logout-modal__message">
+              You're about to sign out of your MathFlix account.
+              <br />
+            </p>
+            <div class="logout-modal__buttons">
+              <button id="logout-cancel" class="logout-modal__btn logout-modal__btn--cancel">Stay Here</button>
+              <button id="logout-confirm" class="logout-modal__btn logout-modal__btn--confirm">Sign Out</button>
             </div>
           </div>
         </div>

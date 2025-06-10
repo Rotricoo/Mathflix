@@ -297,6 +297,8 @@ function handleSearchClick(e) {
  * Sets up event listeners with proper cleanup and outside-click-to-close behavior
  */
 function initializeHeaderButtons() {
+  console.log("🔧 Initializing header buttons...");
+
   // Get all header elements
   const searchModal = document.getElementById("search-modal");
   const notificationModal = document.getElementById("notification-modal");
@@ -310,22 +312,23 @@ function initializeHeaderButtons() {
   // Search button functionality
   if (searchBtn) {
     searchBtn.addEventListener("click", function (e) {
+      e.preventDefault();
       e.stopPropagation();
+      console.log("🔍 Search button clicked");
       handleSearchClick(e);
     });
+    console.log("✅ Search button connected");
   }
 
   // Search close button with proper cleanup
   if (searchClose && searchModal) {
-    const newSearchClose = searchClose.cloneNode(true);
-    searchClose.parentNode.replaceChild(newSearchClose, searchClose);
-
-    newSearchClose.addEventListener("click", function (e) {
+    searchClose.addEventListener("click", function (e) {
       e.preventDefault();
       e.stopPropagation();
       searchModal.style.display = "none";
-      console.log("Search modal closed via close button");
+      console.log("❌ Search modal closed via close button");
     });
+    console.log("✅ Search close button connected");
   }
 
   // Search modal - close when clicking outside
@@ -333,14 +336,18 @@ function initializeHeaderButtons() {
     searchModal.addEventListener("click", function (e) {
       if (e.target === searchModal || e.target.classList.contains("search-modal__backdrop")) {
         searchModal.style.display = "none";
-        console.log("Search modal closed via outside click");
+        console.log("❌ Search modal closed via outside click");
       }
     });
   }
 
-  // Notification button with click-outside-to-close
+  // Notification button functionality
   if (notificationBtn && notificationModal) {
-    notificationBtn.onclick = () => {
+    notificationBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      console.log("🔔 Notification button clicked");
+
       notificationModal.style.display = "flex";
 
       // Set up outside click listener
@@ -352,30 +359,40 @@ function initializeHeaderButtons() {
         }
       };
       setTimeout(() => document.addEventListener("click", handleOutsideClick), 100);
-    };
+    });
+    console.log("✅ Notification button connected");
   }
 
   // Notification close button
   if (notificationClose && notificationModal) {
-    notificationClose.onclick = () => {
+    notificationClose.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
       notificationModal.style.display = "none";
-    };
+      console.log("❌ Notification modal closed");
+    });
+    console.log("✅ Notification close button connected");
   }
 
   // Profile menu dropdown with click-outside-to-close
   if (profileToggle && profileMenu) {
-    profileToggle.onclick = function (e) {
+    profileToggle.addEventListener("click", function (e) {
+      e.preventDefault();
       e.stopPropagation();
+      console.log("👤 Profile toggle clicked");
+
       const isOpen = profileMenu.style.display === "block";
 
       // Close menu
       if (isOpen) {
         profileMenu.style.display = "none";
         this.setAttribute("aria-expanded", "false");
+        console.log("❌ Profile menu closed");
       } else {
         // Open menu
         profileMenu.style.display = "block";
         this.setAttribute("aria-expanded", "true");
+        console.log("✅ Profile menu opened");
 
         // Setup outside click to close
         setTimeout(() => {
@@ -384,12 +401,14 @@ function initializeHeaderButtons() {
               profileMenu.style.display = "none";
               profileToggle.setAttribute("aria-expanded", "false");
               document.removeEventListener("click", closeMenu);
+              console.log("❌ Profile menu closed via outside click");
             }
           };
           document.addEventListener("click", closeMenu);
         }, 10);
       }
-    };
+    });
+    console.log("✅ Profile toggle connected");
   }
 
   // Profile menu item clicks
@@ -397,27 +416,36 @@ function initializeHeaderButtons() {
     const profileAction = e.target.closest("[data-action]");
     if (profileAction) {
       const action = profileAction.dataset.action;
+      console.log("🎯 Profile action:", action);
 
       if (action === "profile") {
         const profileModal = document.getElementById("profile-modal");
         if (profileModal) {
           profileModal.style.display = "flex";
-          profileMenu.style.display = "none";
+          if (profileMenu) profileMenu.style.display = "none";
+          console.log("✅ Profile modal opened");
         }
       } else if (action === "logout") {
-        alert("Logout functionality would go here");
-        profileMenu.style.display = "none";
+        if (profileMenu) profileMenu.style.display = "none";
+        setTimeout(() => {
+          handleLogout();
+        }, 200);
+        console.log("🚪 Logout initiated from profile menu");
       }
     }
   });
 
-  // Profile modal close button
+  // Profile modal functionality
   const profileModal = document.getElementById("profile-modal");
   if (profileModal) {
+    // Close button
     const profileClose = profileModal.querySelector(".profile-modal__close");
     if (profileClose) {
-      profileClose.addEventListener("click", function () {
+      profileClose.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
         profileModal.style.display = "none";
+        console.log("❌ Profile modal closed via close button");
       });
     }
 
@@ -425,9 +453,29 @@ function initializeHeaderButtons() {
     profileModal.addEventListener("click", function (e) {
       if (e.target === profileModal || e.target.classList.contains("profile-modal__backdrop")) {
         profileModal.style.display = "none";
+        console.log("❌ Profile modal closed via backdrop");
       }
     });
+
+    // Profile modal logout button
+    const profileLogoutBtn = document.getElementById("profile-logout");
+    if (profileLogoutBtn) {
+      profileLogoutBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log("🚪 Profile modal logout clicked");
+
+        profileModal.style.display = "none";
+
+        setTimeout(() => {
+          handleLogout();
+        }, 300);
+      });
+      console.log("✅ Profile modal logout button connected");
+    }
   }
+
+  console.log("✅ All header buttons initialized successfully");
 }
 
 // Initialize header functionality after DOM is ready
@@ -1545,7 +1593,7 @@ function createMobileMenuElements() {
   if (existingToggle) existingToggle.remove();
   if (existingOverlay) existingOverlay.remove();
 
-  // Show APENAS mobile search controls
+  // Show mobile search controls
   const mobileControls = document.querySelector(".mobile-header-controls");
   if (mobileControls && window.innerWidth <= 480) {
     mobileControls.style.display = "flex";
@@ -1566,30 +1614,30 @@ function createMobileMenuElements() {
   header.insertBefore(hamburger, header.firstChild);
   console.log("✅ Hamburger button created");
 
-  // Create menu overlay (COM notification DENTRO do menu)
+  // Create menu overlay - VERSÃO SIMPLIFICADA
   const overlay = document.createElement("div");
   overlay.className = "mobile-menu-overlay";
   overlay.innerHTML = `
     <div class="mobile-menu-content">
-      <!-- Logo MAIOR (120px) -->
+      <!-- Logo -->
       <div class="mobile-menu-logo">
         <img src="assets/icons/mathflix-logo.svg" alt="Mathflix">
       </div>
       
-      <!-- Profile DISCRETO como botão -->
+      <!-- Profile -->
       <div class="mobile-menu-profile">
         <img src="assets/icons/mathflix-icon.svg" alt="Profile">
         <span>Math</span>
       </div>
       
-      <!-- Navigation (SEM search) -->
+      <!-- Navigation -->
       <nav class="mobile-menu-nav">
         <a href="#" id="mobile-home">Home</a>
         <a href="#" id="mobile-movies">Movies</a>
         <a href="#" id="mobile-series">Series</a>
       </nav>
       
-      <!-- NOTIFICATION BUTTON DENTRO DO MENU -->
+      <!-- Notification DENTRO do menu -->
       <button class="mobile-menu-notification" id="mobile-menu-notification">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M18 16v-5a6 6 0 0 0-12 0v5"></path>
@@ -1599,7 +1647,7 @@ function createMobileMenuElements() {
         <span>Notifications</span>
       </button>
       
-      <!-- Logout no mesmo lugar -->
+      <!-- Logout simples -->
       <button class="mobile-menu-logout" id="mobile-logout">
         Logout
       </button>
@@ -1607,7 +1655,7 @@ function createMobileMenuElements() {
   `;
 
   document.body.appendChild(overlay);
-  console.log("✅ Mobile overlay created (notification inside menu)");
+  console.log("✅ Mobile overlay created (simplified version)");
 }
 
 /**
@@ -1702,14 +1750,14 @@ function setupMobileMenuActions() {
     console.log("✅ Mobile notification connected");
   }
 
-  // Logout
+  // Logout mobile menu
   const mobileLogout = document.getElementById("mobile-logout");
   if (mobileLogout) {
     mobileLogout.addEventListener("click", () => {
       console.log("🚪 Mobile logout clicked");
       closeMobileMenu();
       setTimeout(() => {
-        alert("Logout functionality would go here");
+        handleLogout();
       }, 300);
     });
     console.log("✅ Mobile logout connected");
@@ -1789,7 +1837,7 @@ function closeMobileMenu() {
 }
 
 /**
- * BACKUP MOBILE CONTROLS - Se as outras funções falharem
+ * BACKUP MOBILE CONTROLS
  */
 function setupBackupMobileControls() {
   console.log("🛡️ Setting up backup mobile controls...");
@@ -1836,6 +1884,34 @@ function setupBackupMobileControls() {
           notificationModal.style.display = "flex";
           console.log("✅ BACKUP: Notification modal opened");
         }
+      }, 300);
+    }
+  });
+
+  // BACKUP Logout
+  document.addEventListener("click", function (e) {
+    if (e.target.closest("#mobile-logout") || e.target.closest(".mobile-menu-logout") || e.target.closest("#profile-logout")) {
+      e.preventDefault();
+      e.stopPropagation();
+      console.log("🚪 BACKUP: Logout clicked");
+
+      // Close any open menus
+      const mobileOverlay = document.querySelector(".mobile-menu-overlay");
+      const mobileToggle = document.querySelector(".mobile-menu-toggle");
+      const profileModal = document.getElementById("profile-modal");
+
+      if (mobileOverlay && mobileToggle) {
+        mobileToggle.classList.remove("active");
+        mobileOverlay.classList.remove("active");
+        document.body.style.overflow = "";
+      }
+
+      if (profileModal) {
+        profileModal.style.display = "none";
+      }
+
+      setTimeout(() => {
+        handleLogout();
       }, 300);
     }
   });
@@ -2224,6 +2300,7 @@ document.addEventListener("click", function (e) {
 
 /**
  * Random movie main function
+
  * Sorteia um filme e exibe modal com countdown
  */
 function showRandomMovieCard() {
@@ -2463,8 +2540,6 @@ window.testRandomMovie = function () {
 
 console.log("✅ Search and Random movie systems initialized");
 
-console.log("MathFlix Main Application Controller loaded successfully");
-
 // =============================================================================
 // 14. DYNAMIC CONTENT COUNTERS
 // =============================================================================
@@ -2599,3 +2674,135 @@ window.updateStats = function () {
   console.log("Manual stats update:", stats);
   return stats;
 };
+
+// =============================================================================
+// LOGOUT FUNCTIONALITY
+// =============================================================================
+
+// Manter as funções de logout mas garantir que não conflitem:
+
+/**
+ * Handle logout functionality - VERSÃO SIMPLIFICADA
+ * Shows confirmation modal and processes logout
+ */
+function handleLogout() {
+  console.log("🚪 Logout process initiated");
+
+  const logoutModal = document.getElementById("logout-modal");
+  if (!logoutModal) {
+    console.error("❌ Logout modal not found!");
+    // Fallback direto
+    confirmLogout();
+    return;
+  }
+
+  // Mostrar modal de confirmação
+  logoutModal.style.display = "flex";
+
+  // Setup dos botões - VERSÃO SIMPLIFICADA
+  const cancelBtn = document.getElementById("logout-cancel");
+  const confirmBtn = document.getElementById("logout-confirm");
+
+  if (cancelBtn) {
+    cancelBtn.onclick = function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      console.log("🚫 Logout cancelled");
+      logoutModal.style.display = "none";
+    };
+  }
+
+  if (confirmBtn) {
+    confirmBtn.onclick = function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      console.log("✅ Logout confirmed");
+      logoutModal.style.display = "none";
+
+      setTimeout(() => {
+        confirmLogout();
+      }, 300);
+    };
+  }
+
+  // Fechar com ESC
+  const escHandler = function (e) {
+    if (e.key === "Escape") {
+      logoutModal.style.display = "none";
+      document.removeEventListener("keydown", escHandler);
+    }
+  };
+  document.addEventListener("keydown", escHandler);
+
+  // Fechar clicando no backdrop
+  logoutModal.onclick = function (e) {
+    if (e.target === logoutModal || e.target.classList.contains("logout-modal__backdrop")) {
+      logoutModal.style.display = "none";
+    }
+  };
+
+  console.log("🚪 Logout modal displayed (simplified version)");
+}
+
+/**
+ * Execute the actual logout process
+ */
+function confirmLogout() {
+  console.log("🚪 Executing logout...");
+
+  try {
+    // Limpar dados da sessão
+    localStorage.removeItem("mathflix_current_user");
+    localStorage.removeItem("mathflix_role");
+    localStorage.removeItem("mathflix_login_time");
+
+    console.log("✅ Session data cleared");
+
+    // Redirecionar para página de login
+    window.location.href = "login.html";
+  } catch (error) {
+    console.error("❌ Error during logout:", error);
+    alert("Logout completed! Redirecting to login page...");
+    window.location.href = "login.html";
+  }
+}
+
+// Expor funções globalmente
+window.handleLogout = handleLogout;
+window.confirmLogout = confirmLogout;
+
+// Função para verificar integridade do HTML:
+
+window.checkHTMLIntegrity = function () {
+  console.log("🔍 Checking HTML integrity after cleanup...");
+
+  const elements = {
+    // Logout modal elements
+    logoutModal: document.getElementById("logout-modal"),
+    logoutCancel: document.getElementById("logout-cancel"),
+    logoutConfirm: document.getElementById("logout-confirm"),
+
+    // Header elements
+    searchBtn: document.getElementById("search-btn"),
+    notificationBtn: document.getElementById("notification-btn"),
+    profileToggle: document.getElementById("profile-menu-toggle"),
+
+    // Mobile elements
+    mobileHeaderSearch: document.getElementById("mobile-header-search"),
+
+    // Modals
+    searchModal: document.getElementById("search-modal"),
+    notificationModal: document.getElementById("notification-modal"),
+    profileModal: document.getElementById("profile-modal"),
+    movieModal: document.getElementById("movie-modal"),
+  };
+
+  console.log("Element availability:");
+  Object.entries(elements).forEach(([name, element]) => {
+    console.log(`${name}: ${!!element ? "✅" : "❌"}`);
+  });
+
+  return elements;
+};
+
+console.log("MathFlix Main Application Controller loaded successfully");
