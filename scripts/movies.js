@@ -1,25 +1,180 @@
 /**
+ ====================== SECTIONS OVERVIEW: ==============================
+ *
+ * 1.  DATABASE INITIALIZATION
+ *     - Global moviesData object creation
+ *     - Standard data structure documentation
+ *     - Field descriptions and data types
+ *
+ * 2.  TOP 10 FEATURED MOVIES
+ *     - Premium collection of critically acclaimed films
+ *     - Hero carousel and featured section content
+ *     - High-quality metadata with complete cast/crew information
+ *
+ * 3.  VERTICAL CAROUSEL COLLECTION (Horror)
+ *     - Horror movie collection with portrait poster layout
+ *     - Specialized vertical carousel presentation
+ *     - Unique modal display optimization
+ *
+ * 4.  DIGO'S FAVORITES COLLECTION
+ *     - Feel-good movies, musicals, and family entertainment
+ *     - Uplifting content with positive themes
+ *     - Curated selection for comfort viewing
+ *
+ * 5.  SERIES COLLECTION
+ *     - Television series with mood-based categorization
+ *     - Categories: long-serie, cozy-serie, weekend-serie
+ *     - Series classification for dynamic carousels
+ *
+ * 6.  MOVIE MARATHONS
+ *     - Complete film franchises organized by series
+ *     - Perfect for binge-watching storylines
+ *     - Multiple franchise collections:
+ *       6.1 The Hunger Games Saga (5 films)
+ *       6.2 Harry Potter Series (8 films)
+ *       6.3 Alien Marathon (6 films)
+ *       6.4 Toy Story Collection (4 films)
+ *       6.5 X-Men Universe (10 films)
+ *
+ * 7.  SPOILER SYSTEM
+ *     - Spoiler database with engaging plot reveals
+ *     - Modal overlay functionality with auto-close timer
+ *     - Layout detection (normal/vertical) for proper display
+ *     - Interactive spoiler button management
+ *
+ * 8.  CONTENT CLASSIFICATION SYSTEM
+ *     - Intelligent series/movies detection
+ *     - Automatic content categorization
+ *     - Known series verification and correction
+ *
  * =============================================================================
- * MATHFLIX MOVIES DATABASE & SPOILER SYSTEM
+ * DATABASE STRUCTURE:
  * =============================================================================
  *
- * This file contains:
- * - Complete movies and series database with metadata
- * - Spoiler texts for each title
- * - Spoiler overlay functionality for modal display
+ * Standard Movie/Series Entry:
+ * {
+ *   title: string,          // Full title of movie/series
+ *   genre: array[3],        // Maximum 3 genres for categorization
+ *   categories: array[3],   // Series only - mood-based categories
+ *   duration: string,       // Runtime (movies) or season count (series)
+ *   year: number,           // Release year
+ *   age: string,            // Age rating (G, PG, PG-13, R, TV-14, etc.)
+ *   origin: string,         // Country of origin
+ *   locations: array,       // Filming locations
+ *   cast: array,            // Main cast members (3-5 actors)
+ *   director: string,       // Director name(s)
+ *   description: string,    // Plot synopsis (2-3 sentences)
+ *   poster: string,         // Path to poster image
+ *   trailer: string,        // YouTube embed URL
+ *   tags: array[3],         // Maximum 3 descriptive tags
+ *   ranking: object         // User ratings { math: 0, digo: 0 }
+ * }
  *
- * Database Structure:
- * - Movies: title, genre, duration, year, age, origin, locations, cast, director, description, poster, trailer, tags, ranking
- * - Series: same as movies + categories field for classification
+ * =============================================================================
+ * CONTENT CATEGORIES:
+ * =============================================================================
  *
- * Organization:
- * 1. Database Initialization
- * 2. Top 10 Featured Movies
- * 3. Vertical Carousel (Horror Collection)
- * 4. Digo's Favorites (Family/Musical)
- * 5. Series Collection
- * 6. Movie Marathons (Franchises)
- * 7. Spoiler System
+ * Movies (Auto-detected):
+ * - Any entry without 'categories' field
+ * - Any entry with type !== "series"
+ * - Standard movie metadata structure
+ *
+ * Series Categories:
+ * - long-serie: Long-running shows (10+ seasons)
+ * - cozy-serie: Comfort viewing, sitcoms, feel-good content
+ * - weekend-serie: Binge-worthy series perfect for weekend viewing
+ *
+ * Collection Types:
+ * - Featured: Top 10 premium movies for hero carousel
+ * - Vertical: Horror collection with portrait poster layout
+ * - Favorites: Family-friendly and musical content
+ * - Marathons: Complete film franchises for binge-watching
+ *
+ * =============================================================================
+ * SPOILER SYSTEM FEATURES:
+ * =============================================================================
+ *
+ * Spoiler Database:
+ * - Fun and engaging plot reveals for each title
+ * - Humorous and entertaining spoiler descriptions
+ * - Character-driven spoilers with personality
+ *
+ * Overlay Functionality:
+ * - Auto-close timer (10 seconds) with visual countdown
+ * - Progress bar animation showing time remaining
+ * - Manual close options (X button, backdrop click, ESC key)
+ * - Layout detection for proper modal integration
+ *
+ * Interactive Features:
+ * - Spoiler button appears in movie modals
+ * - Supports both horizontal and vertical modal layouts
+ * - Prevents background scrolling when overlay is open
+ * - Smooth animations and transitions
+ *
+ * =============================================================================
+ * MARATHON COLLECTIONS:
+ * =============================================================================
+ *
+ * The Hunger Games Saga (5 Films):
+ * Harry Potter Series (8 Films):
+ * Alien Marathon (6 Films):
+ * Toy Story Collection (4 Films):
+ * X-Men Universe (10 Films):
+ *
+ * =============================================================================
+ * DEPENDENCIES:
+ * =============================================================================
+ *
+ * External Dependencies:
+ * - YouTube API for trailer embedding
+ * - Local image assets for posters
+ *
+ * Internal Dependencies:
+ * - main.js - Content counters and carousel systems
+ * - script.js - Movie modal functionality
+ * - main-sections.css - Spoiler overlay styling
+ *
+ * Global Variables Created:
+ * - window.moviesData - Complete movie/series database
+ * - window.movieSpoilers - Spoiler text database
+ * - window.setupModalSpoiler - Spoiler functionality setup
+ * - window.openSpoilerOverlay - Overlay display function
+ * - window.closeSpoilerOverlay - Overlay cleanup function
+ *
+ * =============================================================================
+ * PERFORMANCE CONSIDERATIONS:
+ * =============================================================================
+ *
+ * - Large dataset optimized for client-side storage
+ * - Efficient object property access patterns
+ * - Lazy spoiler overlay creation (DOM elements created on demand)
+ * - Memory cleanup for timer intervals
+ * - Event listener management with proper cleanup
+ *
+ * =============================================================================
+ * CONTENT MANAGEMENT:
+ * =============================================================================
+ *
+ * Adding New Movies:
+ * 1. Follow standard data structure format
+ * 2. Include all required fields (title, genre, year, etc.)
+ * 3. Add corresponding spoiler text to movieSpoilers object
+ * 4. Ensure proper poster and trailer URLs
+ *
+ * Adding New Series:
+ * 1. Include 'categories' field for proper classification
+ * 2. Use appropriate category tags (long-serie, cozy-serie, weekend-serie)
+ * 3. Set proper duration format (e.g., "9 seasons", "16+ seasons")
+ *
+ * Marathon Collections:
+ * 1. Organize by franchise in sequential order
+ * 2. Use consistent naming convention for related films
+ * 3. Maintain chronological release order
+ * 4. Include comprehensive cast information across films
+ *
+ * =============================================================================
+ * VERSION: 2.0 - Production Ready Release
+ * LAST UPDATED: June 10, 2025
  * =============================================================================
  */
 

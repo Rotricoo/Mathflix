@@ -1,28 +1,160 @@
 /**
- * =============================================================================
- * MATHFLIX CORE APPLICATION SCRIPT
- * =============================================================================
  *
  * This file manages the core interactive functionality of the MathFlix application:
  * - User authentication and privilege management
  * - Movie modal system with dual layout support (horizontal/vertical)
  * - Rating and comment system with admin controls
- * - Advanced search functionality with autocomplete
- * - Random movie recommendation system
- * - LocalStorage data persistence
+ * - Modal event handling and ESC key management
+ * - LocalStorage data persistence for ratings and comments
+ * - Responsive layout switching for different screen sizes
  *
- * Dependencies:
- * - movies.js for content database
- * - main.js for carousel and navigation
+ * =============================================================================
+ * SECTIONS OVERVIEW:
+ * =============================================================================
  *
- * User Privilege System:
- * - Admin users: "mathdigo" or role="admin" can edit ratings/comments
- * - Regular users: Can view all content but cannot modify ratings
+ * 1.  GLOBAL VARIABLES & CONFIGURATIONS
+ *     - Admin privilege checking and user role management
+ *     - Movie key tracking and layout configuration
+ *     - Search pagination state management
+ *     - Vertical movies list for horror collection layout
  *
- * Layout System:
- * - Horizontal layout: Standard movies with side-by-side poster/trailer
- * - Vertical layout: Horror collection with portrait posters and toggle
+ * 2.  LOCALSTORAGE MANAGEMENT
+ *     - Movie data persistence (ratings and comments)
+ *     - Cross-session data preservation
+ *     - Safe error handling for storage operations
  *
+ * 3.  MOVIE MODAL SYSTEM
+ *     - Global click handler with event delegation
+ *     - Modal opening with metadata population
+ *     - Dual layout system (horizontal/vertical) selection
+ *     - Responsive media handling and toggle functionality
+ *     - Modal closing and resource cleanup
+ *     - Event listener management and duplicate prevention
+ *     - ESC key handling for all modals with priority system
+ *     - MutationObserver for automatic listener setup
+ *
+ * 4.  MOVIE RANKING & COMMENT SYSTEM
+ *     - Complete star rating interface (1-5 stars)
+ *     - Admin-only editing with visual feedback for all users
+ *     - Comment button and preview system
+ *     - Character-limited comment editing (300 chars)
+ *     - Read-only mode for non-admin users
+ *     - Robust comment popup creation and management
+ *     - Event delegation for dynamically created elements
+ *     - Testing and debugging functions for development
+ *
+ * =============================================================================
+ * USER PRIVILEGE SYSTEM:
+ * =============================================================================
+ *
+ * Admin Users (can edit):
+ * - Username: "mathdigo"
+ * - Can modify star ratings (1-5 stars)
+ * - Can add/edit comments (up to 300 characters)
+ * - Changes are saved to localStorage immediately
+ *
+ * Regular Users (read-only):
+ * - Can view all ratings and comments
+ * - Star ratings appear interactive but clicks are ignored
+ * - Comment popups open in read-only mode
+ * - No data modification capabilities
+ *
+ * =============================================================================
+ * LAYOUT SYSTEM:
+ * =============================================================================
+ *
+ * Horizontal Layout:
+ * - Desktop: Side-by-side poster and trailer display
+ * - Mobile/Tablet: Toggle between poster and trailer with button
+ * - Used for most movies in the database
+ *
+ * Vertical Layout:
+ * - Portrait poster with toggle functionality
+ * - Optimized for vertical poster presentation
+ * - Toggle button to switch between poster and trailer
+ *
+ * Mobile Responsiveness:
+ * - ≤768px: Toggle buttons for media switching
+ * - >768px: Side-by-side display for horizontal layout
+ *
+ * =============================================================================
+ * MODAL MANAGEMENT:
+ * =============================================================================
+ *
+ * Priority System for ESC Key:
+ * 1. Movie Modal (highest priority)
+ * 2. Search Modal
+ * 3. Notification Modal
+ * 4. Other utility modals
+ * 5. Profile menu dropdown (lowest priority)
+ *
+ * Event Handling:
+ * - Global event delegation for performance
+ * - Automatic listener cleanup to prevent memory leaks
+ * - MutationObserver for dynamic content handling
+ * - Backdrop click detection for modal closing
+ * - Resource cleanup (video stopping) on modal close
+ *
+ * =============================================================================
+ * DEPENDENCIES:
+ * =============================================================================
+ *
+ * External Dependencies:
+ * - LocalStorage API for data persistence
+ * - MutationObserver API for DOM monitoring
+ * - MouseEvent API for event simulation
+ *
+ * Internal Dependencies:
+ * - movies.js - Complete movie database (window.moviesData)
+ * - main.js - Carousel system and navigation
+ * - main-sections.css - Modal styling and responsive design
+ *
+ * Global Variables Created:
+ * - window.closeMovieModal - Modal closing function
+ * - window.testCommentSystem - Testing and debugging
+ * - window.simulateCommentClick - Development testing
+ * - window.showCommentBox - Comment popup display
+ * - window.handleStarClick - Star rating handler
+ * - window.ensureCommentPopupExists - Popup creation
+ *
+ * Global Variables Used:
+ * - currentMovieKey - Currently displayed movie
+ * - isAdminUser - Current user admin status
+ * - currentPage - Search pagination state
+ * - currentResults - Search results array
+ * - verticalMovies - Array of movies using vertical layout
+ *
+ * =============================================================================
+ * PERFORMANCE OPTIMIZATIONS:
+ * =============================================================================
+ *
+ * - Event delegation for dynamic content handling
+ * - Listener deduplication with dataset flags
+ * - Resource cleanup (video stopping) on modal close
+ * - Lazy popup creation only when needed
+ * - Efficient DOM queries with element caching
+ * - Memory leak prevention with proper event cleanup
+ * - MutationObserver for automatic setup of dynamic elements
+ *
+ * =============================================================================
+ * TESTING & DEBUGGING:
+ * =============================================================================
+ *
+ * Available Console Functions:
+ * - window.testCommentSystem() - Complete system verification
+ * - window.simulateCommentClick() - Test event delegation
+ * - checkAdminUser() - Verify user privileges
+ * - getCurrentMovieData() - Debug current movie state
+ *
+ * Development Features:
+ * - Comprehensive console logging for all operations
+ * - Error handling with fallback behaviors
+ * - State verification at critical points
+ * - Manual testing functions for quality assurance
+ *
+ * =============================================================================
+ * VERSION: 2.0 - Production Ready Release
+ * LAST UPDATED: June 10, 2025
  * =============================================================================
  */
 

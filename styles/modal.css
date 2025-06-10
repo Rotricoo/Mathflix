@@ -1,19 +1,298 @@
-/* =========================
-   === MOVIE MODAL SYSTEM - NAVIGATION INDEX ===
-   ========================= */
-/* 
-   QUICK NAVIGATION - Use Ctrl+F to jump to sections:
-   
-   1. MOVIE MODAL BASE
-   2. MOVIE MODAL CONTENT & LAYOUT
-   3. MOVIE MODAL MEDIA (POSTER/TRAILER)
-   4. MOVIE MODAL BASE VERTICAL
-   5. MOVIE MODAL DETAILS & INFO
-   6. MOVIE MODAL RANKING SYSTEM
-   7. MOVIE MODAL RESPONSIVE BREAKPOINTS
-   
-   TIP: Search for "===" to jump between main sections
-   ========================= */
+/**
+ * =============================================================================
+ * MATHFLIX MOVIE MODAL SYSTEM STYLING
+ * =============================================================================
+ *
+ * This file contains complete styling for the MathFlix movie modal system,
+ * including dual layout support (horizontal/vertical), responsive design,
+ * rating and comment integration, spoiler overlay system, and comprehensive
+ * mobile optimization for all device types.
+ *
+ * =============================================================================
+ * SECTIONS OVERVIEW:
+ * =============================================================================
+ *
+ * 1.  MOVIE MODAL BASE
+ *     - Fixed overlay positioning and backdrop effects
+ *     - Modal container with rounded corners and shadows
+ *     - Close button styling and positioning
+ *     - Z-index management for proper layering
+ *
+ * 2.  MOVIE MODAL CONTENT & LAYOUT
+ *     - Flex-based layout system for content organization
+ *     - Title typography with dynamic sizing for long titles
+ *     - Details section with comprehensive movie metadata
+ *     - Information hierarchy and visual organization
+ *
+ * 3.  MOVIE MODAL MEDIA (POSTER/TRAILER)
+ *     - Standard horizontal layout for most movies
+ *     - Poster and trailer container styling
+ *     - Hover effects and opacity transitions
+ *     - Responsive media sizing and proportions
+ *
+ * 4.  MOVIE MODAL BASE VERTICAL
+ *     - Specialized vertical layout for horror collection
+ *     - Portrait poster optimization (2:3 aspect ratio)
+ *     - Toggle functionality between poster and trailer
+ *     - Container positioning and overflow management
+ *
+ * 5.  MOVIE MODAL DETAILS & INFO
+ *     - Metadata display with consistent typography
+ *     - Genre buttons with interactive hover effects
+ *     - Cast, director, and location information styling
+ *     - Description text formatting and readability
+ *
+ * 6.  MOVIE MODAL RANKING SYSTEM
+ *     - Star rating interface (1-5 stars) with golden colors
+ *     - User label system (Math/Digo) with color coding
+ *     - Interactive star hover effects and visual feedback
+ *     - Comment display integration
+ *
+ * 7.  MOVIE MODAL SPOILER SYSTEM
+ *     - In-modal spoiler button with low opacity design
+ *     - Spoiler text display with fade-in animations
+ *     - Warning styling with red accent colors
+ *     - Responsive positioning and sizing
+ *
+ * 8.  SPOILER OVERLAY SYSTEM
+ *     - Full-screen overlay with backdrop blur effects
+ *     - Animated modal with slide-in transitions
+ *     - Auto-close timer with progress bar visualization
+ *     - Interactive elements (close button, backdrop click)
+ *
+ * 9.  MOVIE MODAL RESPONSIVE BREAKPOINTS
+ *     - Mobile Small (≤480px): Complete mobile optimization
+ *     - Tablet (481px-768px): Enhanced mobile experience
+ *     - Desktop (≥769px): Full desktop layout restoration
+ *     - Touch-optimized interactions for mobile devices
+ *
+ * =============================================================================
+ * LAYOUT SYSTEM ARCHITECTURE:
+ * =============================================================================
+ *
+ * Horizontal Layout (Standard Movies):
+ * - Side-by-side poster and details on desktop
+ * - Stacked layout with toggle buttons on mobile/tablet
+ * - 16:9 aspect ratio optimization for trailers
+ * - Progressive enhancement from mobile to desktop
+ *
+ * Vertical Layout (Horror Collection):
+ * - Portrait poster display (2:3 aspect ratio)
+ * - Toggle container for poster/trailer switching
+ * - Specialized for movies: screen, chucky, tifannychucky, etc.
+ * - Compact design for mobile with reduced dimensions
+ *
+ * Responsive Behavior:
+ * - Mobile: Vertical stacking with centered alignment
+ * - Tablet: Enhanced mobile with larger touch targets
+ * - Desktop: Full side-by-side layout with hover effects
+ *
+ * =============================================================================
+ * INTERACTIVE FEATURES:
+ * =============================================================================
+ *
+ * Media Toggle System:
+ * - Poster/trailer switching with smooth transitions
+ * - Button styling consistent across layouts
+ * - Mobile-optimized touch targets (200px+ width)
+ * - Hover effects with transform animations
+ *
+ * Star Rating Interface:
+ * - 5-star system with golden filled stars
+ * - User-specific labels (Math/Digo) with color coding
+ * - Interactive hover states for admin users
+ * - Visual feedback with glow effects
+ *
+ * Spoiler System:
+ * - Low-opacity spoiler button (0.1 → 0.8 on hover)
+ * - Full-screen overlay with auto-close timer
+ * - Progress bar animation (10-second countdown)
+ * - Multiple close options (X, backdrop, ESC key)
+ *
+ * =============================================================================
+ * MOBILE OPTIMIZATION FEATURES:
+ * =============================================================================
+ *
+ * Touch Interface Enhancements:
+ * - Minimum 44px touch targets for all interactive elements
+ * - Enhanced close button (4rem × 4rem) with visual feedback
+ * - Touch-action optimization for smooth scrolling
+ * - Tap highlight customization for iOS devices
+ *
+ * Layout Adaptations:
+ * - Vertical content stacking for narrow screens
+ * - Centered alignment for better mobile readability
+ * - Reduced padding and optimized spacing
+ * - Reorganized metadata in digestible sections
+ *
+ * Performance Optimizations:
+ * - Hardware acceleration with transform3d
+ * - Will-change properties for smooth animations
+ * - Touch-action manipulation for iOS compatibility
+ * - Reduced animation complexity for lower-end devices
+ *
+ * =============================================================================
+ * SPOILER OVERLAY FEATURES:
+ * =============================================================================
+ *
+ * Visual Design:
+ * - Full-viewport overlay with dark backdrop (85% opacity)
+ * - Backdrop blur effect (12px) for depth perception
+ * - Gradient background for modal content
+ * - Border glow effects with brand colors
+ *
+ * Auto-Close System:
+ * - 10-second countdown timer with visual progress bar
+ * - Linear animation showing time remaining
+ * - Automatic modal dismissal on timer completion
+ * - Smooth fade-out animation on close
+ *
+ * Interactive Elements:
+ * - Large close button (4rem × 4rem) with hover effects
+ * - Backdrop click detection for quick dismissal
+ * - ESC key support for keyboard users
+ * - Touch-friendly controls for mobile devices
+ *
+ * Content Animation:
+ * - Slide-in animation with cubic-bezier easing
+ * - Text reveal animation with delay timing
+ * - Scale and opacity transitions for smooth entrance
+ * - Coordinated timing for professional feel
+ *
+ * =============================================================================
+ * RESPONSIVE BREAKPOINT SPECIFICATIONS:
+ * =============================================================================
+ *
+ * Mobile Small (≤480px):
+ * - 95vw modal width with 2rem padding
+ * - Vertical content stacking with centered alignment
+ * - 200px × 112px media dimensions (16:9 compact)
+ * - 200px × 300px vertical media dimensions (2:3)
+ * - Enhanced close button (4rem × 4rem) with feedback
+ * - Reorganized metadata in grouped sections
+ * - Touch-optimized spoiler button positioning
+ *
+ * Tablet (481px-768px):
+ * - 85vw modal width with enhanced spacing
+ * - Slightly larger media dimensions (240px × 135px)
+ * - 180px × 240px vertical media (compact but readable)
+ * - Improved typography scaling (+0.1rem from mobile)
+ * - Enhanced touch targets and visual feedback
+ * - Maintained mobile layout with tablet optimizations
+ *
+ * Desktop (≥769px):
+ * - Side-by-side layout restoration (flex-direction: row)
+ * - Full-size media containers (220px-320px width)
+ * - Hidden toggle buttons for horizontal layouts
+ * - Hover effects and desktop interactions
+ * - Original spoiler positioning and behavior
+ * - Full responsive image sizing and proportions
+ *
+ * =============================================================================
+ * ACCESSIBILITY CONSIDERATIONS:
+ * =============================================================================
+ *
+ * Keyboard Navigation:
+ * - Tab order optimization for all interactive elements
+ * - ESC key support for modal dismissal
+ * - Focus-visible states for keyboard users
+ * - Proper focus management on modal open/close
+ *
+ * Visual Accessibility:
+ * - High contrast ratios for text and backgrounds
+ * - Clear visual hierarchy with size and color
+ * - Sufficient color contrast for star ratings
+ * - Alternative text support for media elements
+ *
+ * Motor Accessibility:
+ * - Large touch targets (minimum 44px) for mobile
+ * - Reduced motion support through CSS media queries
+ * - Clear visual feedback for all interactions
+ * - Consistent spacing for easy navigation
+ *
+ * Screen Reader Support:
+ * - Semantic HTML structure for content organization
+ * - ARIA labels for interactive elements
+ * - Proper heading hierarchy for content structure
+ * - Descriptive text for star ratings and buttons
+ *
+ * =============================================================================
+ * PERFORMANCE OPTIMIZATIONS:
+ * =============================================================================
+ *
+ * Animation Performance:
+ * - CSS transforms for GPU acceleration
+ * - Will-change properties for smooth transitions
+ * - Transform3d usage for hardware acceleration
+ * - Optimized keyframes using efficient properties
+ *
+ * Layout Efficiency:
+ * - Flexbox for responsive layouts without media queries
+ * - Efficient selector specificity for fast rendering
+ * - Grouped properties to reduce CSS redundancy
+ * - Optimized z-index management for proper layering
+ *
+ * Mobile Performance:
+ * - Touch-action optimization for smooth scrolling
+ * - Hardware acceleration for iOS compatibility
+ * - Reduced animation complexity for lower-end devices
+ * - Efficient DOM queries through specific selectors
+ *
+ * =============================================================================
+ * DEPENDENCIES:
+ * =============================================================================
+ *
+ * External Dependencies:
+ * - CSS Grid and Flexbox support
+ * - CSS Transforms and Transitions
+ * - CSS Backdrop-filter support
+ * - CSS Custom Properties (CSS Variables)
+ *
+ * Internal Dependencies:
+ * - script.js - Modal functionality and event handling
+ * - main.js - Carousel integration and movie data
+ * - movies.js - Movie database and spoiler content
+ * - main-sections.css - Global variables and base styling
+ *
+ * JavaScript Coordination:
+ * - openMovieModal() function for modal display
+ * - closeMovieModal() function for cleanup
+ * - Spoiler overlay system integration
+ * - Event delegation for dynamic content
+ *
+ * =============================================================================
+ * MAINTENANCE GUIDELINES:
+ * =============================================================================
+ *
+ * Adding New Modal Layouts:
+ * 1. Follow existing naming conventions (.movie-modal__element)
+ * 2. Include responsive behavior for all breakpoints
+ * 3. Add appropriate hover and focus states
+ * 4. Test across all supported devices and browsers
+ *
+ * Modifying Responsive Breakpoints:
+ * 1. Update all relevant sections consistently
+ * 2. Test media dimensions and proportions
+ * 3. Verify touch target sizes for mobile
+ * 4. Check spoiler positioning and visibility
+ *
+ * Spoiler System Updates:
+ * 1. Coordinate with JavaScript timer functionality
+ * 2. Test auto-close behavior across devices
+ * 3. Verify backdrop and close button interactions
+ * 4. Ensure proper animation timing and transitions
+ *
+ * Performance Considerations:
+ * 1. Use transform and opacity for animations
+ * 2. Test on lower-end devices for smooth performance
+ * 3. Optimize critical path CSS for modal loading
+ * 4. Maintain efficient selector specificity
+ *
+ * =============================================================================
+ * VERSION: 2.0 - Production Ready Release
+ * LAST UPDATED: June 10, 2025
+ * =============================================================================
+ */
 
 /* =========================
    1. MOVIE MODAL BASE

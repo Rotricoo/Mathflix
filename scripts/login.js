@@ -1,21 +1,193 @@
-/* =====================================================================
-   === MATHFLIX LOGIN PAGE JAVASCRIPT ===
-   ===================================================================== */
-
-/* =========================
-   === TABLE OF CONTENTS ===
-   ========================= */
-/*
-   1. USER CREDENTIALS DATABASE
-   2. DOM CONTENT LOADED EVENTS
-   3. LOGIN FORM ANIMATION
-   4. PASSWORD VISIBILITY TOGGLE
-   5. FORGOT PASSWORD FUNCTIONALITY
-   6. SIGN UP BUTTON FUNCTIONALITY
-   7. LOGIN VALIDATION SYSTEM
-   8. CUSTOM POPUP SYSTEM
-   9. GLOBAL FUNCTION EXPORTS
-*/
+/**
+ * =============================================================================
+ * MATHFLIX LOGIN SYSTEM & AUTHENTICATION
+ * =============================================================================
+ *
+ * This file manages the complete login and authentication system for MathFlix,
+ * including user credential validation, form animations, password toggles,
+ * custom popup system, and session management with localStorage persistence.
+ *
+ * =============================================================================
+ * SECTIONS OVERVIEW:
+ * =============================================================================
+ *
+ * 1.  USER CREDENTIALS DATABASE
+ *     - Static user database with role-based access
+ *     - Admin and regular user account definitions
+ *     - Password and privilege management
+ *
+ * 2.  DOM CONTENT LOADED EVENTS
+ *     - Page initialization and setup
+ *     - Component initialization orchestration
+ *     - Event listener registration
+ *
+ * 3.  LOGIN FORM ANIMATION
+ *     - CSS animation trigger on page load
+ *     - Smooth form entrance effect
+ *     - Visual feedback for form availability
+ *
+ * 4.  PASSWORD VISIBILITY TOGGLE
+ *     - Eye icon show/hide functionality
+ *     - Dynamic visibility based on input content
+ *     - Accessibility features with ARIA labels
+ *
+ * 5.  FORGOT PASSWORD FUNCTIONALITY
+ *     - Humorous password hint system
+ *     - Custom popup with personalized message
+ *     - Click prevention and event handling
+ *
+ * 6.  SIGN UP BUTTON FUNCTIONALITY
+ *     - Exclusive club message system
+ *     - Disabled registration with custom feedback
+ *     - Personalized rejection popup
+ *
+ * 7.  LOGIN VALIDATION SYSTEM
+ *     - Complete form validation workflow
+ *     - Credential verification against user database
+ *     - Visual feedback with success/error states
+ *     - Loading spinner for authentication simulation
+ *     - Session data persistence with localStorage
+ *
+ * 8.  CUSTOM POPUP SYSTEM
+ *     - Dual-mode popup system (manual/auto-redirect)
+ *     - Welcome messages with automatic redirection
+ *     - Informational popups with manual close
+ *     - Configurable timeout and redirect options
+ *
+ * 9.  GLOBAL FUNCTION EXPORTS
+ *     - Function exposure for HTML form integration
+ *     - Cross-file accessibility for validation
+ *     - Global namespace management
+ *
+ * =============================================================================
+ * USER AUTHENTICATION SYSTEM:
+ * =============================================================================
+ *
+ * User Accounts:
+ * - Admin Account: "mathdigo" / "amorzinho" (full privileges)
+ * - Regular Account: "math" / "flix" (standard access)
+ *
+ * Role-Based Access:
+ * - Admin: Can edit ratings, comments, and all interactive features
+ * - User: Read-only access to all content and features
+ *
+ * Session Management:
+ * - localStorage persistence for user session
+ * - Role-based privilege checking across application
+ * - Automatic session restoration on page reload
+ *
+ * =============================================================================
+ * FORM VALIDATION FEATURES:
+ * =============================================================================
+ *
+ * Visual Feedback System:
+ * - Real-time field validation with color coding
+ * - Success state: Green borders and checkmarks
+ * - Error state: Red borders and warning messages
+ * - Loading state: Spinner during authentication
+ *
+ * Error Handling:
+ * - Empty field validation with specific messaging
+ * - Invalid credential feedback with hints
+ * - Form reset capabilities after errors
+ * - User-friendly error messages
+ *
+ * UX Enhancements:
+ * - Password visibility toggle with eye icon
+ * - Smooth animations and transitions
+ * - Loading simulation for realistic feel
+ * - Personalized welcome messages
+ *
+ * =============================================================================
+ * POPUP SYSTEM FEATURES:
+ * =============================================================================
+ *
+ * Auto-Redirect Popups (Welcome Messages):
+ * - Hide close button for seamless flow
+ * - Automatic redirection after timeout
+ * - Personalized welcome based on user role
+ * - Smooth transition to main application
+ *
+ * Manual Close Popups (Information):
+ * - Show close button for user control
+ * - Click or ESC to close functionality
+ * - Humorous messages for forgot password
+ * - Exclusive club messaging for sign-up
+ *
+ * Configuration Options:
+ * - Customizable timeout duration
+ * - Flexible redirect URL configuration
+ * - Message content personalization
+ * - Display mode selection (auto/manual)
+ *
+ * =============================================================================
+ * SECURITY CONSIDERATIONS:
+ * =============================================================================
+ *
+ * Client-Side Security:
+ * - Static credential storage (demo purposes only)
+ * - Session data limited to localStorage
+ * - No sensitive data transmission
+ * - Role-based access control implementation
+ *
+ * Production Notes:
+ * - Current implementation is for demonstration only
+ * - Replace with secure server-side authentication
+ * - Implement proper password hashing
+ * - Add CSRF protection and rate limiting
+ *
+ * =============================================================================
+ * DEPENDENCIES:
+ * =============================================================================
+ *
+ * External Dependencies:
+ * - Web Storage API (localStorage)
+ * - DOM API for element manipulation
+ * - CSS animations for visual effects
+ *
+ * Internal Dependencies:
+ * - login.html - Login page structure and form elements
+ * - login.css - Styling for animations and visual feedback
+ * - index.html - Main application (redirect target)
+ *
+ * Global Variables Created:
+ * - window.validateLogin - Form validation function
+ * - validUsers - User credentials database (local scope)
+ *
+ * Global Variables Used:
+ * - localStorage.mathflix_current_user - Session user
+ * - localStorage.mathflix_role - User role/privileges
+ *
+ * =============================================================================
+ * PERFORMANCE OPTIMIZATIONS:
+ * =============================================================================
+ *
+ * - Event delegation for efficient listener management
+ * - Lazy loading of visual feedback elements
+ * - Minimal DOM queries with element caching
+ * - Debounced input validation to prevent excessive processing
+ * - Efficient popup creation and cleanup
+ *
+ * =============================================================================
+ * TESTING & DEBUGGING:
+ * =============================================================================
+ *
+ * Console Logging:
+ * - Comprehensive logging for all authentication steps
+ * - Visual feedback state tracking
+ * - Popup system operation monitoring
+ * - Form validation process debugging
+ *
+ * Error Handling:
+ * - Graceful fallbacks for missing DOM elements
+ * - Safe localStorage access with error catching
+ * - User-friendly error messages for failed operations
+ *
+ * =============================================================================
+ * VERSION: 2.0 - Production Ready Release
+ * LAST UPDATED: June 10, 2025
+ * =============================================================================
+ */
 
 /* =========================
    === 1. USER CREDENTIALS DATABASE ===

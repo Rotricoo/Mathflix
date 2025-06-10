@@ -1,3 +1,239 @@
+/**
+ * =============================================================================
+ * MATHFLIX CAROUSEL & SPLIDE COMPONENTS STYLING
+ * =============================================================================
+ *
+ * This file contains all carousel and Splide.js component styling for MathFlix,
+ * including responsive layouts, interactive effects, and specialized carousel
+ * configurations for different content types and screen sizes.
+ *
+ * =============================================================================
+ * SECTIONS OVERVIEW:
+ * =============================================================================
+ *
+ * 1.  GALLERIES & CAROUSELS BASE
+ *     - Base container styling and standardized layouts
+ *     - Universal title alignment system (5rem left margin)
+ *     - Common gallery container configurations
+ *
+ * 2.  TOP 10 CAROUSEL
+ *     - Featured movies carousel with auto-scroll functionality
+ *     - Enhanced hover effects with intelligent scaling
+ *     - Thumbnail styling with smooth transitions
+ *
+ * 3.  VERTICAL CAROUSEL (POSTERS)
+ *     - Horror movie collection with portrait poster layout
+ *     - Click-to-center functionality with blur/focus effects
+ *     - Active slide prominence with scaling and opacity
+ *     - Adjacent slide visibility management
+ *
+ * 4.  SIMPLE CAROUSELS
+ *     - Standard horizontal carousels for content sections
+ *     - Basic hover effects and transition animations
+ *     - Consistent thumbnail sizing and spacing
+ *
+ * 5.  SERIES & MARATHON CAROUSELS
+ *     - Television series and movie marathon collections
+ *     - Specialized styling for franchise content
+ *     - Enhanced visual hierarchy and organization
+ *
+ * 6.  MARATHON SECTION
+ *     - Dual-layout system (horizontal/vertical based on screen size)
+ *     - Information panel with gradient backgrounds
+ *     - Responsive layout switching for optimal viewing
+ *
+ * 7.  SPLIDE ARROWS & CONTROLS
+ *     - Navigation arrow styling and positioning
+ *     - Hover states and visual feedback
+ *     - Visibility management (show on hover, always visible for vertical)
+ *
+ * 8.  RESPONSIVE BREAKPOINTS
+ *     - Mobile-first responsive design system
+ *     - 5 distinct breakpoints with optimized layouts
+ *     - Progressive enhancement for larger screens
+ *
+ * =============================================================================
+ * CAROUSEL TYPES & CONFIGURATIONS:
+ * =============================================================================
+ *
+ * Top 10 Featured Carousel:
+ * - Auto-scrolling premium movie collection
+ * - 28rem thumbnails with 1.12x scale hover
+ * - Intelligent positioning and overflow management
+ *
+ * Vertical Horror Carousel:
+ * - Portrait poster layout (2:3 aspect ratio)
+ * - Click-to-center functionality with blur/focus states
+ * - Active slide: 1.3x scale, full opacity, no blur
+ * - Adjacent slides: 0.85x scale, 60% opacity, slight blur
+ * - Other slides: 0.85x scale, 30% opacity, full blur
+ *
+ * Standard Horizontal Carousels:
+ * - 16:9 aspect ratio thumbnails
+ * - 22rem default width with responsive adjustments
+ * - 1.12x scale hover with brightness enhancement
+ *
+ * Marathon Collections:
+ * - Franchise-based movie collections
+ * - Information panel with title and label
+ * - Responsive layout: horizontal (desktop) / vertical (mobile/tablet)
+ *
+ * =============================================================================
+ * RESPONSIVE BREAKPOINT SYSTEM:
+ * =============================================================================
+ *
+ * Mobile Small (≤480px):
+ * - Centered titles, compact thumbnails (14rem)
+ * - Vertical marathon layout with gradient overlay
+ * - Simplified navigation, hidden arrows (except vertical)
+ *
+ * Mobile/Tablet (481px-768px):
+ * - Centered titles, medium thumbnails (18-22rem)
+ * - Vertical marathon layout maintained
+ * - Enhanced touch targets and spacing
+ *
+ * Tablet/Notebook (769px-1024px):
+ * - Standard titles, larger thumbnails (20-24rem)
+ * - Transitional layouts preparing for desktop
+ * - Balanced touch and hover interactions
+ *
+ * Desktop Base (1025px-1440px):
+ * - Full desktop experience with larger thumbnails (22-27rem)
+ * - Complete hover effects and navigation
+ * - Optimized spacing and visual hierarchy
+ *
+ * Large Desktop (≥1441px):
+ * - Maximum thumbnail sizes (28rem)
+ * - Horizontal marathon layout with side-by-side info panel
+ * - Enhanced visual effects and premium experience
+ *
+ * =============================================================================
+ * VISUAL EFFECTS & INTERACTIONS:
+ * =============================================================================
+ *
+ * Hover Effects:
+ * - Scale transformations with cubic-bezier easing
+ * - Brightness adjustments for visual feedback
+ * - Z-index management for proper layering
+ *
+ * Transitions:
+ * - 0.35s cubic-bezier(0.4, 2, 0.6, 1) for scaling
+ * - 0.4s ease for opacity and filter changes
+ * - Smooth animations with will-change optimization
+ *
+ * Focus States:
+ * - Vertical carousel active slide prominence
+ * - Adjacent slide visibility with reduced opacity
+ * - Progressive blur effects for depth perception
+ *
+ * Navigation:
+ * - Arrow show/hide on container hover
+ * - Always visible arrows for vertical carousel
+ * - Enhanced styling with background and border effects
+ *
+ * =============================================================================
+ * LAYOUT CONSISTENCY FEATURES:
+ * =============================================================================
+ *
+ * Title Alignment:
+ * - Standardized 5rem left margin for all gallery titles
+ * - Responsive centering for mobile/tablet breakpoints
+ * - Consistent typography hierarchy across all sections
+ *
+ * Spacing System:
+ * - Margin/padding consistency across carousel types
+ * - Gap management through JavaScript and CSS coordination
+ * - Responsive spacing adjustments for different screen sizes
+ *
+ * Container Management:
+ * - Overflow visible for proper hover effects
+ * - Z-index layering for interactive elements
+ * - Proper containment for performance optimization
+ *
+ * =============================================================================
+ * PERFORMANCE OPTIMIZATIONS:
+ * =============================================================================
+ *
+ * GPU Acceleration:
+ * - will-change properties for smooth animations
+ * - transform3d usage for hardware acceleration
+ * - contain properties for layout optimization
+ *
+ * Efficient Selectors:
+ * - Specific class targeting to minimize recalculation
+ * - Grouped selectors for shared properties
+ * - Media query organization for optimal parsing
+ *
+ * Animation Performance:
+ * - CSS transforms instead of layout-triggering properties
+ * - Optimized transition timing for smooth 60fps animations
+ * - Strategic use of GPU-accelerated properties
+ *
+ * =============================================================================
+ * ACCESSIBILITY CONSIDERATIONS:
+ * =============================================================================
+ *
+ * Keyboard Navigation:
+ * - Focus-visible states for keyboard users
+ * - Proper tab order through carousel elements
+ * - Arrow key navigation support through Splide.js
+ *
+ * Visual Accessibility:
+ * - High contrast hover states
+ * - Clear visual hierarchy with size and color
+ * - Sufficient color contrast for text elements
+ *
+ * Motion Sensitivity:
+ * - Smooth transitions that respect user preferences
+ * - Optional animation reduction capabilities
+ * - Performance-optimized animations
+ *
+ * =============================================================================
+ * DEPENDENCIES:
+ * =============================================================================
+ *
+ * External Dependencies:
+ * - Splide.js v4.1.4 - Carousel functionality
+ * - CSS Custom Properties (CSS Variables) support
+ *
+ * Internal Dependencies:
+ * - main.js - Carousel initialization and configuration
+ * - main-sections.css - Global variables and base styling
+ * - CSS Grid and Flexbox support for layout
+ *
+ * CSS Custom Properties Used:
+ * - --white, --white-50 - Text and border colors
+ * - --green-lighter - Accent color for highlights
+ * - --font-bold - Typography weight consistency
+ *
+ * =============================================================================
+ * MAINTENANCE NOTES:
+ * =============================================================================
+ *
+ * Adding New Carousel Types:
+ * 1. Follow existing naming conventions (.gallery__container.{type})
+ * 2. Implement responsive breakpoints for all screen sizes
+ * 3. Include hover effects and accessibility features
+ * 4. Test across all breakpoints for consistency
+ *
+ * Modifying Breakpoints:
+ * 1. Update all relevant sections consistently
+ * 2. Test thumbnail sizing across all carousel types
+ * 3. Verify title alignment and spacing
+ * 4. Check marathon section layout switching
+ *
+ * Performance Considerations:
+ * 1. Minimize use of expensive CSS properties
+ * 2. Use transform and opacity for animations
+ * 3. Group similar selectors to reduce redundancy
+ * 4. Test performance on lower-end devices
+ *
+ * =============================================================================
+ * VERSION: 2.0 - Production Ready Release
+ * LAST UPDATED: June 10, 2025
+ * =============================================================================
+ */
+
 /* =========================
    === CAROUSELS & SPLIDE COMPONENTS - NAVIGATION INDEX ===
    ========================= */
@@ -15,7 +251,6 @@
    
    TIP: Search for "===" to jump between main sections
    ========================= */
-
 /* =========================
    1. GALLERIES & CAROUSELS BASE
    ========================= */

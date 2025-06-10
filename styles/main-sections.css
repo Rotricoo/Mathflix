@@ -1,45 +1,408 @@
-/* =========================
-   === MATHFLIX MAIN STYLES - NAVIGATION INDEX ===
-   ========================= */
-/* 
-   QUICK NAVIGATION - Use Ctrl+F to jump to sections:
-   
-   1. CSS VARIABLES & GLOBAL COLORS
-   2. HTML & BODY BASE SETUP
-   3. PAGE LOADING & FADE ANIMATIONS
-   4. LOGIN PAGE BACKGROUND
-   5. GLOBAL BACKGROUND SYSTEM
-   6. HEADER & NAVIGATION
-   7. PROFILE DROPDOWN SYSTEM
-   8. PROFILE MODAL
-   9. LOGOUT MODAL
-   10. MODAL BASE SYSTEM
-   11. SEARCH MODAL
-   12. NOTIFICATION MODAL
-   13. SEARCH AUTOCOMPLETE
-   14. HEADER ICON BUTTONS
-   15. SEARCH RESULTS DISPLAY
-   16. RANDOM MOVIE BUTTONS
-   17. ACCESSIBILITY FOCUS
-   18. HERO SECTION
-   19. HERO NAVIGATION
-   20. HERO TEXT VARIANTS
-   21. HERO ANIMATIONS
-   22. HERO BUTTONS
-   23. GENERAL ICONS
-   24. CUSTOM POPUP SYSTEM
-   25. RANDOM MOVIE SECTION
-   26. FOOTER
-   27. DEVICE CAPABILITY DETECTION
-   28. RESPONSIVE BREAKPOINT SYSTEM
-   29. MOBILE SMALL (≤480px) - COMPREHENSIVE MOBILE EXPERIENCE
-   30. MOBILE/TABLET (481px-768px) - ENHANCED MOBILE EXPERIENCE
-   31. TABLET/LAPTOP (769px-1024px) - DESKTOP TRANSITION
-   32. DESKTOP (1025px-1440px) - STANDARD DESKTOP EXPERIENCE
-   33. RESPONSIVE DEVELOPMENT HELPERS
-   
-   TIP: Search for "===" to jump between main sections
-   ========================= */
+/**
+ * =============================================================================
+ * MATHFLIX MAIN SECTIONS & RESPONSIVE SYSTEM
+ * =============================================================================
+ *
+ * This file contains the complete styling system for MathFlix main application,
+ * including responsive design, component styling, modal systems, and comprehensive
+ * breakpoint management for all device types and screen sizes.
+ *
+ * =============================================================================
+ * SECTIONS OVERVIEW:
+ * =============================================================================
+ *
+ * 1.  CSS VARIABLES & GLOBAL COLORS
+ *     - Complete color palette and brand colors
+ *     - Typography weight system and consistency
+ *     - Global effects and glow properties
+ *
+ * 2.  HTML & BODY BASE SETUP
+ *     - Universal box-sizing and overflow management
+ *     - Font system setup (62.5% rem base)
+ *     - Global typography and text-shadow
+ *
+ * 3.  PAGE LOADING & FADE ANIMATIONS
+ *     - Smooth page entrance with opacity transitions
+ *     - Page loading state management
+ *     - CSS animation coordination with JavaScript
+ *
+ * 4.  LOGIN PAGE BACKGROUND
+ *     - Specialized gradient background for authentication
+ *     - Green-to-black transitions for login experience
+ *
+ * 5.  GLOBAL BACKGROUND SYSTEM
+ *     - Dynamic hero background with overlay gradients
+ *     - JavaScript-controlled background switching
+ *     - Performance-optimized background transitions
+ *
+ * 6.  HEADER & NAVIGATION
+ *     - Responsive header layout and positioning
+ *     - Logo scaling and navigation typography
+ *     - Icon styling and hover effects
+ *     - Profile user icon with enhanced interactions
+ *
+ * 7.  PROFILE DROPDOWN SYSTEM
+ *     - Animated dropdown menu with smooth transitions
+ *     - Outside-click-to-close functionality
+ *     - Enhanced hover effects and visual feedback
+ *     - Accessibility focus states and keyboard navigation
+ *
+ * 8.  PROFILE MODAL
+ *     - Complete user profile interface
+ *     - Dynamic statistics display and user information
+ *     - Interactive sections with organized layout
+ *     - Responsive design across all breakpoints
+ *
+ * 9.  LOGOUT MODAL
+ *     - Simplified confirmation modal design
+ *     - Enhanced visual effects and animations
+ *     - Dual-button system (cancel/confirm)
+ *     - Backdrop blur and smooth transitions
+ *
+ * 10. MODAL BASE SYSTEM
+ *     - Universal modal framework and backdrop
+ *     - Consistent styling across all modal types
+ *     - Close button standardization
+ *     - Z-index management and layering
+ *
+ * 11. SEARCH MODAL
+ *     - Advanced search interface with autocomplete
+ *     - Responsive input styling and button design
+ *     - Results display with grid layout system
+ *     - Pagination and thumbnail management
+ *
+ * 12. NOTIFICATION MODAL
+ *     - Simple notification display system
+ *     - Consistent with modal base design
+ *     - Responsive content sizing
+ *
+ * 13. SEARCH AUTOCOMPLETE
+ *     - Real-time dropdown suggestions interface
+ *     - Keyboard navigation and click handling
+ *     - Custom scrollbar styling
+ *     - Category display and visual hierarchy
+ *
+ * 14. HEADER ICON BUTTONS
+ *     - Search and notification button styling
+ *     - Hover animations with transform effects
+ *     - SVG icon management and transitions
+ *     - Pointer events and interaction states
+ *
+ * 15. SEARCH RESULTS DISPLAY
+ *     - Grid-based thumbnail layout system
+ *     - Responsive column management (1-4 columns)
+ *     - Pagination controls and navigation
+ *     - Hover effects and visual feedback
+ *
+ * 16. RANDOM MOVIE BUTTONS
+ *     - Special search hint and random movie functionality
+ *     - Interactive button styling and states
+ *     - Integration with search system
+ *
+ * 17. ACCESSIBILITY FOCUS
+ *     - Comprehensive focus-visible states
+ *     - Keyboard navigation support
+ *     - High contrast focus indicators
+ *
+ * 18. HERO SECTION
+ *     - Dynamic hero content with responsive layout
+ *     - Icon container and text styling
+ *     - Interactive title with gradient effects
+ *     - Text variants for different backgrounds
+ *
+ * 19. HERO NAVIGATION
+ *     - Dot navigation and arrow controls
+ *     - Hover states and active indicators
+ *     - Smooth transition animations
+ *
+ * 20. HERO TEXT VARIANTS
+ *     - Dark text variants for light backgrounds
+ *     - Gradient text effects and transitions
+ *     - Dynamic color switching based on content
+ *
+ * 21. HERO ANIMATIONS
+ *     - Fade in/out transitions between heroes
+ *     - Background transition coordination
+ *     - Keyframe animations for smooth effects
+ *
+ * 22. HERO BUTTONS
+ *     - Interactive "See Details" button system
+ *     - Icon integration and hover effects
+ *     - Button group styling and transitions
+ *
+ * 23. GENERAL ICONS
+ *     - Universal icon styling system
+ *     - SVG properties and transitions
+ *     - Color coordination and hover states
+ *
+ * 24. CUSTOM POPUP SYSTEM
+ *     - Flexible popup framework for comments
+ *     - Modal overlay with backdrop effects
+ *     - Button styling and interaction states
+ *
+ * 25. RANDOM MOVIE SECTION
+ *     - Dedicated random movie display area
+ *     - Container styling and visual hierarchy
+ *     - Interactive elements and hover effects
+ *
+ * 26. FOOTER
+ *     - Complete footer layout with navigation
+ *     - Logo, navigation, and social media integration
+ *     - Responsive design across all breakpoints
+ *     - Copyright and link styling
+ *
+ * 27. DEVICE CAPABILITY DETECTION
+ *     - Hover-enabled device glow effects
+ *     - Touch device active state handling
+ *     - Progressive enhancement based on capabilities
+ *
+ * 28. RESPONSIVE BREAKPOINT SYSTEM
+ *     - Mobile-first responsive design approach
+ *     - 5 distinct breakpoints with detailed specifications
+ *     - Component visibility management across devices
+ *
+ * 29. MOBILE SMALL (≤480px) - COMPREHENSIVE MOBILE EXPERIENCE
+ *     - Complete mobile interface with hamburger navigation
+ *     - Touch-optimized interactions and spacing
+ *     - Mobile-specific component layouts
+ *     - Performance-optimized animations
+ *
+ * 30. MOBILE/TABLET (481px-768px) - ENHANCED MOBILE EXPERIENCE
+ *     - Improved mobile layout with enhanced touch targets
+ *     - Transitional design elements
+ *     - Optimized typography and spacing
+ *
+ * 31. TABLET/LAPTOP (769px-1024px) - DESKTOP TRANSITION
+ *     - Hybrid mobile/desktop interface
+ *     - Full desktop navigation with mobile optimizations
+ *     - Balanced layout for transitional screen sizes
+ *
+ * 32. DESKTOP (1025px-1440px) - STANDARD DESKTOP EXPERIENCE
+ *     - Complete desktop interface with full features
+ *     - Hover effects and desktop interactions
+ *     - Optimized layout for standard monitors
+ *
+ * 33. RESPONSIVE DEVELOPMENT HELPERS
+ *     - Visual breakpoint indicators for development
+ *     - Color-coded screen size identification
+ *     - Development and debugging assistance
+ *
+ * =============================================================================
+ * RESPONSIVE BREAKPOINT SYSTEM:
+ * =============================================================================
+ *
+ * Mobile Small (≤480px):
+ * - Hamburger menu with full overlay navigation
+ * - Touch-optimized controls and spacing
+ * - Simplified layouts with essential features
+ * - Mobile search and notification integration
+ *
+ * Mobile/Tablet (481px-768px):
+ * - Enhanced mobile experience with larger touch targets
+ * - Improved typography and visual hierarchy
+ * - Transitional layouts preparing for desktop
+ *
+ * Tablet/Laptop (769px-1024px):
+ * - Full desktop navigation with mobile optimizations
+ * - Hybrid interface balancing touch and pointer interactions
+ * - Optimized for tablet and small laptop screens
+ *
+ * Desktop (1025px-1440px):
+ * - Complete desktop experience with all features
+ * - Hover effects and advanced interactions
+ * - Optimized for standard desktop monitors
+ *
+ * Large Desktop (≥1441px):
+ * - Enhanced visuals for large displays
+ * - Scaled typography and spacing
+ * - Premium experience for high-resolution screens
+ *
+ * =============================================================================
+ * MOBILE NAVIGATION SYSTEM:
+ * =============================================================================
+ *
+ * Hamburger Menu Features:
+ * - Positioned on left side of header for accessibility
+ * - 3-line animated icon with smooth transitions
+ * - Full-screen overlay with backdrop blur
+ * - Touch-friendly navigation elements
+ *
+ * Mobile Menu Components:
+ * - Centered logo (120px mobile, 180px tablet)
+ * - Profile section with avatar and user name
+ * - Navigation links (Home, Movies, Series)
+ * - Notification button integration
+ * - Logout functionality at bottom
+ *
+ * Mobile Header Controls:
+ * - Search button positioned on right side
+ * - Notification integration for tablet breakpoint
+ * - Consistent styling across mobile breakpoints
+ *
+ * =============================================================================
+ * HERO SECTION FEATURES:
+ * =============================================================================
+ *
+ * Dynamic Background System:
+ * - JavaScript-controlled background switching
+ * - Smooth transition animations (0.8s ease-in-out)
+ * - Overlay gradients for text readability
+ * - Responsive background positioning
+ *
+ * Interactive Elements:
+ * - Hover-activated title gradient animations
+ * - Icon and text color coordination
+ * - Navigation dots with active states
+ * - Arrow controls with hover effects
+ *
+ * Text Variants:
+ * - Light text for dark backgrounds (default)
+ * - Dark text variants for light backgrounds
+ * - Gradient text effects with animation
+ * - Responsive typography across breakpoints
+ *
+ * =============================================================================
+ * MODAL SYSTEM ARCHITECTURE:
+ * =============================================================================
+ *
+ * Base Modal Framework:
+ * - Fixed positioning with full viewport coverage
+ * - Backdrop blur effects for depth
+ * - Consistent z-index layering (200-2000)
+ * - Universal close button styling
+ *
+ * Modal Types:
+ * - Search Modal: Advanced search with autocomplete
+ * - Notification Modal: Simple message display
+ * - Profile Modal: Complete user interface
+ * - Logout Modal: Confirmation with enhanced design
+ * - Custom Popup: Comment system integration
+ *
+ * Responsive Behavior:
+ * - Mobile: Full-width with reduced padding
+ * - Tablet: Balanced sizing with touch optimization
+ * - Desktop: Optimal sizing with hover effects
+ *
+ * =============================================================================
+ * SEARCH SYSTEM FEATURES:
+ * =============================================================================
+ *
+ * Autocomplete Interface:
+ * - Real-time dropdown suggestions
+ * - Category-based result organization
+ * - Keyboard navigation support
+ * - Custom scrollbar styling
+ *
+ * Results Display:
+ * - Responsive grid layout (1-4 columns)
+ * - Thumbnail cards with hover effects
+ * - Pagination controls and navigation
+ * - Loading states and transitions
+ *
+ * Mobile Optimization:
+ * - 2-column grid for mobile devices
+ * - 3-column grid for tablet screens
+ * - Touch-friendly buttons and interactions
+ * - Optimized spacing and typography
+ *
+ * =============================================================================
+ * PERFORMANCE OPTIMIZATIONS:
+ * =============================================================================
+ *
+ * CSS Efficiency:
+ * - Grouped selectors for reduced redundancy
+ * - Efficient use of CSS custom properties
+ * - Transform-based animations for GPU acceleration
+ * - Optimized media query organization
+ *
+ * Animation Performance:
+ * - Hardware-accelerated transforms
+ * - Smooth 60fps transitions
+ * - will-change properties for smooth animations
+ * - Reduced layout thrashing through efficient properties
+ *
+ * Responsive Loading:
+ * - Mobile-first approach for faster initial load
+ * - Progressive enhancement for larger screens
+ * - Efficient breakpoint management
+ * - Optimized image loading and scaling
+ *
+ * =============================================================================
+ * ACCESSIBILITY FEATURES:
+ * =============================================================================
+ *
+ * Keyboard Navigation:
+ * - Tab order optimization across all components
+ * - Focus-visible states for keyboard users
+ * - ESC key support for modal dismissal
+ * - Arrow key navigation where appropriate
+ *
+ * Visual Accessibility:
+ * - High contrast color combinations
+ * - Clear visual hierarchy with size and color
+ * - Sufficient color contrast ratios
+ * - Alternative text and ARIA label support
+ *
+ * Motor Accessibility:
+ * - Large touch targets for mobile (minimum 44px)
+ * - Reduced motion options through media queries
+ * - Clear visual feedback for all interactions
+ * - Consistent spacing for easy navigation
+ *
+ * =============================================================================
+ * DEPENDENCIES:
+ * =============================================================================
+ *
+ * External Dependencies:
+ * - CSS Grid and Flexbox support
+ * - CSS Custom Properties (CSS Variables)
+ * - CSS Transforms and Transitions
+ * - CSS Backdrop-filter support
+ *
+ * Internal Dependencies:
+ * - main.js - JavaScript functionality coordination
+ * - script.js - Modal system integration
+ * - carousel-splide.css - Carousel component styling
+ * - login.css - Authentication page styling
+ *
+ * Font Dependencies:
+ * - Roboto font family from Google Fonts
+ * - Font weight variants (300, 400, 500, 700)
+ * - Fallback font stack for compatibility
+ *
+ * =============================================================================
+ * MAINTENANCE GUIDELINES:
+ * =============================================================================
+ *
+ * Adding New Breakpoints:
+ * 1. Update all component sections consistently
+ * 2. Test across all existing breakpoints
+ * 3. Maintain mobile-first methodology
+ * 4. Update development helpers section
+ *
+ * Modifying Colors:
+ * 1. Update CSS custom properties in variables section
+ * 2. Test contrast ratios for accessibility
+ * 3. Verify all component variants and states
+ * 4. Check modal and overlay visibility
+ *
+ * Component Updates:
+ * 1. Follow existing naming conventions (.component__element)
+ * 2. Include responsive behavior for all breakpoints
+ * 3. Add appropriate hover and focus states
+ * 4. Test keyboard navigation functionality
+ *
+ * Performance Considerations:
+ * 1. Use transform and opacity for animations
+ * 2. Group similar selectors to reduce redundancy
+ * 3. Test on lower-end devices for smooth performance
+ * 4. Optimize critical path CSS for faster loading
+ *
+ * =============================================================================
+ * VERSION: 2.0 - Production Ready Release
+ * LAST UPDATED: June 10, 2025
+ * =============================================================================
+ */
 
 /* =========================
    1. CSS VARIABLES & GLOBAL COLORS

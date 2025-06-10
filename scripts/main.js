@@ -1,8 +1,4 @@
 /**
- * =============================================================================
- * MATHFLIX MAIN APPLICATION CONTROLLER
- * =============================================================================
- *
  * This file manages the core functionality of the MathFlix application:
  * - Page loading animations and initial setup
  * - Splide carousel configurations for all content sections
@@ -11,13 +7,150 @@
  * - Navigation system for Movies/Series filtering with tag-based content
  * - Vertical carousel click-to-center functionality
  * - Dynamic series carousel generation based on content categories
+ * - Mobile menu system with hamburger navigation
+ * - Search autocomplete and advanced search functionality
+ * - Random movie recommendation system with countdown timer
+ * - Dynamic content counters for profile statistics
+ * - Logout functionality with confirmation modal
  * - Footer navigation integration
  *
- * Dependencies:
- * - Splide.js for carousel functionality
- * - movies.js for content data
- * - script.js for modal functionality
+ * =============================================================================
+ * SECTIONS OVERVIEW:
+ * =============================================================================
  *
+ * 1.  PAGE INITIALIZATION
+ *     - DOM ready handlers and page loading animations
+ *     - Initial setup and configuration
+ *
+ * 2.  SPLIDE CAROUSEL SYSTEM
+ *     - Responsive carousel configurations for all screen sizes
+ *     - Top 10 featured carousel with auto-scroll
+ *     - Standard horizontal carousels for content sections
+ *     - Vertical carousel for horror movie collection
+ *     - Marathon carousels for movie franchise collections
+ *
+ * 3.  HEADER FUNCTIONALITY
+ *     - Search button and modal management
+ *     - Notification system integration
+ *     - Profile menu dropdown with outside-click-to-close
+ *     - Header button event listeners and cleanup
+ *
+ * 4.  HERO "SEE DETAILS" BUTTON HANDLER
+ *     - Hero button functionality for movies and series
+ *     - Marathon collections search integration
+ *     - Content type detection and routing
+ *
+ * 5.  DYNAMIC HERO SECTION SYSTEM
+ *     - Hero content database with tag-based filtering
+ *     - Auto-rotation system with navigation controls
+ *     - Context switching for home/movies/series
+ *     - Custom styling application for different heroes
+ *     - Fade animations and smooth transitions
+ *
+ * 6.  HEADER NAVIGATION SYSTEM
+ *     - Movies/Series filtering functionality
+ *     - Navigation state management
+ *     - Content visibility controls
+ *     - Hero context switching integration
+ *
+ * 7.  VERTICAL CAROUSEL CLICK-TO-CENTER FUNCTIONALITY
+ *     - Click handling for vertical carousel items
+ *     - Centering animation before modal opening
+ *     - Movement state management to prevent conflicts
+ *
+ * 8.  DYNAMIC SERIES CAROUSELS SYSTEM
+ *     - Category-based series carousel generation
+ *     - Weekend binge, cozy comfort, and endless journey collections
+ *     - Dynamic HTML creation and Splide initialization
+ *
+ * 9.  FOOTER NAVIGATION INTEGRATION
+ *     - Footer-to-header navigation triggering
+ *     - Smooth scroll-to-top functionality
+ *     - Seamless navigation experience
+ *
+ * 10. MOBILE MENU SYSTEM
+ *     - Responsive mobile menu creation and management
+ *     - Hamburger button positioning (left side)
+ *     - Mobile search button functionality (right side)
+ *     - Mobile overlay with navigation, profile, and logout
+ *     - Touch-friendly interface with proper event handling
+ *     - Backup mobile controls for reliability
+ *
+ * 11. SEARCH AUTOCOMPLETE & FUNCTIONALITY SYSTEM
+ *     - Real-time autocomplete suggestions
+ *     - Multi-field search (title, director, cast, genre)
+ *     - Dropdown management and click handling
+ *     - Search input event listeners
+ *
+ * 12. SEARCH & RANDOM MOVIE FUNCTIONALITY
+ *     - Advanced search with pagination
+ *     - Responsive grid layout for search results
+ *     - Easter egg commands and special searches
+ *     - Search modal management and outside-click-to-close
+ *
+ * 13. RANDOM MOVIE SYSTEM
+ *     - Random movie selection from database
+ *     - Countdown timer with auto-open functionality
+ *     - Manual controls (go to movie, reroll)
+ *     - Modal management with proper cleanup
+ *
+ * 14. DYNAMIC CONTENT COUNTERS
+ *     - Intelligent series/movies detection
+ *     - Real-time statistics calculation
+ *     - Profile modal integration
+ *     - Content classification and counting
+ *
+ * 15. LOGOUT FUNCTIONALITY
+ *     - Logout confirmation modal (simplified design)
+ *     - Session data cleanup
+ *     - Redirection to login page
+ *     - Multiple logout button support (mobile, desktop, profile)
+ *
+ * =============================================================================
+ * RESPONSIVE BREAKPOINTS:
+ * =============================================================================
+ *
+ * Mobile Small:    ≤480px  - Single column, hamburger menu, touch controls
+ * Mobile/Tablet:   481px-768px - Enhanced mobile, larger touch targets
+ * Tablet/Laptop:   769px-1024px - Transitional layout, side-by-side content
+ * Desktop:         1025px-1440px - Full desktop experience, hover effects
+ * Large Display:   ≥1441px - Optimized for large screens, more content
+ *
+ * =============================================================================
+ * DEPENDENCIES:
+ * =============================================================================
+ *
+ * External Libraries:
+ * - Splide.js v4.1.4 - Carousel functionality
+ * - Splide AutoScroll Extension - Top 10 auto-scrolling carousel
+ *
+ * Internal Dependencies:
+ * - movies.js - Complete movie and series database (window.moviesData)
+ * - script.js - Movie modal functionality (openMovieModal function)
+ * - main-sections.css - Responsive styling and animations
+ *
+ * Global Variables Created:
+ * - window.verticalSplide - Vertical carousel instance for click-to-center
+ * - window.heroMovies - Current hero movies array (filtered by context)
+ * - window.randomMovieTimer - Timer for random movie countdown
+ * - window.updateStats - Function to manually update content statistics
+ * - window.handleLogout - Logout functionality
+ * - window.confirmLogout - Execute logout process
+ *
+ * =============================================================================
+ * PERFORMANCE NOTES:
+ * =============================================================================
+ *
+ * - Lazy initialization with setTimeout delays for smooth loading
+ * - Event delegation for dynamic content handling
+ * - Memory cleanup for intervals and event listeners
+ * - Responsive image loading and carousel optimization
+ * - Debounced search functionality to prevent excessive API calls
+ * - Efficient DOM queries with element caching where appropriate
+ *
+ * =============================================================================
+ * VERSION: 2.0 - Production Ready Release
+ * LAST UPDATED: June 10, 2025
  * =============================================================================
  */
 
