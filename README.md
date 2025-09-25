@@ -1,4 +1,4 @@
-# MathFlix 🎬✨
+# MathFlix 🎬
 
 <div align="center">
   <img src="assets/icons/mathflix-logo.svg" alt="MathFlix Logo" width="200"/>
@@ -9,7 +9,7 @@
 
 </div>
 
-## 📋 Table of Contents
+## Table of Contents
 
 * [About the Project](#about-the-project)
 * [Project Status](#project-status)
@@ -29,7 +29,7 @@ What began as a simple homepage recreation has transformed into a fully function
 
 ## Project Status
 
-✅ **Completed Features:**
+**Completed Features:**
 * Fully functional login/logout system
 * Complete responsive design (Mobile, Tablet, Desktop)
 * Advanced movie modal system with dual layouts
@@ -43,9 +43,9 @@ What began as a simple homepage recreation has transformed into a fully function
 * Spoiler overlay system
 * Dynamic statistics counter
 
-## ✨ Features
+## Features
 
-### 🎨 **User Interface & Experience**
+### **User Interface & Experience**
 
 * **Personalized Homepage** with curated movie collections
 * **Dynamic Hero Section** with auto-rotating featured content
@@ -54,14 +54,14 @@ What began as a simple homepage recreation has transformed into a fully function
 * **Responsive Design** optimized for all devices
 * **Mobile-First Navigation** with hamburger menu system
 
-### 🔐 **Authentication & User Management**
+### **Authentication & User Management**
 
 * **Complete Login/Logout System** with localStorage persistence
 * **User Profile Management** with dynamic statistics
 * **Admin Privileges System** for content editing
 * **Session Management** with automatic state preservation
 
-### 🔍 **Content Discovery**
+### **Content Discovery**
 
 * **Intelligent Search** with real-time autocomplete
 * **Advanced Filtering** by Movies/Series categories
@@ -69,7 +69,7 @@ What began as a simple homepage recreation has transformed into a fully function
 * **Content Categorization** (Weekend Series, Cozy Content, Long Series)
 * **Marathon Collections** for complete film series
 
-### ⭐ **Interactive Features**
+### **Interactive Features**
 
 * **Rating System** with 5-star reviews (Admin-only editing)
 * **Comment System** with character limits and validation
@@ -77,14 +77,14 @@ What began as a simple homepage recreation has transformed into a fully function
 * **Dynamic Content Counters** showing real database statistics
 * **Click-to-Center** functionality for vertical carousels
 
-### 📱 **Mobile Experience**
+### **Mobile Experience**
 
 * **Dedicated Mobile Interface** with touch-optimized controls
 * **Responsive Modal System** with toggle functionality
 * **Mobile Search Integration** with backdrop controls
 * **Touch-Friendly Navigation** with swipe support
 
-## 🛠️ Technologies Used
+## Technologies Used
 
 ### **Frontend Technologies**
 
@@ -118,13 +118,11 @@ What began as a simple homepage recreation has transformed into a fully function
   * Larger touch targets
   * Better content spacing
 
-
 * **Tablet/Laptop (769px-1024px)**
   * Desktop navigation appears
   * Side-by-side content layout
   * Enhanced modal experience
   * Optimized carousel sizing
-
 
 * **Desktop (1025px+)**
   * Full desktop experience
@@ -132,7 +130,7 @@ What began as a simple homepage recreation has transformed into a fully function
   * Advanced hover effects
   * Complete feature set
 
-## 🔧 Key Functionalities
+## Key Functionalities
 
 ### **Content Management System**
 
@@ -168,9 +166,9 @@ window.moviesData = {
 * Mobile: Toggle between poster/trailer
 * Desktop: Side-by-side display
 
-## 🔮 Future Improvements
+## Future Improvements
 
-### 📌 Planned Features
+### Planned Features
 
 - [ ] Backend integration (Node.js + Express)
 - [ ] User registration system
@@ -178,12 +176,12 @@ window.moviesData = {
 - [ ] Automated movie content fetching (via external APIs)
 - [ ] MongoDB or local database for persistent content
 
-### 🛠️ Technical Enhancements
+### Technical Enhancements
 
 - [ ] TypeScript for better structure and maintainability
 - [ ] Lazy loading for optimized performance
 
-## 👨‍💻 Author
+## Author
 
 **Rodrigo Souza**  
 Front-End Student & Visual Designer exploring the world of Web Development
@@ -211,7 +209,7 @@ I'm a front-end student and graphic designer who's recently fallen in love with 
 
 This project began as a small creative challenge and evolved into a full-featured streaming platform. Through it, I’ve been exploring how to blend interface design, interactivity, and a good user experience—while still learning new things every day.
 
-### 💡 Skills Practiced
+### Skills Practiced
 
 - HTML5, CSS3, JavaScript (ES6+)
 - Responsive Web Design
@@ -227,7 +225,7 @@ This project began as a small creative challenge and evolved into a full-feature
 * Performance Optimization
 * Cross-browser Compatibility
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
