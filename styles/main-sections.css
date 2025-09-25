@@ -3878,7 +3878,7 @@ body.login-page {
 
 /* =========================
    33. RESPONSIVE DEVELOPMENT HELPERS
-   ========================= */
+   ========================= 
 body::before {
   content: "MOBILE SMALL ≤480px";
   position: fixed;
@@ -3918,6 +3918,7 @@ body::before {
 @media (min-width: 1441px) {
   body::before {
     content: "LARGE DESKTOP ≥1441px";
-    background: blue;
+    background: rgb(188, 188, 189);
   }
 }
+ */
